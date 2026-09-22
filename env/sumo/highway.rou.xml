@@ -8,6 +8,6 @@
     </vTypeDistribution>
     <route id="r0" edges="e0"/>
     <flow id="traffic" type="carDist" route="r0" begin="0" end="100000"
-          period="3.00"
+          period="4.50"
           departLane="random" departSpeed="8.0"/>
 </routes>

@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2026-09-03 10:47:07 by Eclipse SUMO netconvert Version 1.18.0
-<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
+<!-- generated on 2026-09-22T14:11:34.252312+09:00 by Eclipse SUMO netconvert 1.27.1
+<netconvertConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
 
     <input>
-        <node-files value="env/sumo/highway.nod.xml"/>
-        <edge-files value="env/sumo/highway.edg.xml"/>
+        <node-files value="/home/mk/bmil/env/sumo/highway.nod.xml"/>
+        <edge-files value="/home/mk/bmil/env/sumo/highway.edg.xml"/>
     </input>
 
     <output>
-        <output-file value="env/sumo/highway.net.xml"/>
+        <output-file value="/home/mk/bmil/env/sumo/highway.net.xml"/>
     </output>
 
-</configuration>
+</netconvertConfiguration>
 -->
 
-<net version="1.16" junctionCornerDetail="5" limitTurnSpeed="5.50" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/net_file.xsd">
+<net version="1.20" junctionCornerDetail="5" limitTurnSpeed="5.50" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/net_file.xsd">
 
     <location netOffset="0.00,0.00" convBoundary="0.00,0.00,12000.00,0.00" origBoundary="0.00,0.00,12000.00,0.00" projParameter="!"/>
 
