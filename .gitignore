@@ -1,4 +1,5 @@
 .venv/
+.venv-hyehwa/
 __pycache__/
 *.py[cod]
 .env

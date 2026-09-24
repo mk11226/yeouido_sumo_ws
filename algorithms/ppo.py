@@ -208,6 +208,8 @@ class PPO:
         """
         obs = state
         finished_returns = []
+        if ep_stats is None:
+            ep_stats = [0.0, 0]
         self.buffer.clear()
 
         for _ in range(self.n_steps):
@@ -226,8 +228,11 @@ class PPO:
             if truncated and not terminated:
                 stored_reward += self.gamma * self.get_value(next_obs)
 
+            # 시간 초과의 부트스트랩은 위 보상에 이미 반영됐다.
+            # GAE는 reset 이후의 별도 에피소드 가치/advantage를 섞지 않도록
+            # terminated와 truncated 모두에서 재귀를 끊어야 한다.
             self.buffer.add(obs, action, log_prob, stored_reward, value,
-                            terminated)
+                            terminated or truncated)
 
             if terminated or truncated:
                 finished_returns.append(ep_stats[0])

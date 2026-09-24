@@ -1,0 +1,25 @@
+{
+  "name": "tile_002_1_0",
+  "path": "tiles/tile_002_1_0.osm.xml",
+  "request_url": "https://overpass-api.de/api/interpreter",
+  "method": "POST",
+  "query": "[out:xml][timeout:75][maxsize:268435456];\nway[\"highway\"~\"^(motorway|motorway_link|trunk|trunk_link|primary|primary_link|secondary|secondary_link|tertiary|tertiary_link|unclassified|residential|living_street|service|road)$\"](37.5316597,126.9790243,37.5410277,127.0018163)->.roads;\n(.roads;rel(bw.roads)[\"type\"=\"restriction\"];);\n(._;>>;);\nout meta;\n",
+  "bbox_west_south_east_north": [
+    126.9790243,
+    37.5316597,
+    127.0018163,
+    37.5410277
+  ],
+  "downloaded_at_utc": "2026-09-23T05:13:01.402885+00:00",
+  "osm_metadata": {
+    "osm_base": "2026-09-22T08:45:51Z"
+  },
+  "counts": {
+    "node": 2835,
+    "way": 539,
+    "relation": 13
+  },
+  "bytes": 696590,
+  "sha256": "a80a54f96e194f8c64df57fde795dad49575c4df345346ea5db17c67e9a3e6d5",
+  "elapsed_seconds": 2.865770309988875
+}

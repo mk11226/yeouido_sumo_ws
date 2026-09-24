@@ -1,0 +1,6 @@
+ Retrying in 1 seconds
+[test] initial_untrained: {"episodes": 80, "collision_rate": 0.0, "collision_rate_wilson95": [0, 0.0458197362645751], "success_rate": 0.0, "timeout_rate": 1.0, "other_failure_rate": 0.0, "mean_return": -15.706514229153049, "std_return": 0.9113931378161979, "mean_steps": 1200.0, "mean_speed": 0.01631229181020799, "mean_lane_changes": 0.0, "safety_intervention_rate": 0.0, "min_gap": 0.2597700080224996}
+ Retrying in 1 seconds
+[test] sumo_baseline: {"episodes": 80, "collision_rate": 0.0, "collision_rate_wilson95": [0, 0.0458197362645751], "success_rate": 0.9875, "timeout_rate": 0.0125, "other_failure_rate": 0.0, "mean_return": 49.107506483050074, "std_return": 6.640187655365089, "mean_steps": 396.5, "mean_speed": 5.138153659205896, "mean_lane_changes": 0.75, "safety_intervention_rate": 0.0, "min_gap": 0.0010253738867618267}
+ Retrying in 1 seconds
+[test] ppo_best: {"episodes": 80, "collision_rate": 0.0, "collision_rate_wilson95": [0, 0.0458197362645751], "success_rate": 0.9875, "timeout_rate": 0.0125, "other_failure_rate": 0.0, "mean_return": 47.98320972442797, "std_return": 7.146973861197967, "mean_steps": 428.475, "mean_speed": 4.752457713685954, "mean_lane_changes": 0.125, "safety_intervention_rate": 0.5987805589590991, "min_gap": 0.001000000000000334}

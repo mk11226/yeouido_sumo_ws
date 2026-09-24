@@ -1,0 +1,10 @@
+Warning: Invalid characters for PoI ID 'SKKU Seoul main gate'
+Warning: Invalid characters for PoI ID 'SKKU Suwon main gate'
+Warning: At actuated tlLogic '414685347', linkIndex 2,3,4 has no controlling detector.
+Warning: At actuated tlLogic '414685959', linkIndex 11,12,13 has no controlling detector.
+Warning: At actuated tlLogic '436870729', actuated phase 2 has no controlling detector.
+Warning: At actuated tlLogic '436870729', linkIndex 3,4,11,12,13 has no controlling detector.
+Warning: At actuated tlLogic 'cluster_13348545139_13348545140_3274291984_436718758_#3more', linkIndex 3,4,5 has no controlling detector.
+Warning: At actuated tlLogic 'cluster_13798072143_414684607_436798771_4908230137', linkIndex 10,11,12,13 has no controlling detector.
+Warning: At actuated tlLogic 'cluster_4655421093_4662858740_4860929588_5141018509', actuated phase 4 has no controlling detector.
+Warning: At actuated tlLogic 'cluster_5194568309_9816197132_9816197133', linkIndex 15,16,17 has no controlling detector.

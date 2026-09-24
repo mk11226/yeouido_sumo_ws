@@ -1,0 +1,115 @@
+{
+  "created_utc": "2026-09-23T06:04:44.687208+00:00",
+  "builder_sha256": "4d05a830ee08fb1f4ecff0fcedacdaeeec25232e06c83b084291424cfe713d84",
+  "source": "/home/mk/bmil_ws/env/skku_commute/buildings_source/merged.osm.xml",
+  "source_sha256": "a130d7c33f685f95ab7349b988601aa20c5123dd3b6df701eeee75bd82650e16",
+  "network_sha256": "6ac70300dfe4676accf2dd1146f3bdb6847e20cf6a4c1e7bd02651006da62b6d",
+  "source_manifest": "/home/mk/bmil_ws/env/skku_commute/buildings_source/manifest.json",
+  "source_manifest_sha256": "bee52897f79c2800a93f7f26739a8ef1ed7ffa82c4f705850af25dc8a28699b0",
+  "polyconvert_version": "Eclipse SUMO polyconvert 1.27.1\n Build features: Linux-6.17.0-1018-azure x86_64 GNU 14.2.1 Release FMI Proj GUI Intl SWIG Parquet Eigen GDAL GL2PS JuPedSim\n Copyright (C) 2001-2026 German Aerospace Center (DLR) and others; https://sumo.dlr.de\n\nEclipse SUMO polyconvert 1.27.1 is part of SUMO.\nThis program and the accompanying materials\nare made available under the terms of the Eclipse Public License v2.0\nwhich accompanies this distribution, and is available at\nhttp://www.eclipse.org/legal/epl-v20.html\nThis program may also be made available under the following Secondary\nLicenses when the conditions for such availability set forth in the Eclipse\nPublic License 2.0 are satisfied: GNU General Public License, version 2\nor later which is available at\nhttps://www.gnu.org/licenses/old-licenses/gpl-2.0-standalone.html\nSPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later",
+  "polyconvert_command": [
+    "/home/mk/bmil_ws/.venv-hyehwa/bin/polyconvert",
+    "--net-file",
+    "/home/mk/bmil_ws/env/skku_commute/skku_commute.net.xml",
+    "--osm-files",
+    "/home/mk/bmil_ws/env/skku_commute/buildings.normalized.osm.xml",
+    "--type-file",
+    "/home/mk/bmil_ws/env/skku_commute/buildings.typ.xml",
+    "--all-attributes",
+    "true",
+    "--discard",
+    "true",
+    "--prune.in-net",
+    "true",
+    "--prune.in-net.offsets",
+    "650,650,650,650",
+    "--precision",
+    "3",
+    "--output-file",
+    "/home/mk/bmil_ws/env/skku_commute/buildings.projected.raw.xml"
+  ],
+  "projection": {
+    "netOffset": "-319078.64,-4127993.38",
+    "convBoundary": "0.00,0.00,9961.48,34605.87",
+    "origBoundary": "126.952844,37.281219,127.065466,37.593680",
+    "projParameter": "+proj=utm +zone=52 +ellps=WGS84 +datum=WGS84 +units=m +no_defs"
+  },
+  "source_counts": {
+    "nodes": 112583,
+    "ways": 18791,
+    "relations": 144,
+    "building_tagged_ways": 18512,
+    "building_tagged_relations": 144
+  },
+  "counts": {
+    "unique_osm_building_features": 18626,
+    "outer_footprint_polygons": 18715,
+    "courtyard_mask_polygons": 66,
+    "total_polygons": 18781,
+    "features_with_name": 3032,
+    "features_with_height_tag": 1896,
+    "features_with_levels_tag": 2598,
+    "known_source_closures_restored": 3,
+    "source_attribute_values_restored": 3,
+    "skipped_or_unsupported_records": 0,
+    "prepared_shapes_not_imported": 0
+  },
+  "validation": {
+    "unique_ids": true,
+    "finite_coordinates": true,
+    "closed_rings": true,
+    "original_osm_attributes_retained": true,
+    "positive_projected_area": true,
+    "minimum_area_m2": 0.8487637437347826,
+    "building_layer": -4.0,
+    "courtyard_layer": -3.9,
+    "road_network_not_modified": true
+  },
+  "skipped_or_unsupported": [],
+  "not_imported_polygon_ids": [],
+  "source_closures_restored_after_polyconvert": [
+    {
+      "polygon": "building_way_772267787",
+      "closing_segment_m": 0.020864355370705863
+    },
+    {
+      "polygon": "building_way_1185568382",
+      "closing_segment_m": 0.055493525769577355
+    },
+    {
+      "polygon": "building_way_562788258",
+      "closing_segment_m": 0.07819144506707963
+    }
+  ],
+  "source_attribute_values_restored_after_polyconvert": [
+    {
+      "polygon": "building_way_184583247",
+      "key": "name"
+    },
+    {
+      "polygon": "building_way_184583245",
+      "key": "name"
+    },
+    {
+      "polygon": "building_way_1219930955",
+      "key": "description"
+    }
+  ],
+  "limitations": [
+    "Unique OSM features are mapping objects, not a guarantee of unique physical buildings.",
+    "Heights/levels are retained only when present in OSM; missing values are not invented.",
+    "Two-dimensional building footprints, not 3D facades or extruded buildings.",
+    "Courtyards are white masks, not native polygon holes; masks can cover other overlapping background polygons.",
+    "Incomplete or branching member rings are skipped rather than closed with invented segments.",
+    "OSM may omit buildings or have outdated outlines. Input nodes are retained without manual geographic shifts."
+  ],
+  "attribution": "© OpenStreetMap contributors, ODbL, https://www.openstreetmap.org/copyright",
+  "overview": "buildings.overview.png",
+  "output_sha256": {
+    "buildings.typ.xml": "cf6cfe0887d2537029e6d8bb2bd2b0d7796ec1230576df95c97674e9d5114033",
+    "buildings.normalized.osm.xml": "5f5e90802d4f1c5aaff6e0622058b48ee51b23fd162df9e08a52ed38f158c87f",
+    "buildings.poly.xml": "00de9156495c5bba0336b5e52f5026bb70629227f5c5d0828859ee830db244f7",
+    "buildings.build.log": "c5b6fd8211edd733614c0fcc956b64ff288d5876926ffe7291fcfa8bf3dbb887"
+  },
+  "wall_seconds": 17.972039106010925
+}

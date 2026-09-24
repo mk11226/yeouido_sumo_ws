@@ -1,0 +1,327 @@
+{
+  "source_records": 44020,
+  "valid_coordinates": 44020,
+  "invalid_coordinate_ids": [],
+  "source_type_counts": {
+    "001": 3126,
+    "007": 21452,
+    "002": 12805,
+    "003": 5415,
+    "010": 825,
+    "012": 81,
+    "019": 82,
+    "005": 2,
+    "018": 1,
+    "022": 119,
+    "014": 63,
+    "004": 1,
+    "013": 18,
+    "008": 9,
+    "016": 6,
+    "017": 3,
+    "020": 2,
+    "006": 2,
+    "024": 4,
+    "009": 1,
+    "": 3
+  },
+  "source_status_counts": {
+    "001": 43549,
+    "": 458,
+    "003": 5,
+    "002": 6,
+    "004": 2
+  },
+  "selected_records": 650,
+  "selected_kind_counts": {
+    "pedestrian": 276,
+    "vehicle": 326,
+    "warning": 46,
+    "unknown": 2
+  },
+  "selected_type_counts": {
+    "007": 276,
+    "003": 100,
+    "002": 192,
+    "012": 3,
+    "010": 24,
+    "001": 41,
+    "022": 10,
+    "019": 2,
+    "024": 2
+  },
+  "selected_status_counts": {
+    "001": 650
+  },
+  "eligible_vehicle_records": 289,
+  "eligible_vehicle_type_records": 292,
+  "selected_zero_front_quantity_ids": [
+    "03-0000062065",
+    "03-0000063951",
+    "03-0000072877"
+  ],
+  "selected_hidden_display_ids": [],
+  "selected_removal_construction_ids": [],
+  "duplicate_source_ids": [
+    "03-0000022706",
+    "03-0000060690",
+    "03-0000060707"
+  ],
+  "distance_to_route_m": {
+    "p50": 19.965646043753537,
+    "p90": 86.7491763829245,
+    "p99": 140.47990088578328,
+    "maximum": 148.1326431205098
+  },
+  "coordinate_evidence": {
+    "prj_archive_member": "mounted_signals_20210809.zip!A057_L.prj",
+    "prj_wkt": "PROJCS[\"Korea_2000_Korea_Central_Belt_2010\",GEOGCS[\"GCS_Korea_2000\",DATUM[\"D_Korea_2000\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]],PROJECTION[\"Transverse_Mercator\"],PARAMETER[\"False_Easting\",200000.0],PARAMETER[\"False_Northing\",600000.0],PARAMETER[\"Central_Meridian\",127.0],PARAMETER[\"Scale_Factor\",1.0],PARAMETER[\"Latitude_Of_Origin\",38.0],UNIT[\"Meter\",1.0]]",
+    "epsg_operation_equivalent": "EPSG:5186",
+    "epsg_equivalence_max_error_degrees": 0.0,
+    "archive_point_records": 47781,
+    "shp_dbf_compared": 47781,
+    "shp_dbf_maximum_difference_m": 0.0,
+    "csv_zip_common_ids": 43421,
+    "csv_zip_coordinate_change_m": {
+      "p50": 4.706995837981095e-05,
+      "p90": 3.509724952001154,
+      "p99": 18.718591278519973,
+      "maximum": 424.4475684617116
+    },
+    "csv_zip_within_1m": 33274,
+    "note": "The CSV is newer than the ZIP. Changed facility coordinates are retained from the CSV; no snapping or correction is applied."
+  },
+  "direction_vs_mount_geometry_degrees": {
+    "compared": 337,
+    "absolute_difference": {
+      "p50": 1.7423644749214873e-09,
+      "p90": 4.047370794069139e-09,
+      "p99": 1.4228733003847076e-05,
+      "maximum": 3.060953616795814e-05
+    },
+    "interpretation": "Diagnostic only: raw mount direction often matches a mathematical angle from east; it is not a traffic heading."
+  },
+  "tdata_cross_validation": {
+    "source_records": 1000,
+    "route_buffer_m": 150,
+    "nearby_centers": 23,
+    "nearest_general_vehicle_mount_distance_m": {
+      "p50": 14.120102033216803,
+      "p90": 21.407769568408302,
+      "p99": 47.19652778366274,
+      "maximum": 51.494656475972555
+    },
+    "centers_with_mount_within_50m": 22,
+    "centers_with_mount_within_100m": 23,
+    "records": [
+      {
+        "intersection_id": "1552",
+        "name": "이수역",
+        "lon": 126.9821635,
+        "lat": 37.4853994,
+        "distance_to_route_m": 15.680244744078525,
+        "nearest_vehicle_mount_id": "03-0000053429",
+        "nearest_vehicle_mount_distance_m": 19.68152679805063
+      },
+      {
+        "intersection_id": "1625",
+        "name": "이수교차로",
+        "lon": 126.98502,
+        "lat": 37.4997565,
+        "distance_to_route_m": 20.339557032999682,
+        "nearest_vehicle_mount_id": "03-0000008756",
+        "nearest_vehicle_mount_distance_m": 3.419830997892256
+      },
+      {
+        "intersection_id": "1816",
+        "name": "종로4가",
+        "lon": 126.9977692,
+        "lat": 37.5707425,
+        "distance_to_route_m": 17.198858508385317,
+        "nearest_vehicle_mount_id": "03-0000077761",
+        "nearest_vehicle_mount_distance_m": 20.596739038823742
+      },
+      {
+        "intersection_id": "1830",
+        "name": "재향군인회",
+        "lon": 126.9975784,
+        "lat": 37.5733612,
+        "distance_to_route_m": 8.463577970804995,
+        "nearest_vehicle_mount_id": "03-0000062975",
+        "nearest_vehicle_mount_distance_m": 10.705565670131797
+      },
+      {
+        "intersection_id": "1851",
+        "name": "창경궁",
+        "lon": 126.9966823,
+        "lat": 37.5790415,
+        "distance_to_route_m": 10.883904154921067,
+        "nearest_vehicle_mount_id": "03-0000042699",
+        "nearest_vehicle_mount_distance_m": 8.041104982283164
+      },
+      {
+        "intersection_id": "1864",
+        "name": "청계4가",
+        "lon": 126.9979233,
+        "lat": 37.5690316,
+        "distance_to_route_m": 4.08307643498798,
+        "nearest_vehicle_mount_id": "03-0000045964",
+        "nearest_vehicle_mount_distance_m": 11.794405179053857
+      },
+      {
+        "intersection_id": "1866",
+        "name": "성균관대입구",
+        "lon": 126.9987504,
+        "lat": 37.5830166,
+        "distance_to_route_m": 9.819827314233814,
+        "nearest_vehicle_mount_id": "03-0000042683",
+        "nearest_vehicle_mount_distance_m": 12.169506229721947
+      },
+      {
+        "intersection_id": "1867",
+        "name": "국립과학관",
+        "lon": 126.9970056,
+        "lat": 37.5814946,
+        "distance_to_route_m": 9.78143409334064,
+        "nearest_vehicle_mount_id": "03-0000066344",
+        "nearest_vehicle_mount_distance_m": 17.313472836398013
+      },
+      {
+        "intersection_id": "1999",
+        "name": "원남동사거리",
+        "lon": 126.9973494,
+        "lat": 37.5759134,
+        "distance_to_route_m": 14.210900504317786,
+        "nearest_vehicle_mount_id": "03-0000011627",
+        "nearest_vehicle_mount_distance_m": 31.95770787456419
+      },
+      {
+        "intersection_id": "2063",
+        "name": "동빙고동",
+        "lon": 126.9913518,
+        "lat": 37.5294537,
+        "distance_to_route_m": 2.622835395613651,
+        "nearest_vehicle_mount_id": "03-0000057460",
+        "nearest_vehicle_mount_distance_m": 17.579891676995874
+      },
+      {
+        "intersection_id": "20938",
+        "name": "오장동사거리(연등)",
+        "lon": 127.0024434,
+        "lat": 37.5656491,
+        "distance_to_route_m": 13.764915919491067,
+        "nearest_vehicle_mount_id": "03-0000006972",
+        "nearest_vehicle_mount_distance_m": 15.383016926020943
+      },
+      {
+        "intersection_id": "2114",
+        "name": "한강중교앞",
+        "lon": 126.9918396,
+        "lat": 37.5257062,
+        "distance_to_route_m": 4.329378325058849,
+        "nearest_vehicle_mount_id": "03-0000074733",
+        "nearest_vehicle_mount_distance_m": 21.61052720080444
+      },
+      {
+        "intersection_id": "21552",
+        "name": "이수역(연등)",
+        "lon": 126.9837126,
+        "lat": 37.4855904,
+        "distance_to_route_m": 146.45544838271925,
+        "nearest_vehicle_mount_id": "03-0000053435",
+        "nearest_vehicle_mount_distance_m": 14.280045353398107
+      },
+      {
+        "intersection_id": "21625",
+        "name": "이수교차로(연등)",
+        "lon": 126.985563,
+        "lat": 37.5003642,
+        "distance_to_route_m": 4.992411131312738,
+        "nearest_vehicle_mount_id": "03-0000009981",
+        "nearest_vehicle_mount_distance_m": 14.120102033216803
+      },
+      {
+        "intersection_id": "21816",
+        "name": "종로4가(연등)1",
+        "lon": 126.9978832,
+        "lat": 37.5701474,
+        "distance_to_route_m": 4.871982110178007,
+        "nearest_vehicle_mount_id": "03-0000055727",
+        "nearest_vehicle_mount_distance_m": 12.835496614741787
+      },
+      {
+        "intersection_id": "21830",
+        "name": "재향군인회(연등)",
+        "lon": 126.997577,
+        "lat": 37.574215,
+        "distance_to_route_m": 11.036708544550084,
+        "nearest_vehicle_mount_id": "03-0000066468",
+        "nearest_vehicle_mount_distance_m": 7.487069054294953
+      },
+      {
+        "intersection_id": "21864",
+        "name": "청계4가(연등)",
+        "lon": 126.9979823,
+        "lat": 37.5687441,
+        "distance_to_route_m": 6.477781836669781,
+        "nearest_vehicle_mount_id": "03-0000076032",
+        "nearest_vehicle_mount_distance_m": 8.118380348505314
+      },
+      {
+        "intersection_id": "21999",
+        "name": "서울대병원정문",
+        "lon": 126.997248,
+        "lat": 37.57706,
+        "distance_to_route_m": 14.745214733965868,
+        "nearest_vehicle_mount_id": "03-0000020797",
+        "nearest_vehicle_mount_distance_m": 20.19692023684291
+      },
+      {
+        "intersection_id": "22114",
+        "name": "한강중교앞(연등)",
+        "lon": 126.9916305,
+        "lat": 37.5252949,
+        "distance_to_route_m": 33.66399388064207,
+        "nearest_vehicle_mount_id": "03-0000048469",
+        "nearest_vehicle_mount_distance_m": 9.888336686722662
+      },
+      {
+        "intersection_id": "22821",
+        "name": "엠버서더호텔(연등)",
+        "lon": 127.0028805,
+        "lat": 37.55973,
+        "distance_to_route_m": 12.953546196058069,
+        "nearest_vehicle_mount_id": "03-0000004284",
+        "nearest_vehicle_mount_distance_m": 17.52163928316912
+      },
+      {
+        "intersection_id": "22864",
+        "name": "을지로4가(연등)1",
+        "lon": 126.9980969,
+        "lat": 37.5673779,
+        "distance_to_route_m": 7.155856478755785,
+        "nearest_vehicle_mount_id": "03-0000055567",
+        "nearest_vehicle_mount_distance_m": 9.31216626603611
+      },
+      {
+        "intersection_id": "22865",
+        "name": "을지로5가(연등1)",
+        "lon": 127.00028,
+        "lat": 37.5668,
+        "distance_to_route_m": 17.306907260300875,
+        "nearest_vehicle_mount_id": "03-0000010928",
+        "nearest_vehicle_mount_distance_m": 8.40874578216572
+      },
+      {
+        "intersection_id": "22957",
+        "name": "수도방위사령부(연등)",
+        "lon": 126.986574,
+        "lat": 37.468401,
+        "distance_to_route_m": 39.63565547125154,
+        "nearest_vehicle_mount_id": "03-0000070341",
+        "nearest_vehicle_mount_distance_m": 51.494656475972555
+      }
+    ],
+    "note": "2024 independent intersection-center coordinates compared with 2023 physical mounts. Separation is expected and does not prove approach ownership."
+  }
+}

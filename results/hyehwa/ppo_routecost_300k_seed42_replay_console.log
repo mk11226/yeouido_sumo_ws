@@ -1,0 +1,10 @@
+ Retrying in 1 seconds
+[replay] north_to_northeast: arrived, 351.0s, interventions 77.5%
+[replay] north_to_south: arrived, 161.5s, interventions 51.4%
+[replay] northeast_to_north: arrived, 142.5s, interventions 23.9%
+[replay] northeast_to_south: arrived, 246.5s, interventions 66.9%
+[replay] northeast_to_southwest: arrived, 160.5s, interventions 41.4%
+[replay] south_to_north: arrived, 147.5s, interventions 39.7%
+[replay] south_to_northeast: arrived, 127.0s, interventions 49.6%
+[replay] southwest_to_northeast: arrived, 272.0s, interventions 63.1%
+[saved] /home/mk/bmil_ws/results/hyehwa/ppo_routecost_300k_seed42/replay

@@ -1,0 +1,47 @@
+Success.
+Warning: Ambiguity in turnarounds computation at junction '10585408095'.
+Warning: Ambiguity in turnarounds computation at junction '10773341433'.
+Warning: Ambiguity in turnarounds computation at junction '11256318576'.
+Warning: Ambiguity in turnarounds computation at junction '11428505000'.
+Warning: Ambiguity in turnarounds computation at junction '12857535707'.
+Warning: Found sharp turn with radius 6.86 at the end of edge '-1004681602'.
+Warning: Found sharp turn with radius 8.20 at the end of edge '-1004681644#1'.
+Warning: Found sharp turn with radius 8.21 at the end of edge '-1004836023#2'.
+Warning: Found angle of 108.09 degrees at edge '-1005340600', segment 1.
+Warning: Found sharp turn with radius 8.39 at the end of edge '-1005340600'.
+Warning: Found angle of 121.51 degrees at edge '-1012800282#1', segment 1.
+Warning: Found sharp turn with radius 6.78 at the end of edge '-1012800282#1'.
+Warning: Found angle of 99.77 degrees at edge '-1057108308#3', segment 4.
+Warning: Found angle of 152.31 degrees at edge '-1116242460#0', segment 1.
+Warning: Found angle of 106.44 degrees at edge '-1389844901#0', segment 2.
+Warning: Shape for junction '1132441054' has distance 38.73 to its given position.
+Warning: Shape for junction '13442121607' has distance 21.56 to its given position.
+Warning: Shape for junction '13459547986' has distance 29.43 to its given position.
+Warning: Shape for junction '1936511519' has distance 20.90 to its given position.
+Warning: Shape for junction '2140316070' has distance 20.72 to its given position.
+Warning: Edge '-1455543594' is not connected to outgoing edges at junction '2376668126'.
+Warning: Lane '-182130364#1_0' is not connected from any incoming edge at junction '1910980522'.
+Warning: Lane '-243542156_0' is not connected from any incoming edge at junction '3863007940'.
+Warning: Lane '-256636938#4_0' is not connected from any incoming edge at junction '2385935469'.
+Warning: Lane '-42007355_0' is not connected from any incoming edge at junction '707213435'.
+Warning: Lane '1465558148_3' is not connected from any incoming edge at junction '13442121620'.
+Warning: Edge '180192150' is not connected to outgoing edges at junction '436873161'.
+Warning: Edge '506162633' is not connected to outgoing edges at junction '4203161539'.
+Warning: Edge '523341063' is not connected to outgoing edges at junction '2385935469'.
+Warning: Intersecting left turns at junction '1076972694' from lane '92878872#1_0' and lane '-92878872#2_0' (increase junction radius to avoid this).
+Warning: Speed of straight connection '1212097839_0->1465273771_3' reduced by 5.13 due to turning radius of 9.89 (length=12.43, angle=93.40).
+Warning: Speed of straight connection '1212097839_0->1465273771_4' reduced by 5.93 due to turning radius of 7.85 (length=9.64, angle=93.40).
+Warning: Speed of straight connection '1212097839_0->1465273771_5' reduced by 6.75 due to turning radius of 6.01 (length=7.14, angle=93.40).
+Warning: Speed of straight connection '474155678_0->418064360#1_1' reduced by 6.59 due to turning radius of 6.34 (length=13.70, angle=156.63).
+Warning: Speed of straight connection '1465558140_4->1465558145_3' reduced by 5.10 due to turning radius of 14.05 (length=5.37, angle=38.22).
+Warning: Intersecting left turns at junction '3105152029' from lane '33803225#3_0' and lane '-33803225#4_0' (increase junction radius to avoid this).
+Warning: Intersecting left turns at junction '3817106956' from lane '304253670#0_0' and lane '-304253670#1_0' (increase junction radius to avoid this).
+Warning: Intersecting left turns at junction '3830592101' from lane '416195452_0' and lane '-416195453#0_0' (increase junction radius to avoid this).
+Warning: Intersecting left turns at junction '3843312679' from lane '381081257#1_0' and lane '-381081268#0_0' (increase junction radius to avoid this).
+Warning: 56 total messages of type: Ambiguity in turnarounds computation at junction '%'.
+Warning: 95 total messages of type: Found angle of % degrees at edge '%', segment %.
+Warning: 308 total messages of type: Found sharp turn with radius % at the % of edge '%'.
+Warning: 134 total messages of type: Intersecting left turns at junction '%' from lane '%' and lane '%' (increase junction radius to avoid this).
+Warning: 10 total messages of type: Lane '%' is not connected from any incoming edge at junction '%'.
+Warning: 11 total messages of type: Shape for junction '%' has distance % to its given position.
+Warning: 23 total messages of type: Speed of % connection '%' reduced by % due to turning radius of % (length=%, angle=%).

@@ -1,0 +1,324 @@
+{
+  "network_sha256": "a147986e787419321e3d6aa32aca64b304539b771c19a81713794c1a31452096",
+  "signal_cycles_seconds": [
+    75.0,
+    75.0
+  ],
+  "max_steps": 1200,
+  "step_length": 0.5,
+  "traffic_vph": 720,
+  "seed": 42,
+  "observations_finite_bounded": true,
+  "integration_tests_passed": 3,
+  "results": [
+    {
+      "mode": "sumo",
+      "route": "southwest_to_northeast",
+      "seed": 42,
+      "arrived": true,
+      "collided": false,
+      "failure": null,
+      "elapsed": 277.5,
+      "wait": 145.5,
+      "lane_changes": 2,
+      "intervention_rate": 0.0,
+      "last": {
+        "road": "1069458463",
+        "lane_id": "1069458463_0",
+        "best_offset": 0,
+        "continuation": true,
+        "tls": null
+      }
+    },
+    {
+      "mode": "sumo",
+      "route": "northeast_to_southwest",
+      "seed": 42,
+      "arrived": true,
+      "collided": false,
+      "failure": null,
+      "elapsed": 161.5,
+      "wait": 55.5,
+      "lane_changes": 2,
+      "intervention_rate": 0.0,
+      "last": {
+        "road": "1455534439#1",
+        "lane_id": "1455534439#1_0",
+        "best_offset": 0,
+        "continuation": true,
+        "tls": null
+      }
+    },
+    {
+      "mode": "sumo",
+      "route": "south_to_northeast",
+      "seed": 42,
+      "arrived": true,
+      "collided": false,
+      "failure": null,
+      "elapsed": 127.5,
+      "wait": 51.0,
+      "lane_changes": 0,
+      "intervention_rate": 0.0,
+      "last": {
+        "road": "1069458463",
+        "lane_id": "1069458463_0",
+        "best_offset": 0,
+        "continuation": true,
+        "tls": null
+      }
+    },
+    {
+      "mode": "sumo",
+      "route": "northeast_to_south",
+      "seed": 42,
+      "arrived": true,
+      "collided": false,
+      "failure": null,
+      "elapsed": 240.5,
+      "wait": 146.0,
+      "lane_changes": 2,
+      "intervention_rate": 0.0,
+      "last": {
+        "road": "-1455534430",
+        "lane_id": "-1455534430_0",
+        "best_offset": 0,
+        "continuation": true,
+        "tls": null
+      }
+    },
+    {
+      "mode": "sumo",
+      "route": "north_to_south",
+      "seed": 42,
+      "arrived": true,
+      "collided": false,
+      "failure": null,
+      "elapsed": 315.5,
+      "wait": 204.5,
+      "lane_changes": 0,
+      "intervention_rate": 0.0,
+      "last": {
+        "road": "-1455534430",
+        "lane_id": "-1455534430_0",
+        "best_offset": 0,
+        "continuation": true,
+        "tls": null
+      }
+    },
+    {
+      "mode": "sumo",
+      "route": "south_to_north",
+      "seed": 42,
+      "arrived": true,
+      "collided": false,
+      "failure": null,
+      "elapsed": 152.5,
+      "wait": 51.0,
+      "lane_changes": 0,
+      "intervention_rate": 0.0,
+      "last": {
+        "road": "-1455534441",
+        "lane_id": "-1455534441_0",
+        "best_offset": 0,
+        "continuation": true,
+        "tls": null
+      }
+    },
+    {
+      "mode": "sumo",
+      "route": "north_to_northeast",
+      "seed": 42,
+      "arrived": true,
+      "collided": false,
+      "failure": null,
+      "elapsed": 427.5,
+      "wait": 296.0,
+      "lane_changes": 0,
+      "intervention_rate": 0.0,
+      "last": {
+        "road": "1069458463",
+        "lane_id": "1069458463_0",
+        "best_offset": 0,
+        "continuation": true,
+        "tls": null
+      }
+    },
+    {
+      "mode": "sumo",
+      "route": "northeast_to_north",
+      "seed": 42,
+      "arrived": true,
+      "collided": false,
+      "failure": null,
+      "elapsed": 138.0,
+      "wait": 33.0,
+      "lane_changes": 0,
+      "intervention_rate": 0.0,
+      "last": {
+        "road": "-1455534441",
+        "lane_id": "-1455534441_0",
+        "best_offset": 0,
+        "continuation": true,
+        "tls": null
+      }
+    },
+    {
+      "mode": "full_accel_keep",
+      "route": "southwest_to_northeast",
+      "seed": 42,
+      "arrived": true,
+      "collided": false,
+      "failure": null,
+      "elapsed": 277.5,
+      "wait": 144.5,
+      "lane_changes": 0,
+      "intervention_rate": 0.7279279279279279,
+      "last": {
+        "road": "1069458463",
+        "lane_id": "1069458463_0",
+        "best_offset": 0,
+        "continuation": true,
+        "tls": null
+      }
+    },
+    {
+      "mode": "full_accel_keep",
+      "route": "northeast_to_southwest",
+      "seed": 42,
+      "arrived": true,
+      "collided": false,
+      "failure": null,
+      "elapsed": 161.5,
+      "wait": 55.5,
+      "lane_changes": 0,
+      "intervention_rate": 0.39009287925696595,
+      "last": {
+        "road": "1455534439#1",
+        "lane_id": "1455534439#1_0",
+        "best_offset": 0,
+        "continuation": true,
+        "tls": null
+      }
+    },
+    {
+      "mode": "full_accel_keep",
+      "route": "south_to_northeast",
+      "seed": 42,
+      "arrived": true,
+      "collided": false,
+      "failure": null,
+      "elapsed": 127.5,
+      "wait": 51.0,
+      "lane_changes": 0,
+      "intervention_rate": 0.4392156862745098,
+      "last": {
+        "road": "1069458463",
+        "lane_id": "1069458463_0",
+        "best_offset": 0,
+        "continuation": true,
+        "tls": null
+      }
+    },
+    {
+      "mode": "full_accel_keep",
+      "route": "northeast_to_south",
+      "seed": 42,
+      "arrived": false,
+      "collided": false,
+      "failure": "timeout",
+      "elapsed": 600.0,
+      "wait": 534.0,
+      "lane_changes": 0,
+      "intervention_rate": 0.9216666666666666,
+      "last": {
+        "road": "632698296",
+        "lane_id": "632698296_1",
+        "best_offset": -1,
+        "continuation": false,
+        "tls": [
+          "joinedS_436835243_cluster_13449688037_1939144085_287319177_436837770_#1more_cluster_1939144076_5973684182",
+          2,
+          11.030999999999995,
+          "r"
+        ]
+      }
+    },
+    {
+      "mode": "full_accel_keep",
+      "route": "north_to_south",
+      "seed": 42,
+      "arrived": true,
+      "collided": false,
+      "failure": null,
+      "elapsed": 315.5,
+      "wait": 204.5,
+      "lane_changes": 0,
+      "intervention_rate": 0.7004754358161648,
+      "last": {
+        "road": "-1455534430",
+        "lane_id": "-1455534430_0",
+        "best_offset": 0,
+        "continuation": true,
+        "tls": null
+      }
+    },
+    {
+      "mode": "full_accel_keep",
+      "route": "south_to_north",
+      "seed": 42,
+      "arrived": true,
+      "collided": false,
+      "failure": null,
+      "elapsed": 152.5,
+      "wait": 51.0,
+      "lane_changes": 0,
+      "intervention_rate": 0.3737704918032787,
+      "last": {
+        "road": "-1455534441",
+        "lane_id": "-1455534441_0",
+        "best_offset": 0,
+        "continuation": true,
+        "tls": null
+      }
+    },
+    {
+      "mode": "full_accel_keep",
+      "route": "north_to_northeast",
+      "seed": 42,
+      "arrived": true,
+      "collided": false,
+      "failure": null,
+      "elapsed": 427.5,
+      "wait": 296.0,
+      "lane_changes": 0,
+      "intervention_rate": 0.735672514619883,
+      "last": {
+        "road": "1069458463",
+        "lane_id": "1069458463_0",
+        "best_offset": 0,
+        "continuation": true,
+        "tls": null
+      }
+    },
+    {
+      "mode": "full_accel_keep",
+      "route": "northeast_to_north",
+      "seed": 42,
+      "arrived": true,
+      "collided": false,
+      "failure": null,
+      "elapsed": 138.0,
+      "wait": 33.0,
+      "lane_changes": 0,
+      "intervention_rate": 0.26811594202898553,
+      "last": {
+        "road": "-1455534441",
+        "lane_id": "-1455534441_0",
+        "best_offset": 0,
+        "continuation": true,
+        "tls": null
+      }
+    }
+  ]
+}

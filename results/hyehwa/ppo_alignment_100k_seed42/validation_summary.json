@@ -1,0 +1,116 @@
+[
+  {
+    "steps": 0,
+    "episodes": 8,
+    "collision_rate": 0.0,
+    "collision_rate_wilson95": [
+      0,
+      0.3244156195108769
+    ],
+    "success_rate": 0.0,
+    "timeout_rate": 1.0,
+    "other_failure_rate": 0.0,
+    "mean_return": -15.911680551817597,
+    "std_return": 0.19344964655552058,
+    "mean_steps": 1200.0,
+    "mean_speed": 0.00491368033918916,
+    "mean_lane_changes": 0.0,
+    "safety_intervention_rate": 0.0,
+    "min_gap": 2.199944628584813
+  },
+  {
+    "steps": 20480,
+    "episodes": 8,
+    "collision_rate": 0.0,
+    "collision_rate_wilson95": [
+      0,
+      0.3244156195108769
+    ],
+    "success_rate": 0.875,
+    "timeout_rate": 0.125,
+    "other_failure_rate": 0.0,
+    "mean_return": 44.00899157823835,
+    "std_return": 15.280796770590122,
+    "mean_steps": 553.125,
+    "mean_speed": 3.558538672903566,
+    "mean_lane_changes": 0.0,
+    "safety_intervention_rate": 0.6885875706214689,
+    "min_gap": 0.0010000000000331966
+  },
+  {
+    "steps": 40960,
+    "episodes": 8,
+    "collision_rate": 0.0,
+    "collision_rate_wilson95": [
+      0,
+      0.3244156195108769
+    ],
+    "success_rate": 0.875,
+    "timeout_rate": 0.125,
+    "other_failure_rate": 0.0,
+    "mean_return": 44.03212118092533,
+    "std_return": 15.284073475764224,
+    "mean_steps": 552.75,
+    "mean_speed": 3.5590318523722577,
+    "mean_lane_changes": 0.0,
+    "safety_intervention_rate": 0.6906377204884667,
+    "min_gap": 0.0010000000000331966
+  },
+  {
+    "steps": 61440,
+    "episodes": 8,
+    "collision_rate": 0.0,
+    "collision_rate_wilson95": [
+      0,
+      0.3244156195108769
+    ],
+    "success_rate": 0.875,
+    "timeout_rate": 0.125,
+    "other_failure_rate": 0.0,
+    "mean_return": 44.15902020545154,
+    "std_return": 15.084644234764244,
+    "mean_steps": 553.25,
+    "mean_speed": 3.5574586090082443,
+    "mean_lane_changes": 0.0,
+    "safety_intervention_rate": 0.5302756439222774,
+    "min_gap": 0.0010000000000331966
+  },
+  {
+    "steps": 81920,
+    "episodes": 8,
+    "collision_rate": 0.0,
+    "collision_rate_wilson95": [
+      0,
+      0.3244156195108769
+    ],
+    "success_rate": 0.75,
+    "timeout_rate": 0.25,
+    "other_failure_rate": 0.0,
+    "mean_return": 34.56235975435743,
+    "std_return": 20.44441981137897,
+    "mean_steps": 660.25,
+    "mean_speed": 2.6438153048558926,
+    "mean_lane_changes": 0.75,
+    "safety_intervention_rate": 0.8599015524422567,
+    "min_gap": 0.0010000000000331966
+  },
+  {
+    "steps": 100000,
+    "episodes": 8,
+    "collision_rate": 0.0,
+    "collision_rate_wilson95": [
+      0,
+      0.3244156195108769
+    ],
+    "success_rate": 0.875,
+    "timeout_rate": 0.125,
+    "other_failure_rate": 0.0,
+    "mean_return": 42.18412644070976,
+    "std_return": 16.32095386998753,
+    "mean_steps": 551.875,
+    "mean_speed": 3.510572235470981,
+    "mean_lane_changes": 0.125,
+    "safety_intervention_rate": 0.747678369195923,
+    "min_gap": 0.0010000000000331966
+  }
+]

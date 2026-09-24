@@ -1,0 +1,26 @@
+{
+  "checkpoint": "best.pt",
+  "timesteps": 20480,
+  "saved_at_utc": "2026-09-23T03:55:10.531739+00:00",
+  "validation": {
+    "episodes": 8,
+    "collision_rate": 0.0,
+    "collision_rate_wilson95": [
+      0,
+      0.3244156195108769
+    ],
+    "success_rate": 0.875,
+    "timeout_rate": 0.125,
+    "other_failure_rate": 0.0,
+    "mean_return": 44.00225934050605,
+    "std_return": 15.287931700709947,
+    "mean_steps": 553.25,
+    "mean_speed": 3.5591752512145924,
+    "mean_lane_changes": 0.0,
+    "safety_intervention_rate": 0.6945323090826931,
+    "min_gap": 0.0010000000000331966
+  },
+  "selection_rule": "maximize validation success_rate, then mean_return",
+  "architecture_config": "config.json",
+  "weights_only": true
+}

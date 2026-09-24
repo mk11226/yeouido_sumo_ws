@@ -1,0 +1,2 @@
+Warning: Unused states in tlLogic 'cluster_11356881998_11521951182_11521951191_4683581782', program '0' in phase 0 after tl-index -1
+Warning: Vehicle 'flow_corridor_02.1' performs emergency braking on lane ':10679772931_1_0' with decel=9.00, wished=4.50, severity=1.00, time=121.00.

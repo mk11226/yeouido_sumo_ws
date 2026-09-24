@@ -1,0 +1,2558 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <script src="https://www.seoul.go.kr/seoulgnb/gnb.js"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="서울시 데이터를 쉽고 빠르게 확인할 수 있는 데이터 허브 플랫폼입니다.">
+    <link rel="canonical" href="https://data.seoul.go.kr/bsp/wgs/index.do?tab=portal">
+    <title>데이터 탐색 > 데이터 검색 | 서울 데이터 허브(Seoul Data Hub)</title>
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://data.seoul.go.kr/bsp/" />
+    <meta property="og:title" content="서울 데이터 허브 | 공식 데이터 플랫폼" />
+    <meta property="og:description" content="서울 데이터 허브는 생성형 AI 챗봇 기능을 통해 사용자가 데이터를 쉽게 검색하고 활용할 수 있도록 지원합니다. 생성형 AI 챗봇은 사용자가 원하는 데이터를 추천하고, 관련 정보와 사용 방법을 안내하여 복잡한 데이터 검색 과정을 간소화하고 필요한 정보를 신속하게 제공합니다." />
+    <meta property="og:image" content="/bsp/images/wgs/meta-tags.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://data.seoul.go.kr/bsp/" />
+    <meta property="twitter:title" content="서울 데이터 허브 | 공식 데이터 플랫폼" />
+    <meta property="twitter:description" content="서울 데이터 허브는 생성형 AI 챗봇 기능을 통해 사용자가 데이터를 쉽게 검색하고 활용할 수 있도록 지원합니다. 생성형 AI 챗봇은 사용자가 원하는 데이터를 추천하고, 관련 정보와 사용 방법을 안내하여 복잡한 데이터 검색 과정을 간소화하고 필요한 정보를 신속하게 제공합니다." />
+    <meta property="twitter:image" content="http://data.seoul.go.kr/bsp/images/wgs/meta-tags.png" />
+
+    <!-- Common -->
+    
+
+    <link rel="icon" href="/bsp/images/wgs/favicon/favicon.ico" type="image/x-icon">
+
+    <!-- 기존 config.js -->
+    
+    
+
+
+    
+    
+    
+    <link rel="stylesheet" href="/bsp/lib/tuiComp/tui-pagination.css">
+
+    
+    <link href="/bsp/lib/tmpl/plugins/slick/css/slick.css" rel="stylesheet" type="text/css">
+    <link href="/bsp/lib/tmpl/plugins/jquery-labelauty/css/jquery-labelauty.css" rel="stylesheet" type="text/css">
+    <link href="/bsp/lib/tmpl/plugins/jquery-ui/jquery-ui.css" rel="stylesheet" type="text/css">
+
+    <link href="/bsp/lib/tmpl/plugins/video/css/edu-video.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="/bsp/css/wgs/common/default.css">
+    <link rel="stylesheet" href="/bsp/css/wgs/common/font.css">
+    <link rel="stylesheet" href="/bsp/css/wgs/plugins/swiper/11.0.7/swiper-bundle.min.css">
+    <link rel="stylesheet" href="/bsp/css/wgs/plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="/bsp/css/wgs/common/ui-layout.css">
+    <link rel="stylesheet" href="/bsp/css/wgs/common/ui-style.css">
+    <link rel="stylesheet" href="/bsp/css/wgs/common/ui-content.css">
+    <link rel="stylesheet" href="/bsp/css/wgs/common/ui-plugins.css">
+    <link rel="stylesheet" href="/bsp/css/wgs/theme/theme.css">
+
+    <script src="/bsp/css/wgs/plugins/jquery/jquery.js"></script>
+    <script src="/bsp/css/wgs/plugins/jquery-ui/jquery-ui.js"></script>
+    <script src="/bsp/lib/tmpl/plugins/slick/js/slick.min.js"></script>
+    <script src="/bsp/lib/tmpl/plugins/jquery-labelauty/js/jquery-labelauty.js"></script>
+    <script src="/bsp/lib/tmpl/plugins/fontawesome-free/font-awesome-5.2.0.js"></script>
+    <script src="/bsp/lib/tmpl/plugins/popover/popover.min.js"></script>
+    <script src="/bsp/lib/tmpl/plugins/popover/sbp.js"></script>
+    <script src="/bsp/lib/tmpl/plugins/lodash/lodash.js"></script>
+    <script src="/bsp/css/admin/plugins/moment/moment.min.js"></script>
+    <script src="/bsp/js/wgs/ui-script.js"></script>
+    <script type="module" src="/bsp/dist/citizenSsoLogin.js?v=1790142117815"></script>
+    <script type="module" src="/bsp/dist/wgsMain.js?v=1790142117815"></script>
+    <script type="module" src="/bsp/dist/wgsMenu.js?v=1790142117815"></script>
+    <script type="module" src="/bsp/dist/wgsHeaderSearch.js?v=1790142117815"></script>
+
+    <style>
+        .tooltip-box-main{
+            top: 141%;
+            left: 51%;
+            transform: translate(-50%, -50%);
+            position: absolute;
+            max-width: 300px;
+            padding: 12px;
+            font-size: 14px;
+            color: #fff;
+            background: rgb(33, 37, 41);
+            border-radius: 8px;
+            z-index: 999;
+            display: none;
+            cursor: pointer;
+        }
+        .tooltip-box-main:after {
+            border-top: 0px solid transparent;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid #484848;
+            content: "";
+            position: absolute;
+            top: -8px;
+            left: calc(50% - 8px);
+        }
+        .highcharts-credits {
+            display: none;
+        }
+        /*::-webkit-scrollbar {*/
+        /*    height: 12px;*/
+        /*}*/
+
+        #info-area {
+            overflow-x: clip;
+        }
+
+        .idle-chart-element {
+            height: 421px;
+            width: 95%;
+            margin:auto;
+            display: flex !important;
+            align-items: center;
+            justify-content:center;
+        }
+
+        .idle-side-chart-element {
+            height: 125px;
+            width: 95%;
+            margin:auto;
+            display: flex;
+            align-items: center;
+            justify-content:center;
+        }
+        .ol-overlaycontainer-stopevent{
+            display:none;
+        }
+        #main-introduce{
+            width: 100%;
+        }
+    </style>
+
+    
+    
+
+</head>
+<body>
+    <input type="hidden" name="_csrf" value="e1c1f583-5b70-451c-bbd1-9db2f2ea13c1">
+    <input type="hidden" id="nmCsrf" value="_csrf">
+    <input type="hidden" id="token" value="e1c1f583-5b70-451c-bbd1-9db2f2ea13c1">
+    <!-- 기존 config.js -->
+
+    <script>
+        // GA4 User Setting
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            "userId":""
+        })
+
+        // add GA4 Custom Event Trigger Execution
+        $(document).ready( () => {
+            // GA4 Custom Event Trigger Execution
+            $("#portalTabBtn").click(function(){
+                window.dataLayer.push({
+                    "event": "use_service_type",
+                    "serviceType": "portal"
+                });
+            });
+            $("#chatbotTabBtn").click(function(){
+                window.dataLayer.push({
+                    "event": "use_service_type",
+                    "serviceType": "chatbot"
+                });
+            });
+            $("#mtvTabBtn").click(function(){
+                window.dataLayer.push({
+                    "event": "use_service_type",
+                    "serviceType": "mtv"
+                });
+            });
+
+            // current page add
+            let currentPageClass = $(".current-page").attr("class") || "";  // 값이 없을 경우 빈 문자열 할당
+            
+            // dataLayer 이벤트 푸시
+            let serviceType = "portal";  // 기본값을 portal로 설정
+            if (currentPageClass) {
+                if (currentPageClass.indexOf("chatbot") > -1) {
+                    serviceType = "chatbot";
+                } else if (currentPageClass.indexOf("mtv") > -1) {
+                    serviceType = "mtv";
+                }
+            }
+            
+            window.dataLayer.push({
+                "event": "use_service_type",
+                "serviceType": serviceType
+            });
+        });
+
+        sessionStorage.setItem("contextPath", "/bsp");
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-WBLTTTHW');</script>
+    <!-- End Google Tag Manager -->
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LHLLS01TCQ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-LHLLS01TCQ');
+
+        performance.mark("chart_map_render_done");
+        performance.measure("page_full_render", "navigationStart", "chart_map_render_done");
+
+        gtag('event', 'chart_map_render_done', {
+            value: performance.getEntriesByName("page_full_render")[0].duration,
+            event_category: 'UX',
+            non_interaction: true
+        });
+    </script>
+
+    <script type="text/javascript">
+        var loggingCustomSid = "data.seoul.go.kr/bsp";
+    </script>
+    <script type="text/javascript" src="//weblog.eseoul.go.kr/wlo/js/install.js" ></script>
+
+    <!-- 세션 로그 아웃 -->
+    <script>
+        let worker = null;
+
+        window.sessionTime = 1800;
+        let uid = "";
+        let isPopupActive = false;
+        let lastFocusedElement = null;
+
+        // 팝업 활성화 및 포커스 이동을 처리하는 함수
+        function activatePopupAndFocus() {
+            // 현재 포커스된 요소 저장
+            lastFocusedElement = document.activeElement;
+
+            $("#auto-logut-popup").addClass("active");
+            // 약간의 지연 후 포커스 이동
+            setTimeout(() => {
+                const loginDelayBtn = document.getElementById("login-delay");
+                if (loginDelayBtn) {
+                    loginDelayBtn.focus();
+                }
+            }, 100);
+            isPopupActive = true;
+        }
+
+        // 이전 포커스 위치로 돌아가는 함수
+        function restoreFocus() {
+            if (lastFocusedElement) {
+                lastFocusedElement.focus();
+            }
+            lastFocusedElement = null;
+        }
+
+        if (uid && uid !== "adminseoul1111") {
+            try {
+                worker = new Worker(`/bsp/dist/setIntervalWorker.js`);
+
+                worker.onerror = function(e) {
+                    console.warn('[세션Worker] Worker 로드 실패, 세션 타임아웃 기능이 비활성화됩니다:', e.message);
+                    worker = null;
+                };
+
+                worker.onmessage = function (e) {
+                    if (e.data.isTimeOutPrev && !isPopupActive) {
+                        activatePopupAndFocus();
+                    }
+                    if (typeof e.data.leftTime !== "number" || isNaN(e.data.leftTime)) {
+                        $("#logout-count").text("00:00");
+                    } else {
+                        let minutes = Math.floor(e.data.leftTime / 60);
+                        let secs = e.data.leftTime % 60;
+                        $("#logout-count").text(String(minutes).padStart(2, "0") + ":" + String(secs).padStart(2, "0"));
+                    }
+
+                    if (e.data.isTimeOut) {
+                        window.localStorage.clear();
+                        alert('세션이 만료되어 메인 화면으로 이동합니다.');
+                        worker.terminate();
+                        worker = null; // [수정] terminate 후 null 처리로 postMessage 호출 방지
+
+                        if (window.location.hostname.indexOf('data.seoul.go.kr') > -1) {
+                            let ssoLoginYn = $('#ssoLoginYn').val();
+                            if (ssoLoginYn === 'Y') {
+                                sessionStorage.clear();
+                                window.localStorage.clear();
+                                let obj = document.ssoLogoutForm;
+                                obj.submit();
+                            } else {
+                                sessionStorage.clear();
+                                window.localStorage.clear();
+                                window.location.href = `/bsp/wgs/logout.do`;
+                            }
+                        } else {
+                            window.location.href = `/bsp/wgs/logout.do?redirectUrl=/wgs/login.do`;
+                        }
+                    }
+                };
+
+                if (!window.location.href.includes('/wgs/login.do')) {
+                    worker.postMessage({type: "start", sessionTime: window.sessionTime});
+                }
+
+            } catch(e) {
+                console.warn('[세션Worker] Worker 생성 중 예외 발생:', e);
+                worker = null;
+            }
+
+            onmousemove = (e) => {
+                //auto-logut-popup 비활성화 시에만 세션 초기화
+                if (!isPopupActive && worker) {
+                    worker.postMessage({type: "reset", sessionTime: window.sessionTime});
+                }
+            };
+
+            onkeyup = (e) => {
+                //auto-logut-popup 비활성화 시에만 세션 초기화
+                if (!isPopupActive && worker) {
+                    worker.postMessage({type: "reset", sessionTime: window.sessionTime});
+                }
+            };
+
+            window.addEventListener('mousemove', onmousemove);
+            window.addEventListener('keyup', onkeyup);
+        }
+    </script>
+
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WBLTTTHW"
+                      height="0" width="0" style="display:none;visibility:hidden" title="google-tag-manager"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    
+    <script src="https://unpkg.com/web-vitals@3/dist/web-vitals.iife.js"></script>
+    <script>
+        function sendToGA4({ name, delta, id }) {
+            gtag('event', name, {
+                value: Math.round(name === 'CLS' ? delta * 1000 : delta), // ms 단위
+                event_category: 'Web Vitals',
+                event_label: id,
+                non_interaction: true  // 이 이벤트는 bounce rate에 영향 X
+            });
+        }
+
+        webVitals.getCLS(sendToGA4);
+        webVitals.getFID(sendToGA4);
+        webVitals.getLCP(sendToGA4);
+        webVitals.getFCP(sendToGA4);
+        webVitals.getTTFB(sendToGA4);
+    </script>
+
+    
+    <div id="skip_navigation">
+        <a href="#container" id="skip_to_content">본문 바로가기</a>
+    </div>
+    <!-- header -->
+
+    <form name="ssoLoginForm" method="post" action="https://www.seoul.go.kr/member/userlogin/loginCheck.do"  onSubmit="return(true)">
+        <input type="hidden" name="div" value="mem">
+        <input type="hidden" name="SITE_GB" value="GB131"> <!-- 해당 사이트 코드 -->
+        <input type="hidden" name="refresh_url" id="ssoLoginRefreshUrl" value=""> <!-- 로그인 성공 시 되돌아갈 url -->
+    </form>
+
+    <form id="ssoLogoutForm" name="ssoLogoutForm" action="/bsp/sso/logout.jsp" method="post">
+    </form>
+
+    <input type="hidden" id="ssoLoginYn" name="ssoLoginYn" value="">
+
+    <div id="wrap">
+        <div id="loading_wrap" style="display: none;">
+            <div id="floatingCirclesG">
+                <div class="f_circleG" id="frotateG_01"></div>
+                <div class="f_circleG" id="frotateG_02"></div>
+                <div class="f_circleG" id="frotateG_03"></div>
+                <div class="f_circleG" id="frotateG_04"></div>
+                <div class="f_circleG" id="frotateG_05"></div>
+                <div class="f_circleG" id="frotateG_06"></div>
+                <div class="f_circleG" id="frotateG_07"></div>
+                <div class="f_circleG" id="frotateG_08"></div>
+            </div>
+            <div style="
+            display: block;
+            background-color: rgba(255, 255, 255, 0.86);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 34;
+        "></div>
+        </div>
+        <header id="header" class="header">
+            <div class="header-top" style="background-color: white;">
+                <div class="header-top-inner">
+                    <div id="seoul-common-gnb" style="height:47px;">
+                    </div>
+                </div>
+            </div>
+            <!-- 모바일 가로모드 GNB 노출 버튼 -->
+            <div class="mtv-btn-wrap">
+                <button type="button" class="mtv-btn">
+                    <span class="safari-hidden">GNB 열기</span>
+                </button>
+            </div>
+
+            <div class="header-center">
+                <div class="header-center-inner">
+                    <div class="left">
+                        <a href="/bsp/wgs/index.do" id="headerLogo" class="logo"><span class="safari-hidden">서울 데이터 허브(Seoul Data Hub)</span></a>
+                    </div>
+                    <div class="center">
+                        
+                        <div id="gnb" class="gnb">
+                            <!--<button type="button" class="btn-gnb-start blind" title="GNB 시작"></button>-->
+                            <nav>
+                                <ul class="dep01">
+                                    <li id="headerChatbotBtn" class="chatbotBtn left">
+                                        <a id="chatbotTabBtn" href="#">공공데이터챗봇</a>
+                                    </li>
+                                    <li id="headerPortalBtn" class="portalBtn left hoverMenu">
+                                        <a id="portalTabBtn" href="#">포털</a>
+                                    </li>
+                                    <li id="headerMtvBtn" class="mtvBtn right">
+                                        <a id="mtvTabBtn" href="#">3차원 시각화</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                            <!--<button type="button" class="btn-gnb-end blind" title="GNB 종료"></button>-->
+                        </div>
+                    </div>
+
+                    <div class="right">
+                        <div class="util">
+                            <div class="btn-wrap">
+                                <div class="center">
+
+                                    
+                                    <a href="#" class="btn-float-model" id="contestGnbBtn" style="display:none;">이벤트!</a>
+                                    
+                                    
+                                    
+                                        
+                                        <button id="loginBtn" class="btn-medium btn-outline-none btn-inner-ico" style="font-weight: unset"><i class="ico-login"></i>로그인</button>
+                                        <button id="signUpBtn" class="btn-medium btn-outline-none btn-inner-ico" style="font-weight: unset"><i class="ico-member"></i>회원가입</button>
+                                    
+                                    
+                                    
+                                </div>
+                            </div>
+                            <!-- // pc -->
+
+                            <div class="header-search toggleParent" id="header-search">
+                                <button type="button" class="toggleTrigger" id="header-search-toggle" title="통합검색 열기">
+                                    <i aria-hidden="true"></i>
+                                    <span class="safari-hidden">통합검색</span>
+                                </button>
+                                <div class="header-search-outer">
+                                    <div class="header-search-inner">
+                                        <strong class="header-search-title">통합검색</strong>
+                                        <div class="header-search-field">
+                                            <div class="header-search-box">
+                                                <label class="blind" for="header-total-search-keyword">검색어 입력</label>
+                                                <input id="header-total-search-keyword" type="search" value="" placeholder="검색어를 입력해주세요" autocomplete="off">
+                                                <button type="button" aria-label="검색"><i aria-hidden="true"></i></button>
+                                            </div>
+                                            <div class="header-search-autocomplete" hidden></div>
+                                        </div>
+                                        <div class="header-search-recommend">
+                                            <a href="#">#추천검색어1</a>
+                                            <a href="#">#추천검색어2</a>
+                                            <a href="#">#추천검색어3</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="sitemap toggleParent" id="sitemap" style="display: flex;justify-content: center;align-items: center;">
+                                <span class="mo-only" style="margin-right: 14px;">
+
+                                    
+                                    <a href="#" class="btn-float-model" id="moContestGnbBtn" style="display:none;">이벤트!</a>
+                                </span>
+                                <button type="button" class="toggleTrigger" id="sitemap-toggle" title="닫기"> </button>
+                                <div class="sitemap-outer">
+                                    <div class="sitemap-inner">
+                                        <div class="left">
+                                            <a href="/bsp/wgs/index.do" class="logo"><span class="safari-hidden">서울 데이터 허브(Seoul Data Hub</span></a>
+                                            <ul class="tabChangeList category-list">
+                                                <li class="chatbotBtn"><a href="#">공공데이터챗봇 <!--<span class="pc-only">바로가기</span>--></a></li>
+                                                <li class="portalBtn"><a href="#">포털 <!--<span class="pc-only">바로가기</span>--></a></li>
+                                                <li class="mtvBtn"><a href="#">3차원 시각화 <!--<span class="pc-only">바로가기</span>--></a></li>
+                                            </ul>
+                                            <!-- mo -->
+                                            <div class="mo-only">
+                                                <div class="btn-wrap">
+                                                    <!-- 로그인 전 -->
+                                                    <div class="left">
+                                                        
+                                                            <button id="moLoginBtn" class="btn-medium btn-outline-none btn-inner-ico"><i class="ico-login"></i>로그인</button>
+                                                            <button id="moSignUpBtn" class="btn-medium btn-outline-none btn-inner-ico"><i class="ico-member"></i>회원가입</button>
+                                                        
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- // mo -->
+
+                                        </div>
+                                        <div class="right">
+                                            <nav id="btnMenu">
+                                            </nav>
+                                        </div>
+                                    </div>
+                                    <div class="mo-footer">
+                                        <p>ⓒ 2024. Seoul Data Hub Some right Reserved.</p>
+                                        <ul>
+                                            <li><a id="headPrivacyPolicy" href="#" title="새창으로 열림">개인정보처리방침</a></li>
+                                            <li><a id="headMemberRule" href="#" title="새창으로 열림">이용약관</a></li>
+                                            <li><a id="headEmailPolicy" href="#">이메일무단수집거부</a></li>
+                                            <li><a id="headQnaWrite" href="#">오류신고</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <iframe name="iframe" id="chatbotFrame" src="/bsp/wgs/chatbot/chatbotMain.do" title="챗봇 메인페이지" style="display:none; width:100%; height:calc(100dvh - var(--header-height)); border-top:1px solid #E9E9E9;"></iframe>
+            <iframe name="iframe" id="mtvFrame" title="3차원 시각화 메인 페이지" style="display:none; width:100%; height:calc(100dvh - var(--header-height));" allow="camera;microphone"></iframe>
+        </header>
+
+        <div id="auto-logut-popup" class="layer-popup" tabindex="0" style="z-index: 2003;">
+            <div class="layer-dimmed prevent-close" title="레이어팝업 닫기"></div>
+            <div class="layer-wrap">
+                <div class="error-box">
+                    <picture>
+                        <source media="(min-width: 1280px)" srcset="/bsp/images/wgs/auto_logout.png">
+                        <source media="(max-width: 1279px)" srcset="/bsp/images/wgs/auto_logout.png">
+                        <img src="/bsp/images/wgs/auto_logout.png" alt="" width="280" height="245">
+                    </picture>
+                    <div class="mt15">
+                        <h4>자동 로그아웃 안내</h4>
+                        <p class="fc-green fs-18">보안을 위해 자동으로 로그아웃 됩니다.</p>
+                        <p class="mt25">세션 시간이 만료되어 보안을 위해<br>아래 시간 후에 자동으로 로그아웃 됩니다.<p>
+                        <p class="mt25">계속 로그인 상태를 유지하시려면<br>아래의 '로그인 연장'버튼을 눌러주세요.</p>
+                        <p class="mt25"><span class="logout-count" id="logout-count">00:00</span></p>
+                    </div>
+                    <div class="btn-wrap mb15">
+                        <button type="button" class="btn-large btn-outline-black" id="popup-logout">로그아웃</button>
+                        <button type="button" class="btn-large btn-green" id="login-delay">로그인 연장</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        window.onload = function() {
+            Yjs.Gnb.init('G135', 'seoul-common-gnb');
+
+        };
+        // tab event
+        function checkTab(e) {
+            if (e.key === 'Tab' && !e.shiftKey) {
+                e.preventDefault(); // 기본 Tab 동작 방지
+                document.getElementById('sitemap-toggle').focus(); // 버튼에 포커스 이동
+            }
+        }
+        $(function(){
+            const $btn = $('#sitemap-toggle');
+            const $site = $('#sitemap');
+            if(!$btn.length || !$site.length) return;
+
+            const sync = () => $btn.attr('title', $site.hasClass('active') ? '닫기' : '전체메뉴');
+
+            // 초기 상태 반영
+            sync();
+
+            // 클릭 후(공통 토글이 class 바꾼 뒤) 반영
+            $btn.on('click', () => setTimeout(sync, 0));
+
+            // ESC 닫기 등 비클릭 변화 대응
+            if (window.MutationObserver) {
+                new MutationObserver(sync).observe($site.get(0), { attributes: true, attributeFilter: ['class'] });
+            }
+        });
+    </script>
+    <script type="module">
+        import {getSessionInfo, goLoginPage} from '/bsp/js/wgs/main/citizenSsoLogin.js';
+
+        $(".web_error").click(function(e) {
+            eventView();
+        });
+
+        function ssoLogOut(){
+            let obj = document.ssoLogoutForm;
+            obj.submit();
+        }
+
+        $('#logoutBtn').click(function () {
+            let ssoLoginYn = $('#ssoLoginYn').val();
+            if (ssoLoginYn === 'Y') {
+                sessionStorage.clear();
+                window.localStorage.clear();
+                ssoLogOut();
+            } else {
+                sessionStorage.clear();
+                window.localStorage.clear();
+                window.location.href=`/bsp/wgs/logout.do`;
+            }
+
+        });
+
+        $('#signUpBtn').click(function () {
+            window.location.href="https://www.seoul.go.kr/member/join/regist01.do?SITE_GB=GB131";
+        });
+
+        $('#myPageBtn').click(function () {
+            let upperMenuList = JSON.parse(sessionStorage.getItem("menuInfo")).menuLv1List
+            window.location.href=`/bsp` + upperMenuList.find(menu => menu.menuNm === '마이페이지').childMenuUrl;
+        });
+
+        // 이벤트 버튼 : WGS.TB_WGS_EVENT_BTN 테이블 설정에 따라 표출 여부/버튼명/이동 URL 결정
+        $.get(`/bsp/wgs/eventBtn/info.do`, function (res) {
+            const eventBtn = res.data;
+            if (!eventBtn || eventBtn.useYn !== 'Y' || !eventBtn.moveUrl) return;
+
+            const moveUrl = /^https?:\/\//.test(eventBtn.moveUrl)
+                ? eventBtn.moveUrl
+                : `/bsp` + eventBtn.moveUrl;
+
+            const $btnAnchors = $('#contestGnbBtn, #moContestGnbBtn, #contestBtn > a');
+            if (eventBtn.btnNm) {
+                $btnAnchors.text(eventBtn.btnNm);
+            }
+            $btnAnchors.on('click', function (e) {
+                e.preventDefault();
+                if (eventBtn.newTabYn === 'Y') {
+                    window.open(moveUrl, '_blank');
+                } else {
+                    window.location.href = moveUrl;
+                }
+            });
+
+            $('#contestGnbBtn, #moContestGnbBtn, #contestBtn').show();
+        });
+
+        $('#moSignUpBtn').click(function () {
+            window.location.href="https://www.seoul.go.kr/member/join/regist01.do?SITE_GB=GB131";
+        });
+
+        $('#moLogoutBtn').click(function () {
+            window.location.href=`/bsp/wgs/logout.do`;
+        });
+
+
+        $('#moMyPageBtn').click(function () {
+            let upperMenuList = JSON.parse(sessionStorage.getItem("menuInfo")).menuLv1List
+            window.location.href=`/bsp` + upperMenuList.find(menu => menu.menuNm === '마이페이지').childMenuUrl;
+        });
+
+        $('#powerUserBtn').click(function () {
+            window.location.href=`/bsp/wgs/powerUser/main.do`;
+        });
+
+        $('#headerLogo').click(function (e) {
+            e.preventDefault();
+            if (($('#chatbotFrame').css('display')) == 'none' && ($('#mtvFrame').css('display')) == 'none') {
+                window.location.href=`/bsp/wgs/index.do?tab=portal`;
+            } else {
+                window.location.href=`/bsp/wgs/index.do`;
+            }
+        })
+
+        $("#popup-logout").click(function (e){
+            e.preventDefault();
+            isPopupActive = false;
+            restoreFocus();
+            if (window.location.hostname.indexOf('data.seoul.go.kr') > -1) {
+                let ssoLoginYn = $('#ssoLoginYn').val();
+                if (ssoLoginYn === 'Y') {
+                    sessionStorage.clear();
+                    window.localStorage.clear();
+                    let obj = document.ssoLogoutForm;
+                    obj.submit();
+                } else {
+                    sessionStorage.clear();
+                    window.localStorage.clear();
+                    window.location.href=`/bsp/wgs/logout.do`;
+                }
+            } else {
+                window.location.href=`/bsp/wgs/logout.do?redirectUrl=/wgs/login.do`; // 메인 화면 URL
+            }
+        })
+
+        $("#login-delay").click(function (e){
+            e.preventDefault();
+            if (worker) worker.postMessage({type: "reset", sessionTime: window.sessionTime}); // [수정] worker null 가드
+            $("#auto-logut-popup").removeClass("active");
+            isPopupActive = false;
+            // 약간의 지연 후 이전 포커스 위치로 복귀
+            setTimeout(() => {
+                restoreFocus();
+            }, 100);
+        })
+
+    </script>
+    <script>
+        let serverGbn = "REAL_OUT";
+        
+        // 웹 접근성 - 스킵 네비게이션
+        // URL에서 tab 파라미터 가져오기
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentTab = urlParams.get('tab');
+        
+        // MTV 탭일 경우 스킵 네비게이션 숨김 (cross-site 이슈 발생)
+        const skipNavigation = document.getElementById('skip_navigation');
+        if (currentTab === 'mtv') {
+            skipNavigation.style.display = 'none';
+        } else {
+            skipNavigation.style.display = '';
+        }
+
+        document.getElementById('skip_to_content').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            let targetElement = null;
+            
+            // tab 파라미터에 따라 포커스 이동할 요소 결정
+            if (currentTab === 'chatbot') {
+                // chatbot일 경우
+                const chatbotFrame = document.getElementById('chatbotFrame');
+                if (chatbotFrame && chatbotFrame.contentDocument) {
+                    targetElement = chatbotFrame.contentDocument.getElementById('refreshBtnNav');
+                }
+            } else {
+                // portal이거나 tab 파라미터가 없는 경우
+                const container = document.getElementById('container');
+                if (container) {
+                    targetElement = container.querySelector('#content');
+                }
+            }
+            
+            // 해당 요소로 포커스 이동
+            if (targetElement) {
+                targetElement.setAttribute('tabindex', '-1');
+                targetElement.focus();
+            }
+        });
+    </script>
+<!---->
+
+
+
+    <!-- Common -->
+    
+
+    <!-- Highcharts -->
+    <script type="module" src="/bsp/dist/highmaps.js"></script>
+    <script type="module" src="/bsp/dist/series_on_point.js"></script>
+    <script type="module" src="/bsp/dist/exporting.js"></script>
+    <script type="module" src="/bsp/dist/export_data.js"></script>
+    <script type="module" src="/bsp/dist/offline_exporting.js"></script>
+    <script type="module" src="/bsp/dist/accessibility.js"></script>
+
+    
+    <script type="module" src="/bsp/dist/download.js"></script>
+
+    
+    <script type="module" src="/bsp/dist/dataView.js?v=1790142117815"></script>
+
+    <style>
+        #applyStatusTooltip {
+            display: none;
+            position: absolute;
+            background-color: rgba(51, 51, 51, 0.9);
+            color: white;
+            padding: 12px 16px;
+            border-radius: 4px;
+            font-size: 13px;
+            z-index: 1000;
+            max-width: 400px;
+            word-wrap: break-word;
+            line-height: 1.5;
+        }
+
+        #applyStatusTooltip::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-bottom: 6px solid rgba(51, 51, 51, 0.9);
+        }
+
+        #applyStatusTooltip .tooltip-title {
+            font-weight: bold;
+            margin-bottom: 8px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        #applyStatusTooltip .tooltip-content {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .metadata-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding-top: 32px;
+            margin-bottom: 12px;
+        }
+
+        .metadata-toolbar .table-length {
+            padding-top: 0;
+        }
+
+        @media screen and (max-width: 767px) {
+            .metadata-toolbar {
+                align-items: stretch;
+                flex-direction: column;
+            }
+
+            .metadata-toolbar #metaCsvDownload {
+                align-self: flex-end;
+            }
+        }
+    </style>
+
+    <link rel="stylesheet" href="/bsp/lib/tuiComp/tui-pagination.css">
+    <style>
+        @media (min-width:1279px) {
+            .trgtTableIndctNm{
+                max-width: 80%;
+            }
+        }
+
+        .data-grid-td {
+            max-height: 150px;
+            max-width: 800px;
+            overflow: auto;
+            white-space: nowrap;
+        }
+
+        .data-grid-td * {
+            width: 800px;
+            white-space: normal;
+        }
+
+        #dataGrid .table-col.table-inner-scroll {
+            /* 스크롤바 설정 */
+            overflow-x: auto; /* 가로 스크롤 */
+        }
+        #dataGrid .table-col.table-inner-scroll::-webkit-scrollbar {
+            width: 10px; /* 원하는 크기로 조정 */
+            height: 10px;
+        }
+        #dataGrid .table-col.table-inner-scroll::-webkit-scrollbar-button {
+            display: none; /* 버튼을 초기화하여 숨김 처리 */
+        }
+        #dataGrid .table-col.table-inner-scroll::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 0, 0, 0.5); /* 스크롤바 색상 */
+            border-radius: 5px; /* 둥근 모서리 */
+        }
+        #dataGrid .table-col.table-inner-scroll::-webkit-scrollbar-track {
+            background-color: rgba(255, 255, 255, 0.9); /* 스크롤 트랙 색상 */
+        }
+        #dataGrid .table-col.table-inner-scroll::-webkit-scrollbar {
+            width: 10px !important;
+        }
+        .use-condition-table {
+            margin-top: 24px;
+        }
+        .anals-transfer-help {
+            display: inline-flex;
+            align-items: center;
+            position: absolute;
+            top: -24px;
+            right: 2px;
+            margin: 0;
+            z-index: 2;
+        }
+        .anals-transfer-help .tooltip-wrap {
+            left: auto;
+            right: 0;
+            width: 420px;
+            line-height: 1.55;
+            text-align: left;
+            white-space: normal;
+            word-break: keep-all;
+            overflow-wrap: normal;
+        }
+        #analsApply {
+            white-space: nowrap;
+        }
+        .employee-open-guide {
+            display: inline-block;
+            margin-top: 22px;
+            color: #444;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+        .employee-open-guide .toastui-editor-contents {
+            color: #444;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        .employee-open-guide .toastui-editor-contents p {
+            margin: 0;
+        }
+        .employee-open-guide-default::before {
+            content: "※";
+            margin-right: 4px;
+        }
+        .access-guide-box {
+            margin-bottom: 20px;
+            padding: 16px 18px;
+            border: 1px solid #d8e4f2;
+            border-left: 4px solid #2f6fed;
+            border-radius: 6px;
+            background: #f7fbff;
+        }
+        .access-guide-title {
+            display: block;
+            margin-bottom: 6px;
+            color: #123b6d;
+            font-size: 16px;
+            font-weight: 700;
+        }
+        .access-guide-desc {
+            margin: 0 0 12px;
+            color: #555;
+            line-height: 1.5;
+            word-break: keep-all;
+        }
+        .access-guide-contact-list {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            color: #333;
+        }
+        .access-guide-contact-item {
+            padding: 8px 0;
+            border-top: 1px solid #e5edf6;
+            line-height: 1.45;
+        }
+        .access-guide-contact-item:first-child {
+            border-top: 0;
+            padding-top: 0;
+        }
+        .access-guide-contact-detail {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px 8px;
+            color: #555;
+            font-size: 14px;
+        }
+        .access-guide-contact-detail span {
+            display: inline-flex;
+            align-items: center;
+            min-width: 0;
+        }
+        .access-guide-contact-detail em {
+            margin-right: 4px;
+            color: #777;
+            font-style: normal;
+            font-weight: 600;
+        }
+    </style>
+<div id="container" class="container">
+
+    <input type="hidden" id="thisMenuId" value=""/>
+    <input type="hidden" id="uid" value=""/>
+    <input type="hidden" id="userNm" value=""/>
+    <input type="hidden" id="dataTypeCd" title="데이터유형코드"/>
+    <input type="hidden" id="canDownload" value="Y"/>
+    <input type="hidden" id="canAnals" value=""/>
+
+    <input type="hidden" name="fileGrpId" id="fileGrpId" title="파일그룹ID" value=""/>
+    <input type="hidden" name="fileId" id="fileId" title="파일ID" value=""/>
+    <input type="hidden" name="trgtTableEngNm" id="trgtTableEngNm`" title="테이블영문명"/>
+    <input type="hidden" name="gisYn" id="gisYn" title="GIS 여부"/>
+    <input type="hidden" name="capa" id="capa" title="용량"/>
+    <input type="hidden" name="searchKeyword" id="searchKeyword" title="검색어" value=""/>
+    <input type="hidden" name="tdColNmArr" id="tdColNmArr"/>
+
+    <!-- content -->
+    <div id="content" class="content">
+        <main id="breadcrumb">
+            <div class="breadcrumb">
+                <div class="breadcrumb-inner">
+                    <div class="left">
+                        <ol id="breadcrumb-wrap">
+                            <li id="homeLink" class="breadcrumb-home"><a href="#"><span>홈</span></a></li>
+                            <li id="upperMenuNm"><span>데이터 검색</span></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <input type="hidden" name="id" id="id" title="테이블ID" value="1821"/>
+
+        <section>
+            <div class="section-data-title position-relative">
+                <div class="left">
+                    <div id="lvl1JrmImg" class="thumb"></div>
+                    <div class="type-title pc-only lvl1JrmCd"></div>
+                </div>
+                <div class="right">
+                    <div class="d-flex gap-8 tag_section"></div>
+                    <div class="type-title mo-only lvl1JrmCd"></div>
+                    <h1 class="trgtTableIndctNm">서울시 신호등 관련 정보</h1>
+                    <div class="dsDesc">서울시 신호등 관련 정보입니다. (좌표계: EPSG:5186)</div>
+                    <!--<div class="mo-only">
+                        <span class="list-view">
+                            <i class="ico-view"><span class="safari-hidden">조회수</span></i> <span id="dataInqCnt"></span>
+                            <i class="ico-download ml8"><span class="safari-hidden">다운로드수</span></i> <span id="dataDwldCnt"></span>
+                        </span>
+                    </div>-->
+                    <div class="button-list fluid-scroll">
+                        <ul id="dataBtnList" style="display: none;">
+                            <li><button type="button" class="btn-large btn-outline-green btn-inner-ico btn_metaverse" id="mtvrsView"><i class="ico-3d"></i>3차원 시각화</button></li>
+                            <li><button type="button" class="btn-large btn-outline-green btn-inner-ico btn_gis" id="gisView"><i class="ico-seoul"></i>인구관 시각화</button></li>
+                            <li><button type="button" class="btn-large btn-outline-green btn-inner-ico btn_theme" id="themeView"><i class="ico-visual"></i>주제 시각화</button></li>
+                            <li><button type="button" class="btn-large btn-outline-green btn-inner-ico btn_economics" id="economicsView"><i class="ico-visual"></i>경제관 시각화</button></li>
+                            <li><button type="button" class="btn-large btn-outline-black btn-inner-ico" id="saveBucket"><i class="ico-basket"></i><span id="bucketText">데이터 바구니 담기</span></button></li>
+                            <li><button type="button" class="btn-large btn-outline-black btn-inner-ico" id="copyLink"><i class="ico-copy"></i>URL 복사</button></li>
+                            
+                                <li>
+                                    <button class="btn-large btn-outline-black btn-inner-ico share-popup-btn" data-popover-target="#sharePopup"><i class="ico-share"></i>공유</button>
+                                </li>
+                            
+
+                            
+                            
+
+                            
+                            <li class="position-relative"><button type="button" class="btn-large btn-outline-black btn-inner-ico" id="dataDwld" title="새창으로 열림"><i class="ico-download"></i>데이터 다운로드</button>
+                                
+                            </li>
+                            
+                            
+                            
+                        </ul>
+                        <div class="pc-only">
+                            <span class="list-view">
+                                <i class="ico-view"><span class="safari-hidden">조회수</span></i> <span id="dataInqCnt"></span>
+                                <i class="ico-download ml8"><span class="safari-hidden">다운로드수</span></i> <span id="dataDwldCnt"></span>
+                            </span>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="search-components">
+                    <picture id="lcColIcon">
+                    </picture>
+                    <picture id="tmeserColIcon">
+                    </picture>
+                    <picture id="cdColIcon">
+                    </picture>
+                    <picture id="valColIcon">
+                    </picture>
+                    <picture id="textColIcon">
+                    </picture>
+                </div>
+            </div>
+        </section>
+
+        <hr class="section-hr">
+
+        <section class="data300-split">
+            <div class="data300-component">
+                <div class="table-caption">
+                    <div class="left">
+                        <h2 class="table-caption-title">데이터 구성요소
+                            <button type="button" class="btn-tooltip" title="툴팁">
+						        <span class="tooltip-wrap" style="width:320px;">
+                                    위치: 공간분석 활용이 가능한 위치 속성(좌표, 행정구역, 주소 등)의 구성 요소 입니다.<br>
+                                    시계열: 시계열 분석 활용이 가능한 시간 속성(일시, 날짜, 연도 등)의 구성 요소 입니다.<br>
+                                    코드: 분류 분석 활용이 가능한 코드 속성(구분, 그룹, 타입 등)의 구성 요소 입니다.
+
+                                </span>
+                            </button>
+                        </h2>
+                    </div>
+                </div>
+                <div class="table-row table-row-mo">
+                    <table>
+                        <caption>데이터 구성요소 - 위치, 시계열, 코드, 수치, 텍스트</caption>
+                        <colgroup>
+                            <col style="width:160px;">
+                            <col>
+                        </colgroup>
+                        <tbody>
+                        <tr>
+                            <th scope="row">위치</th>
+                            <td id="lcCol"></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">시계열</th>
+                            <td id="tmeserCol"></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">코드</th>
+                            <td id="cdCol"></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">수치</th>
+                            <td id="valCol"></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">텍스트</th>
+                            <td id="textCol"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="data300-property">
+                <div class="table-caption">
+                    <div class="left">
+                        <h2 class="table-caption-title">데이터 속성
+                            <button type="button" class="btn-tooltip" title="툴팁">
+                                <span class="tooltip-wrap" style="width:320px;">
+                                    기준성: 위치,시계열,코드 속성 포함정도를 뜻합니다.<br>
+                                    정형성: 수량, 측정값, 계산값 등 수치정보 포함정도를 뜻합니다.<br>
+                                    비정형성: 문자, 내용, 설명등 문자형 정보 포함정도를 뜻합니다.
+                                </span>
+                            </button>
+                        </h2>
+                    </div>
+                </div>
+                <div class="prop-container">
+                    <div class="prop-list">
+                        <div class="prop-bar">
+                            <p id="crtrDivText"></p>
+                            <ul id="crtrDiv" class="prop-depth">
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                            </ul>
+                        </div>
+                        <h4>기준성</h4>
+                    </div>
+                    <div class="prop-list">
+                        <div class="prop-bar">
+                            <p id="formltyText"></p>
+                            <ul id="formlty" class="prop-depth">
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                            </ul>
+                        </div>
+                        <h4>정형성</h4>
+                    </div>
+                    <div class="prop-list">
+                        <div class="prop-bar">
+                            <p id="unstructChartrText"></p>
+                            <ul id="unstructChartr" class="prop-depth">
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                            </ul>
+                        </div>
+                        <h4>비정형성</h4>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="table-caption">
+                <div class="left">
+                    <h2 class="table-caption-title">데이터 정보</h2>
+                </div>
+            </div>
+
+            <div class="table-row table-row-mo">
+                <table id="dataInfoTable">
+                    <caption>데이터 정보 - 공개일자, 적재일자, 갱신주기, 분류, 원본시스템, 저작권자, 제공기관, 제공부서, 담당자, 용량, 원본형태, 라이선스, 관련태그</caption>
+                    <colgroup>
+                        <col style="width:160px;">
+                        <col>
+                        <col style="width:160px;">
+                        <col>
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                        <th scope="row">공개일자</th>
+                        <td id="openDt"></td>
+                        <th scope="row" id="regDtTh">적재일자</th>
+                        <td id="regDt"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">갱신주기</th>
+                        <td id="clctCycle"></td>
+                        <th scope="row">분류</th>
+                        <td id="lvl1JrmCd"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">원본시스템</th>
+                        <td id="infosysNm"></td>
+                        <th scope="row">저작권자</th>
+                        <td id="cpyrthr"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">제공기관</th>
+                        <td id="pvsnInsttNm"></td>
+                        <th scope="row">제공부서</th>
+                        <td id="pvsnDeptNm"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">담당자</th>
+                        <td id="chroNm"></td>
+                        <th id="capaTh" scope="row">용량</th>
+                        <td id="capaPretty"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">원본형태</th>
+                        <td colspan="3" id="dataStleCd"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">라이선스</th>
+                        <td colspan="3" id="lcnsCd"></td>
+                    </tr>
+                    <tr id="tagInfoTr">
+                        <th scope="row">관련태그</th>
+                        <td colspan="3" id="tagInfo"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            
+
+        </section>
+
+        <section class="fluid" id="tab_section">
+            <div class="section-inner" id="detail_tab">
+                <div class="tab-content fluid-scroll">
+                    <ul class="tab-list tab-border">
+                        <li class="tab active" id="detail_meta_tab_li"><button data-controls="tab-subpanel001" id="detail_meta_tab">메타정보</button></li>
+                        <li class="tab" id="detail_data_tab_li"><button data-controls="tab-subpanel002" id="detail_data_tab">데이터</button></li>
+                        <li class="tab" id="detail_vslz_tab_li"><button data-controls="tab-subpanel003" id="detail_skii_tab" title="선택됨">기술통계</button></li>
+                        <li class="tab pc-only" id="detail_skill_tab_li"><button data-controls="tab-subpanel004" id="detail_vslz_tab">시각화 분석</button></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="tab-subpanel001" class="tabpanel bg-F9F9F9">
+                <h3 class="blind">메타정보</h3>
+                <div class="section-inner pb40" id="meta">
+
+                    
+                    <div class="metadata-toolbar">
+                        <div class="table-length">전체 <b class="fc-green"><span id="metaCount">0</span></b> 건</div>
+                        <button type="button" class="btn-large btn-gray" id="metaCsvDownload" title="메타정보 CSV 다운로드">내려받기(CSV)</button>
+                    </div>
+
+                    <!-- 그리드 영역-->
+                    <div id="metaGrid"></div>
+
+                    <!-- 페이징 영역 -->
+                    <div id="metaPagination" class="tui-pagination"></div>
+                </div>
+            </div>
+
+            <div id="tab-subpanel002" class="tabpanel bg-F9F9F9">
+                <h3 class="blind">데이터</h3>
+                <div id="data" class="section-inner pt20 pb40">
+                    <div class="table-filter data-filter">
+                        <div id="searchParents">
+                            <!-- 열 필터 선택 영역 -->
+                            <div style="margin-bottom: 16px; border: 1px solid #E0E0E0; padding: 12px;">
+                                <div style="margin-bottom: 8px;">
+                                    <strong>열 필터 선택</strong>
+                                </div>
+                                <div id="rowFilterBox" style="display: flex; flex-wrap: wrap; gap: 12px;">
+                                    <label class="inp rowChkAll" for="rowChkAll" style="display: inline-flex; align-items: center; margin: 0;">
+                                        <input type="checkbox" class="rowChkAll" id="rowChkAll" checked>
+                                        <b class="fs-14" style="margin-left: 6px;">전체 선택</b>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- 행 필터 조건 영역 -->
+                            <dl>
+                                <div class="list">
+                                    <dt class="blind">행 필터 선택</dt>
+                                    <dd>
+                                        <input type="hidden" class="dataIndex" id="searchFrm0" value="0">
+                                        <select id="filter_if" name="filter_if" title="행 필터 조건 선택">
+                                            <option value="선택">행 필터 조건 선택</option>
+                                        </select>
+                                    </dd>
+                                </div>
+                                <div class="list">
+                                    <dt class="blind">필터 조건 선택</dt>
+                                    <dd>
+                                        <select id="filter_sign0" name="filter_sign" title="필터 조건 선택">
+                                            <option value="선택">필터 조건 선택</option>
+                                        </select>
+                                    </dd>
+                                </div>
+                                <div class="list d-flex flex-row">
+                                    <dt class="blind">조건 값 입력</dt>
+                                    <dd>
+                                        <input type="text" id="cond_field" name="cond_field" placeholder="조건 값 입력" class="flex-mo-1">
+                                        <button class="buttonAdd form_btn_plus">+</button>
+                                    </dd>
+                                </div>
+                            </dl>
+                        </div>
+
+                        <div class="list right-button" style="display:flex; justify-content: end;">
+                            <dt class="blind">조건검색</dt>
+                            <dd>
+                                <button type="button" id="columnFilter" class="btn-large btn-gray btn-inner-ico filter_btn"><i class="ico-search"></i>이 조건으로 검색</button>
+                            </dd>
+                        </div>
+                    </div>
+                    
+                    <div class="table-length" style="display:flex; justify-content: space-between; align-items: flex-end;">
+                        <div>
+                            전체 <b class="fc-green"><span id="dataCount">0</span></b> 건
+                            <span style="float: right; color:red; margin-left: 5px;">* 데이터는 최대1,000건까지 조회되며 전체데이터는 다운로드하여 확인해주시기 바랍니다.</span>
+                        </div>
+                        <div class="hr d-flex" style="align-items: end;">
+                            <div style="text-align: end;">
+                                <button type="button" class="btn-large btn-gray" name="fileDown" id="dataCsv" title="CSV 버튼" style="margin-bottom: 3px;">내려받기(CSV)</button>
+                                <button type="button" class="btn-large btn-gray" name="fileDown" id="dataJson" title="JSON 버튼" style="margin-bottom: 3px;">내려받기(JSON)</button>
+                                <button type="button" class="btn-large btn-gray" name="fileDown" id="dataXlsx" title="XLSX 버튼" style="margin-bottom: 3px;">내려받기(XLSX)</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 그리드 영역-->
+                    <div id="dataGrid"></div>
+
+                    <!-- 페이징 영역 -->
+                    <div id="dataPagination" class="tui-pagination"></div>
+
+                    
+
+                </div>
+            </div>
+
+
+
+
+            <div id="tab-subpanel003" class="tabpanel bg-F9F9F9">
+                <h3 class="blind">기술통계</h3>
+                <div class="section-inner pb40" id="skill">
+
+                    
+                    <div class="table-length" style="display:flex; justify-content: space-between; align-items: center; margin-bottom:8px;">
+                        <div>
+                            전체 <b class="fc-green"><span id="skillCount">0</span></b> 건
+                        </div>
+                        <div class="hr d-flex" style="align-items: end;">
+                            <div style="text-align: end;">
+                                <button type="button" class="btn-large btn-gray" name="fileDown" id="skillCsv" title="CSV 버튼">내려받기(CSV)</button>
+                                <button type="button" class="btn-large btn-gray" name="fileDown" id="skillJson" title="JSON 버튼">내려받기(JSON)</button>
+                                <button type="button" class="btn-large btn-gray" name="fileDown" id="skillXlsx" title="XLSX 버튼">내려받기(XLSX)</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 그리드 영역-->
+                    <div id="skillGrid"></div>
+
+                    <!-- 페이징 영역 -->
+                    <div id="skillPagination" class="tui-pagination"></div>
+
+                </div>
+            </div>
+
+
+            <div id="tab-subpanel004" class="tabpanel bg-F9F9F9 active">
+                <h3 class="blind">시각화 분석</h3>
+                <div class="section-inner pb40">
+                    <div class="visual-analysis">
+                        <ol>
+                            <li>
+                                <dl>
+                                    <dt>STEP 1</dt>
+                                    <dd>X축 항목 선택</dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt>STEP 2</dt>
+                                    <dd>Y축 합계 유형 선택</dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt>STEP 3</dt>
+                                    <dd>Y축 항목 선택</dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt>STEP 4</dt>
+                                    <dd>그래프 유형 선택</dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt>STEP 5</dt>
+                                    <dd>시각화 자료 확인</dd>
+                                </dl>
+                            </li>
+                        </ol>
+                        <div class="visual-analysis-grid">
+                            <div class="type-x">
+                                <div class="type-control">
+                                    <div class="type-header">
+                                        <select class="visual_select" id="selectX">
+                                            <option value="x">X축</option>
+                                        </select>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="type-y">
+                                <div class="type-control">
+                                    <div class="type-header">
+                                        <div id="y_area">
+                                            <div style="display:flex;">
+
+                                                <select class="visual_select" id="selectY" name="selectY">
+                                                    <option value="y">Y축</option>
+                                                </select>
+                                                <div class="operation" style="display: inline-flex;">
+                                                    <button type="button" class="btn-plus select_add buttonAdd" title="추가">+</button>
+                                                    <br/><br/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="select_btm_box">
+                                            <select class="visual_select select_btm" title="집계유형 선택">
+                                                <option value="x">집계 유형</option>
+                                                <option value="avg">평균</option>
+                                                <option value="sum">합계</option>
+                                                <option value="count">개수</option>
+                                            </select>
+                                        </div>
+
+                                        
+                                        
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            <div class="inner-tab">
+                                <div class="tab-content">
+                                    <ul class="tab-list chart_type">
+                                        <li class="tab"><button class="chart_type_btn" data-controls="tab-subpanel01-01" id="tab-sub01"><i class="ico-bar"></i>막대</button></li>
+                                        <li class="tab"><button class="chart_type_btn" data-controls="tab-subpanel01-02" id="tab-sub02"><i class="ico-line"></i>선</button></li>
+                                        <li class="tab"><button class="chart_type_btn" data-controls="tab-subpanel01-03" id="tab-sub03" title="선택됨"><i class="ico-nestbar"></i>중첩 막대</button></li>
+                                        <li class="tab"><button class="chart_type_btn" data-controls="tab-subpanel01-04" id="tab-sub04"><i class="ico-circle"></i>원형</button></li>
+                                    </ul>
+                                </div>
+                                <div class="chart_box" id="chartBox">
+                                    <!-- 차트영역 -->
+                                </div>
+                                <div id="loadingImg" style="text-align:center; display: none;"><img src="/bsp/images/wgs/chatbot/chatbot-loading.svg" alt="로딩 이미지"></div>
+                                <div class="chart_bottom">
+                                    <div class="chart_legend">
+                                        <input type="checkbox" id="chartLgendAt" title="차트 내 범례 표출 체크박스"> 차트 내 범례 표출
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="relation_section">
+            <div class="detail_con relation_data" style="display: none;">
+                <div class="detail_tit table-caption">
+                    <div class="left">
+                        <h2 class="table-caption-title">연관 데이터</h2>
+                    </div>
+                </div>
+                <div class="search-result-list relation">
+                    <ul id="relationDataList"></ul><!-- 2차년도 리스트 -->
+                </div>
+                <!-- 연관데이터가 5건을 초과하는 경우에만 노출(열린데이터광장) -->
+                <div class="btn-wrap btn-grid mt-20" id="relationMoreWrap" style="display: none;">
+                    <div class="right">
+                        <button type="button" class="btn-large btn-outline-black" id="relationMoreBtn" aria-expanded="false" aria-controls="relationDataList">
+                            전체 연관데이터 보기<span id="relationMoreCnt"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="cmnt_section">
+            <div class="table-caption a-center mb8">
+                <div class="left">
+                    <h2 class="table-caption-title">댓글</h2>
+                </div>
+                <div class="right">
+                    <p class="fc-black6 pc-only">욕설, 광고, 비방, 도배성 글 등은 자동삭제됩니다. (댓글은 한글 200자까지 가능합니다.)</p>
+                </div>
+            </div>
+
+            <div class="comment-wrap">
+                <div class="comment-input">
+                        <strong>
+                        
+                        </strong>
+                    
+                    <div class="form-input">
+                        <textarea title="댓글 입력" class="disableResize comment-textarea" id="cmnt_content" name="cmnt_content" data-cmnt-id="newData" maxlength="1000"></textarea>
+                        <div class="text-length">
+                            <span class="ans_cmnt_length" data-cmnt-id="newData">
+                                0
+                            </span>
+                            /1,000
+                        </div>
+                    </div>
+                    <button type="button" class="btn-large btn-gray fw-500 cmnt_input_btn" id="writeBtn">등록</button>
+                </div>
+                <div class="comment-list">
+                    <div id="cmnt-filter-div" class="comment-caption">
+                        <div class="left">
+                            <div class="comment-length">댓글 <b id="commentCount" class="fc-red">2</b></div>
+                        </div>
+                        <div class="right">
+                            <div class="filter-list">
+                                <ul>
+                                    <li id="recently" class="toggleParent disableToggle active"><button type="button" class="toggleTrigger nowrap">최신순</button></li>
+                                    <li id="lately" class="toggleParent disableToggle"><button type="button" class="toggleTrigger nowrap">과거순</button></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="cmnt_list"></div>
+                </div>
+            </div>
+        </section>
+
+
+    </div>
+</div>
+
+
+
+    
+
+<!-- 다운로드 권한 요청 레이어 팝업 -->
+<div class="layer-popup" data-layer-id="layer-popup-download-request">
+    <div class="layer-dimmed" title="레이어팝업 닫기"></div>
+    <div class="layer-wrap" style="width: 1000px; max-width: 95%;">
+        <div class="layer-header">
+            <strong class="tit" id="downloadRequestTitle">다운로드 권한 요청</strong>
+            <button type="button" class="btn-layer-close" title="레이어팝업 닫기" data-layer-close><span class="safari-hidden">닫기</span></button>
+        </div>
+        <div class="layer-content">
+            
+            <h3 class="table-length fc-black">요청 담당자 정보</h3>
+            <div class="table-row table-row-mo">
+                <table>
+                    <caption>요청담당자 정보 - 요청 담당자, 요청 부서, 직위, 연락처, 이메일</caption>
+                    <colgroup>
+                        <col style="width:140px;">
+                        <col>
+                        <col style="width:140px;">
+                        <col>
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                        <th scope="row">요청 담당자</th>
+                        <td>
+                            <div class="form-input">
+                                <input type="text" id="downloadRqstChro" title="요청 담당자" placeholder="요청 담당자">
+                            </div>
+                        </td>
+                        <th scope="row">요청 부서</th>
+                        <td>
+                            <div class="form-input">
+                                <input type="text" id="downloadRqstDept" title="요청 부서" placeholder="요청 부서" style="width: 100%;">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">직위</th>
+                        <td>
+                            <div class="form-input">
+                                <input type="text" id="downloadRqstOfcpos" title="직위" placeholder="직위">
+                            </div>
+                        </td>
+                        <th scope="row">연락처</th>
+                        <td>
+                            <div class="form-input">
+                                <input type="text" id="downloadRqstCttpc" title="연락처" placeholder="연락처">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">이메일</th>
+                        <td colspan="3">
+                            <div class="form-input">
+                                <input type="email" id="downloadrqstEmlAddr" title="이메일" placeholder="이메일">
+                                <span style="color: red; margin-top: 8px; font-size: 14px;">※ 필수 안내가 발송 되니 반드시 정확한 이메일을 입력해주세요.</span>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="table-length fc-black" style="margin-top: 10px;">신청 정보</h3>
+            <div class="table-row table-row-mo">
+                <table>
+                    <caption>신청 정보 - 사용목적</caption>
+                    <colgroup>
+                        <col style="width:140px;">
+                        <col>
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                        <th scope="row" class="required">다운로드 목적</th>
+                        <td>
+                            <div class="form-input">
+                                <textarea title="사용목적" style="height:150px;" id="downloadUsePurps" maxlength="2000" placeholder="사용목적을 입력하세요."></textarea>
+                                <div class="text-length" style="color:#999"><span id="downloadUsePurpsCount">0</span>/2,000</div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="table-length fc-black" style="margin-top: 10px;">보안 각서 <span style="font-weight: 400">※ 우측에 안내된 데이터사용 보안각서를 작성하여 업로드 해주세요.</span>
+                <a href="/bsp/filedown/데이터사용 보안각서.hwpx" download class="link" style="color: #007bff; text-decoration: underline; margin-left: 5px;">데이터사용 보안각서.hwp</a></h3>
+            <div class="table-row table-row-mo">
+                <table>
+                    <colgroup>
+                        <col style="width:140px;">
+                        <col>
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                    <tr>
+                        <th scope="row" class="required">보안 각서</th>
+                        <td>
+                            <div id="securityPledgeFileUploadModule1"></div>
+                        </td>
+                    </tr>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            
+                <p class="mt-15 text-sm" style="color: #666;">※ 전자결재 완료 후 데이터 담당자의 승인이 필요하며, 승인이 완료되면 이메일을 통해 안내됩니다.</p>
+            
+            
+
+            <div class="btn-wrap btn-grid mt-20">
+                <div class="right gap-8 flex-wrap">
+                    
+                    
+                        <button type="button" id="confirmDownloadRequest" class="btn-large btn-green flex-mo-1">결재 요청</button>
+                    
+                    <button type="button" class="btn-large btn-outline-black flex-mo-1" data-layer-close>닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 분석플랫폼 전송 권한 요청 레이어 팝업 -->
+<div class="layer-popup" data-layer-id="layer-popup-anals-request">
+    <div class="layer-dimmed" title="레이어팝업 닫기"></div>
+    <div class="layer-wrap" style="width: 1000px; max-width: 95%;">
+        <div class="layer-header">
+            <strong class="tit" id="analsRequestTitle">분석플랫폼 전송 권한 요청</strong>
+            <button type="button" class="btn-layer-close" title="레이어팝업 닫기" data-layer-close><span class="safari-hidden">닫기</span></button>
+        </div>
+        <div class="layer-content">
+            
+            <h3 class="table-length fc-black">요청 담당자 정보</h3>
+            <div class="table-row table-row-mo">
+                <table>
+                    <caption>요청담당자 정보 - 요청 담당자, 요청 부서, 직위, 연락처, 이메일</caption>
+                    <colgroup>
+                        <col style="width:140px;">
+                        <col>
+                        <col style="width:140px;">
+                        <col>
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                        <th scope="row">요청 담당자</th>
+                        <td>
+                            <div class="form-input">
+                                <input type="text" id="analsRqstChro" title="요청 담당자" placeholder="요청 담당자">
+                            </div>
+                        </td>
+                        <th scope="row">요청 부서</th>
+                        <td>
+                            <div class="form-input">
+                                <input type="text" id="analsRqstDept" title="요청 부서" placeholder="요청 부서" style="width: 100%;">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">직위</th>
+                        <td>
+                            <div class="form-input">
+                                <input type="text" id="analsRqstOfcpos" title="직위" placeholder="직위">
+                            </div>
+                        </td>
+                        <th scope="row">연락처</th>
+                        <td>
+                            <div class="form-input">
+                                <input type="text" id="analsRqstCttpc" title="연락처" placeholder="연락처">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">이메일</th>
+                        <td colspan="3">
+                            <div class="form-input">
+                                <input type="email" id="analsrqstEmlAddr" title="이메일" placeholder="이메일">
+                                <span style="color: red; margin-top: 8px; font-size: 14px;">※ 필수 안내가 발송 되니 반드시 정확한 이메일을 입력해주세요.</span>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="table-length fc-black" style="margin-top: 10px;">신청 정보</h3>
+            <div class="table-row table-row-mo">
+                <table>
+                    <caption>신청 정보 - 사용목적</caption>
+                    <colgroup>
+                        <col style="width:140px;">
+                        <col>
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                        <th scope="row" class="required">분석 목적</th>
+                        <td>
+                            <div class="form-input">
+                                <textarea title="사용목적" style="height:150px;" id="analsUsePurps" maxlength="2000" placeholder="사용목적을 입력하세요."></textarea>
+                                <div class="text-length" style="color:#999"><span id="analsUsePurpsCount">0</span>/2,000</div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="table-length fc-black" style="margin-top: 10px;">보안 각서 <span style="font-weight: 400">※ 우측에 안내된 데이터사용 보안각서를 작성하여 업로드 해주세요.</span>
+                <a href="/bsp/filedown/데이터사용 보안각서.hwpx" download class="link" style="color: #007bff; text-decoration: underline; margin-left: 5px;">데이터사용 보안각서.hwp</a></h3>
+            <div class="table-row table-row-mo">
+                <table>
+                    <colgroup>
+                        <col style="width:140px;">
+                        <col>
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                    <tr>
+                        <th scope="row" class="required">보안 각서</th>
+                        <td>
+                            <div id="securityPledgeFileUploadModule2"></div>
+                        </td>
+                    </tr>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            
+                <p class="mt-15 text-sm" style="color: #666;">※ 전자결재 완료 후 데이터 담당자의 승인이 필요하며, 승인이 완료되면 이메일을 통해 안내됩니다.</p>
+            
+            
+
+            <div class="btn-wrap btn-grid mt-20">
+                <div class="right gap-8 flex-wrap">
+                    
+                    
+                        <button type="button" id="confirmAnalsRequest" class="btn-large btn-green flex-mo-1">결재 요청</button>
+                    
+                    <button type="button" class="btn-large btn-outline-black flex-mo-1" data-layer-close>닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 권한 요청 진행 상태 툴팁 -->
+<div id="applyStatusTooltip" style="display:none; position:absolute; z-index: 1000;"></div>
+
+<!-- 권한 요청 진행 상태 레이어 팝업 (사용 안함 - 주석 처리) -->
+<!--
+<div class="layer-popup" data-layer-id="layer-popup-apply-status">
+    <div class="layer-dimmed" title="레이어팝업 닫기"></div>
+    <div class="layer-wrap" style="width: 600px; max-width: 90%;">
+        <div class="layer-content">
+            <div id="applyStatusContainer">
+                <!- 신청 내역이 동적으로 추가됩니다 ->
+            </div>
+        </div>
+    </div>
+</div>
+-->
+
+<!-- 다운로드 권한 요청 완료 레이어 팝업 -->
+<div class="layer-popup" data-layer-id="layer-popup-download-complete">
+    <div class="layer-dimmed" title="레이어팝업 닫기"></div>
+    <div class="layer-wrap">
+        <div class="layer-content" style="text-align: center; padding: 20px 20px;">
+            <h2 style="font-size: 16px; font-weight: bold; margin-bottom: 10px; color: #333;">권한 요청이 완료되었습니다</h2>
+            <p style="font-size: 16px; color: #666; line-height: 1.6;">
+                권한 승인 여부 확인 및 다운로드는<br>데이터 권한신청 내역에서 하실 수 있습니다.
+            </p>
+            <p style="font-size: 16px; color: red; margin-bottom: 10px; line-height: 1.6;">
+                ※ 다운로드 가능 기간은 승인 후 30일 입니다.
+            </p>
+            <div class="btn-wrap btn-grid">
+                <div class="center gap-8 flex-wrap">
+                    <button type="button" class="btn-large btn-green flex-mo-1 goToDataBucket">권한신청 내역</button>
+                    <button type="button" class="btn-large btn-outline-black flex-mo-1" data-layer-close>닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 분석플랫폼 전송 권한 요청 완료 레이어 팝업 -->
+<div class="layer-popup" data-layer-id="layer-popup-anals-complete">
+    <div class="layer-dimmed" title="레이어팝업 닫기"></div>
+    <div class="layer-wrap">
+        <div class="layer-content" style="text-align: center; padding: 20px 20px;">
+            <h2 style="font-size: 16px; font-weight: bold; margin-bottom: 10px; color: #333;">권한 요청이 완료되었습니다</h2>
+            <p style="font-size: 16px; color: #666; line-height: 1.6;">
+                권한 승인 여부 확인 및 다운로드는<br>데이터 권한신청 내역에서 하실 수 있습니다.
+            </p>
+            <div class="btn-wrap btn-grid">
+                <div class="center gap-8 flex-wrap">
+                    <button type="button" class="btn-large btn-green flex-mo-1 goToDataBucket">권한신청 내역</button>
+                    <button type="button" class="btn-large btn-outline-black flex-mo-1" data-layer-close>닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 프로젝트 선택 레이어 팝업 -->
+<div class="layer-popup aicentro-project-popup" data-layer-id="layer-popup-aicentro-project">
+    <div class="layer-dimmed" title="레이어팝업 닫기"></div>
+    <div class="layer-wrap">
+        <div class="layer-header">
+            <strong class="tit" id="aicentroProjectModalTitle">프로젝트 선택</strong>
+            <button type="button" class="btn-layer-close" title="레이어팝업 닫기" data-layer-close><span class="safari-hidden">닫기</span></button>
+        </div>
+        <div class="layer-content aicentro-project-content">
+            <div class="row">
+                <div class="col-12">
+                    <p class="aicentro-project-description" id="aicentroProjectModalDescription">전송할 프로젝트를 선택하세요.</p>
+                    <div id="analysisPromptPreviewSection" style="display:none;">
+                        <div class="analysis-transfer-summary" role="note" aria-label="분석 프롬프트 전송 내용">
+                            <strong>전송 내용</strong>
+                            <span class="analysis-prompt-excerpt" id="analysisPromptExcerpt"></span>
+                            <span>분석 프롬프트 <em>Markdown</em></span>
+                            <span>메타정보 <em>CSV</em></span>
+                        </div>
+                        <details class="analysis-prompt-details">
+                            <summary>분석 프롬프트 원문 확인</summary>
+                            <div id="analysisPromptPreview" tabindex="0" aria-label="전송할 분석 프롬프트 원문"></div>
+                        </details>
+                    </div>
+                    <div id="largeFileNotice" class="access-guide-box large-file-notice" role="note" aria-labelledby="largeFileNoticeTitle" style="display:none;">
+                        <strong class="access-guide-title" id="largeFileNoticeTitle">대용량 파일 안내</strong>
+                        <p class="access-guide-desc">
+                            선택하신 파일은 1GB 이상의 대용량 파일입니다.<br>
+                            파일 전송에 5~40분이 소요됩니다.<br>
+                            프로젝트를 선택하면 전송이 시작되며,<br>
+                            전송이 완료되면 등록된 이메일로 알림이 발송됩니다.
+                        </p>
+                        <dl class="large-file-info-list">
+                            <div class="large-file-info-row">
+                                <dt>전송 데이터</dt>
+                                <dd id="largeFileDataName">-</dd>
+                            </div>
+                            <div class="large-file-info-row" id="largeFilePeriodRow">
+                                <dt>선택 기간</dt>
+                                <dd id="largeFilePeriod">-</dd>
+                            </div>
+                            <div class="large-file-info-row">
+                                <dt>파일 용량</dt>
+                                <dd id="largeFileSize">-</dd>
+                            </div>
+                        </dl>
+                    </div>
+                    <div class="project-list-toolbar" id="projectListToolbar" style="display:none;">
+                        <label class="safari-hidden" for="projectSearchKeyword">프로젝트명 검색</label>
+                        <div class="project-search-wrap">
+                            <input type="search" id="projectSearchKeyword" class="project-search-input" title="프로젝트명 검색" placeholder="프로젝트명을 입력해주세요">
+                            <button type="button" id="projectSearchButton" class="project-search-button">검색</button>
+                        </div>
+                    </div>
+                    <div class="project-list-panel">
+                        <div class="project-grid-header" id="projectGridHeader" style="display:none;">
+                            <button type="button" class="project-sort-button" data-project-sort-key="name" aria-pressed="true">
+                                프로젝트명 <span class="project-sort-indicator" aria-hidden="true">▲</span>
+                            </button>
+                            <button type="button" class="project-sort-button" data-project-sort-key="createdAt" aria-pressed="false">
+                                프로젝트 생성일 <span class="project-sort-indicator" aria-hidden="true"></span>
+                            </button>
+                        </div>
+                        <div id="projectListContainer" style="max-height: 260px; overflow-y: auto;">
+                            <!-- 프로젝트 목록이 동적으로 추가됩니다 -->
+                        </div>
+                    </div>
+                    <div class="aicentro-project-create-guide" id="aicentroProjectCreateGuide" style="display:none;">
+                        <p id="aicentroProjectCreateGuideMessage"></p>
+                        <button type="button" id="gotoAICentroBtn" class="btn-large btn-outline-green btn-ai">AI분석 플랫폼 바로가기</button>
+                    </div>
+                </div>
+            </div>
+            <div class="aicentro-project-actions">
+                <div class="aicentro-project-actions-inner">
+                    <button type="button" class="btn-large btn-outline-black" data-layer-close>취소</button>
+                    <button type="button" id="confirmProjectSelection" class="btn-large btn-blue" disabled>전송</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .aicentro-project-popup .layer-wrap {
+        width: 620px;
+        max-width: calc(100% - 32px);
+    }
+
+    .aicentro-project-popup .layer-header {
+        padding-bottom: 16px;
+    }
+
+    .aicentro-project-content {
+        padding-top: 18px;
+    }
+
+    .aicentro-project-description {
+        margin: 0 0 16px;
+        color: #666;
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    .project-list-panel {
+        overflow: hidden;
+        border: 1px solid #e0e0e0;
+        border-radius: 6px;
+        background-color: #fff;
+    }
+
+    #projectListContainer {
+        padding: 10px;
+        min-height: 120px;
+    }
+
+    .project-list-toolbar {
+        margin: 18px 0 10px;
+    }
+
+    .project-search-wrap {
+        display: flex;
+        gap: 8px;
+    }
+
+    .project-search-input {
+        min-width: 0;
+        flex: 1;
+        height: 40px;
+        padding: 0 12px;
+        border: 1px solid #cfcfcf;
+        border-radius: 5px;
+        color: #333;
+    }
+
+    .project-search-button {
+        min-width: 64px;
+        padding: 0 14px;
+        border: 1px solid #555;
+        border-radius: 5px;
+        background-color: #555;
+        color: #fff;
+        font-weight: 600;
+    }
+
+    .project-grid-header,
+    .project-item {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 130px;
+        column-gap: 12px;
+        align-items: center;
+    }
+
+    .project-grid-header {
+        padding: 9px 10px 7px;
+        border-bottom: 1px solid #e0e0e0;
+        background: #fafafa;
+    }
+
+    .project-sort-button {
+        padding: 4px 0;
+        border: 0;
+        background: transparent;
+        color: #444;
+        font-size: 14px;
+        font-weight: 600;
+        text-align: left;
+    }
+
+    .project-sort-button:last-child {
+        text-align: center;
+    }
+
+    .project-sort-button:hover,
+    .project-sort-button:focus {
+        color: #0066cc;
+        text-decoration: underline;
+    }
+
+    .project-sort-indicator {
+        display: inline-block;
+        min-width: 12px;
+        margin-left: 2px;
+        font-size: 11px;
+    }
+
+    #projectListContainer:empty {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #analysisPromptPreviewSection {
+        margin: 0 0 16px;
+    }
+
+    .analysis-transfer-summary {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 12px;
+        border: 1px solid #d8e7e4;
+        border-radius: 6px 6px 0 0;
+        background: #f5fbfa;
+        color: #285e55;
+        font-size: 13px;
+    }
+
+    .analysis-transfer-summary strong {
+        margin-right: 4px;
+        color: #174e45;
+        font-size: 14px;
+    }
+
+    .analysis-transfer-summary span {
+        padding-left: 8px;
+        border-left: 1px solid #cce1dc;
+    }
+
+    .analysis-transfer-summary .analysis-prompt-excerpt {
+        min-width: 0;
+        max-width: 180px;
+        overflow: hidden;
+        color: #285e55;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .analysis-transfer-summary em {
+        margin-left: 3px;
+        color: #538178;
+        font-style: normal;
+    }
+
+    .analysis-prompt-details {
+        border: 1px solid #d8e7e4;
+        border-top: 0;
+        border-radius: 0 0 6px 6px;
+        background: #fff;
+    }
+
+    .analysis-prompt-details summary {
+        padding: 10px 12px;
+        color: #356f65;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    #analysisPromptPreview {
+        max-height: 128px;
+        overflow-y: auto;
+        margin: 0 12px 12px;
+        padding: 10px 12px;
+        border: 1px solid #e7eceb;
+        border-radius: 4px;
+        background-color: #f8faf9;
+        color: #333;
+        font-family: monospace;
+        font-size: 12px;
+        line-height: 1.55;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+    }
+
+    .large-file-notice {
+        margin-top: 16px;
+        margin-bottom: 16px;
+    }
+
+    .large-file-info-list {
+        margin: 0;
+        padding: 0;
+        border-top: 1px solid #e5edf6;
+    }
+
+    .large-file-info-row {
+        display: flex;
+        padding-top: 8px;
+        line-height: 1.45;
+    }
+
+    .large-file-info-row dt {
+        width: 92px;
+        flex: 0 0 92px;
+        color: #555;
+        font-weight: 600;
+    }
+
+    .large-file-info-row dd {
+        min-width: 0;
+        margin: 0;
+        color: #222;
+        overflow-wrap: anywhere;
+    }
+
+    .project-item {
+        padding: 12px 14px;
+        margin-bottom: 8px;
+        border: 1px solid #dfe3e6;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.2s;
+        background-color: #fff;
+    }
+
+    .project-item:last-child {
+        margin-bottom: 0;
+    }
+
+    .project-item:hover {
+        border-color: #008c78;
+        background-color: #f5f9ff;
+    }
+
+    .project-item.selected {
+        border-color: #008c78;
+        background-color: #eff9f6;
+    }
+
+    /* 이미 전송된 프로젝트 음영 처리 */
+    .project-item.transferred {
+        background-color: #f5f5f5;
+        border-color: #d0d0d0;
+        cursor: not-allowed;
+        opacity: 0.7;
+    }
+
+    .project-item.transferred:hover {
+        border-color: #d0d0d0;
+        background-color: #f5f5f5;
+    }
+
+    .project-item.transferred h3 {
+        color: #999;
+    }
+
+    .project-item h3 {
+        margin: 0;
+        font-size: 15px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .project-name {
+        display: flex;
+        align-items: center;
+        min-width: 0;
+        gap: 10px;
+    }
+
+    .project-name h3 {
+        min-width: 0;
+    }
+
+    .project-select-indicator {
+        position: relative;
+        width: 18px;
+        height: 18px;
+        flex: 0 0 18px;
+        border: 1px solid #b9c0c5;
+        border-radius: 50%;
+        background: #fff;
+    }
+
+    .project-item.selected .project-select-indicator {
+        border-color: #008c78;
+        background: #008c78;
+    }
+
+    .project-item.selected .project-select-indicator::after {
+        position: absolute;
+        top: 4px;
+        left: 4px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #fff;
+        content: '';
+    }
+
+    .project-created-at {
+        color: #666;
+        font-size: 13px;
+        text-align: center;
+        white-space: nowrap;
+    }
+
+    .project-item p {
+        margin: 0 0 4px 0;
+        font-size: 14px;
+        color: #666;
+    }
+
+    .project-item p:last-child {
+        margin-bottom: 0;
+    }
+
+    .aicentro-project-create-guide {
+        padding: 12px 0 0;
+        color: #777;
+        font-size: 13px;
+        text-align: center;
+    }
+
+    .aicentro-project-create-guide p {
+        margin: 0 0 8px;
+    }
+
+    .aicentro-project-create-guide .btn-large {
+        min-width: 0;
+        height: 32px;
+        padding: 0 14px;
+        font-size: 13px;
+    }
+
+    .aicentro-project-actions {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 18px;
+        padding-top: 14px;
+        border-top: 1px solid #e6e6e6;
+    }
+
+    .aicentro-project-actions-inner {
+        display: flex;
+        gap: 8px;
+    }
+
+    .aicentro-project-actions .btn-large {
+        min-width: 92px;
+        height: 40px;
+    }
+
+    @media screen and (max-width: 480px) {
+        .aicentro-project-popup .layer-wrap {
+            max-width: calc(100% - 20px);
+        }
+
+        .analysis-transfer-summary {
+            flex-wrap: wrap;
+        }
+
+        .project-grid-header,
+        .project-item {
+            grid-template-columns: minmax(0, 1fr) 104px;
+            column-gap: 8px;
+        }
+
+        .project-grid-header {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        .project-created-at,
+        .project-sort-button {
+            font-size: 13px;
+        }
+
+        .aicentro-project-actions {
+            justify-content: stretch;
+        }
+
+        .aicentro-project-actions-inner {
+            width: 100%;
+        }
+
+        .aicentro-project-actions .btn-large {
+            flex: 1;
+        }
+    }
+</style>
+
+
+
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.6/kakao.min.js" integrity="sha384-WAtVcQYcmTO/N+C1N+1m6Gp8qxh+3NlnP7X1U7qP6P5dQY/MsRBNTh+e1ahJrkEm" crossorigin="anonymous"></script>
+
+
+
+<!-- 공유 및 원본데이터보기 팝업 -->
+<div id="sharePopup" class="share-popup-box" style="display: none;">
+    <div class="share-popup-wrap">
+        <a href="#" class="share-kakao" data-kakao-js-key="8316a624a0d866560fa533f6a4a714f6" onclick="socialShare.shareKakao(event)" title="새창으로 열림">
+            카카오톡
+        </a>
+        <a href="#" class="share-facebook" onclick="socialShare.shareFacebook(event)" title="새창으로 열림">
+            페이스북
+        </a>
+        <a href="#" class="share-x" onclick="socialShare.shareX(event)" title="새창으로 열림">
+            X
+        </a>
+        <a href="#" class="share-url" onclick="socialShare.shareUrl(event)" title="새창으로 열림">
+            URL복사
+        </a>
+    </div>
+</div>
+<div id="originPopup" class="origin-popup-box" style="display: none;"></div>
+<div id="toastContainer" class="toast-container"></div>
+
+<script type="module">
+    import {socialShare} from '/bsp/js/wgs/common/socialShare.js';
+
+    window.socialShare = socialShare;
+</script>
+
+<script>
+    // 팝업 포커스 트랩(웹접근성) - 공유(#sharePopup) / 원본데이터보기(#originPopup) 공용
+    // - 팝업 요소는 DOM 상 페이지 하단에 위치해, 팝업이 열려도 트리거 버튼에서 Tab 시
+    //   팝업 내부가 아니라 버튼 다음 요소로 포커스가 흐른다.
+    // - 팝업이 열린 동안 '트리거 버튼 + 팝업 내부 요소'를 하나의 Tab 순환으로 묶어
+    //   포커스가 팝업 내부 요소로 차례대로 이동하도록 한다.
+    var popupFocusTrapHandler = null;
+
+    // Popover 인스턴스가 가리키는 팝업 요소 반환 (하드코딩 대신 대상 팝업을 동적으로 사용)
+    function getPopupEl(popComp) {
+        if (!popComp) return null;
+        if (popComp.$popover) return popComp.$popover;
+        // 폴백: data-popover-target 속성으로 조회
+        if (popComp.$ele) {
+            var sel = popComp.$ele.getAttribute('data-popover-target');
+            if (sel) return document.querySelector(sel);
+        }
+        return null;
+    }
+
+    function bindPopupFocusTrap(popComp) {
+        var popup = getPopupEl(popComp);
+        if (!popup || !popComp || !popComp.$ele) return;
+
+        var trigger = popComp.$ele;
+        var items = popup.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])');
+        if (!items.length) return;
+
+        // 트리거 버튼 다음에 팝업 내부 요소가 차례대로 오도록 논리적 탭 순서 구성
+        var focusList = [trigger].concat(Array.prototype.slice.call(items));
+
+        // 이전 핸들러 잔존 시 제거
+        if (popupFocusTrapHandler) document.removeEventListener('keydown', popupFocusTrapHandler);
+
+        popupFocusTrapHandler = function (e) {
+            var isTab = (e.key === 'Tab' || e.keyCode === 9 || e.which === 9);
+            if (!isTab) return;
+
+            var idx = focusList.indexOf(document.activeElement);
+            if (idx === -1) return; // 트리거/팝업 밖이면 기본 동작 유지
+
+            e.preventDefault();
+            var nextIdx = e.shiftKey
+                ? (idx - 1 + focusList.length) % focusList.length
+                : (idx + 1) % focusList.length;
+            focusList[nextIdx].focus();
+        };
+        document.addEventListener('keydown', popupFocusTrapHandler);
+    }
+
+    function releasePopupFocusTrap(popComp) {
+        if (popupFocusTrapHandler) {
+            document.removeEventListener('keydown', popupFocusTrapHandler);
+            popupFocusTrapHandler = null;
+        }
+        // 키보드로 팝업을 닫은 경우(포커스가 팝업 내부/트리거에 있을 때)에만 트리거로 복귀
+        // → 바깥 마우스 클릭으로 닫을 때 사용자의 포커스를 가로채지 않도록 방어
+        var popup = getPopupEl(popComp);
+        var active = document.activeElement;
+        var insidePopup = !!popup && (popup === active || popup.contains(active));
+        var onTrigger = !!(popComp && popComp.$ele && popComp.$ele === active);
+        if ((insidePopup || onTrigger) && popComp && popComp.$ele) {
+            popComp.$ele.focus();
+        }
+    }
+
+    $(document).ready(function(){
+        PopoverComponent.init({
+            ele: '.origin-popup-btn',
+            position: "bottom",
+            // 원본데이터보기 팝업 포커스 트랩 (웹접근성)
+            beforeShow: function (popComp) {
+                bindPopupFocusTrap(popComp);
+            },
+            beforeHide: function (popComp) {
+                releasePopupFocusTrap(popComp);
+            }
+        });
+
+        PopoverComponent.init({
+            ele: '.share-popup-btn',
+            position: "bottom",
+            // 공유 팝업 열림/닫힘 상태에 따라 버튼 title 갱신 + 포커스 트랩 (웹접근성)
+            beforeShow: function (popComp) {
+                popComp.$ele.setAttribute('title', '펼쳐짐');
+                bindPopupFocusTrap(popComp);
+            },
+            beforeHide: function (popComp) {
+                popComp.$ele.setAttribute('title', '접힘');
+                releasePopupFocusTrap(popComp);
+            }
+        });
+    });
+</script>
+
+<footer id="footer" class="footer" aria-label="Footer">
+    <!-- 의견보내기 플로팅 버튼 -->
+    
+    
+    <div id="contestBtn" class="btn-floating" style="display:none;">
+        <a href="#" class="btn-float-model">이벤트!</a>
+    </div>
+    <ul>
+        <li><a id="platformIntro" href="#">서울 데이터 허브 소개</a></li>
+        <li><a id="privacyPolicy" href="#">개인정보처리방침</a></li>
+        <li><a id="memberRule" href="#" title="새창으로 열림">이용약관</a></li>
+        <li><a id="emailPolicy" href="#" title="새창으로 열림">이메일무단수집거부</a></li>
+        <li><a id="qnaWrite" href="#">오류신고</a></li>
+    </ul>
+    <section class="fluid">
+        <div class="copyright section-inner">
+            <div class="footer-left">
+                <a href="#" class="logo" title="서울 데이터 허브(Seoul Data Hub)"><span class="safari-hidden">서울 데이터 허브(Seoul Data Hub)</span></a>
+            </div>
+            <div class="footer-right">
+                <p class="footer-address mt15">서울특별시청 서소문청사 04515 서울 중구 덕수궁길 15</p>
+                <p class="footer-number">전화번호 02-120 | 대표전화 02-2126-4661 | 데이터전략과</p>
+                <p class="mt8 mb20">ⓒ 2024-2026. Seoul Data Hub Some right Reserved.</p>
+            </div>
+        </div>
+    </section>
+</footer>
+<!-- //footer -->
+<script type="module">
+    import {getSessionInfo, goLoginPage} from '/bsp/js/wgs/main/citizenSsoLogin.js';
+
+    $('#platformIntro').click(function(e){
+        e.preventDefault();
+        location.href = "/bsp/wgs/intro/platform.do";
+    });
+    $('#privacyPolicy, #headPrivacyPolicy').click(function(e){
+        e.preventDefault();
+        location.href = "/bsp/wgs/etc/openPrivacy.do";
+        // window.open("https://data.seoul.go.kr/etc/openPrivacy.do");
+    });
+    $('#memberRule, #headMemberRule').click(function(e){
+        e.preventDefault();
+        window.open("https://www.seoul.go.kr/member/rule/rule.do");
+    });
+    $('#emailPolicy, #headEmailPolicy').click(function(e){
+        e.preventDefault();
+        //location.href = "/bsp/wgs/intro/platform.do";
+
+        window.open("https://www.seoul.go.kr/helper/email.do");
+    });
+    $('#qnaWrite, #headQnaWrite').click(async function(e){
+        e.preventDefault();
+        let sessionInfo = await getSessionInfo();
+        if (!sessionInfo.uid) {
+            if (confirm('로그인이 필요한 기능입니다. 로그인 하시겠습니까?')) {
+                goLoginPage();
+            }
+            return;
+        } else {
+            window.location.href=`/bsp` + "/wgs/qna/write.do?ctgryCd=ERR"
+        }
+    });
+</script>
+</body>
+</html>

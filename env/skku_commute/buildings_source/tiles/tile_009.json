@@ -1,0 +1,26 @@
+{
+  "name": "tile_009",
+  "path": "tiles/tile_009.osm.xml",
+  "request_url": "https://osm.hpi.de/overpass/api/interpreter",
+  "method": "POST",
+  "query": "[out:xml][timeout:60][maxsize:268435456];\n(\n  way[\"building\"][\"building\"!=\"no\"](37.34297,126.9775916,37.3795734,127.006872);\n  relation[\"type\"=\"multipolygon\"][\"building\"][\"building\"!=\"no\"](37.34297,126.9775916,37.3795734,127.006872);\n);\n(._;>>;);\nout meta;\n",
+  "bbox_west_south_east_north": [
+    126.9775916,
+    37.34297,
+    127.006872,
+    37.3795734
+  ],
+  "downloaded_at_utc": "2026-09-23T05:42:56.057323+00:00",
+  "osm_metadata": {
+    "osm_base": "2026-09-22T08:45:51Z"
+  },
+  "bytes": 202846,
+  "sha256": "070fc4e80e351a12ba86f2a725683c84f80607022e2c84c326d64c35c1411519",
+  "counts": {
+    "node": 817,
+    "way": 144,
+    "relation": 2
+  },
+  "elapsed_seconds": 3.7842871710308827,
+  "empty": false
+}

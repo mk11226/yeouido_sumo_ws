@@ -1,0 +1,30 @@
+{
+  "page": "https://data.seoul.go.kr/dataList/OA-15546/F/1/datasetView.do",
+  "download_url": "https://datafile.seoul.go.kr/bigfile/iot/inf/nio_download.do?&useCache=false",
+  "request_method": "POST",
+  "form_fields": {
+    "infId": "OA-15546",
+    "infSeq": "3",
+    "seqNo": ""
+  },
+  "files": [
+    {
+      "name": "mounted_signals.csv",
+      "seq": "7",
+      "sha256": "b41a21af6a4d69cf8aac670829ecc53fd9026fe7354f837317ddd69f03a30628"
+    },
+    {
+      "name": "mounted_signals_definition.pdf",
+      "seq": "6",
+      "sha256": "d4b0e2db709d2c0049a9bd442eee3fd70a72a095cc3c9d504119d6f545f4dc0e"
+    },
+    {
+      "name": "mounted_signals_20210809.zip",
+      "seq": "4",
+      "sha256": "3c052589693e548d223fabb4b6e8c73ab69b514a3a88597fcc0531a7ea13d258"
+    }
+  ],
+  "downloaded_at_utc": "2026-09-23T05:44:41.154396+00:00",
+  "license": "KOGL Type 1 (attribution)",
+  "provider": "서울특별시"
+}

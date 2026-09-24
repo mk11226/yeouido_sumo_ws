@@ -1,0 +1,25 @@
+{
+  "name": "tile_006",
+  "path": "tiles/tile_006.osm.xml",
+  "request_url": "https://osm.hpi.de/overpass/api/interpreter",
+  "method": "POST",
+  "query": "[out:xml][timeout:75][maxsize:268435456];\nway[\"highway\"~\"^(motorway|motorway_link|trunk|trunk_link|primary|primary_link|secondary|secondary_link|tertiary|tertiary_link|unclassified|residential|living_street|service|road)$\"](37.4177651,126.9861956,37.4559508,127.01035)->.roads;\n(.roads;rel(bw.roads)[\"type\"=\"restriction\"];);\n(._;>>;);\nout meta;\n",
+  "bbox_west_south_east_north": [
+    126.9861956,
+    37.4177651,
+    127.01035,
+    37.4559508
+  ],
+  "downloaded_at_utc": "2026-09-23T05:15:47.387263+00:00",
+  "osm_metadata": {
+    "osm_base": "2026-09-22T08:45:51Z"
+  },
+  "counts": {
+    "node": 3949,
+    "way": 830,
+    "relation": 15
+  },
+  "bytes": 990529,
+  "sha256": "c1a74209d2171a53e962c93e4bcdf21c27078a0c3acf462b3d35be588f3102a8",
+  "elapsed_seconds": 3.410606292018201
+}

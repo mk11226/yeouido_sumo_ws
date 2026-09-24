@@ -1,0 +1,65 @@
+{
+  "created_at_utc": "2026-09-23T04:12:07.320432+00:00",
+  "checkpoint_name": "best.pt",
+  "checkpoint_step": 245760,
+  "checkpoint_sha256": "f22a755f5914807aa303a14aa4ed11df008bbddd2f810c1c1f2395d0de4ff0d4",
+  "run_dir": "/home/mk/bmil_ws/results/hyehwa/ppo_routecost_300k_seed42",
+  "checkpoint_path": "/home/mk/bmil_ws/results/hyehwa/ppo_routecost_300k_seed42/best.pt",
+  "checkpoint_metadata": {
+    "checkpoint": "best.pt",
+    "timesteps": 245760,
+    "saved_at_utc": "2026-09-23T04:09:55.554001+00:00",
+    "validation": {
+      "episodes": 8,
+      "collision_rate": 0.0,
+      "collision_rate_wilson95": [
+        0,
+        0.3244156195108769
+      ],
+      "success_rate": 1.0,
+      "timeout_rate": 0.0,
+      "other_failure_rate": 0.0,
+      "mean_return": 48.67714369912392,
+      "std_return": 4.839950007737677,
+      "mean_steps": 440.5,
+      "mean_speed": 4.652433150428143,
+      "mean_lane_changes": 0.125,
+      "safety_intervention_rate": 0.6291146424517594,
+      "min_gap": 0.001000000000000334
+    },
+    "selection_rule": "maximize validation success_rate, then mean_return",
+    "architecture_config": "config.json",
+    "weights_only": true
+  },
+  "safety_assistance": "Simulation only | SUMO collision, signal and right-of-way assistance enabled",
+  "attribution": "Road geometry: OpenStreetMap contributors (ODbL); imported into SUMO.",
+  "source_url": "https://www.openstreetmap.org/copyright",
+  "seed_base": 30003,
+  "deterministic": true,
+  "max_steps": 1200,
+  "step_length": 0.5,
+  "purpose": "Illustrative replay, separate from held-out evaluation.",
+  "network_sha256": "a147986e787419321e3d6aa32aca64b304539b771c19a81713794c1a31452096",
+  "episodes": [
+    {
+      "route": "northeast_to_south",
+      "seed": 30003,
+      "outcome": "arrived",
+      "elapsed_s": 246.5,
+      "steps": 493,
+      "return": 40.79208188737526,
+      "collided": false,
+      "arrived": true,
+      "wait_s": 157.0,
+      "lane_changes": 1,
+      "safety_intervention_rate": 0.6693711967545639,
+      "red_light_crossing_candidates": 0,
+      "trajectory_csv": "trajectory_northeast_to_south.csv"
+    }
+  ],
+  "artifacts": [
+    "trajectories.png",
+    "speed_signals.png",
+    "replay_northeast_to_south.gif"
+  ]
+}

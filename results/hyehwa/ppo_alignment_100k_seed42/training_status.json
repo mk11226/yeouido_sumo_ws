@@ -1,0 +1,13 @@
+{
+  "completed": true,
+  "timesteps": 100000,
+  "requested_steps": 100000,
+  "finished_episodes": 207,
+  "updates": 49,
+  "wall_seconds": 198.94845599099062,
+  "best_validation_score": [
+    0.875,
+    44.15902020545154
+  ],
+  "held_out_evaluation_run": false
+}

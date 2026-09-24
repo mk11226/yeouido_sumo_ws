@@ -1,0 +1,28 @@
+***Starting server on port 36957 ***
+Loading net-file from '/home/mk/bmil_ws/env/skku_commute/skku_commute.net.xml' ... done (2847ms).
+Loading additional-files from '/home/mk/bmil_ws/env/skku_commute/campuses.add.xml' ... done (0ms).
+Loading additional-files from '/home/mk/bmil_ws/env/skku_commute/buildings.poly.xml' ... done (361ms).
+Warning: Unused states in tlLogic 'cluster_11356881998_11521951182_11521951191_4683581782', program '0' in phase 0 after tl-index -1
+Loading route-files incrementally from '/home/mk/bmil_ws/env/skku_commute/skku_commute.rou.xml'
+Loading done.
+Simulation started with time: 0.00.
+Warning: Vehicle 'flow_corridor_02.1' performs emergency braking on lane ':10679772931_1_0' with decel=9.00, wished=4.50, severity=1.00, time=121.00.
+Simulation ended at time: 304.50.
+Performance:
+ Duration: 48.08s
+ TraCI-Duration: 0.51s
+ Real time factor: 6.33293
+ UPS: 1001.351857
+Vehicles:
+ Inserted: 182
+ Running: 131
+ Waiting: 0
+ Emergency Braking: 1
+Statistics (avg of 182):
+ RouteLength: 1831.11
+ Speed: 13.77
+ Duration: 132.27
+ WaitingTime: 12.62
+ TimeLoss: 23.37
+ DepartDelay: 0.01
+ DepartDelayWaiting: 0.00

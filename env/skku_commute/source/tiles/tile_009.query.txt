@@ -1,0 +1,5 @@
+[out:xml][timeout:75][maxsize:268435456];
+way["highway"~"^(motorway|motorway_link|trunk|trunk_link|primary|primary_link|secondary|secondary_link|tertiary|tertiary_link|unclassified|residential|living_street|service|road)$"](37.34297,126.9775916,37.3795734,127.006872)->.roads;
+(.roads;rel(bw.roads)["type"="restriction"];);
+(._;>>;);
+out meta;

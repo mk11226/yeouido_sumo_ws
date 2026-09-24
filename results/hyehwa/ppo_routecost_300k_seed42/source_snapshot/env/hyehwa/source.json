@@ -1,0 +1,14 @@
+{
+  "source_url": "https://api.openstreetmap.org/api/0.6/map?bbox=126.994,37.580,127.010,37.594",
+  "bbox_west_south_east_north": [
+    126.994,
+    37.58,
+    127.01,
+    37.594
+  ],
+  "downloaded_at_utc": "2026-09-23T03:39:21.995834+00:00",
+  "sha256": "1ca7b570b903b727c00a8c446b406d9c26223db8ed4c3f94ed21b9d4b20015fd",
+  "copyright": "© OpenStreetMap contributors",
+  "license": "ODbL 1.0",
+  "license_url": "https://www.openstreetmap.org/copyright"
+}

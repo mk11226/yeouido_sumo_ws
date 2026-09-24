@@ -1,0 +1,170 @@
+{
+  "created_at_utc": "2026-09-23T05:21:21.784690+00:00",
+  "scope": "Selected Seoul-to-Suwon SUMO route only; read-only comparison against archived OSM restrictions and OSRM geometry.",
+  "result": "No confirmed turn-restriction violation was found on the selected route. Relation 16705869 cannot be resolved because its archived source lacks via/to members.",
+  "source_sha256": {
+    "source/merged.osm.xml": "ef7b4e3119e3e5a20bdcbc49ea895fe705420df986171675f0a4c56761da8720",
+    "source/route.json": "d74f40b014ec0844485754b6068939d39425099f51403784075465ddc27d4cf5",
+    "skku_commute.net.xml": "adfd89c8b19bffa85eba8650b80c6400c2d58dc31845f2859f54c0677efeb106",
+    "route.json": "9ed52796c878aca04610d7c4522d16c7626aa3d423f97ea0fe161fc33d1cd0c8"
+  },
+  "method": [
+    "Inspect all archived restriction relations, not only the warning lines: netconvert aggregates repeated warning messages.",
+    "Map SUMO external edge IDs to OSM way IDs by removing the leading direction sign and split suffix; retain the sign for same-way U-turn checks.",
+    "Inspect direct from/to transitions and via-way sequences for no_* restrictions whose from-way is on the route.",
+    "Inspect the only_straight_on restriction at a joined junction against its raw source node/way geometry; do not mistake an absorbed internal way for an omitted mandatory turn.",
+    "Sum passenger-allowed internal lane lengths for each adjacent external edge pair, including secondary via lanes; report the min/max across lane choices.",
+    "Compare polylines sampled approximately every 20m using point-to-segment nearest distances in SUMO projected coordinates. External edge gaps are straight interpolations for this comparison, so it is an approximate geometry comparison."
+  ],
+  "route_external_edges": 226,
+  "route_distinct_osm_ways": 121,
+  "source_restriction_relations": 457,
+  "from_way_on_route_relations_checked": [
+    6309651,
+    6309652,
+    12390318,
+    16705869,
+    17035602,
+    19910546,
+    19910624,
+    19910625,
+    19910631,
+    19910632,
+    19910640,
+    19910705,
+    19910706,
+    19910707,
+    19910708,
+    19910709,
+    19910710,
+    19910717,
+    19910718,
+    19919435,
+    19919436,
+    19954318,
+    19954319,
+    19954320,
+    19954321,
+    19954324,
+    19954325,
+    19954326,
+    19954327,
+    19954329,
+    19954330,
+    19954348,
+    19954349,
+    19954350,
+    19954351,
+    19954357,
+    19954358,
+    19954361,
+    19954362,
+    19954365,
+    19954375,
+    19954376,
+    19978549,
+    19978550
+  ],
+  "from_way_on_route_relation_count": 44,
+  "direct_no_turn_candidates_found": 0,
+  "same_way_direction_reversals_found": 0,
+  "ignored_relation_ids_visible_in_warning_lines": [
+    7153094,
+    7153095,
+    7153096,
+    7153104,
+    7153105,
+    7172375,
+    7172376,
+    7172377,
+    7172378,
+    7215090,
+    7215091,
+    7215092,
+    7774330,
+    9240727,
+    9306113,
+    16705869,
+    19910957,
+    20252624
+  ],
+  "ignored_relations_touching_route": [
+    {
+      "id": 7172376,
+      "restriction": "no_right_turn",
+      "from_way": 568598223,
+      "via_way": 488392553,
+      "to_way": 600317492,
+      "finding": "Only the to-way is on the selected route; the forbidden from/via approach is not traversed."
+    },
+    {
+      "id": 16705869,
+      "restriction": "no_left_turn",
+      "source_version": 2,
+      "source_timestamp": "2024-02-19T04:12:22Z",
+      "members": [
+        {
+          "type": "way",
+          "ref": "518362768",
+          "role": "from"
+        }
+      ],
+      "original_tile": "source/tiles/tile_005.osm.xml",
+      "finding": "Raw Overpass tile itself contains only from-way 518362768. No via/to member exists to determine the forbidden maneuver; no guessed correction was made."
+    }
+  ],
+  "joined_junction_restriction_review": {
+    "id": 17035602,
+    "restriction": "only_straight_on",
+    "from_way": 521118064,
+    "via_node": 11521951201,
+    "to_way": 497290500,
+    "raw_to_way_nodes": [
+      11521951201,
+      11521951180
+    ],
+    "joined_junction": "cluster_11521951180_11521951201_4888858378_4888858379",
+    "sumo_external_transition": [
+      "521118064#1",
+      "251118733#0"
+    ],
+    "finding": "Both endpoints of required to-way 497290500 belong to the same joined junction. The selected connection continues south to 251118733, matching the raw straight-through geometry; its absence as an external route edge is not a confirmed violation."
+  },
+  "length_comparison_m": {
+    "sumo_external_after_depart_arrival_trimming": 34985.66,
+    "sumo_external_full_edges": 35014.0,
+    "adjacent_external_transitions": 225,
+    "transitions_without_passenger_connection": 0,
+    "internal_min": 3352.06,
+    "internal_max": 3362.06,
+    "sumo_including_internal_min": 38337.72,
+    "sumo_including_internal_max": 38347.72,
+    "osrm_reported": 38524.4,
+    "remaining_difference_range": [
+      176.68,
+      186.68
+    ],
+    "interpretation": "About 3.35km of junction-internal links explains most of the apparent 34.99km versus 38.52km difference. The remaining difference reflects distinct routing/lane geometry and should not be described as exactly the same path."
+  },
+  "approximate_geometry_distance_m": {
+    "sumo_to_osrm": {
+      "sample_count": 2323,
+      "median": 0.02853546401992493,
+      "p95": 45.45735972704501,
+      "maximum": 370.9876326883788,
+      "fraction_above_50m": 0.048643994834266034
+    },
+    "osrm_to_sumo": {
+      "sample_count": 2245,
+      "median": 0.03028708147655623,
+      "p95": 62.27297221463058,
+      "maximum": 464.1075595965641,
+      "fraction_above_50m": 0.054788418708240534
+    }
+  },
+  "limitations": [
+    "Incomplete source relation 16705869 prevents a complete turn-restriction assurance for its from-way.",
+    "This audit compares archived source tags and generated topology; it does not verify current road signs or legal restrictions against official traffic records.",
+    "Per-transition min/max internal lengths need not represent one globally feasible lane sequence; the bounds are a distance explanation, while an actual SUMO drive validates the final lane sequence."
+  ]
+}

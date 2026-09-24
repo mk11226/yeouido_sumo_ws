@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<routes>
+  <vTypeDistribution id="traffic_mix">
+    <vType id="hv_idm" probability="0.6" vClass="passenger" carFollowModel="IDM" accel="2.0" decel="4.5" emergencyDecel="9" tau="1.2" minGap="2.5" length="4.8" speedFactor="normc(0.95,0.08,0.7,1.1)" color="0.3,0.6,0.9" />
+    <vType id="hv_krauss" probability="0.4" vClass="passenger" carFollowModel="Krauss" accel="2.0" decel="4.5" emergencyDecel="9" tau="1.2" minGap="2.5" length="4.8" speedFactor="normc(0.95,0.08,0.7,1.1)" color="0.9,0.7,0.2" />
+  </vTypeDistribution>
+  <route id="bg_southwest_to_northeast" edges="26299045#0 26299045#1 632698296 632698300 779526219 1069458463" />
+  <route id="bg_northeast_to_southwest" edges="37400220#1 219073859 517581272 1455534439#1" />
+  <route id="bg_south_to_northeast" edges="1455534425 183521061 779526219 1069458463" />
+  <route id="bg_northeast_to_south" edges="37400220#1 1466406611 1455534434 632698296 183521060 -1455534430" />
+  <route id="bg_north_to_south" edges="219073855 1466406611 1455534434 632698296 183521060 -1455534430" />
+  <route id="bg_south_to_north" edges="1455534425 183521061 779526219 -1455534441" />
+  <route id="bg_north_to_northeast" edges="219073855 1466406611 1455534434 632698296 632698300 779526219 1069458463" />
+  <route id="bg_northeast_to_north" edges="37400220#1 -1455534441" />
+  <flow id="flow_southwest_to_northeast" type="traffic_mix" route="bg_southwest_to_northeast" begin="0.0" end="3600" probability="0.025" departLane="best" departSpeed="max" />
+  <flow id="flow_northeast_to_southwest" type="traffic_mix" route="bg_northeast_to_southwest" begin="0.25" end="3600" probability="0.025" departLane="best" departSpeed="max" />
+  <flow id="flow_south_to_northeast" type="traffic_mix" route="bg_south_to_northeast" begin="0.5" end="3600" probability="0.025" departLane="best" departSpeed="max" />
+  <flow id="flow_northeast_to_south" type="traffic_mix" route="bg_northeast_to_south" begin="0.75" end="3600" probability="0.025" departLane="best" departSpeed="max" />
+  <flow id="flow_north_to_south" type="traffic_mix" route="bg_north_to_south" begin="1.0" end="3600" probability="0.025" departLane="best" departSpeed="max" />
+  <flow id="flow_south_to_north" type="traffic_mix" route="bg_south_to_north" begin="1.25" end="3600" probability="0.025" departLane="best" departSpeed="max" />
+  <flow id="flow_north_to_northeast" type="traffic_mix" route="bg_north_to_northeast" begin="1.5" end="3600" probability="0.025" departLane="best" departSpeed="max" />
+  <flow id="flow_northeast_to_north" type="traffic_mix" route="bg_northeast_to_north" begin="1.75" end="3600" probability="0.025" departLane="best" departSpeed="max" />
+</routes>

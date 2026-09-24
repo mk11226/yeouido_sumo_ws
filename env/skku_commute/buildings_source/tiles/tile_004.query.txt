@@ -1,0 +1,7 @@
+[out:xml][timeout:60][maxsize:268435456];
+(
+  way["building"]["building"!="no"](37.4689378,126.9733242,37.5071014,126.9946402);
+  relation["type"="multipolygon"]["building"]["building"!="no"](37.4689378,126.9733242,37.5071014,126.9946402);
+);
+(._;>>;);
+out meta;

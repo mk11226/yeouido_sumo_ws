@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<types>
+  <type id="highway.motorway" numLanes="2" speed="27.777778" priority="15" oneway="true" allow="passenger bus taxi delivery truck emergency" />
+  <type id="highway.motorway_link" numLanes="1" speed="16.666667" priority="14" oneway="true" allow="passenger bus taxi delivery truck emergency" />
+  <type id="highway.trunk" numLanes="2" speed="22.222222" priority="13" oneway="false" allow="passenger bus taxi delivery truck emergency" />
+  <type id="highway.trunk_link" numLanes="1" speed="13.888889" priority="12" oneway="false" allow="passenger bus taxi delivery truck emergency" />
+  <type id="highway.primary" numLanes="2" speed="13.888889" priority="11" oneway="false" allow="passenger bus taxi delivery truck emergency" />
+  <type id="highway.primary_link" numLanes="1" speed="11.111111" priority="10" oneway="false" allow="passenger bus taxi delivery truck emergency" />
+  <type id="highway.secondary" numLanes="2" speed="13.888889" priority="9" oneway="false" allow="passenger bus taxi delivery truck emergency" />
+  <type id="highway.secondary_link" numLanes="1" speed="11.111111" priority="8" oneway="false" allow="passenger bus taxi delivery truck emergency" />
+  <type id="highway.tertiary" numLanes="1" speed="11.111111" priority="7" oneway="false" allow="passenger bus taxi delivery truck emergency" />
+  <type id="highway.tertiary_link" numLanes="1" speed="8.333333" priority="6" oneway="false" allow="passenger bus taxi delivery truck emergency" />
+  <type id="highway.unclassified" numLanes="1" speed="8.333333" priority="5" oneway="false" allow="passenger bus taxi delivery truck emergency" />
+  <type id="highway.residential" numLanes="1" speed="8.333333" priority="4" oneway="false" allow="passenger bus taxi delivery truck emergency" />
+  <type id="highway.living_street" numLanes="1" speed="5.555556" priority="3" oneway="false" allow="passenger bus taxi delivery truck emergency" />
+  <type id="highway.service" numLanes="1" speed="5.555556" priority="2" oneway="false" allow="passenger bus taxi delivery truck emergency" />
+  <type id="highway.road" numLanes="1" speed="8.333333" priority="1" oneway="false" allow="passenger bus taxi delivery truck emergency" />
+</types>

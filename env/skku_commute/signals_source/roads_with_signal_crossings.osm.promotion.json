@@ -1,0 +1,1994 @@
+{
+  "source_sha256": "ef7b4e3119e3e5a20bdcbc49ea895fe705420df986171675f0a4c56761da8720",
+  "derived_sha256": "23ed799e7760df12420e16d4c05242552a491ee7e1757e8b9c56888b35ca36e8",
+  "promoted_count": 188,
+  "records": [
+    {
+      "osm_node_id": "436834191",
+      "lon": 126.9987772,
+      "lat": 37.5351491,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "436839431",
+      "lon": 126.9983022,
+      "lat": 37.5643518,
+      "original_tags": {
+        "crossing:signals": "yes",
+        "highway": "crossing",
+        "junction": "yes",
+        "name": "중구청교차로",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "436865177",
+      "lon": 126.9991801,
+      "lat": 37.5922645,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "436877431",
+      "lon": 127.00929,
+      "lat": 37.56452,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "490631619",
+      "lon": 126.9789102,
+      "lat": 37.5209832,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "traffic_signals;crossing"
+      }
+    },
+    {
+      "osm_node_id": "495936567",
+      "lon": 126.9955309,
+      "lat": 37.2972075,
+      "original_tags": {
+        "button_operated": "no",
+        "crossing": "traffic_signals",
+        "crossing:markings": "yes",
+        "highway": "crossing",
+        "tactile_paving": "yes",
+        "traffic_signals:sound": "no"
+      }
+    },
+    {
+      "osm_node_id": "729260676",
+      "lon": 126.9793421,
+      "lat": 37.3384301,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "729261028",
+      "lon": 126.9794301,
+      "lat": 37.3405551,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "729261031",
+      "lon": 126.9793616,
+      "lat": 37.3408824,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "1378743157",
+      "lon": 126.9972386,
+      "lat": 37.5346665,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "1685710572",
+      "lon": 126.9778099,
+      "lat": 37.3426181,
+      "original_tags": {
+        "button_operated": "yes",
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "1985633485",
+      "lon": 126.9943748,
+      "lat": 37.4483612,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "2384953036",
+      "lon": 126.9870181,
+      "lat": 37.5347385,
+      "original_tags": {
+        "bicycle": "no",
+        "button_operated": "no",
+        "crossing": "traffic_signals",
+        "highway": "crossing",
+        "horse": "no",
+        "traffic_signals:sound": "no"
+      }
+    },
+    {
+      "osm_node_id": "2384953044",
+      "lon": 126.9872671,
+      "lat": 37.5347784,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "2574027676",
+      "lon": 126.9820342,
+      "lat": 37.4766376,
+      "original_tags": {
+        "check_date:crossing": "2022-05-18",
+        "crossing": "traffic_signals",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "2574027678",
+      "lon": 126.9813369,
+      "lat": 37.4766918,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "2578295005",
+      "lon": 126.9815347,
+      "lat": 37.4763283,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing",
+        "kerb": "lowered",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "2578295006",
+      "lon": 126.9819812,
+      "lat": 37.4764071,
+      "original_tags": {
+        "check_date:crossing": "2022-05-18",
+        "crossing": "traffic_signals",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "2578295007",
+      "lon": 126.9813393,
+      "lat": 37.4764666,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing",
+        "kerb": "lowered",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "2578295008",
+      "lon": 126.9815518,
+      "lat": 37.4768021,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "3054132411",
+      "lon": 126.9907158,
+      "lat": 37.5205523,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "3112252730",
+      "lon": 126.9873637,
+      "lat": 37.5702854,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing",
+        "kerb": "flush",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "3112252732",
+      "lon": 126.988176,
+      "lat": 37.5701748,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "3112252733",
+      "lon": 126.9876389,
+      "lat": 37.5701,
+      "original_tags": {
+        "button_operated": "no",
+        "crossing:signals": "yes",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "3112255529",
+      "lon": 126.9873771,
+      "lat": 37.5701667,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing",
+        "kerb": "flush",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "3112255629",
+      "lon": 126.9881683,
+      "lat": 37.570305,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing",
+        "kerb": "flush",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "3274291454",
+      "lon": 127.0109794,
+      "lat": 37.5716862,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing",
+        "source": "Bing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "3274291965",
+      "lon": 127.0109659,
+      "lat": 37.5717886,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing",
+        "source": "Bing"
+      }
+    },
+    {
+      "osm_node_id": "3274291984",
+      "lon": 127.0088654,
+      "lat": 37.5714727,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "crossing:island": "no",
+        "highway": "crossing",
+        "source": "Bing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "3274370904",
+      "lon": 126.9896126,
+      "lat": 37.5773678,
+      "original_tags": {
+        "crossing:island": "no",
+        "crossing:signals": "yes",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "3285441969",
+      "lon": 126.9893339,
+      "lat": 37.5611117,
+      "original_tags": {
+        "crossing": "uncontrolled;traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "3514148193",
+      "lon": 126.9919491,
+      "lat": 37.5705065,
+      "original_tags": {
+        "crossing:signals": "yes",
+        "highway": "crossing",
+        "kerb": "lowered",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "3514148293",
+      "lon": 126.9919571,
+      "lat": 37.5703901,
+      "original_tags": {
+        "crossing:signals": "yes",
+        "highway": "crossing",
+        "kerb": "lowered",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "3514148693",
+      "lon": 126.9923957,
+      "lat": 37.5705276,
+      "original_tags": {
+        "crossing:signals": "yes",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "3541185293",
+      "lon": 126.9868925,
+      "lat": 37.5346209,
+      "original_tags": {
+        "bicycle": "no",
+        "button_operated": "no",
+        "crossing": "traffic_signals",
+        "highway": "crossing",
+        "horse": "no",
+        "traffic_signals:sound": "no"
+      }
+    },
+    {
+      "osm_node_id": "3647496994",
+      "lon": 126.9828055,
+      "lat": 37.5691989,
+      "original_tags": {
+        "crossing:island": "no",
+        "crossing:signals": "yes",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "3824313805",
+      "lon": 126.9833583,
+      "lat": 37.378625,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "3824313806",
+      "lon": 126.9834957,
+      "lat": 37.3784065,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "3833429830",
+      "lon": 126.9921938,
+      "lat": 37.5702889,
+      "original_tags": {
+        "crossing:signals": "yes",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "4273893706",
+      "lon": 127.0023603,
+      "lat": 37.5631456,
+      "original_tags": {
+        "button_operated": "no",
+        "crossing": "traffic_signals",
+        "highway": "crossing",
+        "tactile_paving": "yes",
+        "traffic_signals:sound": "yes",
+        "traffic_signals:vibration": "no"
+      }
+    },
+    {
+      "osm_node_id": "4273893707",
+      "lon": 127.0026029,
+      "lat": 37.5629876,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "crossing:island": "no",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "4275436184",
+      "lon": 126.9895043,
+      "lat": 37.5342539,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing",
+        "tactile_paving": "yes",
+        "traffic_signals:vibration": "no"
+      }
+    },
+    {
+      "osm_node_id": "4275436294",
+      "lon": 126.995597,
+      "lat": 37.5346161,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "crossing:island": "no",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "4276255149",
+      "lon": 126.9982932,
+      "lat": 37.5644604,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "4276255150",
+      "lon": 126.9985182,
+      "lat": 37.5643576,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "crossing:island": "no",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "4276255151",
+      "lon": 126.9983186,
+      "lat": 37.5641535,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "4276255152",
+      "lon": 126.9980911,
+      "lat": 37.5643499,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "crossing:island": "no",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "4683581775",
+      "lon": 126.9863696,
+      "lat": 37.5009676,
+      "original_tags": {
+        "crossing:island": "no",
+        "crossing:signals": "yes",
+        "highway": "crossing",
+        "kerb": "lowered",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "4683581777",
+      "lon": 126.9866786,
+      "lat": 37.501479,
+      "original_tags": {
+        "button_operated": "no",
+        "crossing:island": "no",
+        "crossing:signals": "yes",
+        "highway": "crossing",
+        "kerb": "lowered",
+        "tactile_paving": "yes",
+        "traffic_signals:sound": "no",
+        "traffic_signals:vibration": "no"
+      }
+    },
+    {
+      "osm_node_id": "4683581778",
+      "lon": 126.9855548,
+      "lat": 37.5003592,
+      "original_tags": {
+        "button_operated": "no",
+        "crossing": "traffic_signals",
+        "highway": "crossing",
+        "kerb": "lowered",
+        "tactile_paving": "yes",
+        "traffic_signals:sound": "no",
+        "traffic_signals:vibration": "no"
+      }
+    },
+    {
+      "osm_node_id": "4683581779",
+      "lon": 126.9837173,
+      "lat": 37.4855885,
+      "original_tags": {
+        "button_operated": "yes",
+        "crossing:island": "no",
+        "crossing:signals": "yes",
+        "highway": "crossing",
+        "kerb": "lowered",
+        "tactile_paving": "yes",
+        "traffic_signals:sound": "yes",
+        "traffic_signals:vibration": "yes"
+      }
+    },
+    {
+      "osm_node_id": "4888858380",
+      "lon": 126.9817853,
+      "lat": 37.4767908,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "4888858381",
+      "lon": 126.9817493,
+      "lat": 37.4763156,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing",
+        "kerb": "lowered",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "5172891764",
+      "lon": 126.9877473,
+      "lat": 37.5643166,
+      "original_tags": {
+        "bicycle": "yes",
+        "crossing": "zebra;traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "5172891765",
+      "lon": 126.9880223,
+      "lat": 37.5646215,
+      "original_tags": {
+        "bicycle": "yes",
+        "crossing": "zebra;traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "5207100222",
+      "lon": 126.9982411,
+      "lat": 37.5108951,
+      "original_tags": {
+        "bicycle": "yes",
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "5332422212",
+      "lon": 126.9941073,
+      "lat": 37.2994743,
+      "original_tags": {
+        "button_operated": "no",
+        "crossing": "traffic_signals",
+        "crossing:markings": "yes",
+        "highway": "crossing",
+        "tactile_paving": "yes",
+        "traffic_signals:sound": "no"
+      }
+    },
+    {
+      "osm_node_id": "5352541380",
+      "lon": 126.9900698,
+      "lat": 37.3116977,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "5352541386",
+      "lon": 126.989975,
+      "lat": 37.3115583,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "5485727727",
+      "lon": 127.0017425,
+      "lat": 37.5436156,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "5568102762",
+      "lon": 126.9776292,
+      "lat": 37.3419767,
+      "original_tags": {
+        "button_operated": "yes",
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "5702191562",
+      "lon": 126.9980614,
+      "lat": 37.570845,
+      "original_tags": {
+        "button_operated": "no",
+        "crossing": "traffic_signals",
+        "crossing:island": "no",
+        "highway": "crossing",
+        "tactile_paving": "yes",
+        "traffic_signals:sound": "yes"
+      }
+    },
+    {
+      "osm_node_id": "5702191564",
+      "lon": 126.9970744,
+      "lat": 37.5707492,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "5702307828",
+      "lon": 127.0019332,
+      "lat": 37.5706506,
+      "original_tags": {
+        "crossing:island": "no",
+        "crossing:signals": "yes",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "5768277854",
+      "lon": 126.9980696,
+      "lat": 37.5706919,
+      "original_tags": {
+        "button_operated": "no",
+        "crossing": "traffic_signals",
+        "crossing:island": "no",
+        "highway": "crossing",
+        "tactile_paving": "yes",
+        "traffic_signals:sound": "yes"
+      }
+    },
+    {
+      "osm_node_id": "5973693860",
+      "lon": 126.9970846,
+      "lat": 37.5706545,
+      "original_tags": {
+        "crossing:signals": "yes",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "5992466242",
+      "lon": 126.9788828,
+      "lat": 37.340368,
+      "original_tags": {
+        "button_operated": "yes",
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "6576155457",
+      "lon": 126.9820042,
+      "lat": 37.4745874,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing",
+        "kerb": "lowered",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "6576179878",
+      "lon": 126.9823871,
+      "lat": 37.4730544,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "6576179879",
+      "lon": 126.9825868,
+      "lat": 37.4731095,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "7062515348",
+      "lon": 126.9965956,
+      "lat": 37.5790333,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "crossing:island": "yes",
+        "crossing:markings": "yes",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "7062515349",
+      "lon": 126.9967801,
+      "lat": 37.5790436,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "crossing:island": "yes",
+        "crossing:markings": "yes",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "7068953034",
+      "lon": 126.9795444,
+      "lat": 37.5701365,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "7168643283",
+      "lon": 126.993251,
+      "lat": 37.5608827,
+      "original_tags": {
+        "crossing:island": "no",
+        "crossing:signals": "yes",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "7173863487",
+      "lon": 126.9887753,
+      "lat": 37.5612643,
+      "original_tags": {
+        "crossing:signals": "yes",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "7174750350",
+      "lon": 127.0099523,
+      "lat": 37.5696151,
+      "original_tags": {
+        "crossing:signals": "yes",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "7183965920",
+      "lon": 126.988814,
+      "lat": 37.5610826,
+      "original_tags": {
+        "crossing:signals": "yes",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "7311080426",
+      "lon": 126.9879362,
+      "lat": 37.5642957,
+      "original_tags": {
+        "bicycle": "yes",
+        "crossing": "zebra;traffic_signals",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "7335400058",
+      "lon": 127.0019894,
+      "lat": 37.5629851,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "7483551559",
+      "lon": 127.009,
+      "lat": 37.5715431,
+      "original_tags": {
+        "crossing:signals": "yes",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "7614493437",
+      "lon": 126.9991561,
+      "lat": 37.3831895,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "7765365843",
+      "lon": 126.9990149,
+      "lat": 37.5353077,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "7782072485",
+      "lon": 126.9949104,
+      "lat": 37.2981928,
+      "original_tags": {
+        "button_operated": "no",
+        "crossing": "traffic_signals",
+        "crossing:markings": "yes",
+        "highway": "crossing",
+        "tactile_paving": "yes",
+        "traffic_signals:sound": "no"
+      }
+    },
+    {
+      "osm_node_id": "7907100661",
+      "lon": 126.9882384,
+      "lat": 37.3183509,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "7907100662",
+      "lon": 126.9880818,
+      "lat": 37.3183524,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "7932913941",
+      "lon": 126.9896412,
+      "lat": 37.3117281,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "7932913965",
+      "lon": 126.9825053,
+      "lat": 37.3166157,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "7932913966",
+      "lon": 126.9826167,
+      "lat": 37.3166941,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "7932913981",
+      "lon": 126.982916,
+      "lat": 37.3164242,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "7932913982",
+      "lon": 126.9828064,
+      "lat": 37.3163594,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "8209566040",
+      "lon": 127.0092292,
+      "lat": 37.5681898,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "8209566041",
+      "lon": 127.0093872,
+      "lat": 37.5681152,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "8380350240",
+      "lon": 126.9793377,
+      "lat": 37.570263,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "8471989455",
+      "lon": 126.997562,
+      "lat": 37.4815743,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "crossing:island": "yes",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "8471989457",
+      "lon": 126.9977468,
+      "lat": 37.4813024,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "crossing:island": "yes",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "8471989458",
+      "lon": 126.9974407,
+      "lat": 37.4813894,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "crossing:island": "yes",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "8494137504",
+      "lon": 126.9783251,
+      "lat": 37.3792077,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "8494137505",
+      "lon": 126.9783694,
+      "lat": 37.3792938,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "9040767544",
+      "lon": 127.0022667,
+      "lat": 37.5669802,
+      "original_tags": {
+        "crossing:island": "no",
+        "crossing:signals": "yes",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "9331404773",
+      "lon": 126.9785222,
+      "lat": 37.3418146,
+      "original_tags": {
+        "button_operated": "yes",
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "9913921973",
+      "lon": 126.983156,
+      "lat": 37.5510696,
+      "original_tags": {
+        "button_operated": "yes",
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "10296354651",
+      "lon": 127.0018725,
+      "lat": 37.5694102,
+      "original_tags": {
+        "crossing:signals": "yes",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "10296354655",
+      "lon": 127.0022707,
+      "lat": 37.5694553,
+      "original_tags": {
+        "crossing:signals": "yes",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "10296354658",
+      "lon": 127.0022844,
+      "lat": 37.569787,
+      "original_tags": {
+        "button_operated": "yes",
+        "crossing:signals": "yes",
+        "highway": "crossing",
+        "tactile_paving": "yes",
+        "traffic_signals:sound": "yes",
+        "traffic_signals:vibration": "no"
+      }
+    },
+    {
+      "osm_node_id": "11189591938",
+      "lon": 126.9878445,
+      "lat": 37.5701083,
+      "original_tags": {
+        "button_operated": "no",
+        "crossing:signals": "yes",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "11203052955",
+      "lon": 126.9823371,
+      "lat": 37.5605427,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "crossing:markings": "yes",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "11203052956",
+      "lon": 126.9823866,
+      "lat": 37.5604226,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "crossing:markings": "yes",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "11203052957",
+      "lon": 126.9823972,
+      "lat": 37.5603969,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "crossing:markings": "yes",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "11203052960",
+      "lon": 126.9819349,
+      "lat": 37.5602267,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "crossing:markings": "yes",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "11203052961",
+      "lon": 126.9818795,
+      "lat": 37.5603813,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing",
+        "kerb": "lowered"
+      }
+    },
+    {
+      "osm_node_id": "11203052964",
+      "lon": 126.9820077,
+      "lat": 37.5605186,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "crossing:markings": "yes",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "11203083979",
+      "lon": 126.9875206,
+      "lat": 37.5659702,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "crossing:markings": "yes",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "11203083980",
+      "lon": 126.987709,
+      "lat": 37.565975,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "crossing:markings": "yes",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "11203083983",
+      "lon": 126.9873452,
+      "lat": 37.5660709,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "crossing:markings": "yes",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "11203083984",
+      "lon": 126.9873401,
+      "lat": 37.5662092,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "crossing:markings": "yes",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "11203083987",
+      "lon": 126.9878847,
+      "lat": 37.5660852,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing",
+        "kerb": "lowered",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "11203083988",
+      "lon": 126.9878804,
+      "lat": 37.5662236,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "crossing:markings": "yes",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "11225325964",
+      "lon": 127.0105571,
+      "lat": 37.5172174,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "crossing:markings": "yes",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "11225325967",
+      "lon": 127.0103662,
+      "lat": 37.5170287,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "crossing:markings": "yes",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "11233115540",
+      "lon": 126.9827046,
+      "lat": 37.5686034,
+      "original_tags": {
+        "crossing:signals": "yes",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "11356881998",
+      "lon": 126.9818963,
+      "lat": 37.4802382,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "11428504987",
+      "lon": 126.9950861,
+      "lat": 37.5033438,
+      "original_tags": {
+        "button_operated": "no",
+        "crossing": "marked",
+        "crossing:island": "no",
+        "crossing:markings": "zebra",
+        "crossing:signals": "yes",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "11521911667",
+      "lon": 126.9946403,
+      "lat": 37.4484095,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "11521951146",
+      "lon": 126.9817499,
+      "lat": 37.4745456,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing",
+        "kerb": "lowered",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "11521951150",
+      "lon": 126.9829067,
+      "lat": 37.4718941,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "crossing:markings": "yes",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "11521951162",
+      "lon": 126.9831544,
+      "lat": 37.4719753,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "crossing:markings": "yes",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "11521951186",
+      "lon": 126.9817484,
+      "lat": 37.4812298,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "11521951189",
+      "lon": 126.9817168,
+      "lat": 37.4802461,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "11555013045",
+      "lon": 127.0016513,
+      "lat": 37.539994,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "11555013049",
+      "lon": 127.0014688,
+      "lat": 37.5383335,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "crossing:island": "no",
+        "crossing:signals": "yes",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "11641428774",
+      "lon": 126.995065,
+      "lat": 37.5031135,
+      "original_tags": {
+        "button_operated": "no",
+        "crossing": "marked",
+        "crossing:markings": "zebra",
+        "crossing:signals": "yes",
+        "highway": "crossing",
+        "tactile_paving": "yes",
+        "traffic_signals:sound": "yes"
+      }
+    },
+    {
+      "osm_node_id": "11641428794",
+      "lon": 126.9949678,
+      "lat": 37.5032488,
+      "original_tags": {
+        "button_operated": "no",
+        "crossing": "marked",
+        "crossing:markings": "zebra",
+        "crossing:signals": "yes",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "11987095811",
+      "lon": 126.9900424,
+      "lat": 37.5773574,
+      "original_tags": {
+        "crossing:signals": "yes",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "11987095818",
+      "lon": 126.9902519,
+      "lat": 37.5773374,
+      "original_tags": {
+        "crossing:signals": "yes",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "12049511100",
+      "lon": 126.9916653,
+      "lat": 37.298572,
+      "original_tags": {
+        "button_operated": "no",
+        "crossing": "traffic_signals",
+        "crossing:markings": "yes",
+        "highway": "crossing",
+        "tactile_paving": "yes",
+        "traffic_signals:vibration": "no"
+      }
+    },
+    {
+      "osm_node_id": "12451306727",
+      "lon": 126.9940695,
+      "lat": 37.5339598,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "12451306728",
+      "lon": 126.9956215,
+      "lat": 37.5345082,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "12451306733",
+      "lon": 126.9989156,
+      "lat": 37.5351892,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "12451306738",
+      "lon": 127.001602,
+      "lat": 37.5380573,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "12451306742",
+      "lon": 126.9881117,
+      "lat": 37.5337322,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "12451306743",
+      "lon": 126.9883316,
+      "lat": 37.5338949,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "12451306747",
+      "lon": 127.0017744,
+      "lat": 37.540034,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "12451306749",
+      "lon": 127.0015623,
+      "lat": 37.5381843,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "12451306751",
+      "lon": 127.0004641,
+      "lat": 37.5367745,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "12451306754",
+      "lon": 126.9996632,
+      "lat": 37.5360172,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "12451306757",
+      "lon": 126.9989899,
+      "lat": 37.5354578,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "12451306760",
+      "lon": 126.9985946,
+      "lat": 37.5351749,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "12451306765",
+      "lon": 126.9956752,
+      "lat": 37.5345673,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "12451306768",
+      "lon": 126.9955402,
+      "lat": 37.5345579,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "12451306771",
+      "lon": 126.9938701,
+      "lat": 37.5345108,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "12451306774",
+      "lon": 126.9938002,
+      "lat": 37.5344495,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "12451306777",
+      "lon": 126.9939504,
+      "lat": 37.5344588,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "12451306780",
+      "lon": 126.9920082,
+      "lat": 37.5343681,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "crossing:island": "no",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "12451306783",
+      "lon": 126.9902448,
+      "lat": 37.5342515,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "crossing:island": "no",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "12451306786",
+      "lon": 126.9888811,
+      "lat": 37.5341851,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "crossing:island": "no",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "12451306792",
+      "lon": 126.9845982,
+      "lat": 37.5349248,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "crossing:island": "no",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "12451306795",
+      "lon": 126.9808635,
+      "lat": 37.5347782,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "crossing:island": "no",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "12451306798",
+      "lon": 126.9790628,
+      "lat": 37.5346994,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "crossing:island": "no",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "12451306801",
+      "lon": 126.9759148,
+      "lat": 37.5346033,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "crossing:island": "no",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "12857535989",
+      "lon": 127.0066748,
+      "lat": 37.547623,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "crossing:markings": "yes",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "12857535999",
+      "lon": 127.0067055,
+      "lat": 37.547788,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "crossing:markings": "zebra:double",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "12987275176",
+      "lon": 126.9828455,
+      "lat": 37.4718743,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "crossing:markings": "yes",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "12997876953",
+      "lon": 127.0033882,
+      "lat": 37.5471353,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "12997876954",
+      "lon": 127.0032517,
+      "lat": 37.5473884,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "13199967206",
+      "lon": 127.0156429,
+      "lat": 37.5728449,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "crossing:island": "no",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "13199967208",
+      "lon": 127.0154782,
+      "lat": 37.5729033,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "13199967209",
+      "lon": 127.0154127,
+      "lat": 37.5730356,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "13204036881",
+      "lon": 127.0158547,
+      "lat": 37.5700935,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "13204036884",
+      "lon": 127.0156435,
+      "lat": 37.5700087,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "13204036887",
+      "lon": 127.0156774,
+      "lat": 37.569614,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "13204084924",
+      "lon": 127.0121972,
+      "lat": 37.5721012,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "13204084925",
+      "lon": 127.0122642,
+      "lat": 37.5719596,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "13342443010",
+      "lon": 126.984981,
+      "lat": 37.3778177,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "13556289186",
+      "lon": 126.9865968,
+      "lat": 37.5012409,
+      "original_tags": {
+        "crossing:island": "no",
+        "crossing:signals": "yes",
+        "highway": "crossing",
+        "kerb": "lowered",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "13556289187",
+      "lon": 126.9866756,
+      "lat": 37.5011375,
+      "original_tags": {
+        "crossing:island": "no",
+        "crossing:signals": "yes",
+        "highway": "crossing",
+        "kerb": "lowered",
+        "tactile_paving": "yes"
+      }
+    },
+    {
+      "osm_node_id": "13588814698",
+      "lon": 127.0013243,
+      "lat": 37.504976,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "13588814700",
+      "lon": 127.0012863,
+      "lat": 37.5051167,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "13588831719",
+      "lon": 126.9994798,
+      "lat": 37.5081753,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "13716634144",
+      "lon": 127.009646,
+      "lat": 37.5163321,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "crossing:island": "no",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "13720677167",
+      "lon": 127.007905,
+      "lat": 37.4411063,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "13732389928",
+      "lon": 126.9828025,
+      "lat": 37.5686048,
+      "original_tags": {
+        "crossing:signals": "yes",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "13735062345",
+      "lon": 126.9902367,
+      "lat": 37.5774051,
+      "original_tags": {
+        "crossing:signals": "yes",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "13822924090",
+      "lon": 127.0079078,
+      "lat": 37.5335324,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "13971401815",
+      "lon": 126.9901622,
+      "lat": 37.5772446,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "crossing:island": "no",
+        "crossing:signals": "yes",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "14069103351",
+      "lon": 126.988833,
+      "lat": 37.3130123,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "14069103352",
+      "lon": 126.9889633,
+      "lat": 37.3130622,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "14152483254",
+      "lon": 127.0153532,
+      "lat": 37.5440311,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    },
+    {
+      "osm_node_id": "14205480646",
+      "lon": 127.0023498,
+      "lat": 37.5415876,
+      "original_tags": {
+        "crossing": "traffic_signals",
+        "highway": "crossing"
+      }
+    }
+  ],
+  "reviewed_midblock_insertions": [
+    {
+      "id": "sinbanpo_crossing",
+      "way_id": "1252436244",
+      "lon": 126.98968650350119,
+      "lat": 37.501977877602364,
+      "source_record_ids": [
+        "03-0000052102",
+        "03-0000052103",
+        "03-0000049084"
+      ],
+      "source_node_pair": [
+        "11641428787",
+        "13049399778"
+      ],
+      "source_segment_index": 1,
+      "segment_fraction": 0.8182890603816785,
+      "reason": "Three ordinary vehicle-signal mounts have the on-route, surface-level Sinbanpo-ro carriageway as their nearest passenger road (5.29/5.29/3.50 m). Three further records belong closer to the opposite surface carriageway and are excluded from this projection median.",
+      "projection_method": "Median of the listed source records projected onto the original OSM way in EPSG:5186; source coordinates remain unchanged",
+      "projected_source_records": [
+        {
+          "id": "03-0000052102",
+          "distance_to_original_way_m": 5.293487921461496,
+          "offset_m": 92.0947819353243
+        },
+        {
+          "id": "03-0000052103",
+          "distance_to_original_way_m": 5.293487921461496,
+          "offset_m": 92.0947819353243
+        },
+        {
+          "id": "03-0000049084",
+          "distance_to_original_way_m": 3.4897077316786858,
+          "offset_m": 113.51198558106745
+        }
+      ],
+      "represents": "Derived SUMO control location, not a surveyed stop line or the exact signal-head coordinate",
+      "derived_node_id": "9390257261957",
+      "reused_original_node": false
+    },
+    {
+      "id": "ilwolro_crossing",
+      "way_id": "561229641",
+      "lon": 126.9722458248541,
+      "lat": 37.29069745981428,
+      "source_record_ids": [
+        "national:national_standard_page4:7212"
+      ],
+      "source_node_pair": [
+        "452394408",
+        "520991292"
+      ],
+      "source_segment_index": 0,
+      "segment_fraction": 0.5570566736006126,
+      "reason": "Official ROAD_ROUTE_NM is Ilwol-ro, matching the nearest on-route surface road. Distances are 8.31 m to the SUMO route lane and 9.91 m to the original OSM centerline; no nearer ramp or grade-separated road was found.",
+      "projection_method": "Median of the listed source records projected onto the original OSM way in EPSG:5186; source coordinates remain unchanged",
+      "projected_source_records": [
+        {
+          "id": "national:national_standard_page4:7212",
+          "distance_to_original_way_m": 9.91445334136182,
+          "offset_m": 206.40366328346278
+        }
+      ],
+      "represents": "Derived SUMO control location, not a surveyed stop line or the exact signal-head coordinate",
+      "derived_node_id": "9509679425795",
+      "reused_original_node": false
+    }
+  ]
+}

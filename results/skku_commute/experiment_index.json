@@ -1,0 +1,74 @@
+{
+  "scenario": "SKKU Seoul to Suwon with OSM buildings and evidence-based signal locations",
+  "controller": "SUMO IDM, built-in safety active; no learned policy",
+  "scenario_manifest": "env/skku_commute/manifest.json",
+  "scenario_manifest_sha256": "6614fbb7cdfc6aa25d119fe16419f410a8c509e83340e14fb4e44faf62634368",
+  "network_sha256": "6ac70300dfe4676accf2dd1146f3bdb6847e20cf6a4c1e7bd02651006da62b6d",
+  "signal_program_audit": "results/skku_commute/signal_program_audit.json",
+  "signal_program_audit_sha256": "a9e4ca17b4be53daba5097dd1478bf10f588ac0d2671a21721f98e0c6682da89",
+  "placement_review": "env/skku_commute/signals_source/placement_review.json",
+  "placement_review_sha256": "09082adb728fae8c9776a864a71a0231f2d87ed868ab88516a7daadb6690aeb8",
+  "prior_road_only_snapshot": "results/skku_commute/road_only_snapshot",
+  "final_validations": [
+    {
+      "id": "buildings_signals_final_seed42",
+      "summary": "results/skku_commute/buildings_signals_final_seed42/summary.json",
+      "summary_sha256": "30c67ba1caa2581be1d64008e9d9aafa669fcdebf401744fb072ca9fb9793530",
+      "gui": false,
+      "seed": 42,
+      "background": true,
+      "distance_m": 38347.25,
+      "duration_s": 3496.5,
+      "waiting_time_s": 780.5,
+      "collision_report_count": 0,
+      "teleport_event_count": 0,
+      "passed": true
+    },
+    {
+      "id": "buildings_signals_final_seed43",
+      "summary": "results/skku_commute/buildings_signals_final_seed43/summary.json",
+      "summary_sha256": "e49eef644d5f46ac5046c155f4260fe119e89390f20a110f7ec2bd6907b33355",
+      "gui": false,
+      "seed": 43,
+      "background": true,
+      "distance_m": 38347.25,
+      "duration_s": 3496.5,
+      "waiting_time_s": 792.0,
+      "collision_report_count": 0,
+      "teleport_event_count": 0,
+      "passed": true
+    },
+    {
+      "id": "buildings_signals_final_gui_seed42",
+      "summary": "results/skku_commute/buildings_signals_final_gui_seed42/summary.json",
+      "summary_sha256": "fbfc5ce72133d339ba0efe558b4c096bccd5622b041b13eb958f849390c7b28c",
+      "gui": true,
+      "seed": 42,
+      "background": true,
+      "distance_m": 38347.25,
+      "duration_s": 3496.5,
+      "waiting_time_s": 780.5,
+      "collision_report_count": 0,
+      "teleport_event_count": 0,
+      "passed": true
+    }
+  ],
+  "scripts_sha256": {
+    "download_skku_corridor.py": "dd7fda1df9d9df95b79cb344f51628dfe99a62f8b8636ac5e0f73a64bdee69de",
+    "download_skku_buildings.py": "99fd428be4f109e1c08b58d8cf72b17b41d0165a1f5112f9227f90ef24d96417",
+    "prepare_seoul_signals.py": "0175be47619796a220796adcae21b3da624599f0f665f29e72b10cd9f6043e4c",
+    "prepare_gyeonggi_signals.py": "316490aaf886fdabe78560d4fb8329f0d8720babe867249f9ba21c89247659cd",
+    "build_skku_commute.py": "bed9b6924d1dc22f7dc89408ce482e0744cc33de8a6415d53ce64d9229b7ff9a",
+    "build_skku_buildings.py": "4d05a830ee08fb1f4ecff0fcedacdaeeec25232e06c83b084291424cfe713d84",
+    "build_skku_signals.py": "317f81fffa17cb8814eddcff2b7f4daae1d64eeefacb22a5234f8f961b902969",
+    "run_skku_commute.py": "4f53aeb3c6a8d734cedbe4d73b862d3d0027e83ca99fe599221f76a618f99b07"
+  },
+  "limitations": [
+    "Archived facility positions and OSM are incomplete and have different dates; not certified complete current real-world coverage",
+    "Stop-line projection and SUMO programs are derived; programs and demand are synthetic",
+    "Buildings are 2D visual polygons, not collision or sensor geometry",
+    "Smoke validations, not learned-policy or safety certification"
+  ],
+  "signal_placement_audit": "results/skku_commute/signal_placement_audit.json",
+  "signal_placement_audit_sha256": "858e232a342935ac43a63069e7971cffd412d0be6346e8edc543ec2ec4d47740"
+}

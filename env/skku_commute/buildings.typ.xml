@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<polygonTypes>
+  <polygonType id="building" name="building" color="0.73,0.76,0.78" layer="-4.0" fill="force" discard="false" />
+  <polygonType id="building.university" name="building.education" color="0.78,0.73,0.64" layer="-4.0" fill="force" discard="false" />
+  <polygonType id="building.school" name="building.education" color="0.78,0.73,0.64" layer="-4.0" fill="force" discard="false" />
+  <polygonType id="building.college" name="building.education" color="0.78,0.73,0.64" layer="-4.0" fill="force" discard="false" />
+  <polygonType id="building.courtyard_mask" name="courtyard_mask" color="1,1,1" layer="-3.9" fill="force" discard="false" />
+</polygonTypes>

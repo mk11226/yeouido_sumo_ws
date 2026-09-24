@@ -1,0 +1,161 @@
+{
+  "label": "diagnostic_validation_only_not_held_out_test",
+  "controller": "PPO deterministic predictions without overrides",
+  "route_id": "northeast_to_south",
+  "validation_seed": 10003,
+  "checkpoint_file": "best.pt (copied before evaluation)",
+  "checkpoint_sha256": "c1197630edaef258fe7d5ddf7296439de54d3e36a9a94fe878b4f6309921f331",
+  "checkpoint_timesteps": 184320,
+  "strategic_route_assist": false,
+  "safety_shield_enabled": true,
+  "vehicle_modes": {
+    "speed_mode": 31,
+    "lane_change_mode": 512
+  },
+  "command_mapping": {
+    "1": "left",
+    "0": "keep",
+    "-1": "right"
+  },
+  "lane_command_counts": {
+    "0": 452,
+    "-1": 27,
+    "1": 0
+  },
+  "wrong_lane_command_counts": {
+    "0": 69,
+    "-1": 27,
+    "1": 0
+  },
+  "wrong_lane_steps": 96,
+  "mean_left_keep_right_probabilities_when_wrong": [
+    0.20245763954396048,
+    0.43555293045938015,
+    0.36198943356672925
+  ],
+  "wrong_lane_samples": [
+    {
+      "step": 182,
+      "lane": "1455534434_1",
+      "offset": -1,
+      "speed": 9.853708,
+      "left_keep_right_probabilities": [
+        0.19476597011089325,
+        0.6784113645553589,
+        0.12682265043258667
+      ],
+      "chosen_action": [
+        0.8883797526359558,
+        0.0
+      ]
+    },
+    {
+      "step": 212,
+      "lane": "1455534434_1",
+      "offset": -1,
+      "speed": 0.0,
+      "left_keep_right_probabilities": [
+        0.26425448060035706,
+        0.39105701446533203,
+        0.3446884751319885
+      ],
+      "chosen_action": [
+        0.6197464466094971,
+        0.0
+      ]
+    },
+    {
+      "step": 253,
+      "lane": "632698296_1",
+      "offset": -1,
+      "speed": 0.7736134293079377,
+      "left_keep_right_probabilities": [
+        0.1280852109193802,
+        0.4996184706687927,
+        0.3722962737083435
+      ],
+      "chosen_action": [
+        0.5957598090171814,
+        0.0
+      ]
+    },
+    {
+      "step": 283,
+      "lane": "632698296_1",
+      "offset": -1,
+      "speed": 0.0,
+      "left_keep_right_probabilities": [
+        0.12691031396389008,
+        0.4140656590461731,
+        0.45902398228645325
+      ],
+      "chosen_action": [
+        0.4684397280216217,
+        -1.0
+      ]
+    }
+  ],
+  "actual_lane_changes": [
+    {
+      "step": 291,
+      "from_lane": "632698296_1",
+      "to_lane": "632698296_0",
+      "offset_before": -1,
+      "offset_after": 0,
+      "command": -1.0,
+      "left_keep_right_probabilities_before": [
+        0.09508111327886581,
+        0.4377386271953583,
+        0.4671802520751953
+      ],
+      "alignment_reward": 0.5,
+      "misalignment_penalty_after": 0.0
+    }
+  ],
+  "steps": 479,
+  "episode_return": 44.166482647850394,
+  "terminal_info": {
+    "route_id": "northeast_to_south",
+    "route_index": 3,
+    "seed": 10003,
+    "speed": null,
+    "gap": null,
+    "collided": false,
+    "arrived": true,
+    "failure_reason": null,
+    "route_length": 835.0500000000001,
+    "route_distance": 934.2140429640571,
+    "route_progress": 1.0,
+    "wait_time": 142.5,
+    "elapsed_time": 239.5,
+    "lane_changes": 1,
+    "intervention_count": 332,
+    "lane_intervention_count": 26,
+    "longitudinal_intervention_count": 332,
+    "intervention_rate": 0.6931106471816284,
+    "red_light_crossing_candidates": 0,
+    "safety_shield_enabled": true,
+    "strategic_route_assist": false,
+    "sumo_log": "/home/mk/bmil_ws/results/hyehwa/ppo_routecost_300k_seed42/sumo_logs/sumo_330e090605_00001_seed10003.log",
+    "timeout": false,
+    "lane_change": 0,
+    "lane_change_applied": false,
+    "lane_change_requested": false,
+    "lane_intervention": false,
+    "requested_acceleration": 1.4084787487983703,
+    "requested_speed": 14.095571999999999,
+    "actual_acceleration": null,
+    "longitudinal_intervention": false,
+    "safety_intervention": false,
+    "waiting_red": false,
+    "route_alignment_reward": 0.0,
+    "route_misalignment_penalty": 0.0,
+    "progress_m": 7.047785999999999,
+    "terminated": true,
+    "truncated": false,
+    "episode": {
+      "r": 44.166482647850394,
+      "l": 479
+    }
+  }
+}

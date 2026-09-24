@@ -1,0 +1,546 @@
+{
+  "split": "held_out_test",
+  "seed_base": 20000,
+  "episodes_per_policy": 80,
+  "routes": [
+    "north_to_northeast",
+    "north_to_south",
+    "northeast_to_north",
+    "northeast_to_south",
+    "northeast_to_southwest",
+    "south_to_north",
+    "south_to_northeast",
+    "southwest_to_northeast"
+  ],
+  "route_schedule": "sorted routes cyclically, identical seed + route per controller",
+  "selected_checkpoint": "/home/mk/bmil_ws/results/hyehwa/ppo_routecost_300k_seed42/best.pt",
+  "checkpoint_metadata": {
+    "checkpoint": "best.pt",
+    "timesteps": 245760,
+    "saved_at_utc": "2026-09-23T04:09:55.554001+00:00",
+    "validation": {
+      "episodes": 8,
+      "collision_rate": 0.0,
+      "collision_rate_wilson95": [
+        0,
+        0.3244156195108769
+      ],
+      "success_rate": 1.0,
+      "timeout_rate": 0.0,
+      "other_failure_rate": 0.0,
+      "mean_return": 48.67714369912392,
+      "std_return": 4.839950007737677,
+      "mean_steps": 440.5,
+      "mean_speed": 4.652433150428143,
+      "mean_lane_changes": 0.125,
+      "safety_intervention_rate": 0.6291146424517594,
+      "min_gap": 0.001000000000000334
+    },
+    "selection_rule": "maximize validation success_rate, then mean_return",
+    "architecture_config": "config.json",
+    "weights_only": true
+  },
+  "policies": {
+    "initial_untrained": {
+      "episodes": 80,
+      "collision_rate": 0.0,
+      "collision_rate_wilson95": [
+        0,
+        0.0458197362645751
+      ],
+      "success_rate": 0.0,
+      "timeout_rate": 1.0,
+      "other_failure_rate": 0.0,
+      "mean_return": -15.706514229153049,
+      "std_return": 0.9113931378161979,
+      "mean_steps": 1200.0,
+      "mean_speed": 0.01631229181020799,
+      "mean_lane_changes": 0.0,
+      "safety_intervention_rate": 0.0,
+      "min_gap": 0.2597700080224996
+    },
+    "sumo_baseline": {
+      "episodes": 80,
+      "collision_rate": 0.0,
+      "collision_rate_wilson95": [
+        0,
+        0.0458197362645751
+      ],
+      "success_rate": 0.9875,
+      "timeout_rate": 0.0125,
+      "other_failure_rate": 0.0,
+      "mean_return": 49.107506483050074,
+      "std_return": 6.640187655365089,
+      "mean_steps": 396.5,
+      "mean_speed": 5.138153659205896,
+      "mean_lane_changes": 0.75,
+      "safety_intervention_rate": 0.0,
+      "min_gap": 0.0010253738867618267
+    },
+    "ppo_best": {
+      "episodes": 80,
+      "collision_rate": 0.0,
+      "collision_rate_wilson95": [
+        0,
+        0.0458197362645751
+      ],
+      "success_rate": 0.9875,
+      "timeout_rate": 0.0125,
+      "other_failure_rate": 0.0,
+      "mean_return": 47.98320972442797,
+      "std_return": 7.146973861197967,
+      "mean_steps": 428.475,
+      "mean_speed": 4.752457713685954,
+      "mean_lane_changes": 0.125,
+      "safety_intervention_rate": 0.5987805589590991,
+      "min_gap": 0.001000000000000334
+    }
+  },
+  "by_route": {
+    "initial_untrained": {
+      "north_to_northeast": {
+        "episodes": 10,
+        "collision_rate": 0.0,
+        "collision_rate_wilson95": [
+          0,
+          0.2775401687666166
+        ],
+        "success_rate": 0.0,
+        "timeout_rate": 1.0,
+        "other_failure_rate": 0.0,
+        "mean_return": -15.998609186655688,
+        "std_return": 0.002978741546697373,
+        "mean_steps": 1200.0,
+        "mean_speed": 8.235403459845351e-05,
+        "mean_lane_changes": 0.0,
+        "safety_intervention_rate": 0.0,
+        "min_gap": 4.161716816854598
+      },
+      "north_to_south": {
+        "episodes": 10,
+        "collision_rate": 0.0,
+        "collision_rate_wilson95": [
+          0,
+          0.2775401687666166
+        ],
+        "success_rate": 0.0,
+        "timeout_rate": 1.0,
+        "other_failure_rate": 0.0,
+        "mean_return": -15.999468442348354,
+        "std_return": 0.00021449162769954073,
+        "mean_steps": 1200.0,
+        "mean_speed": 3.4488369829341534e-05,
+        "mean_lane_changes": 0.0,
+        "safety_intervention_rate": 0.0,
+        "min_gap": 59.703336401464746
+      },
+      "northeast_to_north": {
+        "episodes": 10,
+        "collision_rate": 0.0,
+        "collision_rate_wilson95": [
+          0,
+          0.2775401687666166
+        ],
+        "success_rate": 0.0,
+        "timeout_rate": 1.0,
+        "other_failure_rate": 0.0,
+        "mean_return": -13.718241778406417,
+        "std_return": 1.457221300550094,
+        "mean_steps": 1200.0,
+        "mean_speed": 0.12677758489033553,
+        "mean_lane_changes": 0.0,
+        "safety_intervention_rate": 0.0,
+        "min_gap": 0.2597700080224996
+      },
+      "northeast_to_south": {
+        "episodes": 10,
+        "collision_rate": 0.0,
+        "collision_rate_wilson95": [
+          0,
+          0.2775401687666166
+        ],
+        "success_rate": 0.0,
+        "timeout_rate": 1.0,
+        "other_failure_rate": 0.0,
+        "mean_return": -15.991276023777804,
+        "std_return": 0.004193823573732484,
+        "mean_steps": 1200.0,
+        "mean_speed": 0.0004957281416553541,
+        "mean_lane_changes": 0.0,
+        "safety_intervention_rate": 0.0,
+        "min_gap": 81.42023621960966
+      },
+      "northeast_to_southwest": {
+        "episodes": 10,
+        "collision_rate": 0.0,
+        "collision_rate_wilson95": [
+          0,
+          0.2775401687666166
+        ],
+        "success_rate": 0.0,
+        "timeout_rate": 1.0,
+        "other_failure_rate": 0.0,
+        "mean_return": -15.944786842625948,
+        "std_return": 0.03320790639787136,
+        "mean_steps": 1200.0,
+        "mean_speed": 0.0030812101408437247,
+        "mean_lane_changes": 0.0,
+        "safety_intervention_rate": 0.0,
+        "min_gap": 47.96050380204794
+      },
+      "south_to_north": {
+        "episodes": 10,
+        "collision_rate": 0.0,
+        "collision_rate_wilson95": [
+          0,
+          0.2775401687666166
+        ],
+        "success_rate": 0.0,
+        "timeout_rate": 1.0,
+        "other_failure_rate": 0.0,
+        "mean_return": -16.000048551419006,
+        "std_return": 3.4373919420006333e-05,
+        "mean_steps": 1200.0,
+        "mean_speed": 1.6114408047845549e-06,
+        "mean_lane_changes": 0.0,
+        "safety_intervention_rate": 0.0,
+        "min_gap": 28.336189082042324
+      },
+      "south_to_northeast": {
+        "episodes": 10,
+        "collision_rate": 0.0,
+        "collision_rate_wilson95": [
+          0,
+          0.2775401687666166
+        ],
+        "success_rate": 0.0,
+        "timeout_rate": 1.0,
+        "other_failure_rate": 0.0,
+        "mean_return": -16.00004191560732,
+        "std_return": 3.176122995665229e-05,
+        "mean_steps": 1200.0,
+        "mean_speed": 1.6722779015253765e-06,
+        "mean_lane_changes": 0.0,
+        "safety_intervention_rate": 0.0,
+        "min_gap": 15.228746249131788
+      },
+      "southwest_to_northeast": {
+        "episodes": 10,
+        "collision_rate": 0.0,
+        "collision_rate_wilson95": [
+          0,
+          0.2775401687666166
+        ],
+        "success_rate": 0.0,
+        "timeout_rate": 1.0,
+        "other_failure_rate": 0.0,
+        "mean_return": -15.999641092383865,
+        "std_return": 0.0002637113620646936,
+        "mean_steps": 1200.0,
+        "mean_speed": 2.3685185695224694e-05,
+        "mean_lane_changes": 0.0,
+        "safety_intervention_rate": 0.0,
+        "min_gap": 16.02216170251446
+      }
+    },
+    "sumo_baseline": {
+      "north_to_northeast": {
+        "episodes": 10,
+        "collision_rate": 0.0,
+        "collision_rate_wilson95": [
+          0,
+          0.2775401687666166
+        ],
+        "success_rate": 0.9,
+        "timeout_rate": 0.1,
+        "other_failure_rate": 0.0,
+        "mean_return": 47.633087331258196,
+        "std_return": 14.01204194978482,
+        "mean_steps": 683.7,
+        "mean_speed": 3.1095165838955547,
+        "mean_lane_changes": 0.4,
+        "safety_intervention_rate": 0.0,
+        "min_gap": 0.0010257019007928747
+      },
+      "north_to_south": {
+        "episodes": 10,
+        "collision_rate": 0.0,
+        "collision_rate_wilson95": [
+          0,
+          0.2775401687666166
+        ],
+        "success_rate": 1.0,
+        "timeout_rate": 0.0,
+        "other_failure_rate": 0.0,
+        "mean_return": 45.40054981504341,
+        "std_return": 0.08148678913547881,
+        "mean_steps": 409.3,
+        "mean_speed": 4.304578596953783,
+        "mean_lane_changes": 0.7,
+        "safety_intervention_rate": 0.0,
+        "min_gap": 0.0010268614845596602
+      },
+      "northeast_to_north": {
+        "episodes": 10,
+        "collision_rate": 0.0,
+        "collision_rate_wilson95": [
+          0,
+          0.2775401687666166
+        ],
+        "success_rate": 1.0,
+        "timeout_rate": 0.0,
+        "other_failure_rate": 0.0,
+        "mean_return": 48.56801575732779,
+        "std_return": 0.058037358160974425,
+        "mean_steps": 279.3,
+        "mean_speed": 7.068294944143679,
+        "mean_lane_changes": 0.0,
+        "safety_intervention_rate": 0.0,
+        "min_gap": 0.0010338170460499896
+      },
+      "northeast_to_south": {
+        "episodes": 10,
+        "collision_rate": 0.0,
+        "collision_rate_wilson95": [
+          0,
+          0.2775401687666166
+        ],
+        "success_rate": 1.0,
+        "timeout_rate": 0.0,
+        "other_failure_rate": 0.0,
+        "mean_return": 46.765864275615684,
+        "std_return": 0.38894557043351896,
+        "mean_steps": 345.8,
+        "mean_speed": 5.38680579971301,
+        "mean_lane_changes": 1.5,
+        "safety_intervention_rate": 0.0,
+        "min_gap": 0.0010332819442737673
+      },
+      "northeast_to_southwest": {
+        "episodes": 10,
+        "collision_rate": 0.0,
+        "collision_rate_wilson95": [
+          0,
+          0.2775401687666166
+        ],
+        "success_rate": 1.0,
+        "timeout_rate": 0.0,
+        "other_failure_rate": 0.0,
+        "mean_return": 56.35000916049999,
+        "std_return": 0.33137092482688,
+        "mean_steps": 319.0,
+        "mean_speed": 7.824374840566035,
+        "mean_lane_changes": 1.8,
+        "safety_intervention_rate": 0.0,
+        "min_gap": 19.503899900138492
+      },
+      "south_to_north": {
+        "episodes": 10,
+        "collision_rate": 0.0,
+        "collision_rate_wilson95": [
+          0,
+          0.2775401687666166
+        ],
+        "success_rate": 1.0,
+        "timeout_rate": 0.0,
+        "other_failure_rate": 0.0,
+        "mean_return": 45.57590990594325,
+        "std_return": 0.1218607948121177,
+        "mean_steps": 430.4,
+        "mean_speed": 4.126824536398575,
+        "mean_lane_changes": 0.0,
+        "safety_intervention_rate": 0.0,
+        "min_gap": 0.001026950062623655
+      },
+      "south_to_northeast": {
+        "episodes": 10,
+        "collision_rate": 0.0,
+        "collision_rate_wilson95": [
+          0,
+          0.2775401687666166
+        ],
+        "success_rate": 1.0,
+        "timeout_rate": 0.0,
+        "other_failure_rate": 0.0,
+        "mean_return": 45.81984267927227,
+        "std_return": 0.09512974814236518,
+        "mean_steps": 301.7,
+        "mean_speed": 5.8667666505425675,
+        "mean_lane_changes": 1.1,
+        "safety_intervention_rate": 0.0,
+        "min_gap": 0.0010306233774199924
+      },
+      "southwest_to_northeast": {
+        "episodes": 10,
+        "collision_rate": 0.0,
+        "collision_rate_wilson95": [
+          0,
+          0.2775401687666166
+        ],
+        "success_rate": 1.0,
+        "timeout_rate": 0.0,
+        "other_failure_rate": 0.0,
+        "mean_return": 56.74677293944006,
+        "std_return": 0.5670105337887713,
+        "mean_steps": 402.8,
+        "mean_speed": 6.291864406991876,
+        "mean_lane_changes": 0.5,
+        "safety_intervention_rate": 0.0,
+        "min_gap": 0.0010253738867618267
+      }
+    },
+    "ppo_best": {
+      "north_to_northeast": {
+        "episodes": 10,
+        "collision_rate": 0.0,
+        "collision_rate_wilson95": [
+          0,
+          0.2775401687666166
+        ],
+        "success_rate": 0.9,
+        "timeout_rate": 0.1,
+        "other_failure_rate": 0.0,
+        "mean_return": 46.72907169833066,
+        "std_return": 14.057834346359304,
+        "mean_steps": 698.9,
+        "mean_speed": 3.039661113835031,
+        "mean_lane_changes": 0.0,
+        "safety_intervention_rate": 0.722993275146659,
+        "min_gap": 0.001000000000000334
+      },
+      "north_to_south": {
+        "episodes": 10,
+        "collision_rate": 0.0,
+        "collision_rate_wilson95": [
+          0,
+          0.2775401687666166
+        ],
+        "success_rate": 1.0,
+        "timeout_rate": 0.0,
+        "other_failure_rate": 0.0,
+        "mean_return": 44.526547738826785,
+        "std_return": 0.4044133069861619,
+        "mean_steps": 412.6,
+        "mean_speed": 4.265846267221417,
+        "mean_lane_changes": 0.0,
+        "safety_intervention_rate": 0.6236063984488609,
+        "min_gap": 0.0010000000000012221
+      },
+      "northeast_to_north": {
+        "episodes": 10,
+        "collision_rate": 0.0,
+        "collision_rate_wilson95": [
+          0,
+          0.2775401687666166
+        ],
+        "success_rate": 1.0,
+        "timeout_rate": 0.0,
+        "other_failure_rate": 0.0,
+        "mean_return": 48.048805566465596,
+        "std_return": 0.6448145231305497,
+        "mean_steps": 279.4,
+        "mean_speed": 7.064660645698734,
+        "mean_lane_changes": 0.0,
+        "safety_intervention_rate": 0.42197566213314247,
+        "min_gap": 0.0010000000000331966
+      },
+      "northeast_to_south": {
+        "episodes": 10,
+        "collision_rate": 0.0,
+        "collision_rate_wilson95": [
+          0,
+          0.2775401687666166
+        ],
+        "success_rate": 1.0,
+        "timeout_rate": 0.0,
+        "other_failure_rate": 0.0,
+        "mean_return": 42.41690215934671,
+        "std_return": 3.820833631267153,
+        "mean_steps": 476.0,
+        "mean_speed": 3.9136846661994182,
+        "mean_lane_changes": 1.0,
+        "safety_intervention_rate": 0.676890756302521,
+        "min_gap": 0.0010000000000331966
+      },
+      "northeast_to_southwest": {
+        "episodes": 10,
+        "collision_rate": 0.0,
+        "collision_rate_wilson95": [
+          0,
+          0.2775401687666166
+        ],
+        "success_rate": 1.0,
+        "timeout_rate": 0.0,
+        "other_failure_rate": 0.0,
+        "mean_return": 56.3629306521273,
+        "std_return": 0.10076689088632886,
+        "mean_steps": 320.4,
+        "mean_speed": 7.786645729977592,
+        "mean_lane_changes": 0.0,
+        "safety_intervention_rate": 0.4235330836454432,
+        "min_gap": null
+      },
+      "south_to_north": {
+        "episodes": 10,
+        "collision_rate": 0.0,
+        "collision_rate_wilson95": [
+          0,
+          0.2775401687666166
+        ],
+        "success_rate": 1.0,
+        "timeout_rate": 0.0,
+        "other_failure_rate": 0.0,
+        "mean_return": 44.848690233313796,
+        "std_return": 0.529334717272875,
+        "mean_steps": 430.1,
+        "mean_speed": 4.126507577747532,
+        "mean_lane_changes": 0.0,
+        "safety_intervention_rate": 0.634736107881888,
+        "min_gap": 0.001000000000005663
+      },
+      "south_to_northeast": {
+        "episodes": 10,
+        "collision_rate": 0.0,
+        "collision_rate_wilson95": [
+          0,
+          0.2775401687666166
+        ],
+        "success_rate": 1.0,
+        "timeout_rate": 0.0,
+        "other_failure_rate": 0.0,
+        "mean_return": 45.0787699461593,
+        "std_return": 0.4482046781850321,
+        "mean_steps": 307.7,
+        "mean_speed": 5.748825495507176,
+        "mean_lane_changes": 0.0,
+        "safety_intervention_rate": 0.6652583685407865,
+        "min_gap": 0.0010000000000074394
+      },
+      "southwest_to_northeast": {
+        "episodes": 10,
+        "collision_rate": 0.0,
+        "collision_rate_wilson95": [
+          0,
+          0.2775401687666166
+        ],
+        "success_rate": 1.0,
+        "timeout_rate": 0.0,
+        "other_failure_rate": 0.0,
+        "mean_return": 55.85395980085366,
+        "std_return": 0.6347951217458482,
+        "mean_steps": 502.7,
+        "mean_speed": 5.040300551213459,
+        "mean_lane_changes": 0.0,
+        "safety_intervention_rate": 0.470260592798886,
+        "min_gap": 0.001000000000000334
+      }
+    }
+  },
+  "wall_seconds": 176.95426306698937,
+  "limitations": [
+    "A single training seed is evaluated.",
+    "SUMO safety assistance remains enabled; intervention rates must accompany collision rates.",
+    "SUMO baseline has no external action requests, so its intervention rate is structurally zero and action-request penalties do not apply.",
+    "OSM road geometry and simulated traffic do not reproduce measured real-world traffic."
+  ]
+}

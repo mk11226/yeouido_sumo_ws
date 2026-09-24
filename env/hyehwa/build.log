@@ -1,0 +1,85 @@
+Success.
+Warning: Discarding unknown compound 'highway.service' in type 'highway.service|service.alley' (first occurrence for edge '167755770').
+Warning: Discarding unusable type 'highway.service|service.alley' (first occurrence for edge '167755770').
+Warning: Discarding unusable type 'waterway.stream' (first occurrence for edge '377289815').
+Warning: Discarding unknown compound 'railway.subway' in type 'railway.subway|usage.main' (first occurrence for edge '379994121').
+Warning: Discarding unknown compound 'usage.main' in type 'railway.subway|usage.main' (first occurrence for edge '379994121').
+Warning: Discarding unusable type 'railway.subway|usage.main' (first occurrence for edge '379994121').
+Warning: Discarding unknown compound 'highway.service' in type 'highway.service|service.parking_aisle' (first occurrence for edge '415938839').
+Warning: Discarding unusable type 'highway.service|service.parking_aisle' (first occurrence for edge '415938839').
+Warning: Discarding unusable type 'waterway.river' (first occurrence for edge '416291900').
+Warning: Discarding unknown compound 'psv' in type 'highway.primary|psv' (first occurrence for edge '517581272').
+Warning: PT line in relation 2894437 with no stops ignored. Probably OSM file is incomplete.
+Warning: PT line in relation 2894443 with no stops ignored. Probably OSM file is incomplete.
+Warning: PT line in relation 2894488 with no stops ignored. Probably OSM file is incomplete.
+Warning: PT line in relation 2894500 with no stops ignored. Probably OSM file is incomplete.
+Warning: PT line in relation 2894535 with no stops ignored. Probably OSM file is incomplete.
+Warning: Ignoring restriction relation '8799118' with unknown from-way.
+Warning: Ignoring restriction relation '8799118' with unknown to-way.
+Warning: Ignoring restriction relation '8799119' with unknown from-way.
+Warning: Ignoring restriction relation '8799119' with unknown to-way.
+Warning: from-edge '1455534421' of restriction relation could not be determined
+Warning: Ignoring restriction relation '19910979'.
+Warning: from-edge '1455534421' of restriction relation could not be determined
+Warning: Ignoring restriction relation '19910980'.
+Warning: No way found for reference '1455534418' in relation '19910981'
+Warning: No way found for reference '1455534418' in relation '19910981'
+Warning: Ignoring restriction relation '19910981' with unknown from-way.
+Warning: Ignoring restriction relation '19910981' with unknown to-way.
+Warning: from-edge '415938839' of restriction relation could not be determined
+Warning: Ignoring restriction relation '19910983'.
+Warning: No way found for reference '1455534415' in relation '19910984'
+Warning: No way found for reference '1455534415' in relation '19910984'
+Warning: Ignoring restriction relation '19910984' with unknown from-way.
+Warning: Ignoring restriction relation '19910984' with unknown to-way.
+Warning: No way found for reference '348537582' in relation '19910986'
+Warning: Ignoring restriction relation '19910986' with unknown from-way.
+Warning: Ignoring restriction relation '19910986' with unknown to-way.
+Warning: from-edge '1455534420' of restriction relation could not be determined
+Warning: Ignoring restriction relation '19910989'.
+Warning: from-edge '1455534420' of restriction relation could not be determined
+Warning: Ignoring restriction relation '19910992'.
+Warning: direction of restriction relation could not be determined
+Warning: direction of restriction relation could not be determined
+Warning: direction of restriction relation could not be determined
+Warning: direction of restriction relation could not be determined
+Warning: direction of restriction relation could not be determined
+Warning: Could not find corresponding edge or compatible lane for free-floating pt stop '357828217' (삼선교.한성대학교.조소암활동터(중)). Thus, it will be removed!
+Warning: Could not find corresponding edge or compatible lane for free-floating pt stop '357858928' (삼선교.한성대학교(중)). Thus, it will be removed!
+Warning: Could not find corresponding edge or compatible lane for free-floating pt stop '357862875' (경신중고입구). Thus, it will be removed!
+Warning: Could not find corresponding edge or compatible lane for free-floating pt stop '357862877' (성북1동사무소동구여상). Thus, it will be removed!
+Warning: Could not find corresponding edge or compatible lane for free-floating pt stop '357862995' (성북초교). Thus, it will be removed!
+Warning: Cannot revise pt stop localization for pt line '10727605', which has no route edges. Ignoring!
+Warning: Removed invalid stop '355173148' from line '10727605'.
+Warning: Removed invalid stop '355173138' from line '10727605'.
+Warning: Removed invalid stop '7106108484' from line '10727605'.
+Warning: Removed invalid stop '3835922764' from line '10727605'.
+Warning: Removed invalid stop '353186868' from line '10727605'.
+Warning: Cannot revise pt stop localization for pt line '10727606', which has no route edges. Ignoring!
+Warning: Cannot revise pt stop localization for pt line '10727607', which has no route edges. Ignoring!
+Warning: Cannot revise pt stop localization for pt line '10727608', which has no route edges. Ignoring!
+Warning: Cannot revise pt stop localization for pt line '10947038', which has no route edges. Ignoring!
+Warning: Reducing junction cluster 13449688037,1939144083,1939144085,287319177,436837770,6408504592 (parallel outgoing 1455534434,219073859).
+Warning: Found angle of 125.51 degrees at edge '1455536608', segment 2.
+Warning: Removing pt stop '287321417' on non existing edge ''.
+Warning: Removing pt stop '353186868' on non existing edge ''.
+Warning: Removing pt stop '355173138' on non existing edge ''.
+Warning: Removing pt stop '355173148' on non existing edge ''.
+Warning: Removing pt stop '355173201' on non existing edge ''.
+Warning: Removed 16 pt stops because they could not be assigned to the network
+Warning: 8 total messages of type: Cannot revise pt stop localization for pt line '%', which has no route edges. Ignoring!
+Warning: 15 total messages of type: Could not find corresponding edge or compatible lane for free-floating pt stop '%' (%). Thus, it will be removed!
+Warning: 6 total messages of type: Discarding unknown compound '%' in type '%' (first occurrence for edge '%').
+Warning: 7 total messages of type: Discarding unusable type '%' (first occurrence for edge '%').
+Warning: 16 total messages of type: Ignoring restriction relation '%' with unknown from-way.
+Warning: 24 total messages of type: Ignoring restriction relation '%' with unknown to-way.
+Warning: 15 total messages of type: Ignoring restriction relation '%'.
+Warning: 34 total messages of type: No way found for reference '%' in relation '%'
+Warning: 36 total messages of type: PT line in relation % with no stops ignored. Probably OSM file is incomplete.
+Warning: 116 total messages of type: Removed invalid stop '%' from line '%'.
+Warning: 16 total messages of type: Removing pt stop '%' on non existing edge '%'.
+Warning: 7 total messages of type: direction of restriction relation could not be determined%
+Warning: 8 total messages of type: from-edge '%' of restriction relation could not be determined
+
+Success.
+Warning: Found angle of 125.51 degrees at edge '1455536608', segment 2.

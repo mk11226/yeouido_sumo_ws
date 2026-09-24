@@ -35,6 +35,21 @@
 
 - [강화학습 기반 자율주행 의사결정 모델 학습](./project_materials/4_Model_Training_RL.md)
 
+### 혜화로터리 실제 지도 기반 실험
+
+- [환경 구축·PPO 학습·평가 결과 및 재실행 방법](./project_materials/5_Hyehwa_RL_구축_학습_결과.md)
+- [혜화로터리 도로와 8개 주행 경로](./env/hyehwa/network.png)
+- 도로 생성: `build_hyehwa.py`, 교차로 환경: `env/hyehwa_env.py`, 학습·평가: `train_hyehwa.py`
+- OSM 도로 형상을 사용하며 신호·교통량은 실험용 설정입니다. 충돌 방지는 SUMO 안전 제어와 함께 동작합니다.
+
+### 성균관대학교 서울 → 수원 캠퍼스 주행 환경
+
+- [약 38.35km 도로 구축·검증 결과 및 실행 방법](./project_materials/6_SKKU_서울_수원_도로환경.md)
+- [현재 환경: 실제 건물·공식 신호 위치 보완 및 검증](./project_materials/7_SKKU_건물_신호등_보완.md)
+- [도심·자동차전용도로·수원 도착 경로 지도](./env/skku_commute/network.png)
+- GUI 실행: `.venv-hyehwa/bin/python run_skku_commute.py --gui --background --viewport-m 180 --keep-open`
+- 실제 OSM 도로·건물 윤곽과 공식 시설 자료의 신호 위치를 반영했습니다. 신호 시간표·교통량은 실험용이며 현장 전체 시설의 완전한 복제는 아닙니다. 이 경로의 PPO 학습은 아직 수행하지 않았습니다.
+
 ---
 ### 팀별 진행 (3-5명으로 구성, 자율 building)
 
@@ -95,4 +110,3 @@ GUI에서는 ego 차량을 자동 추적하고 확대해서 보여주며, 차량
 
 비율·파라미터는 env/road_config.py의 TRAFFIC["controllers"] 에서 수정.
 항목을 추가/삭제하면 그대로 반영된다 (비율 합은 자동 정규화).
-
