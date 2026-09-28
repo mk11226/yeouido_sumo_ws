@@ -1,6 +1,6 @@
 from types import SimpleNamespace
 import unittest
-from skku_queue_lane_change import QueueLaneChange
+from Road_Environment.control.skku_queue_lane_change import QueueLaneChange
 
 
 class QueueLaneChangeTests(unittest.TestCase):

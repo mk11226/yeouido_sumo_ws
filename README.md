@@ -4,7 +4,7 @@
 
 ## 실행
 
-현재 PC는 시스템에 SUMO가 설치되어 있어 다음 명령으로 실행한다.
+현재 PC는 시스템에 SUMO가 설치되어 있어 다음 명령으로 실행한다. 모든 명령은 저장소 루트에서 입력한다. 다른 위치에 저장소를 받았다면 `cd` 경로를 해당 위치로 바꾼다.
 
 ```bash
 cd /home/mk/bmil_ws
@@ -32,35 +32,70 @@ source .venv-skku/bin/activate
 python run_skku_commute.py --gui --background --viewport-m 400 --keep-open
 ```
 
+## 정리된 도로 구축 도구 실행
+
+일반 주행은 위의 `run_skku_commute.py` 명령을 사용한다. `Road_Environment/`로 옮긴 보조 도구는 저장소 루트에서 모듈 이름으로 실행한다.
+
+```bash
+# 구축 옵션 확인
+python3 -m Road_Environment.build.build_skku_commute --help
+
+# 보관한 지도 자료로 도로 환경 재생성 (현재 시나리오 파일 갱신)
+python3 -m Road_Environment.build.build_skku_commute --skip-convert
+
+# 주행 결과 검사 옵션 확인
+python3 -m Road_Environment.validation.audit_skku_queue --help
+
+# 도로 환경 테스트
+python3 -m unittest discover -s tests -p 'test_skku*.py' -v
+```
+
+각 도구의 위치와 문서 6~13번은 [Road_Environment 안내](Road_Environment/README.md)에 모았다.
+
 ## 파일 구성
 
 | 경로 | 내용 |
 |---|---|
+| [Road_Environment/](Road_Environment/README.md) | 서울→수원 구축 문서 6~13번과 도구 모음 |
+| `Road_Environment/control/` | 정체 감지 및 차로 변경 제어 |
 | `run_skku_commute.py` | 주행·GUI 실행, 차량 추적, 결과 기록 |
-| `download_skku_*.py` | 도로·건물·지명 원본 수집 |
-| `build_skku_*.py` | 도로·건물·신호·지명·차로 보정과 교통 수요 생성 |
-| `prepare_seoul_signals.py`, `prepare_gyeonggi_signals.py` | 서울·경기 신호 원본 정규화 |
-| `audit_skku_toll.py`, `audit_skku_queue.py`, `validate_skku_landmarks.py` | 톨게이트 이용·합류 및 지명 검사 |
+| `Road_Environment/download/` | 도로·건물·지명 원본 수집 |
+| `Road_Environment/build/` | 도로·건물·신호·지명·차로 보정과 교통 수요 생성 |
+| `Road_Environment/prepare/` | 서울·경기 신호 원본 정규화 |
+| `Road_Environment/validation/` | 톨게이트 이용·합류 및 지명 검사 |
 | `env/skku_commute/` | 원본 지도, 현재 SUMO 환경, 보정 기록 |
 | `results/skku_commute/` | 주행 결과, 검증 자료, 단계별 환경·코드 스냅샷 |
 | `tests/test_skku_buildings.py` | 건물 형상 처리 검사 |
 
 ## 구축 기록
 
-톨게이트 설정과 이전 변경 내역은 **[10번 통합 문서](project_materials/10_SKKU_톨게이트_차로이용_합류.md)**를 기준으로 확인한다. 6~9번은 단계별 기록이므로 과거 설정·검증 수치가 포함되어 있다.
+톨게이트 설정과 이전 변경 내역은 **[10번 통합 문서](Road_Environment/10_SKKU_톨게이트_차로이용_합류.md)**를 기준으로 확인한다. 6~9번은 단계별 기록이므로 과거 설정·검증 수치가 포함되어 있다.
 
-- [6. 서울 → 수원 도로 환경](project_materials/6_SKKU_서울_수원_도로환경.md)
-- [7. 건물·신호등 보완](project_materials/7_SKKU_건물_신호등_보완.md)
-- [8. 한강·지명·정체](project_materials/8_SKKU_한강_지명_정체.md)
-- [9. 본선 차로·교량명 보완](project_materials/9_SKKU_본선_차로_교량명_보완.md)
-- [10. 톨게이트 차로 이용·합류 및 전체 변경 내역](project_materials/10_SKKU_톨게이트_차로이용_합류.md)
+- [6. 서울 → 수원 도로 환경](Road_Environment/6_SKKU_서울_수원_도로환경.md)
+- [7. 건물·신호등 보완](Road_Environment/7_SKKU_건물_신호등_보완.md)
+- [8. 한강·지명·정체](Road_Environment/8_SKKU_한강_지명_정체.md)
+- [9. 본선 차로·교량명 보완](Road_Environment/9_SKKU_본선_차로_교량명_보완.md)
+- [10. 톨게이트 차로 이용·합류 및 전체 변경 내역](Road_Environment/10_SKKU_톨게이트_차로이용_합류.md)
 
-최신 배경 교통 확장은 [11. 양방향·교차로 주변 교통](project_materials/11_SKKU_양방향_교차로_교통.md)을 참고한다.
+최신 배경 교통 확장은 [11. 양방향·교차로 주변 교통](Road_Environment/11_SKKU_양방향_교차로_교통.md)을 참고한다.
 
-2026-09-28에 혜화로터리 전용 환경·문서·학습 결과와 이전 BC/PPO 실습 코드·데이터를 삭제했다. 서울→수원 원본 지도와 주행·검증 결과는 유지했다. 과거 결과 폴더에 보존한 코드와 해시는 당시 실험의 기록이다.
+2026-09-28 정리 과정에서 함께 삭제했던 공용 BC/PPO 실습 코드·데이터·기존 도로 환경은 이전 커밋 `fdd19a3`에서 복구했다. 혜화로터리 전용 자료는 삭제 상태이며, 서울→수원 원본 지도와 주행·검증 결과는 유지했다. 과거 결과 폴더에 보존한 코드와 해시는 당시 실험의 기록이다.
 
 도로 데이터: © OpenStreetMap contributors, [ODbL 및 저작권 안내](https://www.openstreetmap.org/copyright). 신호·건물 등 개별 자료의 출처는 구축 문서와 원본 manifest를 따른다.
 
-역 주변 직진 신호 연장은 [12번 문서](project_materials/12_SKKU_역주변_직진신호_연장.md)를 참고한다.
+역 주변 직진 신호 연장은 [12번 문서](Road_Environment/12_SKKU_역주변_직진신호_연장.md)를 참고한다.
 
-최신 교통·신호·1차로 정체 대응은 [13번 문서](project_materials/13_SKKU_정체수준_주변교통_차로변경.md)를 참고한다.
+최신 교통·신호·1차로 정체 대응은 [13번 문서](Road_Environment/13_SKKU_정체수준_주변교통_차로변경.md)를 참고한다.
+
+
+## 기존 공용 학습·실습 자료
+
+`algorithms/`의 BC·PPO, `utils/`, `train.py`, `train_bc.py`, `collect_pomdp_data.py`, `test.py`, `view_road.py`와 기존 `env/sumo/` 환경을 복구했다. `data/dataset.npz`, `results/bc_0922_1358/`, `results/run_20260907_202220/`의 학습 데이터·모델·기록도 원본 그대로 복구했다. 이 모델은 기존 실습 환경의 결과이며 서울→수원 경로에서 학습한 모델이 아니다.
+
+- [프로젝트 소개](project_materials/0_Project_Introduction.md)
+- [Windows 설치](project_materials/1_SUMO_Windows_Setup.md), [macOS 설치](project_materials/1_SUMO_macOS_AppleSilicon_Setup.md)
+- [기존 도로 환경·POMDP 구성](project_materials/2_Road_Environment_Construction.md)
+- [BC 학습](project_materials/3_Model_Training_BC.md)
+- [강화학습](project_materials/4_Model_Training_RL.md)
+
+`requirements-skku.txt`는 서울→수원 시뮬레이션용 의존성이며 공용 학습 도구 전체의 의존성 목록은 아니다. 학습 도구의 설치·사용법은 위 실습 문서를 따른다.

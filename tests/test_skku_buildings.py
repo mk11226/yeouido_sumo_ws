@@ -4,7 +4,7 @@ import tempfile
 import unittest
 import xml.etree.ElementTree as ET
 
-from build_skku_buildings import assemble_rings, finalize_polygons, make_footprints, polygon_area
+from Road_Environment.build.build_skku_buildings import assemble_rings, finalize_polygons, make_footprints, polygon_area
 
 
 class BuildingGeometryTests(unittest.TestCase):

@@ -26,19 +26,11 @@ import uuid
 import xml.etree.ElementTree as ET
 
 
+from Road_Environment.runtime import prepare_runtime
+
 ROOT = Path(__file__).resolve().parent
 DEFAULT_SCENARIO = ROOT / "env/skku_commute"
 
-
-def prepare_runtime():
-    # Debian/Ubuntu SUMO packages keep Python bindings outside site-packages.
-    for directory in (Path(os.environ.get("SUMO_HOME", "/usr/share/sumo")) / "tools",):
-        if directory.is_dir() and str(directory) not in sys.path:
-            sys.path.append(str(directory))
-    candidates = [Path(sys.executable).parent, ROOT / ".venv-skku/bin"]
-    os.environ["PATH"] = os.pathsep.join(map(str, candidates)) + os.pathsep + os.environ.get("PATH", "")
-    if shutil.which("sumo") is None:
-        raise RuntimeError("SUMO is unavailable; use .venv-skku/bin/python or put SUMO on PATH")
 
 
 def configured_files(config_path, element):
@@ -195,11 +187,11 @@ def run(args):
                         conn.vehicletype.setShapeClass(type_id, "passenger/sedan")
             plan_path = scenario / "queue_lane_change.json"
             if plan_path.exists():
-                from skku_queue_lane_change import QueueLaneChange
+                from Road_Environment.control.skku_queue_lane_change import QueueLaneChange
                 plan = json.loads(plan_path.read_text())
                 if plan.get("enabled"):
                     maneuver = QueueLaneChange(conn, plan)
-                    report["queue_lane_change_source_sha256"] = hashlib.sha256((ROOT / "skku_queue_lane_change.py").read_bytes()).hexdigest()
+                    report["queue_lane_change_source_sha256"] = hashlib.sha256((ROOT / "Road_Environment/control/skku_queue_lane_change.py").read_bytes()).hexdigest()
                     report["input_sha256"][str(plan_path)] = hashlib.sha256(plan_path.read_bytes()).hexdigest()
             report["outcome"] = "running"
             next_progress = 300.0

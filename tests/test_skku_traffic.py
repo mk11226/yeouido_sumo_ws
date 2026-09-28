@@ -4,7 +4,7 @@ from pathlib import Path
 import unittest
 import xml.etree.ElementTree as ET
 
-from run_skku_commute import prepare_runtime
+from Road_Environment.runtime import prepare_runtime
 
 
 class AreaTrafficTests(unittest.TestCase):
