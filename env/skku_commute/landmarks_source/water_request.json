@@ -1,0 +1,5 @@
+{
+  "query": "[out:json][timeout:60];relation(152336);out geom;",
+  "url": "https://overpass-api.de/api/interpreter",
+  "retrieved_utc": "2026-09-24T11:13:31.969068+00:00"
+}

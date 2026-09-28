@@ -1,8 +1,8 @@
 """Preview or validate the Seoul-to-Suwon SKKU route using SUMO's own driver.
 
-    .venv-hyehwa/bin/python run_skku_commute.py
-    .venv-hyehwa/bin/python run_skku_commute.py --background
-    .venv-hyehwa/bin/python run_skku_commute.py --gui --keep-open
+    .venv-skku/bin/python run_skku_commute.py
+    .venv-skku/bin/python run_skku_commute.py --background
+    .venv-skku/bin/python run_skku_commute.py --gui --keep-open
 
 The default isolates vehicle ``ego`` to test route connectivity. --background
 keeps the configuration's original traffic. This script does not load/train PPO.
@@ -31,10 +31,14 @@ DEFAULT_SCENARIO = ROOT / "env/skku_commute"
 
 
 def prepare_runtime():
-    candidates = [Path(sys.executable).parent, ROOT / ".venv-hyehwa/bin"]
+    # Debian/Ubuntu SUMO packages keep Python bindings outside site-packages.
+    for directory in (Path(os.environ.get("SUMO_HOME", "/usr/share/sumo")) / "tools",):
+        if directory.is_dir() and str(directory) not in sys.path:
+            sys.path.append(str(directory))
+    candidates = [Path(sys.executable).parent, ROOT / ".venv-skku/bin"]
     os.environ["PATH"] = os.pathsep.join(map(str, candidates)) + os.pathsep + os.environ.get("PATH", "")
     if shutil.which("sumo") is None:
-        raise RuntimeError("SUMO is unavailable; use .venv-hyehwa/bin/python or put SUMO on PATH")
+        raise RuntimeError("SUMO is unavailable; use .venv-skku/bin/python or put SUMO on PATH")
 
 
 def configured_files(config_path, element):
@@ -57,6 +61,7 @@ def isolate_ego(route_files, target):
                 if ego is not None:
                     raise ValueError("Multiple vehicles with id='ego' occur in configured routes")
                 ego = copy.deepcopy(element)
+                ego.set("depart", "0")
     if ego is None:
         raise ValueError("Expected an explicit <vehicle id='ego'> in the configured route files")
     root = ET.Element("routes")
@@ -174,8 +179,9 @@ def run(args):
     collision_ids, teleport_ids = set(), set()
     trace_fields = ["time_s", "elapsed_since_departure_s", "x_m", "y_m", "speed_mps",
                     "acceleration_mps2", "distance_m", "road_id", "road_name", "lane_id",
-                    "posted_speed_mps", "allowed_speed_mps", "waiting_time_s"]
+                    "posted_speed_mps", "allowed_speed_mps", "waiting_time_s", "nearby_vehicles_250m"]
     interrupted = None
+    maneuver = None
     try:
         with (output / "sumo_stdout.log").open("w", encoding="utf-8") as stdout, \
                 (output / "trajectory.csv").open("w", newline="", encoding="utf-8") as trace:
@@ -187,6 +193,14 @@ def run(args):
                 for type_id in conn.vehicletype.getIDList():
                     if conn.vehicletype.getVehicleClass(type_id) == "passenger":
                         conn.vehicletype.setShapeClass(type_id, "passenger/sedan")
+            plan_path = scenario / "queue_lane_change.json"
+            if plan_path.exists():
+                from skku_queue_lane_change import QueueLaneChange
+                plan = json.loads(plan_path.read_text())
+                if plan.get("enabled"):
+                    maneuver = QueueLaneChange(conn, plan)
+                    report["queue_lane_change_source_sha256"] = hashlib.sha256((ROOT / "skku_queue_lane_change.py").read_bytes()).hexdigest()
+                    report["input_sha256"][str(plan_path)] = hashlib.sha256(plan_path.read_bytes()).hexdigest()
             report["outcome"] = "running"
             next_progress = 300.0
             while conn.simulation.getTime() < args.max_time:
@@ -216,17 +230,19 @@ def run(args):
                     conn.vehicle.subscribe("ego", [tc.VAR_POSITION, tc.VAR_SPEED,
                         tc.VAR_ACCELERATION, tc.VAR_DISTANCE, tc.VAR_ROAD_ID,
                         tc.VAR_LANE_ID, tc.VAR_ALLOWED_SPEED, tc.VAR_WAITING_TIME])
+                    conn.vehicle.subscribeContext("ego", tc.CMD_GET_VEHICLE_VARIABLE, 250, [tc.VAR_SPEED])
                     if args.gui:
                         conn.vehicle.setColor("ego", (255, 40, 40, 255))
                         conn.vehicle.setShapeClass("ego", "passenger/sedan")
                         configure_gui(conn, conn.vehicle.getPosition("ego"), args.viewport_m)
+                # Collision removal can also appear in SUMO's arrived IDs.
+                if report["ego_collision"]:
+                    report["outcome"] = "collision"
+                    break
                 if "ego" in arrived:
                     report["arrived"] = True
                     report["ego_arrival_time_s"] = now
                     report["outcome"] = "arrived"
-                    break
-                if report["ego_collision"]:
-                    report["outcome"] = "collision"
                     break
                 if report["ego_teleported"]:
                     report["outcome"] = "teleport"
@@ -236,6 +252,8 @@ def run(args):
                     if not state:
                         report["outcome"] = "removed_without_arrival"
                         break
+                    if maneuver is not None:
+                        maneuver.step(now)
                     speed = float(state[tc.VAR_SPEED])
                     lane_id, road_id = state[tc.VAR_LANE_ID], state[tc.VAR_ROAD_ID]
                     if (previous_road == road_id and previous_lane != lane_id
@@ -257,6 +275,12 @@ def run(args):
                     report["maximum_visited_allowed_speed_mps"] = max(report["maximum_visited_allowed_speed_mps"], allowed)
                     if not road_id.startswith(":") and (not report["visited_edges"] or report["visited_edges"][-1] != road_id):
                         report["visited_edges"].append(road_id)
+                    nearby = len(set((conn.vehicle.getContextSubscriptionResults("ego") or {}).keys()) - {"ego"})
+                    if posted >= 19.4 and not road_id.startswith(":"):
+                        density = report.setdefault("open_road_neighbors_250m", {"samples": 0, "sum": 0, "max": 0})
+                        density["samples"] += 1
+                        density["sum"] += nearby
+                        density["max"] = max(density["max"], nearby)
                     x, y = state[tc.VAR_POSITION]
                     writer.writerow({"time_s": now,
                         "elapsed_since_departure_s": now - report["ego_departure_time_s"],
@@ -265,7 +289,7 @@ def run(args):
                         "distance_m": state[tc.VAR_DISTANCE], "road_id": road_id,
                         "road_name": street_cache[road_id], "lane_id": lane_id,
                         "posted_speed_mps": posted, "allowed_speed_mps": allowed,
-                        "waiting_time_s": state[tc.VAR_WAITING_TIME]})
+                        "waiting_time_s": state[tc.VAR_WAITING_TIME], "nearby_vehicles_250m": nearby})
                 if now >= next_progress:
                     trace.flush()
                     print(f"[commute] t={now:.0f}s distance={report['ego_observed_distance_m']/1000:.2f}km "
@@ -293,6 +317,11 @@ def run(args):
                 conn.close(wait=not (args.gui and args.keep_open))
             except Exception as error:
                 report["close_error"] = f"{type(error).__name__}: {error}"
+        if "open_road_neighbors_250m" in report:
+            density = report["open_road_neighbors_250m"]
+            density["mean"] = density["sum"] / max(1, density["samples"])
+        if maneuver is not None:
+            report["queue_lane_change"] = maneuver.report
         report["wall_time_s"] = time.monotonic() - started
         trip = parse_tripinfo(tripinfo_path)
         report["ego_tripinfo"] = trip
@@ -335,7 +364,7 @@ def main():
     parser.add_argument("--keep-open", action="store_true", help="Keep the GUI window after the run ends")
     parser.add_argument("--background", action="store_true", help="Use original traffic; default isolates ego")
     parser.add_argument("--seed", type=int, default=42)
-    parser.add_argument("--max-time", type=float, default=7200.0)
+    parser.add_argument("--max-time", type=float, default=10800.0)
     parser.add_argument("--step-length", type=float, default=0.5)
     parser.add_argument("--teleport-after", type=float, default=-1,
                         help="Seconds stuck before SUMO teleports; -1 disables teleportation (default)")

@@ -1,0 +1,10 @@
+# SKKU Seoul -> Suwon: simulation, map building and visualization.
+# Direct dependencies only; not a complete reproducibility lockfile.
+eclipse-sumo==1.27.1
+sumo-data==1.27.1
+traci==1.27.1
+sumolib==1.27.1
+numpy
+pyproj
+matplotlib
+Pillow

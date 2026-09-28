@@ -5,7 +5,7 @@ road network, traffic, or the main scenario manifest. OSM multipolygon members
 are assembled into exact closed rings before polyconvert projection. Courtyards
 are white masks below the road layer, not native polygon holes or 3D geometry.
 
-    .venv-hyehwa/bin/python build_skku_buildings.py --overview
+    .venv-skku/bin/python build_skku_buildings.py --overview
 """
 from __future__ import annotations
 
@@ -394,7 +394,7 @@ def main():
     for path in (source, network):
         if not path.is_file():
             raise FileNotFoundError(path)
-    os.environ["PATH"] = os.pathsep.join([str(Path(sys.executable).parent), str(ROOT / ".venv-hyehwa/bin"), os.environ.get("PATH", "")])
+    os.environ["PATH"] = os.pathsep.join([str(Path(sys.executable).parent), str(ROOT / ".venv-skku/bin"), os.environ.get("PATH", "")])
     binary = shutil.which("polyconvert")
     if binary is None:
         raise RuntimeError("polyconvert is unavailable")

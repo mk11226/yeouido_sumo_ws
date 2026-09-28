@@ -1,0 +1,75 @@
+***Starting server on port 36591 ***
+Loading net-file from '/home/mk/bmil_ws/env/skku_commute/skku_commute.net.xml' ... done (1740ms).
+Loading additional-files from '/home/mk/bmil_ws/env/skku_commute/campuses.add.xml' ... done (0ms).
+Loading additional-files from '/home/mk/bmil_ws/env/skku_commute/buildings.poly.xml' ... done (209ms).
+Loading additional-files from '/home/mk/bmil_ws/env/skku_commute/landmarks.add.xml' ... done (0ms).
+Loading additional-files from '/home/mk/bmil_ws/env/skku_commute/congestion.add.xml' ... done (0ms).
+Loading route-files incrementally from '/home/mk/bmil_ws/env/skku_commute/skku_commute.rou.xml'
+Loading done.
+Simulation started with time: 0.00.
+Warning: Vehicle 'flow_corridor_04.11' performs emergency braking on lane '1252436244#2_0' with decel=9.00, wished=4.50, severity=1.00, time=310.00.
+Warning: Vehicle 'flow_corridor_00.9' performs emergency braking on lane '517641007_1' with decel=9.00, wished=4.50, severity=1.00, time=481.50.
+Warning: Vehicle 'flow_uiwang_approach.82' performs emergency braking on lane '507449310#0_0' with decel=9.00, wished=4.50, severity=1.00, time=715.00.
+Warning: Vehicle 'flow_corridor_03.17' performs emergency braking on lane '1252436244#2_1' with decel=9.00, wished=4.50, severity=1.00, time=760.00.
+Warning: Vehicle 'flow_corridor_02.32' performs emergency braking on lane '218907632#2_0' with decel=9.00, wished=4.50, severity=1.00, time=760.00.
+Warning: Vehicle 'flow_corridor_02.44' performs emergency braking on lane '-477565914#1_0' with decel=9.00, wished=4.50, severity=1.00, time=847.50.
+Warning: Vehicle 'flow_corridor_03.19' performs emergency braking on lane '1252436244#2_0' with decel=9.00, wished=4.50, severity=1.00, time=850.00.
+Warning: Vehicle 'flow_corridor_12.11' performs emergency braking on lane '561229641#0_0' with decel=9.00, wished=4.50, severity=1.00, time=895.00.
+Warning: Vehicle 'ego' performs emergency braking on lane '-1455518728_1' with decel=9.00, wished=4.50, severity=1.00, time=916.00.
+Warning: Vehicle 'flow_corridor_03.23' performs emergency braking on lane '1252436244#2_0' with decel=9.00, wished=4.50, severity=1.00, time=940.00.
+Warning: Vehicle 'flow_corridor_00.36' performs emergency braking on lane '517641007_1' with decel=9.00, wished=4.50, severity=1.00, time=1359.00.
+Warning: Vehicle 'flow_corridor_04.26' performs emergency braking on lane '555215394#2_0' with decel=9.00, wished=4.50, severity=1.00, time=1427.00.
+Warning: Vehicle 'flow_corridor_05.51' performs emergency braking on lane '518362765#4_0' with decel=9.00, wished=4.50, severity=1.00, time=1435.00.
+Warning: Vehicle 'flow_corridor_00.47' performs emergency braking on lane '517641007_1' with decel=9.00, wished=4.50, severity=1.00, time=1539.00.
+Warning: Vehicle 'flow_uiwang_approach.357' performs emergency braking on lane '507449310#0_0' with decel=9.00, wished=4.50, severity=1.00, time=1705.00.
+Warning: Vehicle 'flow_corridor_00.76' performs emergency braking on lane '517641007_1' with decel=9.00, wished=4.50, severity=1.00, time=1897.00.
+Warning: Vehicle 'flow_corridor_00.95' performs emergency braking on lane '1458158608_0' with decel=9.00, wished=4.50, severity=1.00, time=1929.00.
+Warning: Vehicle 'flow_uiwang_approach.428' performs emergency braking on lane '507449311_0' with decel=9.00, wished=4.50, severity=1.00, time=2065.00.
+Warning: Vehicle 'flow_corridor_00.65' performs emergency braking on lane '517583989_1' with decel=9.00, wished=4.50, severity=1.00, time=2086.50.
+Warning: Vehicle 'flow_corridor_12.57' performs emergency braking on lane '775456751#6_0' with decel=9.00, wished=4.50, severity=1.00, time=2290.00.
+Warning: Vehicle 'flow_uiwang_approach.581' performs emergency braking on lane '507449311_1' with decel=9.00, wished=4.50, severity=1.00, time=2335.00.
+Warning: Vehicle 'flow_corridor_00.115' performs emergency braking on lane '517641007_1' with decel=9.00, wished=4.50, severity=1.00, time=2347.00.
+Warning: Vehicle 'flow_corridor_12.60' performs emergency braking on lane '555231771#3_1' with decel=9.00, wished=4.50, severity=1.00, time=2465.50.
+Warning: Vehicle 'flow_corridor_00.120' performs emergency braking on lane ':10300422164_5_0' with decel=9.00, wished=4.50, severity=1.00, time=2471.50.
+Warning: Vehicle 'flow_corridor_03.39' performs emergency braking on lane '555215394#2_0' with decel=9.00, wished=4.50, severity=1.00, time=2599.50.
+Warning: Vehicle 'flow_uiwang_approach.618' performs emergency braking on lane '507449311_1' with decel=9.00, wished=4.50, severity=1.00, time=2605.00.
+Warning: Vehicle 'flow_corridor_04.56' performs emergency braking on lane '555215394#2_0' with decel=9.00, wished=4.50, severity=1.00, time=2688.00.
+Warning: Vehicle 'flow_uiwang_approach.649' performs emergency braking on lane '507449310#0_0' with decel=9.00, wished=4.50, severity=1.00, time=2695.00.
+Warning: Vehicle 'flow_corridor_02.142' performs emergency braking on lane '218907632#2_0' with decel=9.00, wished=4.50, severity=1.00, time=2740.00.
+Warning: Vehicle 'flow_feeder_26.45' performs emergency braking on lane '775456751#6_0' with decel=9.00, wished=4.50, severity=1.00, time=2830.00.
+Warning: Vehicle 'flow_corridor_00.151' performs emergency braking on lane ':cluster_3844548463_4168666905_11_0' with decel=9.00, wished=4.50, severity=1.00, time=3010.00.
+Warning: Vehicle 'flow_corridor_01.144' performs emergency braking on lane '218907632#3_1' with decel=9.00, wished=4.50, severity=1.00, time=3010.00.
+Warning: Vehicle 'flow_corridor_00.141' performs emergency braking on lane '1456115804#0_0' with decel=9.00, wished=4.50, severity=1.00, time=3105.00.
+Warning: Vehicle 'flow_corridor_00.141' performs emergency braking on lane '-1455518728_0' with decel=9.00, wished=4.50, severity=1.00, time=3166.00.
+Warning: Vehicle 'flow_corridor_04.60' performs emergency braking on lane '518362768#1_0' with decel=9.00, wished=4.50, severity=1.00, time=3195.00.
+Warning: Vehicle 'flow_corridor_00.160' performs emergency braking on lane '1458158609_0' with decel=9.00, wished=4.50, severity=1.00, time=3201.50.
+Warning: Vehicle 'flow_corridor_00.160' performs emergency braking on lane ':10300422164_5_0' with decel=9.00, wished=4.50, severity=1.00, time=3205.00.
+Warning: Vehicle 'flow_corridor_00.148' performs emergency braking on lane '-1455518728_0' with decel=9.00, wished=4.50, severity=1.00, time=3256.50.
+Warning: Vehicle 'flow_corridor_04.63' performs emergency braking on lane '518362768#1_1' with decel=9.00, wished=4.50, severity=1.00, time=3375.00.
+Warning: Vehicle 'flow_corridor_00.180' performs emergency braking on lane '1458158607_0' with decel=9.00, wished=4.50, severity=1.00, time=3457.00.
+Warning: Vehicle 'flow_corridor_00.180' performs emergency braking on lane '517641007_1' with decel=9.00, wished=4.50, severity=1.00, time=3516.50.
+Warning: Vehicle 'flow_corridor_12.90' performs emergency braking on lane '555231771#3_0' with decel=9.00, wished=4.50, severity=1.00, time=3635.50.
+Warning: Vehicle 'flow_corridor_03.76' performs emergency braking on lane '555215394#2_0' with decel=9.00, wished=4.50, severity=1.00, time=3861.50.
+Warning: Vehicle 'flow_corridor_13.105' performs emergency braking on lane '555231771#3_0' with decel=9.00, wished=4.50, severity=1.00, time=3905.50.
+Warning: Vehicle 'flow_corridor_04.72' performs emergency braking on lane '518362768#1_1' with decel=9.00, wished=4.50, severity=1.00, time=3915.00.
+Warning: Vehicle 'flow_corridor_00.160' performs emergency braking on lane '-1455518728_0' with decel=9.00, wished=4.50, severity=1.00, time=3980.50.
+Warning: Vehicle 'flow_corridor_00.208' performs emergency braking on lane ':10300422164_5_0' with decel=9.00, wished=4.50, severity=1.00, time=3991.50.
+Warning: Vehicle 'flow_corridor_13.111' performs emergency braking on lane '555231771#3_0' with decel=9.00, wished=4.50, severity=1.00, time=4175.50.
+Warning: Vehicle 'flow_corridor_03.99' performs emergency braking on lane '555215394#2_0' with decel=9.00, wished=4.50, severity=1.00, time=4308.50.
+Warning: Vehicle 'flow_corridor_02.229' performs emergency braking on lane '218907632#3_0' with decel=9.00, wished=4.50, severity=1.00, time=4360.00.
+Warning: Vehicle 'flow_uiwang_approach.1170' performs emergency braking on lane '507449310#0_0' with decel=9.00, wished=4.50, severity=1.00, time=4405.00.
+Warning: Vehicle 'flow_corridor_00.224' performs emergency braking on lane '517641007_1' with decel=9.00, wished=4.50, severity=1.00, time=4416.50.
+Warning: Vehicle 'flow_corridor_00.221' performs emergency braking on lane '-1455518728_0' with decel=9.00, wished=4.50, severity=1.00, time=4516.00.
+Warning: Vehicle 'flow_feeder_20.135' performs emergency braking on lane '494997545_0' with decel=9.00, wished=4.50, severity=1.00, time=4900.00.
+Warning: Vehicle 'flow_corridor_00.270' performs emergency braking on lane '1069861704_0' with decel=9.00, wished=4.50, severity=1.00, time=4988.00.
+Warning: Vehicle 'flow_corridor_01.256' performs emergency braking on lane '218907632#3_0' with decel=9.00, wished=4.50, severity=1.00, time=5080.00.
+Warning: Vehicle 'flow_corridor_13.140' performs emergency braking on lane '555231771#3_1' with decel=9.00, wished=4.50, severity=1.00, time=5165.50.
+Warning: Vehicle 'flow_corridor_02.276' performs emergency braking on lane '218907632#2_1' with decel=9.00, wished=4.50, severity=1.00, time=5170.00.
+Warning: Vehicle 'flow_corridor_00.286' performs emergency braking on lane '1069861704_1' with decel=9.00, wished=4.50, severity=1.00, time=5258.00.
+Warning: Vehicle 'flow_feeder_20.145' performs emergency braking on lane '494997545_0' with decel=9.00, wished=4.50, severity=1.00, time=5260.00.
+Warning: Vehicle 'flow_corridor_12.134' performs emergency braking on lane '561229641#0_0' with decel=9.00, wished=4.50, severity=1.00, time=5305.00.
+Warning: Vehicle 'flow_corridor_00.259' performs emergency braking on lane '-1455518728_1' with decel=9.00, wished=4.50, severity=1.00, time=5330.50.
+Warning: Vehicle 'flow_corridor_12.138' performs emergency braking on lane '555231771#3_0' with decel=9.00, wished=4.50, severity=1.00, time=5345.50.
+Warning: Vehicle 'flow_corridor_02.289' performs emergency braking on lane '218907632#3_0' with decel=9.00, wished=4.50, severity=1.00, time=5440.00.
+Simulation ended at time: 5477.50.
+Reason: TraCI requested termination.

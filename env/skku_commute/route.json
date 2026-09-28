@@ -238,9 +238,9 @@
     "561229641#0",
     "561229641#1"
   ],
-  "length_excluding_internal_m": 34947.32,
-  "free_flow_cost_s": 2305.59,
-  "length_with_minimum_internal_m": 38337.41,
+  "length_excluding_internal_m": 34737.94,
+  "free_flow_cost_s": 2305.35,
+  "length_with_minimum_internal_m": 38332.76,
   "depart_pos_m": 9.449841503391673,
   "arrival_pos_m": 137.92220546449366,
   "start_lon_lat": [
@@ -253,7 +253,7 @@
   ],
   "start_snap_distance_m": 1.6125678386542222,
   "end_snap_distance_m": 1.6057888792656734,
-  "expressway_mainline_length_m": 13371.44,
+  "expressway_mainline_length_m": 13164.43,
   "max_edge_speed_kmh": 90.0,
   "named_roads": [
     "성균관로",
@@ -1688,7 +1688,7 @@
       "id": "59054363-AddedOnRampEdge",
       "name": "봉담과천로",
       "road_type": "highway.trunk",
-      "length_m": 94.87,
+      "length_m": 98.87,
       "lanes": 4,
       "speed_kmh": 90.0
     },
@@ -1696,15 +1696,15 @@
       "id": "59054363",
       "name": "봉담과천로",
       "road_type": "highway.trunk",
-      "length_m": 19.21,
-      "lanes": 2,
+      "length_m": 27.06,
+      "lanes": 4,
       "speed_kmh": 90.0
     },
     {
       "id": "59054363-AddedOffRampEdge",
       "name": "봉담과천로",
       "road_type": "highway.trunk",
-      "length_m": 95.06,
+      "length_m": 96.41,
       "lanes": 4,
       "speed_kmh": 90.0
     },
@@ -1712,31 +1712,31 @@
       "id": "1224608698",
       "name": "봉담과천로",
       "road_type": "highway.trunk",
-      "length_m": 533.5,
-      "lanes": 2,
+      "length_m": 531.31,
+      "lanes": 4,
       "speed_kmh": 90.0
     },
     {
       "id": "59054368",
       "name": "봉담과천로",
       "road_type": "highway.trunk",
-      "length_m": 741.31,
-      "lanes": 2,
+      "length_m": 741.44,
+      "lanes": 4,
       "speed_kmh": 79.992
     },
     {
       "id": "59054369#0",
       "name": "봉담과천로",
       "road_type": "highway.trunk",
-      "length_m": 410.12,
-      "lanes": 2,
+      "length_m": 406.31,
+      "lanes": 4,
       "speed_kmh": 90.0
     },
     {
       "id": "59054369#1-AddedOnRampEdge",
       "name": "봉담과천로",
       "road_type": "highway.trunk",
-      "length_m": 98.17,
+      "length_m": 95.67,
       "lanes": 4,
       "speed_kmh": 90.0
     },
@@ -1744,7 +1744,7 @@
       "id": "59054369#1",
       "name": "봉담과천로",
       "road_type": "highway.trunk",
-      "length_m": 60.06,
+      "length_m": 57.56,
       "lanes": 4,
       "speed_kmh": 90.0
     },
@@ -1752,47 +1752,47 @@
       "id": "1454713745",
       "name": "봉담과천로",
       "road_type": "highway.trunk",
-      "length_m": 525.59,
-      "lanes": 2,
+      "length_m": 474.99,
+      "lanes": 4,
       "speed_kmh": 90.0
     },
     {
       "id": "1454713745-AddedOffRampEdge",
       "name": "봉담과천로",
       "road_type": "highway.trunk",
-      "length_m": 94.47,
-      "lanes": 3,
+      "length_m": 95.97,
+      "lanes": 4,
       "speed_kmh": 90.0
     },
     {
       "id": "525074948",
       "name": "봉담과천로",
       "road_type": "highway.trunk",
-      "length_m": 1361.35,
-      "lanes": 2,
+      "length_m": 1356.17,
+      "lanes": 4,
       "speed_kmh": 90.0
     },
     {
       "id": "58858238#1-AddedOnRampEdge",
       "name": "봉담과천로",
       "road_type": "highway.trunk",
-      "length_m": 94.55,
-      "lanes": 3,
+      "length_m": 95.9,
+      "lanes": 4,
       "speed_kmh": 90.0
     },
     {
       "id": "58858238#1",
       "name": "봉담과천로",
       "road_type": "highway.trunk",
-      "length_m": 273.88,
-      "lanes": 2,
+      "length_m": 275.33,
+      "lanes": 4,
       "speed_kmh": 90.0
     },
     {
       "id": "58858238#2-AddedOnRampEdge",
       "name": "봉담과천로",
       "road_type": "highway.trunk",
-      "length_m": 95.04,
+      "length_m": 96.39,
       "lanes": 4,
       "speed_kmh": 90.0
     },
@@ -1800,31 +1800,31 @@
       "id": "58858238#2",
       "name": "봉담과천로",
       "road_type": "highway.trunk",
-      "length_m": 373.05,
-      "lanes": 2,
+      "length_m": 381.31,
+      "lanes": 4,
       "speed_kmh": 90.0
     },
     {
       "id": "58858238#2-AddedOffRampEdge",
       "name": "봉담과천로",
       "road_type": "highway.trunk",
-      "length_m": 94.5,
-      "lanes": 3,
+      "length_m": 100.03,
+      "lanes": 4,
       "speed_kmh": 90.0
     },
     {
       "id": "396671501",
       "name": "봉담과천로",
       "road_type": "highway.trunk",
-      "length_m": 106.09,
-      "lanes": 2,
+      "length_m": 57.45,
+      "lanes": 4,
       "speed_kmh": 90.0
     },
     {
       "id": "396671501-AddedOffRampEdge",
       "name": "봉담과천로",
       "road_type": "highway.trunk",
-      "length_m": 94.58,
+      "length_m": 95.93,
       "lanes": 4,
       "speed_kmh": 90.0
     },
@@ -1832,15 +1832,15 @@
       "id": "1224608699",
       "name": "봉담과천로",
       "road_type": "highway.trunk",
-      "length_m": 1745.25,
-      "lanes": 2,
+      "length_m": 1673.53,
+      "lanes": 4,
       "speed_kmh": 90.0
     },
     {
       "id": "489526373-AddedOnRampEdge",
       "name": "봉담과천로",
       "road_type": "highway.trunk",
-      "length_m": 94.36,
+      "length_m": 95.71,
       "lanes": 4,
       "speed_kmh": 90.0
     },
@@ -1848,55 +1848,55 @@
       "id": "489526373",
       "name": "봉담과천로",
       "road_type": "highway.trunk",
-      "length_m": 605.0,
-      "lanes": 2,
+      "length_m": 613.47,
+      "lanes": 4,
       "speed_kmh": 90.0
     },
     {
       "id": "489526373-AddedOffRampEdge",
       "name": "봉담과천로",
       "road_type": "highway.trunk",
-      "length_m": 94.38,
-      "lanes": 3,
+      "length_m": 46.15,
+      "lanes": 4,
       "speed_kmh": 90.0
     },
     {
       "id": "507449308",
       "name": "봉담과천로",
       "road_type": "highway.trunk",
-      "length_m": 595.35,
-      "lanes": 2,
+      "length_m": 540.88,
+      "lanes": 6,
       "speed_kmh": 90.0
     },
     {
       "id": "507570571-AddedOnRampEdge",
       "name": "봉담과천로",
       "road_type": "highway.trunk",
-      "length_m": 94.29,
-      "lanes": 3,
+      "length_m": 100.04,
+      "lanes": 4,
       "speed_kmh": 90.0
     },
     {
       "id": "507570571",
       "name": "봉담과천로",
       "road_type": "highway.trunk",
-      "length_m": 291.27,
-      "lanes": 2,
+      "length_m": 290.17,
+      "lanes": 4,
       "speed_kmh": 90.0
     },
     {
       "id": "403953823#1",
       "name": "봉담과천로",
       "road_type": "highway.trunk",
-      "length_m": 34.18,
-      "lanes": 3,
+      "length_m": 68.42,
+      "lanes": 4,
       "speed_kmh": 90.0
     },
     {
       "id": "58858274",
       "name": "",
       "road_type": "highway.trunk_link",
-      "length_m": 497.43,
+      "length_m": 495.06,
       "lanes": 1,
       "speed_kmh": 50.004000000000005
     },

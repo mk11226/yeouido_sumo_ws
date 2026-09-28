@@ -1,0 +1,36 @@
+{
+  "radius_m": 600,
+  "stopped_speed_threshold_mps": 0.1,
+  "seed": 42,
+  "comparison": {
+    "before": {
+      "station_stopped_time_s": {
+        "구반포역": 963.5,
+        "성균관대역": 1113.5
+      },
+      "duration_s": 8518.0,
+      "arrived": true,
+      "ego_collision": false,
+      "background_collision_reports": 12,
+      "teleport_events": 0
+    },
+    "after": {
+      "station_stopped_time_s": {
+        "구반포역": 68.0,
+        "성균관대역": 10.0
+      },
+      "duration_s": 4923.0,
+      "arrived": true,
+      "ego_collision": false,
+      "background_collision_reports": 6,
+      "teleport_events": 0
+    }
+  },
+  "signal_checks": {
+    "active_programs": 5,
+    "cycle_s": 90,
+    "unchanged_states_and_clearance": true,
+    "automated_tests_passed": 8
+  },
+  "network_and_demand_unchanged": true
+}

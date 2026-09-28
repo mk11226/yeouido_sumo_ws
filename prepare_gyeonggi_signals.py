@@ -1,6 +1,6 @@
 """Normalize archived official Gwacheon/Uiwang signal datasets (offline).
 
-Run from repository root with .venv-hyehwa/bin/python. Coordinates are source
+Run from repository root with .venv-skku/bin/python. Coordinates are source
 facility points, not inferred intersection centres. Unknown codes remain unknown.
 """
 from collections import Counter

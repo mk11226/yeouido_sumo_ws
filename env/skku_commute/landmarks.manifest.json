@@ -1,0 +1,648 @@
+{
+  "water_polygons": 7,
+  "landmarks": [
+    {
+      "id": "landmark_000",
+      "name": "동작대교",
+      "kind": "bridge",
+      "lon_lat": [
+        126.9815168,
+        37.5101826
+      ],
+      "x": 2522.079575097072,
+      "y": 25391.531269914005,
+      "distance_to_route_m": 1084.6264426766102,
+      "source": "way/870733632"
+    },
+    {
+      "id": "landmark_001",
+      "name": "반포대교",
+      "kind": "bridge",
+      "lon_lat": [
+        126.9960282,
+        37.5160124
+      ],
+      "x": 3818.558349700179,
+      "y": 26010.981583393645,
+      "distance_to_route_m": 25.23726718048957,
+      "source": "way/1085504592"
+    },
+    {
+      "id": "landmark_002",
+      "name": "잠수교",
+      "kind": "bridge",
+      "lon_lat": [
+        126.9963238,
+        37.5149373
+      ],
+      "x": 3842.1434761572164,
+      "y": 25891.131139005534,
+      "distance_to_route_m": 7.193229743317798,
+      "source": "way/1091571021"
+    },
+    {
+      "id": "landmark_003",
+      "name": "한성대입구역",
+      "kind": "station",
+      "lon_lat": [
+        127.0059624,
+        37.5885141
+      ],
+      "x": 4867.308814013377,
+      "y": 34037.18397971243,
+      "distance_to_route_m": 871.7676137573856,
+      "source": "node/287600947"
+    },
+    {
+      "id": "landmark_004",
+      "name": "성균관대역",
+      "kind": "station",
+      "lon_lat": [
+        126.9711778,
+        37.3002852
+      ],
+      "x": 1107.0210818392225,
+      "y": 2121.134873584844,
+      "distance_to_route_m": 127.25392847406289,
+      "source": "node/355172707"
+    },
+    {
+      "id": "landmark_005",
+      "name": "과천역",
+      "kind": "station",
+      "lon_lat": [
+        126.9969576,
+        37.4330744
+      ],
+      "x": 3704.881771845976,
+      "y": 16806.43655787967,
+      "distance_to_route_m": 487.49802329009,
+      "source": "node/355173082"
+    },
+    {
+      "id": "landmark_006",
+      "name": "경마공원역",
+      "kind": "station",
+      "lon_lat": [
+        127.0078955,
+        37.4437648
+      ],
+      "x": 4697.782708635554,
+      "y": 17972.116091065574,
+      "distance_to_route_m": 869.3512644507291,
+      "source": "node/355173088"
+    },
+    {
+      "id": "landmark_007",
+      "name": "종로5가역",
+      "kind": "station",
+      "lon_lat": [
+        127.0020222,
+        37.5709867
+      ],
+      "x": 4478.013252480305,
+      "y": 32099.712157106027,
+      "distance_to_route_m": 373.2622946040236,
+      "source": "node/3426724598"
+    },
+    {
+      "id": "landmark_008",
+      "name": "고속터미널역",
+      "kind": "station",
+      "lon_lat": [
+        127.0049222,
+        37.5050371
+      ],
+      "x": 4578.825055327674,
+      "y": 24776.444657621905,
+      "distance_to_route_m": 364.60236126816176,
+      "source": "node/3431313912"
+    },
+    {
+      "id": "landmark_009",
+      "name": "구반포역",
+      "kind": "station",
+      "lon_lat": [
+        126.9867849,
+        37.5012899
+      ],
+      "x": 2966.621209716075,
+      "y": 24394.8116307226,
+      "distance_to_route_m": 7.999846349403614,
+      "source": "node/3834732261"
+    },
+    {
+      "id": "landmark_010",
+      "name": "신반포역",
+      "kind": "station",
+      "lon_lat": [
+        126.996418,
+        37.5036014
+      ],
+      "x": 3823.6761934474343,
+      "y": 24633.11642292235,
+      "distance_to_route_m": 4.911553297881738,
+      "source": "node/3834732267"
+    },
+    {
+      "id": "landmark_011",
+      "name": "동작역",
+      "kind": "station",
+      "lon_lat": [
+        126.978203,
+        37.5029705
+      ],
+      "x": 2211.9643695015693,
+      "y": 24597.56204702705,
+      "distance_to_route_m": 690.631458667792,
+      "source": "node/5770979639"
+    },
+    {
+      "id": "landmark_012",
+      "name": "동대문역사문화공원역",
+      "kind": "station",
+      "lon_lat": [
+        127.0081233,
+        37.5652615
+      ],
+      "x": 5003.392611199408,
+      "y": 31452.99209369812,
+      "distance_to_route_m": 511.894164244729,
+      "source": "node/5772552255"
+    },
+    {
+      "id": "landmark_013",
+      "name": "안국역",
+      "kind": "station",
+      "lon_lat": [
+        126.9861709,
+        37.5768279
+      ],
+      "x": 3091.918406033423,
+      "y": 32777.75983969495,
+      "distance_to_route_m": 950.4869198238798,
+      "source": "node/5782503942"
+    },
+    {
+      "id": "landmark_014",
+      "name": "동대문역",
+      "kind": "station",
+      "lon_lat": [
+        127.0114887,
+        37.5718616
+      ],
+      "x": 5316.151319336845,
+      "y": 32179.049824506044,
+      "distance_to_route_m": 1005.151233148735,
+      "source": "node/5812233465"
+    },
+    {
+      "id": "landmark_015",
+      "name": "삼각지역",
+      "kind": "station",
+      "lon_lat": [
+        126.9738885,
+        37.535478
+      ],
+      "x": 1908.2750828593853,
+      "y": 28212.835284741595,
+      "distance_to_route_m": 1141.3253241062814,
+      "source": "node/5812740055"
+    },
+    {
+      "id": "landmark_016",
+      "name": "을지로3가역",
+      "kind": "station",
+      "lon_lat": [
+        126.9925305,
+        37.5663363
+      ],
+      "x": 3628.675605139346,
+      "y": 31601.57076520659,
+      "distance_to_route_m": 494.62555274787053,
+      "source": "node/5930698985"
+    },
+    {
+      "id": "landmark_017",
+      "name": "충무로역",
+      "kind": "station",
+      "lon_lat": [
+        126.9941091,
+        37.5612019
+      ],
+      "x": 3755.9420813864563,
+      "y": 31028.871755868196,
+      "distance_to_route_m": 699.3252864140877,
+      "source": "node/5933896995"
+    },
+    {
+      "id": "landmark_018",
+      "name": "약수역",
+      "kind": "station",
+      "lon_lat": [
+        127.010623,
+        37.5547501
+      ],
+      "x": 5199.486537706107,
+      "y": 30281.956900729798,
+      "distance_to_route_m": 572.7937299138887,
+      "source": "node/5933896998"
+    },
+    {
+      "id": "landmark_019",
+      "name": "을지로4가역",
+      "kind": "station",
+      "lon_lat": [
+        126.9981685,
+        37.5666425
+      ],
+      "x": 4127.380628416548,
+      "y": 31624.92019473994,
+      "distance_to_route_m": 9.196850202377345,
+      "source": "node/5935738067"
+    },
+    {
+      "id": "landmark_020",
+      "name": "신당역",
+      "kind": "station",
+      "lon_lat": [
+        127.016252,
+        37.5653839
+      ],
+      "x": 5721.661948069581,
+      "y": 31451.381088109687,
+      "distance_to_route_m": 1186.2053371695197,
+      "source": "node/5935738288"
+    },
+    {
+      "id": "landmark_021",
+      "name": "잠원역",
+      "kind": "station",
+      "lon_lat": [
+        127.0111504,
+        37.5127513
+      ],
+      "x": 5147.484742385452,
+      "y": 25620.75587747898,
+      "distance_to_route_m": 1146.264122898821,
+      "source": "node/6033544391"
+    },
+    {
+      "id": "landmark_022",
+      "name": "동대입구역",
+      "kind": "station",
+      "lon_lat": [
+        127.005727,
+        37.5590607
+      ],
+      "x": 4777.129223124648,
+      "y": 30769.434284846764,
+      "distance_to_route_m": 22.918129035946986,
+      "source": "node/6033544419"
+    },
+    {
+      "id": "landmark_023",
+      "name": "정부과천청사역",
+      "kind": "station",
+      "lon_lat": [
+        126.9897504,
+        37.4264709
+      ],
+      "x": 3051.5342564307502,
+      "y": 16087.297918774188,
+      "distance_to_route_m": 755.0965073336841,
+      "source": "node/6035746708"
+    },
+    {
+      "id": "landmark_024",
+      "name": "대공원역",
+      "kind": "station",
+      "lon_lat": [
+        127.0066085,
+        37.4358034
+      ],
+      "x": 4565.229509439901,
+      "y": 17091.134259618353,
+      "distance_to_route_m": 415.2284745005831,
+      "source": "node/6035746711"
+    },
+    {
+      "id": "landmark_025",
+      "name": "선바위역",
+      "kind": "station",
+      "lon_lat": [
+        127.0021114,
+        37.4518055
+      ],
+      "x": 4204.984976947308,
+      "y": 18875.144652494695,
+      "distance_to_route_m": 771.0767280089768,
+      "source": "node/6035746718"
+    },
+    {
+      "id": "landmark_026",
+      "name": "혜화역",
+      "kind": "station",
+      "lon_lat": [
+        127.0019525,
+        37.5821381
+      ],
+      "x": 4498.182122546656,
+      "y": 33337.21955679171,
+      "distance_to_route_m": 305.84369754242044,
+      "source": "node/6036160325"
+    },
+    {
+      "id": "landmark_027",
+      "name": "사당역",
+      "kind": "station",
+      "lon_lat": [
+        126.9816682,
+        37.4765828
+      ],
+      "x": 2455.4901774722384,
+      "y": 21662.99290120136,
+      "distance_to_route_m": 26.043683906147294,
+      "source": "node/6036160367"
+    },
+    {
+      "id": "landmark_028",
+      "name": "남태령역",
+      "kind": "station",
+      "lon_lat": [
+        126.9886975,
+        37.4646556
+      ],
+      "x": 3048.83061375306,
+      "y": 20326.245108954143,
+      "distance_to_route_m": 48.47697880435242,
+      "source": "node/6036160370"
+    },
+    {
+      "id": "landmark_029",
+      "name": "청구역",
+      "kind": "station",
+      "lon_lat": [
+        127.0137776,
+        37.5602311
+      ],
+      "x": 5491.018226803979,
+      "y": 30884.238835665397,
+      "distance_to_route_m": 734.2556911542412,
+      "source": "node/6041673050"
+    },
+    {
+      "id": "landmark_030",
+      "name": "버티고개역",
+      "kind": "station",
+      "lon_lat": [
+        127.0065879,
+        37.5482323
+      ],
+      "x": 4827.686622424051,
+      "y": 29566.289566382766,
+      "distance_to_route_m": 841.4660821303295,
+      "source": "node/6041673060"
+    },
+    {
+      "id": "landmark_031",
+      "name": "한강진역",
+      "kind": "station",
+      "lon_lat": [
+        127.0017506,
+        37.5397964
+      ],
+      "x": 4380.423582474643,
+      "y": 28639.30972120352,
+      "distance_to_route_m": 1140.9041574599246,
+      "source": "node/6041673074"
+    },
+    {
+      "id": "landmark_032",
+      "name": "이태원역",
+      "kind": "station",
+      "lon_lat": [
+        126.9943705,
+        37.5345026
+      ],
+      "x": 3715.8058049383108,
+      "y": 28065.792643562425,
+      "distance_to_route_m": 493.69397633782677,
+      "source": "node/6041673081"
+    },
+    {
+      "id": "landmark_033",
+      "name": "녹사평역",
+      "kind": "station",
+      "lon_lat": [
+        126.9865773,
+        37.53492
+      ],
+      "x": 3028.163193736924,
+      "y": 28126.828467522748,
+      "distance_to_route_m": 36.44288043805806,
+      "source": "node/6041673082"
+    },
+    {
+      "id": "landmark_034",
+      "name": "남성역",
+      "kind": "station",
+      "lon_lat": [
+        126.9718936,
+        37.4843545
+      ],
+      "x": 1609.6834896835499,
+      "y": 22543.92365719471,
+      "distance_to_route_m": 888.8101886539789,
+      "source": "node/6048953581"
+    },
+    {
+      "id": "landmark_035",
+      "name": "이수역",
+      "kind": "station",
+      "lon_lat": [
+        126.9821095,
+        37.4854491
+      ],
+      "x": 2515.6076196715585,
+      "y": 22645.963569957297,
+      "distance_to_route_m": 7.381450943384008,
+      "source": "node/6048953582"
+    },
+    {
+      "id": "landmark_036",
+      "name": "내방역",
+      "kind": "station",
+      "lon_lat": [
+        126.9935544,
+        37.4876455
+      ],
+      "x": 3532.778865406057,
+      "y": 22868.039647269994,
+      "distance_to_route_m": 1000.7811695854181,
+      "source": "node/6048953583"
+    },
+    {
+      "id": "landmark_037",
+      "name": "반포역",
+      "kind": "station",
+      "lon_lat": [
+        127.0116346,
+        37.5081748
+      ],
+      "x": 5179.547691192944,
+      "y": 25112.04130662605,
+      "distance_to_route_m": 1010.5750668223557,
+      "source": "node/6048953584"
+    },
+    {
+      "id": "landmark_038",
+      "name": "종로3가역",
+      "kind": "station",
+      "lon_lat": [
+        126.9923242,
+        37.5704405
+      ],
+      "x": 3620.187571482733,
+      "y": 32057.368649294134,
+      "distance_to_route_m": 483.51782555629705,
+      "source": "node/7207442616"
+    },
+    {
+      "id": "landmark_039",
+      "name": "총신대입구(이수)역",
+      "kind": "station",
+      "lon_lat": [
+        126.9822371,
+        37.48678
+      ],
+      "x": 2530.056511024246,
+      "y": 22793.398838873953,
+      "distance_to_route_m": 8.13943817753521,
+      "source": "node/9420130583"
+    },
+    {
+      "id": "landmark_040",
+      "name": "남산1호터널 톨게이트",
+      "kind": "toll",
+      "lon_lat": [
+        126.9927749,
+        37.5557152
+      ],
+      "x": 3625.0831565596163,
+      "y": 30422.576951569878,
+      "distance_to_route_m": 586.6858155649031,
+      "source": "node/436830835"
+    },
+    {
+      "id": "landmark_041",
+      "name": "의왕 톨게이트",
+      "kind": "toll",
+      "lon_lat": [
+        126.9843089,
+        37.3475504
+      ],
+      "x": 2382.8720856700093,
+      "y": 7340.666279889643,
+      "distance_to_route_m": 6.3988065172448625,
+      "source": "node/1142439455"
+    },
+    {
+      "id": "landmark_042",
+      "name": "북청계TG",
+      "kind": "toll",
+      "lon_lat": [
+        127.0078525,
+        37.3961354
+      ],
+      "x": 4582.2747825755505,
+      "y": 12687.293654187582,
+      "distance_to_route_m": 325.13150081474737,
+      "source": "node/5105216861"
+    },
+    {
+      "id": "landmark_043",
+      "name": "북의왕TG",
+      "kind": "toll",
+      "lon_lat": [
+        126.9911091,
+        37.4068426
+      ],
+      "x": 3125.349562212592,
+      "y": 13906.7958520893,
+      "distance_to_route_m": 379.2393842738406,
+      "source": "node/5110639720"
+    },
+    {
+      "id": "landmark_044",
+      "name": "한강",
+      "kind": "river",
+      "lon_lat": [
+        126.994,
+        37.518
+      ],
+      "x": 3643.9996361245285,
+      "y": 26235.348809086718,
+      "distance_to_route_m": 63.63811773828974,
+      "source": "OSM river polygon"
+    }
+  ],
+  "source_sha256": {
+    "bridges.json": "3837017e6248ad1aee15d0a4ef3800346fd38bdd8cf12999078f94bc55b461bf",
+    "water.json": "a6b93223f41e78d3e8efabae0d7010dab888b199ea3e2381fb5350db413cf93a",
+    "request.json": "bf6a0544e035506ff0b8331ac08fef77ab5f91f90086052f235a539db939b32a",
+    "features.json": "55f5c65beec737addd3cd9476605db5bce9033621476480ed4259c530567090d",
+    "bridges_request.json": "6ff59c56825b27f2e284510427a9f299d5ae871bcdbd285c640770d4daf5d096",
+    "water_request.json": "017589bc6f93a05831a9c70372b94f353a04963a69ee5cdeb318b3da7be55fe7"
+  },
+  "font": "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
+  "attribution": "© OpenStreetMap contributors, ODbL 1.0",
+  "scope": "OSM named stations/toll booths within 1200m of route; major Han River crossings only",
+  "label_images_sha256": {
+    "landmark_000.png": "322159a9701fd9275487c6c25f6e33323168fb725f877f39ab4bdc133457fae3",
+    "landmark_001.png": "64eb06275d93d139578ce294ec5ba632b43bd431a39dd8b414f152d75674540c",
+    "landmark_002.png": "fbe3b69ec2155eb74410b2b9e3ad71f13cfccde4be3e9296eb954eed8b3eef6c",
+    "landmark_003.png": "eda7c92c36e4b7d0807986ac4edff19da87fefd7ae7d88ea7f34d11305eb90fb",
+    "landmark_004.png": "99df328bcb2a49a8f9d62d55130b894631b6af48f932961040b09d9bf3e2b033",
+    "landmark_005.png": "66936aa6f992c67444b07a687c17c1ec24275f78cd16e1e5e47eee16231cf031",
+    "landmark_006.png": "02e4f601d84533c2f759ddcbda85ab300faa0043876a2e3c9050c19e12277d47",
+    "landmark_007.png": "3da48627fdabb21c9e88d5b13f7a6b3aebd6c678b0ef269193e2ec2ba9f7a20e",
+    "landmark_008.png": "db555b3a3bc1819538d72a5f862858c9ff34fc6c0d376754e9eb7d6598ac03af",
+    "landmark_009.png": "944497fe15460e5ffa6b8a5e3c04379f7cc9cefd1e08129fa84e86d44272b0b4",
+    "landmark_010.png": "674dfacdf02e1d51d6a40152742df0e635e3d0c48fa885b61a2105cbfeda1beb",
+    "landmark_011.png": "104dde96c8520756f5082733804353e471a4fbc3862ace3435f94c7a82cb2cb8",
+    "landmark_012.png": "fedb35485aac1108967855ae039cac015c252fe776ee95d4cf6cf6cc854939d6",
+    "landmark_013.png": "8bfaf755d640d894b3fb3908a684fea1b24b9f5246988a198c4ce8713450fd65",
+    "landmark_014.png": "558341e51f42dfdabb4471b2519f6781451dae4de493d65f3af3bac4b922fd50",
+    "landmark_015.png": "52758056a3376264b05e7b3bd4aca190193452eb516f707984a771753ded776a",
+    "landmark_016.png": "98142226f6672914db064cc54e49dc4b61ebe0ac421b6160e97998d59bc09f8b",
+    "landmark_017.png": "d2b2fc964f3d2016d23a0fe1d8b4ea18cc7d467616cc03de288d4a194940c57b",
+    "landmark_018.png": "edc3ae86c4342372f451d3059fc4cab15305936de8ff8becde790cf2251b5361",
+    "landmark_019.png": "41e8cf214d22429de91911bc241726bcd18bce6fa50baae071900fd7765a5856",
+    "landmark_020.png": "d49e0035b0380fe4ba1f5906ff93b7171048363c3f40a94f6a2cde27c0fd37a5",
+    "landmark_021.png": "f65008ddec14c90edfaac8a12a469fe3d38ee339b95edbb98e839cf860d90b1d",
+    "landmark_022.png": "f8b197fd062722eabbd5703dd7407052a24bb09c0ac922df23418758f284d96c",
+    "landmark_023.png": "f3a43b431d4522dcf22934fa0d4170cba375ea79d463439e10a5f0e052382aef",
+    "landmark_024.png": "d2054fa29402f2d44ae594273b30e2face695441724a6d7709ad7af5244e4dd3",
+    "landmark_025.png": "6d1a568f9d5dacaa1c73a10ceb1083e8ff6ce5f4ddb216737cfaaeb42d57a39d",
+    "landmark_026.png": "721047f9a756d770341328cfbb5d5b7e023329c41813e72c26a1ed3b8f179ec7",
+    "landmark_027.png": "96a37836583b928568c87f5e3b4441c11f341bc4a825eb778dcecf1cb0d2dde9",
+    "landmark_028.png": "48e0120c231dc28d92986a009f73426a39cc12c3c692ea1f013a7867a3ab1b1e",
+    "landmark_029.png": "03b9f5cd751b7d069a3bb72f770ae743b5850807bccb1ed5b22b0b61ab755a5f",
+    "landmark_030.png": "3b4f4c785222b58099cd9597bd62ab2ebe7bd19056f9bb50348589e925b33ee7",
+    "landmark_031.png": "773bebfc36f9b4e02d567e9725ff9bb92025610f322710a20646501fb1c3552a",
+    "landmark_032.png": "4d1f481db6df4ff0784701fa9de33043db3c3ef37555c6d346ab6b5cd1bd2aea",
+    "landmark_033.png": "68886aa1e2ef99b2b4dd1ad855d2b3620fec04cbb6c838c6a00c8aae7f99c25d",
+    "landmark_034.png": "afb47961a2b24f2c3b34620029d5a08ecc8a1890f5ca135025e70789fa41c8f2",
+    "landmark_035.png": "22cff839ad1628e95a6fdd1119d94102c423f8862ebf7478bee8afa9d3ced0fd",
+    "landmark_036.png": "eeaa44363e4a4bb30e43016ffe150d0c702f66446ac82493927f23785326a894",
+    "landmark_037.png": "904fb5d1f34e2761274f2f132f49948ca19f7ef12460427187f5c5d9fedbc4bc",
+    "landmark_038.png": "495879aafc670747323b24b426646c1b7ee4935a0f5ad6615ff1250a614cf86d",
+    "landmark_039.png": "4d1dc445dcc2e578a01e28e56e6a47d71c7bf6ce6b84512b7d386cd8bfb5aea3",
+    "landmark_040.png": "aa58129d5d372875b330ce536cde0bc04e668f7a18036d6a51da0b78ef5a4a38",
+    "landmark_041.png": "ef69aa45229be0d9e1cb2a169550ba293c2fc2b770588051ab10e4e3aea51277",
+    "landmark_042.png": "477511d30960f666a59cce34c94918fac7106cf8f7826638c557b55e60770893",
+    "landmark_043.png": "476bb9ddacad1e07387db9c82fdc3b7bb1d7e3b3eb03e357fa2386e7696ad4f6",
+    "landmark_044.png": "d4f7221e7690e2bb8f79132149b79f28b4b5e937504431b48642cbb572cccd7e"
+  }
+}

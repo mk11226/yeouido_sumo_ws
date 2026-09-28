@@ -1,5 +1,7 @@
 # 성균관대학교 서울 → 수원 환경: 건물·신호등 보완
 
+> 2026-09-24: 한강·지명 표시와 정체 설정이 추가되었습니다. 한강·정체 설정은 [후속 문서](8_SKKU_한강_지명_정체.md), 차로 구성은 [차로·교량명 보완 문서](9_SKKU_본선_차로_교량명_보완.md), 현재 실행·검증 결과는 [톨게이트 차로 이용·합류 문서](10_SKKU_톨게이트_차로이용_합류.md)를 참고하세요. 아래 주행 시간은 교통량 변경 전 기록입니다.
+
 작성일: 2026-09-23. SUMO 1.27.1. 도로와 기본 주행 구성은 [도로환경 문서](6_SKKU_서울_수원_도로환경.md)를 따른다.
 
 약 38km 경로 주변에 **실제 OSM 건물 외곽선**을 표시하고, OSM에 명시된 신호 횡단보도와 **서울·과천·의왕·수원의 공식 신호시설 좌표**를 사용해 신호 위치를 보완했다. 건물은 2차원 배경이며, 신호 시간표는 실험용으로 생성했다. 이번 작업에는 새로운 강화학습 학습이나 평가가 포함되지 않는다.
@@ -95,25 +97,25 @@
 
 ```bash
 # 캐시가 유효하면 도로·건물 원본을 다시 요청하지 않는다.
-.venv-hyehwa/bin/python download_skku_corridor.py
-.venv-hyehwa/bin/python download_skku_buildings.py
+.venv-skku/bin/python download_skku_corridor.py
+.venv-skku/bin/python download_skku_buildings.py
 
 # 신호·도로를 재생성하고 건물 투영, 수요, GUI 설정까지 갱신한다.
-.venv-hyehwa/bin/python build_skku_commute.py
+.venv-skku/bin/python build_skku_commute.py
 
 # 단독 완주 검사 / 주변 교통 포함 검사
-.venv-hyehwa/bin/python run_skku_commute.py --seed 42
-.venv-hyehwa/bin/python run_skku_commute.py --background --seed 42
+python3 run_skku_commute.py --seed 42
+python3 run_skku_commute.py --background --seed 42
 
 # 주변 교통과 건물을 표시하며 빨간 ego를 추적한다.
-.venv-hyehwa/bin/python run_skku_commute.py --gui --background --viewport-m 180 --keep-open
+python3 run_skku_commute.py --gui --background --viewport-m 800 --keep-open
 ```
 
 `--output-dir`로 주행 결과 폴더를 지정할 수 있다. 각 결과에는 요약, 궤적, tripinfo, SUMO 로그와 입력 해시가 남는다. 운전 주체는 SUMO의 기본 모델이며 자동 차선변경과 안전 제어를 사용한다.
 
-건물만 다시 투영하려면 `.venv-hyehwa/bin/python build_skku_buildings.py --overview`를 사용한다. 신호 원본의 정규화는 `prepare_seoul_signals.py`, `prepare_gyeonggi_signals.py`가 보관 자료에서 수행한다. **현재 환경 재현에는 정규화 재실행이 필요하지 않다.** 원본·경로·정규화 결과를 갱신했다면 입력 해시와 배치 검토부터 다시 확인한 뒤 전체 빌드·완주 검사를 수행해야 한다.
+건물만 다시 투영하려면 `.venv-skku/bin/python build_skku_buildings.py --overview`를 사용한다. 신호 원본의 정규화는 `prepare_seoul_signals.py`, `prepare_gyeonggi_signals.py`가 보관 자료에서 수행한다. **현재 환경 재현에는 정규화 재실행이 필요하지 않다.** 원본·경로·정규화 결과를 갱신했다면 입력 해시와 배치 검토부터 다시 확인한 뒤 전체 빌드·완주 검사를 수행해야 한다.
 
-## 6. 최종 검증 기록
+## 6. 건물·신호 보완 당시 검증 기록 (교통량 변경 전)
 
 2026-09-23 15:04 KST에 생성한 최종 네트워크로 검사했다. 이전 도로 전용 환경은 [별도 사본](../results/skku_commute/road_only_snapshot/)에 보존했다. 최종 네트워크 SHA-256은 `6ac70300dfe4676accf2dd1146f3bdb6847e20cf6a4c1e7bd02651006da62b6d`이다.
 
@@ -143,7 +145,7 @@ SUMO 로그에는 배경 차량의 급제동 경고와 직접 제어 연결이 �
 
 ![실제 건물 배경과 빨간 신호 앞에서 정지한 차량](../results/skku_commute/buildings_signals_final_gui_seed42/gui_signal_closeup.png)
 
-[현재 실험 목록](../results/skku_commute/experiment_index.json)에 사용 파일과 검사 결과의 해시를 기록했고 세 주행 검사 모두 현재 설정과 입력 해시가 일치함을 확인했다. [신호 프로그램 검사 스크립트](../results/skku_commute/audit_signal_programs.py)도 보존했다.
+[실험 목록](../results/skku_commute/experiment_index.json)의 `previous_revision`에 당시 사용 파일과 검사 결과의 해시를 보존했다. 세 주행 검사는 건물·신호 보완 당시 설정을 대상으로 했으며, 이후 교통량을 변경한 현재 설정의 결과는 후속 문서를 따른다. [신호 프로그램 검사 스크립트](../results/skku_commute/audit_signal_programs.py)도 보존했다.
 
 건물 변환기는 닫힌 고리, 유한 좌표, 양의 면적, 고유 ID와 원본 속성 보존을 검사한다. 신호 검사는 자료 연결의 근거를 추적하는 과정이며 실제 도로의 완전한 측량 검증을 대신하지 않는다.
 

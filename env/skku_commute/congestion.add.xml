@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<additional>
+  <variableSpeedSign id="uiwang_toll_capacity" lanes="507449308_0 507449308_1 507449308_2 507449308_3 507449308_4 507449308_5">
+    <step time="0" speed="2.0" />
+  </variableSpeedSign>
+</additional>

@@ -1,5 +1,5 @@
 .venv/
-.venv-hyehwa/
+.venv-skku/
 __pycache__/
 *.py[cod]
 .env

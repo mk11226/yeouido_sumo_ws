@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2026-09-28T16:43:07.504066+09:00 by Eclipse SUMO sumo 1.27.1
+<sumoConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
+
+    <input>
+        <net-file value="/tmp/skku_offset_calibration/5/skku_commute.net.xml"/>
+        <route-files value="/tmp/skku_offset_calibration/5/skku_commute.rou.xml"/>
+        <additional-files value="/tmp/skku_offset_calibration/5/campuses.add.xml,/tmp/skku_offset_calibration/5/buildings.poly.xml,/tmp/skku_offset_calibration/5/landmarks.add.xml,/tmp/skku_offset_calibration/5/congestion.add.xml,/tmp/skku_offset_calibration/5/station_signals.add.xml"/>
+    </input>
+
+    <output>
+        <tripinfo-output value="/home/mk/bmil_ws/results/skku_commute/offset_calibration_5/tripinfo.xml"/>
+        <tripinfo-output.write-unfinished value="true"/>
+        <tripinfo-output.write-undeparted value="true"/>
+        <statistic-output value="/home/mk/bmil_ws/results/skku_commute/offset_calibration_5/statistics.xml"/>
+    </output>
+
+    <time>
+        <begin value="0"/>
+        <end value="3300.5"/>
+        <step-length value="0.5"/>
+    </time>
+
+    <processing>
+        <collision.action value="remove"/>
+        <collision.check-junctions value="true"/>
+        <time-to-teleport value="-1"/>
+        <lanechange.duration value="3"/>
+    </processing>
+
+    <report>
+        <log value="/home/mk/bmil_ws/results/skku_commute/offset_calibration_5/sumo.log"/>
+        <error-log value="/home/mk/bmil_ws/results/skku_commute/offset_calibration_5/sumo_errors.log"/>
+        <duration-log.statistics value="true"/>
+        <no-step-log value="true"/>
+    </report>
+
+    <traci_server>
+        <remote-port value="44393"/>
+    </traci_server>
+
+    <random_number>
+        <seed value="42"/>
+    </random_number>
+
+    <gui_only>
+        <gui-settings-file value="/tmp/skku_offset_calibration/5/gui.view.xml"/>
+    </gui_only>
+
+</sumoConfiguration>
+-->
+
+<statistics xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/statistic_file.xsd">
+    <performance clockBegin="1790581387.91" clockEnd="1790581491.05" clockDuration="103.14" traciDuration="3.93" realTimeFactor="32.00" vehicleUpdatesPerSecond="124410.33" personUpdatesPerSecond="0.00" begin="0.00" end="3300.00" duration="3300.00"/>
+    <vehicles loaded="14053" inserted="13820" running="2855" waiting="233"/>
+    <teleports total="0" jam="0" yield="0" wrongLane="0"/>
+    <safety collisions="5" emergencyStops="0" emergencyBraking="205"/>
+    <persons loaded="0" running="0" jammed="0"/>
+    <personTeleports total="0" abortWait="0" wrongDest="0"/>
+    <vehicleTripStatistics count="13820" routeLength="3397.33" speed="11.55" duration="464.24" waitingTime="80.80" timeLoss="243.36" departDelay="2.56" departDelayWaiting="927.04" totalTravelTime="6415778.50" totalDepartDelay="251316.37"/>
+    <pedestrianStatistics number="0" routeLength="0.00" duration="0.00" timeLoss="0.00"/>
+    <rideStatistics number="0"/>
+    <transportStatistics number="0"/>
+</statistics>

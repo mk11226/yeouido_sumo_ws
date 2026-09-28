@@ -1,0 +1,149 @@
+{
+  "route_counts": {
+    "seoul": 6,
+    "corridor": 8,
+    "feeder": 13,
+    "opposing": 14,
+    "cross_street": 150,
+    "toll_approach": 1
+  },
+  "observed_vehicles": {
+    "feeder": {
+      "departed": 2597,
+      "arrived": 2352,
+      "unfinished": 245
+    },
+    "cross_street": {
+      "departed": 9965,
+      "arrived": 9128,
+      "removed": 11,
+      "unfinished": 826
+    },
+    "opposing": {
+      "departed": 4387,
+      "arrived": 3723,
+      "removed": 3,
+      "unfinished": 661
+    },
+    "corridor": {
+      "departed": 1960,
+      "arrived": 1610,
+      "removed": 5,
+      "unfinished": 345
+    },
+    "seoul": {
+      "departed": 2427,
+      "arrived": 1708,
+      "unfinished": 719
+    },
+    "toll_approach": {
+      "departed": 2933,
+      "arrived": 2167,
+      "removed": 5,
+      "unfinished": 761
+    }
+  },
+  "ego_outcome": "arrived",
+  "ego_arrival_time_s": 8818.5,
+  "ego_collision": false,
+  "collision_reports": [
+    {
+      "time_s": 1763.0,
+      "collider": "flow_cross_083.9",
+      "victim": "flow_cross_078.10",
+      "type": "junction",
+      "lane": ":cluster_11428504987_11641428774_11641428794_11641428833_#1more_5_0",
+      "position_m": 25.885705920859127
+    },
+    {
+      "time_s": 2973.0,
+      "collider": "flow_opposing_000.109",
+      "victim": "flow_cross_020.5",
+      "type": "junction",
+      "lane": ":2376659672_3_1",
+      "position_m": 7.65708362140052
+    },
+    {
+      "time_s": 3203.0,
+      "collider": "flow_cross_083.17",
+      "victim": "flow_cross_078.19",
+      "type": "junction",
+      "lane": ":cluster_11428504987_11641428774_11641428794_11641428833_#1more_5_0",
+      "position_m": 27.357742204035276
+    },
+    {
+      "time_s": 3943.0,
+      "collider": "flow_uiwang_approach_booth0.199",
+      "victim": "flow_corridor_09_booth0.17",
+      "type": "side",
+      "lane": ":729262282_1_0",
+      "position_m": 7.640274861348283
+    },
+    {
+      "time_s": 4010.0,
+      "collider": "flow_cross_078.24",
+      "victim": "flow_cross_083.21",
+      "type": "junction",
+      "lane": ":cluster_11428504987_11641428774_11641428794_11641428833_#1more_13_0",
+      "position_m": 9.516194448705749
+    },
+    {
+      "time_s": 4703.0,
+      "collider": "flow_uiwang_approach_booth1.230",
+      "victim": "flow_corridor_09_booth2.19",
+      "type": "side",
+      "lane": ":729262282_1_1",
+      "position_m": 7.7145486461727435
+    },
+    {
+      "time_s": 5186.5,
+      "collider": "flow_uiwang_approach_booth1.251",
+      "victim": "flow_corridor_09_booth2.21",
+      "type": "side",
+      "lane": ":729262282_1_1",
+      "position_m": 21.336811070671775
+    },
+    {
+      "time_s": 6890.5,
+      "collider": "flow_cross_078.42",
+      "victim": "flow_cross_083.37",
+      "type": "junction",
+      "lane": ":cluster_11428504987_11641428774_11641428794_11641428833_#1more_13_0",
+      "position_m": 9.518988994730606
+    },
+    {
+      "time_s": 6933.0,
+      "collider": "flow_opposing_000.244",
+      "victim": "flow_cross_020.6",
+      "type": "junction",
+      "lane": ":2376659672_3_1",
+      "position_m": 10.872762664530581
+    },
+    {
+      "time_s": 7563.0,
+      "collider": "flow_opposing_000.267",
+      "victim": "flow_cross_020.7",
+      "type": "junction",
+      "lane": ":2376659672_3_1",
+      "position_m": 9.458081130630818
+    },
+    {
+      "time_s": 8139.5,
+      "collider": "flow_uiwang_approach_booth0.382",
+      "victim": "flow_corridor_09_booth0.33",
+      "type": "side",
+      "lane": ":729262282_1_0",
+      "position_m": 8.471646263757327
+    },
+    {
+      "time_s": 8578.0,
+      "collider": "flow_uiwang_approach_booth0.331",
+      "victim": "flow_corridor_09_booth0.35",
+      "type": "side",
+      "lane": ":729262282_1_0",
+      "position_m": 15.286987602459327
+    }
+  ],
+  "teleport_events": [],
+  "note": "Synthetic demand. Background junction and side collisions remain; removed trips are not counted as arrivals."
+}

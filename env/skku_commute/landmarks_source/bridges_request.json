@@ -1,0 +1,5 @@
+{
+  "query": "[out:json][timeout:60];nwr[\"man_made\"=\"bridge\"][name](37.50,126.96,37.54,127.02);out center tags;",
+  "url": "https://overpass-api.de/api/interpreter",
+  "retrieved_utc": "2026-09-24T11:14:42.364971+00:00"
+}

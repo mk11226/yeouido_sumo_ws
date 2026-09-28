@@ -1,7 +1,0 @@
-***Starting server on port 39535 ***
-Loading net-file from '/home/mk/bmil_ws/results/hyehwa/ppo_100k_seed42/source_snapshot/env/hyehwa/hyehwa.net.xml' ... done (4ms).
-Loading route-files incrementally from '/home/mk/bmil_ws/results/hyehwa/ppo_100k_seed42/source_snapshot/env/hyehwa/traffic.rou.xml'
-Loading done.
-Simulation version 1.27.1 started with time: 0.00.
-Simulation ended at time: 620.50.
-Reason: TraCI requested termination.

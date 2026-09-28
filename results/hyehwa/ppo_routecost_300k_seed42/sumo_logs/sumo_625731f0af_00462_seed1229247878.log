@@ -1,6 +1,0 @@
-Loading net-file from '/home/mk/bmil_ws/results/hyehwa/ppo_routecost_300k_seed42/source_snapshot/env/hyehwa/hyehwa.net.xml' ... done (7ms).
-Loading route-files incrementally from '/home/mk/bmil_ws/results/hyehwa/ppo_routecost_300k_seed42/source_snapshot/env/hyehwa/traffic.rou.xml'
-Loading done.
-Simulation version 1.27.1 started with time: 0.00.
-Simulation ended at time: 336.00.
-Reason: TraCI issued load command.

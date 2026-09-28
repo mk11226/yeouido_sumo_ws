@@ -1,0 +1,34 @@
+***Starting server on port 45303 ***
+Loading net-file from '/home/mk/bmil_ws/env/skku_commute/skku_commute.net.xml' ... done (1704ms).
+Loading additional-files from '/home/mk/bmil_ws/env/skku_commute/campuses.add.xml' ... done (0ms).
+Loading additional-files from '/home/mk/bmil_ws/env/skku_commute/buildings.poly.xml' ... done (204ms).
+Loading additional-files from '/home/mk/bmil_ws/env/skku_commute/landmarks.add.xml' ... done (0ms).
+Loading additional-files from '/home/mk/bmil_ws/env/skku_commute/congestion.add.xml' ... done (1ms).
+Warning: Unused states in tlLogic 'cluster_11356881998_11521951182_11521951191_4683581782', program '0' in phase 0 after tl-index -1
+Loading route-files incrementally from '/home/mk/bmil_ws/env/skku_commute/skku_commute.rou.xml'
+Loading done.
+Simulation started with time: 0.00.
+Warning: Vehicle 'flow_feeder_24.0' performs emergency braking on lane '507449310#0_0' with decel=9.00, wished=4.50, severity=1.00, time=85.00.
+Warning: Vehicle 'flow_corridor_00.0' performs emergency braking on lane '1069861704_0' with decel=9.00, wished=4.50, severity=1.00, time=128.00.
+Warning: Vehicle 'flow_feeder_14.9' performs emergency braking on lane ':13372915938_5_1' with decel=9.00, wished=4.50, severity=1.00, time=355.00.
+Warning: Vehicle 'flow_corridor_01.12' performs emergency braking on lane '-477565914#1_1' with decel=9.00, wished=4.50, severity=1.00, time=489.00.
+Warning: Vehicle 'flow_corridor_00.17' performs emergency braking on lane '1458158607_1' with decel=9.00, wished=4.50, severity=1.00, time=726.50.
+Simulation ended at time: 900.50.
+Performance:
+ Duration: 35.40s
+ TraCI-Duration: 0.52s
+ Real time factor: 25.44
+ UPS: 18088.227816
+Vehicles:
+ Inserted: 993 (Loaded: 1014)
+ Running: 542
+ Waiting: 21
+ Emergency Braking: 5
+Statistics (avg of 993):
+ RouteLength: 2927.95
+ Speed: 10.88
+ Duration: 322.39
+ WaitingTime: 35.50
+ TimeLoss: 102.74
+ DepartDelay: 0.28
+ DepartDelayWaiting: 394.40

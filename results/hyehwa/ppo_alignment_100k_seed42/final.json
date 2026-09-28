@@ -1,9 +1,0 @@
-{
-  "checkpoint": "final.pt",
-  "timesteps": 100000,
-  "saved_at_utc": "2026-09-23T04:01:24.747424+00:00",
-  "validation": null,
-  "selection_rule": "maximize validation success_rate, then mean_return",
-  "architecture_config": "config.json",
-  "weights_only": true
-}

@@ -1,12 +1,14 @@
 # 성균관대학교 서울 → 수원 SUMO 도로 환경
 
+> 최신 설정과 전체 수정 내역·실행·검증 결과는 [10번 통합 문서](10_SKKU_톨게이트_차로이용_합류.md)를 참고한다.
+
 구축·검증일: 2026-09-23. SUMO 1.27.1.
 
 > 이 문서는 최초 도로 환경의 구축 기록이다. 아래 신호 10개·감응식 설정·완주 표는 **건물·신호 위치 보완 전** 결과이며, 당시 환경은 [road_only_snapshot](../results/skku_commute/road_only_snapshot/)에 보존했다. 현재 환경과 새 검증 결과는 [7_SKKU_건물_신호등_보완.md](./7_SKKU_건물_신호등_보완.md)를 따른다. 아래 기본 실행 명령은 보완된 최신 환경을 연다.
 
 서울 인문사회과학캠퍼스 정문 앞 성균관로에서 수원 자연과학캠퍼스 정문 앞 일월로까지, **자동차전용도로를 포함하는 약 38.35km 주행 환경**을 구축했다. 도심 교차로, 다차로 도로, 자동차전용도로 진입·합류·진출, 수원 시내 진입을 하나의 경로에서 경험할 수 있다.
 
-현재 완료 범위는 **실제 지도 기반 도로 생성, 배경 교통 구성, SUMO 기본 운전 모델의 완주 검증, GUI 실행 도구**이다. 이 경로에 대한 PPO 학습은 아직 수행하지 않았다. 기존 혜화로터리 환경·학습 결과는 별도로 유지된다.
+현재 완료 범위는 **실제 지도 기반 도로 생성, 배경 교통 구성, SUMO 기본 운전 모델의 완주 검증, GUI 실행 도구**이다. 이 경로에 대한 PPO 학습은 아직 수행하지 않았다.
 
 ![최초 환경의 전체 경로와 주요 구간](../results/skku_commute/road_only_snapshot/network.png)
 
@@ -105,24 +107,24 @@ ef7b4e3119e3e5a20bdcbc49ea895fe705420df986171675f0a4c56761da8720
 
 ## 5. 실행 방법
 
-프로젝트 루트 `/home/mk/bmil_ws`에서 실행한다. 현재 설치된 `.venv-hyehwa` 환경의 SUMO·TraCI·sumolib·pyproj 등을 재사용한다.
+프로젝트 루트 `/home/mk/bmil_ws`에서 실행한다. 현재 PC는 시스템에 설치된 SUMO를 사용해 `python3`로 실행한다. 다른 환경에서 필요한 패키지와 `.venv-skku` 설정은 [README](../README.md)를 참고한다. 아래 재생성 명령은 가상환경 설정 후 사용한다.
 
 ```bash
 # 주변 차량과 함께 GUI 실행: 빨간 ego를 자동 추적
-.venv-hyehwa/bin/python run_skku_commute.py --gui --background --viewport-m 180 --keep-open
+python3 run_skku_commute.py --gui --background --viewport-m 800 --keep-open
 
 # 도로 연결만 빠르게 확인: ego 한 대
-.venv-hyehwa/bin/python run_skku_commute.py
+python3 run_skku_commute.py
 
 # GUI 없이 주변 교통을 넣어 완주 검사
-.venv-hyehwa/bin/python run_skku_commute.py --background --seed 43
+python3 run_skku_commute.py --background --seed 43
 
 # 저장된 원본을 재사용하여 도로 전체 재생성
-.venv-hyehwa/bin/python download_skku_corridor.py
-.venv-hyehwa/bin/python build_skku_commute.py
+.venv-skku/bin/python download_skku_corridor.py
+.venv-skku/bin/python build_skku_commute.py
 
 # 원본·네트워크 해시가 같을 때 교통량 등 파생 파일만 다시 생성
-.venv-hyehwa/bin/python build_skku_commute.py --skip-convert --segment-vph 100
+.venv-skku/bin/python build_skku_commute.py --skip-convert --segment-vph 100
 ```
 
 기본 결과 폴더는 `results/skku_commute/` 아래 시각별로 생성한다. 직접 지정하려면 `--output-dir`을 사용한다. `--delay-ms`로 GUI 재생 지연을, `--viewport-m`으로 추적 화면 범위를 조절할 수 있다. `--keep-open`은 검사가 끝난 뒤 GUI를 남긴다. 처음부터 전체 지도를 보려면 SUMO의 화면 전체 맞춤 기능을 사용한다.
@@ -137,11 +139,11 @@ ef7b4e3119e3e5a20bdcbc49ea895fe705420df986171675f0a4c56761da8720
 
 강화학습을 이어갈 때는 다음 작업이 필요하다.
 
-1. 기존 혜화 전용 경로 설정을 새 네트워크·226개 도로 경로에 연결한다. 기존 짧은 에피소드 제한과 저속 구간 기준의 관측 정규화·속도 범위를 장거리·최대 90km/h 조건에 맞춘다.
+1. 서울→수원 네트워크·경로를 사용하는 학습 환경을 새로 구성한다. 에피소드 길이와 관측 정규화·속도 범위를 장거리·최대 90km/h 조건에 맞춘다.
 2. 짧은 도심 구간 → 진입·합류 구간 → 자동차전용도로 → 전체 구간 순서로 학습 과제를 구성한다. 처음부터 40분짜리 구간의 도착 보상에만 의존하면 학습 신호가 드물어진다.
-3. 차량 밀도·속도·합류 시각을 다양하게 하고 별도 seed와 구간에서 평가한다. 기존 혜화 모델의 안전 제어 의존 문제와 신호 위반 보상·관측 문제도 별도로 개선해야 한다.
+3. 차량 밀도·속도·합류 시각을 다양하게 하고 별도 seed와 구간에서 평가한다. 안전 제어 개입률과 신호 위반을 별도로 기록하고 보상·관측을 검증해야 한다.
 
-기존 혜화 PPO 체크포인트를 이 도로에서 학습 완료한 모델로 취급하거나, 이번 기본 주행 결과를 안전 제어 없이 운전하는 RL 결과로 해석하면 안 된다.
+이 경로에서 학습한 체크포인트는 없다. 이번 기본 주행 결과를 안전 제어 없이 운전하는 RL 결과로 해석하면 안 된다.
 
 ## 출처
 

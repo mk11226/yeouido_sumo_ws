@@ -3,16 +3,17 @@
   <input>
     <net-file value="skku_commute.net.xml" />
     <route-files value="skku_commute.rou.xml" />
-    <additional-files value="campuses.add.xml,buildings.poly.xml" />
+    <additional-files value="campuses.add.xml,buildings.poly.xml,landmarks.add.xml,congestion.add.xml,station_signals.add.xml" />
   </input>
   <time>
     <step-length value="0.5" />
-    <end value="7200" />
+    <end value="10800" />
   </time>
   <processing>
     <time-to-teleport value="-1" />
     <collision.action value="remove" />
     <collision.check-junctions value="true" />
+    <lanechange.duration value="3" />
   </processing>
   <report>
     <no-step-log value="true" />

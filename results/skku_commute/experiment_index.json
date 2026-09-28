@@ -1,74 +1,217 @@
 {
-  "scenario": "SKKU Seoul to Suwon with OSM buildings and evidence-based signal locations",
-  "controller": "SUMO IDM, built-in safety active; no learned policy",
+  "scenario": "SKKU: approx 200s station waits, denser open roads, first lane then queue-triggered lane changes",
   "scenario_manifest": "env/skku_commute/manifest.json",
-  "scenario_manifest_sha256": "6614fbb7cdfc6aa25d119fe16419f410a8c509e83340e14fb4e44faf62634368",
-  "network_sha256": "6ac70300dfe4676accf2dd1146f3bdb6847e20cf6a4c1e7bd02651006da62b6d",
-  "signal_program_audit": "results/skku_commute/signal_program_audit.json",
-  "signal_program_audit_sha256": "a9e4ca17b4be53daba5097dd1478bf10f588ac0d2671a21721f98e0c6682da89",
-  "placement_review": "env/skku_commute/signals_source/placement_review.json",
-  "placement_review_sha256": "09082adb728fae8c9776a864a71a0231f2d87ed868ab88516a7daadb6690aeb8",
-  "prior_road_only_snapshot": "results/skku_commute/road_only_snapshot",
+  "scenario_manifest_sha256": "3aee566c8eff87dfaa4cd80ae057a54fc9b2588866b5eec883ff43dfb5bd52de",
+  "network_sha256": "1567b9b81838835b861abd88d447fc5bd148e74bd48dd9a421c770013df3672e",
+  "scripts_sha256": {
+    "build_skku_commute.py": "9dfee122e57949d49dda388675aa38a0bd909f0a0eac6213d1c2398b06b1ff88",
+    "build_skku_freeway_traffic.py": "6ce0033fe614fd0ed0d14225f05603d0a16c4d73b710ada4ca79498608dafe32",
+    "build_skku_station_signals.py": "0d947301ae7fb1e66e8c0e4a7ceae1b69d7c450a3297dc05f03d1aff1d50b4f5",
+    "skku_queue_lane_change.py": "d808fbe21ab8d9ba1220d76ba7539709fdf9839ab19290a12e68acfe2268b00b",
+    "run_skku_commute.py": "a0b4c77a385ba12fb789ef8bcdd39d0cf205daccc8305f647d5c2743ac2e9ab4",
+    "audit_skku_queue.py": "47b27ccc39a028adca9d6f1fe29de0224e70e8995fdfcb7da4cc2399e7c3c3ab"
+  },
   "final_validations": [
     {
-      "id": "buildings_signals_final_seed42",
-      "summary": "results/skku_commute/buildings_signals_final_seed42/summary.json",
-      "summary_sha256": "30c67ba1caa2581be1d64008e9d9aafa669fcdebf401744fb072ca9fb9793530",
-      "gui": false,
-      "seed": 42,
-      "background": true,
-      "distance_m": 38347.25,
-      "duration_s": 3496.5,
-      "waiting_time_s": 780.5,
-      "collision_report_count": 0,
-      "teleport_event_count": 0,
-      "passed": true
-    },
-    {
-      "id": "buildings_signals_final_seed43",
-      "summary": "results/skku_commute/buildings_signals_final_seed43/summary.json",
-      "summary_sha256": "e49eef644d5f46ac5046c155f4260fe119e89390f20a110f7ec2bd6907b33355",
-      "gui": false,
-      "seed": 43,
-      "background": true,
-      "distance_m": 38347.25,
-      "duration_s": 3496.5,
-      "waiting_time_s": 792.0,
-      "collision_report_count": 0,
-      "teleport_event_count": 0,
-      "passed": true
-    },
-    {
-      "id": "buildings_signals_final_gui_seed42",
-      "summary": "results/skku_commute/buildings_signals_final_gui_seed42/summary.json",
-      "summary_sha256": "fbfc5ce72133d339ba0efe558b4c096bccd5622b041b13eb958f849390c7b28c",
-      "gui": true,
-      "seed": 42,
-      "background": true,
-      "distance_m": 38347.25,
-      "duration_s": 3496.5,
-      "waiting_time_s": 780.5,
-      "collision_report_count": 0,
-      "teleport_event_count": 0,
-      "passed": true
+      "id": "queue_selected_seed42",
+      "result": "results/skku_commute/queue_selected_seed42/queue_audit.json",
+      "sha256": "d41357a744bd897108fac0f90cb6fb0d8b91704e9484184c3b0a4cc7daae07f3",
+      "behavior_targets_passed": true,
+      "passed": false,
+      "background_collision_reports": 16,
+      "limitation": "Background collisions remain; behavior targets passed but traffic is not collision-free"
     }
   ],
-  "scripts_sha256": {
-    "download_skku_corridor.py": "dd7fda1df9d9df95b79cb344f51628dfe99a62f8b8636ac5e0f73a64bdee69de",
-    "download_skku_buildings.py": "99fd428be4f109e1c08b58d8cf72b17b41d0165a1f5112f9227f90ef24d96417",
-    "prepare_seoul_signals.py": "0175be47619796a220796adcae21b3da624599f0f665f29e72b10cd9f6043e4c",
-    "prepare_gyeonggi_signals.py": "316490aaf886fdabe78560d4fb8329f0d8720babe867249f9ba21c89247659cd",
-    "build_skku_commute.py": "bed9b6924d1dc22f7dc89408ce482e0744cc33de8a6415d53ce64d9229b7ff9a",
-    "build_skku_buildings.py": "4d05a830ee08fb1f4ecff0fcedacdaeeec25232e06c83b084291424cfe713d84",
-    "build_skku_signals.py": "317f81fffa17cb8814eddcff2b7f4daae1d64eeefacb22a5234f8f961b902969",
-    "run_skku_commute.py": "4f53aeb3c6a8d734cedbe4d73b862d3d0027e83ca99fe599221f76a618f99b07"
-  },
-  "limitations": [
-    "Archived facility positions and OSM are incomplete and have different dates; not certified complete current real-world coverage",
-    "Stop-line projection and SUMO programs are derived; programs and demand are synthetic",
-    "Buildings are 2D visual polygons, not collision or sensor geometry",
-    "Smoke validations, not learned-policy or safety certification"
-  ],
-  "signal_placement_audit": "results/skku_commute/signal_placement_audit.json",
-  "signal_placement_audit_sha256": "858e232a342935ac43a63069e7971cffd412d0be6346e8edc543ec2ec4d47740"
+  "previous_revision": {
+    "scenario": "SKKU: station straight greens reallocated within 90-second cycles",
+    "scenario_manifest": "env/skku_commute/manifest.json",
+    "scenario_manifest_sha256": "899ed632437250983a14be987961b58947f6580196862bf5594d7fe4ea85cb2f",
+    "network_sha256": "1567b9b81838835b861abd88d447fc5bd148e74bd48dd9a421c770013df3672e",
+    "final_validations": [
+      {
+        "id": "station_signals_fixed_cycle_seed42",
+        "result": "results/skku_commute/station_signals_fixed_cycle_seed42/comparison.json",
+        "sha256": "27850c27f5a41e0174130c6ad8249e4bfc25939f41e88f30f3ff4077c17ec373",
+        "ego_arrived": true,
+        "passed": false,
+        "limitation": "Background collision reports remain; see summary.json"
+      }
+    ],
+    "previous_revision": {
+      "scenario": "SKKU: opposing and cross-street traffic",
+      "scenario_manifest": "env/skku_commute/manifest.json",
+      "scenario_manifest_sha256": "44edc119421453afeb6abb4f36e8e650fbaaa9dda341beaba2d0acd8188b6989",
+      "network_sha256": "1567b9b81838835b861abd88d447fc5bd148e74bd48dd9a421c770013df3672e",
+      "final_validations": [
+        {
+          "id": "area_traffic_conservative_seed42",
+          "result": "results/skku_commute/area_traffic_validation/audit.json",
+          "sha256": "82be42dbeaafc116ab35615b5ed8d37bd7efcca26f02d4e3fea37b39489e9601",
+          "passed": false,
+          "ego_arrived": true,
+          "limitation": "See background junction collision reports"
+        }
+      ],
+      "scripts_sha256": {
+        "build_skku_commute.py": "34225806813158b2e9b8f5a356b10d30e09992868dd58499b5fdeb7f4f4e84ef",
+        "run_skku_commute.py": "1aa1da37e5d4d8229d4abcf4f211c6651cf45099eaeeb19d9532c617ddc2d8b9"
+      },
+      "previous_revision": {
+        "scenario": "SKKU: observed use of all six Uiwang toll lanes and safe continuous lane changes / zipper merge",
+        "scenario_manifest": "env/skku_commute/manifest.json",
+        "scenario_manifest_sha256": "bf081dff5a3e8fc4fccc132daa70ccfed9168f8ba4fc1ff31c9661795e9eea0f",
+        "network_sha256": "1567b9b81838835b861abd88d447fc5bd148e74bd48dd9a421c770013df3672e",
+        "final_validations": [
+          {
+            "id": "toll_service_final42",
+            "result": "results/skku_commute/toll_service_final42/audit.json",
+            "sha256": "b940d262760a819a38005e0c11ef0af6976766fcc6b312939bdd01a48382bd04",
+            "passed": true
+          },
+          {
+            "id": "toll_service_gui43",
+            "result": "results/skku_commute/toll_service_gui43/audit.json",
+            "sha256": "9b1bd81aa060e740a22fcefdba3f40621a649ac3321c96d4f90a76c0fdcb0aa0",
+            "passed": true
+          }
+        ],
+        "scripts_sha256": {
+          "build_skku_commute.py": "49910d395cfc64956f0f72f2924cfd2b16dd0a1e00f255bd6db247a25179853e",
+          "build_skku_lanes.py": "839d702eee1b0daf0e0b2cc0af97bebb9d16a64c8e50a96635c769ff8cf6c122",
+          "build_skku_landmarks.py": "46801bd40b2b6eb0d4baa9e432f08e1e1aead62a7cbfe4525263b6aba01e7972",
+          "audit_skku_toll.py": "97960e60351d7d99421a691def2048dd967bd37e13c66e31e129ffca427e7211",
+          "run_skku_commute.py": "9e928c7d56673beedd6981f4f9d98668457a9c628092409748dbde9714696f51",
+          "validate_skku_landmarks.py": "9f96d6b4d8b2686223029cd53cb142aa97a296d198951a3e412fc71bf488cbd0"
+        },
+        "previous_revision": {
+          "scenario": "SKKU: southbound mainline 4 lanes, Uiwang toll approach 6 lanes, major bridge labels",
+          "scenario_manifest": "env/skku_commute/manifest.json",
+          "scenario_manifest_sha256": "4559971b8eeecea314f00f0658ca70b90c9358aef0cf0114dc1cc915bc950ae5",
+          "network_sha256": "959f64f55896b9decd92b302d78a3e8bc78af36b74b720e7bc24726e0a3ff0d7",
+          "final_validations": [
+            {
+              "id": "lanes_final_seed42",
+              "result": "results/skku_commute/lanes_final_seed42/summary.json",
+              "sha256": "f791ec2293d58ffc35bc83b0aec5fba33ac295a728e816790febb8c99974f729",
+              "passed": true
+            },
+            {
+              "id": "lanes_gui_seed43",
+              "result": "results/skku_commute/lanes_gui_seed43/audit.json",
+              "sha256": "e3d75ae4256cd3d56a01bd19a0a81afd615ad5e60ac56b380b5c042ff144efd3",
+              "passed": true
+            }
+          ],
+          "scripts_sha256": {
+            "build_skku_commute.py": "c6ae1dc022edaa5a7d938d2aa26a58f3631aef732cc1ebcafa6b843febf53371",
+            "build_skku_lanes.py": "10c5f54541401eceab1388ddf8e0b01c0e604b4f202d1ffbf434d266095a8406",
+            "build_skku_landmarks.py": "0ea6ca9410caeed9e262e279ef33f545fc94c1805f2d973c668ae623b5d7ac22",
+            "run_skku_commute.py": "9e928c7d56673beedd6981f4f9d98668457a9c628092409748dbde9714696f51",
+            "validate_skku_landmarks.py": "79a9cc47c5dddc0901e0adeb8af339d61e935d6e389014ebf5e2273299be7216"
+          },
+          "previous_revision": {
+            "scenario": "SKKU Seoul to Suwon: Han River, Korean landmarks and synthetic Seoul/Uiwang congestion",
+            "scenario_manifest": "env/skku_commute/manifest.json",
+            "scenario_manifest_sha256": "770aa5a29d4cbc76d70e739f9a1605d1fe2435d8b9879098224bfab7e161528f",
+            "network_sha256": "6ac70300dfe4676accf2dd1146f3bdb6847e20cf6a4c1e7bd02651006da62b6d",
+            "final_validations": [
+              {
+                "id": "landmarks_final_seed42",
+                "result": "results/skku_commute/landmarks_final_seed42/summary.json",
+                "sha256": "3ea41bcdc1e2243e43b894c839e6ab443d508c6f937591cdeea44b9a1e351aa7",
+                "passed": true
+              },
+              {
+                "id": "landmarks_final_gui_seed43",
+                "result": "results/skku_commute/landmarks_final_gui_seed43/audit.json",
+                "sha256": "957c23dab27faa465183505304a5dc536d033a1868e592c9d903b6acfa50169f",
+                "passed": true
+              }
+            ],
+            "scripts_sha256": {
+              "build_skku_commute.py": "b87d0609d727080c5610278b90e6f7e547d4314d0fc2e0c32f06e4aa9e91d328",
+              "build_skku_landmarks.py": "eca4e5db19bafec46228a41e8b054f4ccc949977c7ba0e11dd7576360eb86817",
+              "download_skku_landmarks.py": "cf75a3ae4ed566f5cd2ad6125c64229c42dee5a68b5e6c9091d322048cb5f6fd",
+              "run_skku_commute.py": "9e928c7d56673beedd6981f4f9d98668457a9c628092409748dbde9714696f51",
+              "validate_skku_landmarks.py": "0658f24744fe1e47251fb7cea275e19d0d0a3615cf38d3b5c3d87124b23c057a"
+            },
+            "previous_revision": {
+              "scenario": "SKKU Seoul to Suwon with OSM buildings and evidence-based signal locations",
+              "controller": "SUMO IDM, built-in safety active; no learned policy",
+              "scenario_manifest": "env/skku_commute/manifest.json",
+              "scenario_manifest_sha256": "6614fbb7cdfc6aa25d119fe16419f410a8c509e83340e14fb4e44faf62634368",
+              "network_sha256": "6ac70300dfe4676accf2dd1146f3bdb6847e20cf6a4c1e7bd02651006da62b6d",
+              "signal_program_audit": "results/skku_commute/signal_program_audit.json",
+              "signal_program_audit_sha256": "a9e4ca17b4be53daba5097dd1478bf10f588ac0d2671a21721f98e0c6682da89",
+              "placement_review": "env/skku_commute/signals_source/placement_review.json",
+              "placement_review_sha256": "09082adb728fae8c9776a864a71a0231f2d87ed868ab88516a7daadb6690aeb8",
+              "prior_road_only_snapshot": "results/skku_commute/road_only_snapshot",
+              "final_validations": [
+                {
+                  "id": "buildings_signals_final_seed42",
+                  "summary": "results/skku_commute/buildings_signals_final_seed42/summary.json",
+                  "summary_sha256": "30c67ba1caa2581be1d64008e9d9aafa669fcdebf401744fb072ca9fb9793530",
+                  "gui": false,
+                  "seed": 42,
+                  "background": true,
+                  "distance_m": 38347.25,
+                  "duration_s": 3496.5,
+                  "waiting_time_s": 780.5,
+                  "collision_report_count": 0,
+                  "teleport_event_count": 0,
+                  "passed": true
+                },
+                {
+                  "id": "buildings_signals_final_seed43",
+                  "summary": "results/skku_commute/buildings_signals_final_seed43/summary.json",
+                  "summary_sha256": "e49eef644d5f46ac5046c155f4260fe119e89390f20a110f7ec2bd6907b33355",
+                  "gui": false,
+                  "seed": 43,
+                  "background": true,
+                  "distance_m": 38347.25,
+                  "duration_s": 3496.5,
+                  "waiting_time_s": 792.0,
+                  "collision_report_count": 0,
+                  "teleport_event_count": 0,
+                  "passed": true
+                },
+                {
+                  "id": "buildings_signals_final_gui_seed42",
+                  "summary": "results/skku_commute/buildings_signals_final_gui_seed42/summary.json",
+                  "summary_sha256": "fbfc5ce72133d339ba0efe558b4c096bccd5622b041b13eb958f849390c7b28c",
+                  "gui": true,
+                  "seed": 42,
+                  "background": true,
+                  "distance_m": 38347.25,
+                  "duration_s": 3496.5,
+                  "waiting_time_s": 780.5,
+                  "collision_report_count": 0,
+                  "teleport_event_count": 0,
+                  "passed": true
+                }
+              ],
+              "scripts_sha256": {
+                "download_skku_corridor.py": "dd7fda1df9d9df95b79cb344f51628dfe99a62f8b8636ac5e0f73a64bdee69de",
+                "download_skku_buildings.py": "99fd428be4f109e1c08b58d8cf72b17b41d0165a1f5112f9227f90ef24d96417",
+                "prepare_seoul_signals.py": "0175be47619796a220796adcae21b3da624599f0f665f29e72b10cd9f6043e4c",
+                "prepare_gyeonggi_signals.py": "316490aaf886fdabe78560d4fb8329f0d8720babe867249f9ba21c89247659cd",
+                "build_skku_commute.py": "bed9b6924d1dc22f7dc89408ce482e0744cc33de8a6415d53ce64d9229b7ff9a",
+                "build_skku_buildings.py": "4d05a830ee08fb1f4ecff0fcedacdaeeec25232e06c83b084291424cfe713d84",
+                "build_skku_signals.py": "317f81fffa17cb8814eddcff2b7f4daae1d64eeefacb22a5234f8f961b902969",
+                "run_skku_commute.py": "4f53aeb3c6a8d734cedbe4d73b862d3d0027e83ca99fe599221f76a618f99b07"
+              },
+              "limitations": [
+                "Archived facility positions and OSM are incomplete and have different dates; not certified complete current real-world coverage",
+                "Stop-line projection and SUMO programs are derived; programs and demand are synthetic",
+                "Buildings are 2D visual polygons, not collision or sensor geometry",
+                "Smoke validations, not learned-policy or safety certification"
+              ],
+              "signal_placement_audit": "results/skku_commute/signal_placement_audit.json",
+              "signal_placement_audit_sha256": "858e232a342935ac43a63069e7971cffd412d0be6346e8edc543ec2ec4d47740"
+            }
+          }
+        }
+      }
+    }
+  }
 }

@@ -1,0 +1,2126 @@
+{
+  "created_utc": "2026-09-24T12:05:39.230194+00:00",
+  "sumo_version": "Eclipse SUMO sumo 1.27.1",
+  "source_manifest": "source/manifest.json",
+  "source_osm_sha256": "ef7b4e3119e3e5a20bdcbc49ea895fe705420df986171675f0a4c56761da8720",
+  "builder_sha256": "49910d395cfc64956f0f72f2924cfd2b16dd0a1e00f255bd6db247a25179853e",
+  "netconvert_command": [
+    "/home/mk/bmil_ws/.venv-hyehwa/bin/netconvert",
+    "--osm-files",
+    "/home/mk/bmil_ws/env/skku_commute/signals_source/roads_with_signal_crossings.osm.xml",
+    "--type-files",
+    "/home/mk/bmil_ws/env/skku_commute/skku_commute.typ.xml",
+    "--output-file",
+    "/home/mk/bmil_ws/env/skku_commute/skku_commute.net.xml",
+    "--keep-edges.by-vclass",
+    "passenger",
+    "--keep-edges.components",
+    "1",
+    "--geometry.remove",
+    "--ramps.guess",
+    "--ramps.guess-acceleration-lanes",
+    "--junctions.join",
+    "--tls.guess-signals",
+    "--tls.join",
+    "--tls.uncontrolled-within",
+    "--tls.default-type",
+    "static",
+    "--tls.cycle.time",
+    "90",
+    "--tls.red.time",
+    "25",
+    "--tls.allred.time",
+    "2",
+    "--tls.yellow.time",
+    "3",
+    "--no-turnarounds",
+    "--roundabouts.guess",
+    "--junctions.corner-detail",
+    "5",
+    "--output.street-names",
+    "--osm.turn-lanes",
+    "--osm.lane-access",
+    "--osm.annotate-defaults",
+    "--osm.extra-attributes",
+    "highway,maxspeed,lanes,oneway,layer,bridge,tunnel"
+  ],
+  "network": {
+    "edges": 27959,
+    "junctions": 11131,
+    "signals": 235,
+    "road_types": {
+      "highway.residential": 12629,
+      "highway.service": 9178,
+      "highway.living_street": 839,
+      "highway.tertiary": 1712,
+      "highway.primary": 1543,
+      "highway.unclassified": 308,
+      "highway.secondary": 907,
+      "highway.primary_link": 208,
+      "highway.tertiary_link": 66,
+      "highway.trunk_link": 175,
+      "highway.secondary_link": 55,
+      "highway.trunk": 245,
+      "highway.motorway_link": 50,
+      "highway.motorway": 44
+    }
+  },
+  "route": {
+    "id": "seoul_to_suwon",
+    "length_excluding_internal_m": 34737.94,
+    "free_flow_cost_s": 2305.35,
+    "length_with_minimum_internal_m": 38332.76,
+    "depart_pos_m": 9.449841503391673,
+    "arrival_pos_m": 137.92220546449366,
+    "start_lon_lat": [
+      126.9972919,
+      37.5847826
+    ],
+    "end_lon_lat": [
+      126.9738,
+      37.2906472
+    ],
+    "start_snap_distance_m": 1.6125678386542222,
+    "end_snap_distance_m": 1.6057888792656734,
+    "expressway_mainline_length_m": 13164.43,
+    "max_edge_speed_kmh": 90.0,
+    "named_roads": [
+      "성균관로",
+      "창경궁로",
+      "배오개다리",
+      "창경궁로",
+      "을지로",
+      "동호로",
+      "장충단로",
+      "녹사평대로58길",
+      "녹사평대로",
+      "반포대로",
+      "신반포로",
+      "동작대로",
+      "과천대로",
+      "봉담과천로",
+      "경수대로",
+      "서부로",
+      "일월로"
+    ],
+    "signal_controller_count": 69
+  },
+  "background": {
+    "synthetic": true,
+    "segment_vph": 100,
+    "expected_total_departures_per_hour": 4050.0,
+    "routes": [
+      {
+        "id": "corridor_00",
+        "kind": "seoul",
+        "expected_vehicles_per_hour": 200.0,
+        "flow_count": 1,
+        "assigned_booth_lanes": [],
+        "edge_ids": [
+          "-37401405#7",
+          "-37401405#6",
+          "-37401405#4",
+          "-37401405#3",
+          "-37401405#2",
+          "-37401405#1",
+          "1455534439#4",
+          "1455534439#5",
+          "1455534439#6",
+          "1455534439#7",
+          "517641034#1",
+          "517641034#2",
+          "1069861704",
+          "517641003",
+          "1458160301",
+          "37402820",
+          "1458160296",
+          "1458160295",
+          "1458160294",
+          "1458160293",
+          "1458158614",
+          "1458158612",
+          "517583989",
+          "1458158609",
+          "1458158608",
+          "1458158607",
+          "517641007",
+          "1458158597",
+          "37400684#0",
+          "37400684#1",
+          "732213462",
+          "620634300",
+          "1212424784",
+          "218769254#0",
+          "218769254#2",
+          "218769254#3",
+          "1456115798",
+          "1456115797",
+          "1456115789",
+          "184083252",
+          "218923184",
+          "1456115805",
+          "1456115804#0",
+          "1456115804#1",
+          "1456115804#2",
+          "1456115804#3",
+          "913836077",
+          "-1455524946",
+          "-1455524944",
+          "-1455518727#1",
+          "-1455518727#0",
+          "-1455518728",
+          "-428260116#1",
+          "-428260116#0",
+          "1455512074",
+          "-1455512067",
+          "-913006754#9",
+          "-913006754#8",
+          "-913006754#7",
+          "-913006754#6",
+          "-913006754#5",
+          "-913006754#4",
+          "-913006754#3",
+          "-913006754#2",
+          "-913006754#1",
+          "-913006754#0",
+          "-913006753",
+          "913006751",
+          "-244384770#13",
+          "-244384770#12",
+          "-244384770#11",
+          "244214816",
+          "1502825268",
+          "1416040867#1"
+        ]
+      },
+      {
+        "id": "corridor_01",
+        "kind": "seoul",
+        "expected_vehicles_per_hour": 200.0,
+        "flow_count": 1,
+        "assigned_booth_lanes": [],
+        "edge_ids": [
+          "-913006754#1",
+          "-913006754#0",
+          "-913006753",
+          "913006751",
+          "-244384770#13",
+          "-244384770#12",
+          "-244384770#11",
+          "244214816",
+          "1502825268",
+          "1416040867#1",
+          "379943272#2",
+          "-477565914#4",
+          "-477565914#3",
+          "-477565914#2",
+          "-477565914#1",
+          "-477565914#0",
+          "184441590#0",
+          "184441590#1",
+          "184441590#2",
+          "516163752",
+          "-37400628#1",
+          "-37400628#0",
+          "218907632#0",
+          "218907632#1",
+          "218907632#2",
+          "218907632#3",
+          "218959279#0",
+          "218959279#1",
+          "218959279#2",
+          "218959279#3",
+          "218959279#4",
+          "-37928408",
+          "1414486709",
+          "1091571409#1"
+        ]
+      },
+      {
+        "id": "corridor_02",
+        "kind": "seoul",
+        "expected_vehicles_per_hour": 200.0,
+        "flow_count": 1,
+        "assigned_booth_lanes": [],
+        "edge_ids": [
+          "1416040867#1",
+          "379943272#2",
+          "-477565914#4",
+          "-477565914#3",
+          "-477565914#2",
+          "-477565914#1",
+          "-477565914#0",
+          "184441590#0",
+          "184441590#1",
+          "184441590#2",
+          "516163752",
+          "-37400628#1",
+          "-37400628#0",
+          "218907632#0",
+          "218907632#1",
+          "218907632#2",
+          "218907632#3",
+          "218959279#0",
+          "218959279#1",
+          "218959279#2",
+          "218959279#3",
+          "218959279#4",
+          "-37928408",
+          "1414486709",
+          "1091571409#1",
+          "674432572",
+          "674432577",
+          "547990895#0",
+          "547990895#1",
+          "547990895#2",
+          "547990890#0",
+          "913615050",
+          "1532298610#0",
+          "1532298610#1",
+          "1532298610#3",
+          "1532298610#4",
+          "1252436244#0",
+          "1252436244#1",
+          "1252436244#2"
+        ]
+      },
+      {
+        "id": "corridor_03",
+        "kind": "seoul",
+        "expected_vehicles_per_hour": 130.0,
+        "flow_count": 1,
+        "assigned_booth_lanes": [],
+        "edge_ids": [
+          "1091571409#1",
+          "674432572",
+          "674432577",
+          "547990895#0",
+          "547990895#1",
+          "547990895#2",
+          "547990890#0",
+          "913615050",
+          "1532298610#0",
+          "1532298610#1",
+          "1532298610#3",
+          "1532298610#4",
+          "1252436244#0",
+          "1252436244#1",
+          "1252436244#2",
+          "1252436244#4",
+          "-1117538960",
+          "1212097845#0",
+          "1212097845#1",
+          "1212097845#2",
+          "1212097845#3",
+          "509191827#0",
+          "509191827#1",
+          "522803618",
+          "1009647523",
+          "1009647522#1",
+          "1009647521#0",
+          "1009647521#1",
+          "1009647521#2",
+          "1252207934#0",
+          "1252207934#1",
+          "1009647520#0",
+          "1009647520#1",
+          "509191846#0",
+          "509191846#1",
+          "509191846#2",
+          "509191846#3",
+          "509191846#4",
+          "509191846#5",
+          "509191846#6",
+          "509191846#7",
+          "509191846#8",
+          "555215394#0",
+          "555215394#1",
+          "555215394#2",
+          "521118064#0",
+          "521118064#1",
+          "251118733#1",
+          "1240167345#0",
+          "1240167345#1",
+          "518362765#0"
+        ]
+      },
+      {
+        "id": "corridor_04",
+        "kind": "seoul",
+        "expected_vehicles_per_hour": 130.0,
+        "flow_count": 1,
+        "assigned_booth_lanes": [],
+        "edge_ids": [
+          "1252436244#2",
+          "1252436244#4",
+          "-1117538960",
+          "1212097845#0",
+          "1212097845#1",
+          "1212097845#2",
+          "1212097845#3",
+          "509191827#0",
+          "509191827#1",
+          "522803618",
+          "1009647523",
+          "1009647522#1",
+          "1009647521#0",
+          "1009647521#1",
+          "1009647521#2",
+          "1252207934#0",
+          "1252207934#1",
+          "1009647520#0",
+          "1009647520#1",
+          "509191846#0",
+          "509191846#1",
+          "509191846#2",
+          "509191846#3",
+          "509191846#4",
+          "509191846#5",
+          "509191846#6",
+          "509191846#7",
+          "509191846#8",
+          "555215394#0",
+          "555215394#1",
+          "555215394#2",
+          "521118064#0",
+          "521118064#1",
+          "251118733#1",
+          "1240167345#0",
+          "1240167345#1",
+          "518362765#0",
+          "518362765#1",
+          "518362765#3",
+          "518362765#4",
+          "518362765#5",
+          "494997544#1",
+          "1224608697#0",
+          "1224608697#1",
+          "494997545",
+          "518362768#0",
+          "518362768#1",
+          "1252207931#0",
+          "1252207931#1",
+          "555489941",
+          "1252207929"
+        ]
+      },
+      {
+        "id": "corridor_05",
+        "kind": "seoul",
+        "expected_vehicles_per_hour": 130.0,
+        "flow_count": 1,
+        "assigned_booth_lanes": [],
+        "edge_ids": [
+          "518362765#0",
+          "518362765#1",
+          "518362765#3",
+          "518362765#4",
+          "518362765#5",
+          "494997544#1",
+          "1224608697#0",
+          "1224608697#1",
+          "494997545",
+          "518362768#0",
+          "518362768#1",
+          "1252207931#0",
+          "1252207931#1",
+          "555489941",
+          "1252207929",
+          "494997539",
+          "772813013#0",
+          "772813013#1",
+          "772813013#2",
+          "187927807"
+        ]
+      },
+      {
+        "id": "corridor_06",
+        "kind": "corridor",
+        "expected_vehicles_per_hour": 100,
+        "flow_count": 1,
+        "assigned_booth_lanes": [],
+        "edge_ids": [
+          "1252207929",
+          "494997539",
+          "772813013#0",
+          "772813013#1",
+          "772813013#2",
+          "187927807",
+          "581840279",
+          "1055237004",
+          "394405923",
+          "1360484180-AddedOnRampEdge",
+          "1360484180",
+          "1360484180-AddedOffRampEdge",
+          "1495778725",
+          "1495778725-AddedOffRampEdge",
+          "1430502410",
+          "59054363-AddedOnRampEdge",
+          "59054363",
+          "59054363-AddedOffRampEdge",
+          "1224608698"
+        ]
+      },
+      {
+        "id": "corridor_07",
+        "kind": "corridor",
+        "expected_vehicles_per_hour": 100,
+        "flow_count": 1,
+        "assigned_booth_lanes": [],
+        "edge_ids": [
+          "187927807",
+          "581840279",
+          "1055237004",
+          "394405923",
+          "1360484180-AddedOnRampEdge",
+          "1360484180",
+          "1360484180-AddedOffRampEdge",
+          "1495778725",
+          "1495778725-AddedOffRampEdge",
+          "1430502410",
+          "59054363-AddedOnRampEdge",
+          "59054363",
+          "59054363-AddedOffRampEdge",
+          "1224608698",
+          "59054368",
+          "59054369#0",
+          "59054369#1-AddedOnRampEdge",
+          "59054369#1",
+          "1454713745",
+          "1454713745-AddedOffRampEdge",
+          "525074948"
+        ]
+      },
+      {
+        "id": "corridor_08",
+        "kind": "corridor",
+        "expected_vehicles_per_hour": 100,
+        "flow_count": 1,
+        "assigned_booth_lanes": [],
+        "edge_ids": [
+          "1224608698",
+          "59054368",
+          "59054369#0",
+          "59054369#1-AddedOnRampEdge",
+          "59054369#1",
+          "1454713745",
+          "1454713745-AddedOffRampEdge",
+          "525074948",
+          "58858238#1-AddedOnRampEdge",
+          "58858238#1",
+          "58858238#2-AddedOnRampEdge",
+          "58858238#2",
+          "58858238#2-AddedOffRampEdge",
+          "396671501",
+          "396671501-AddedOffRampEdge",
+          "1224608699"
+        ]
+      },
+      {
+        "id": "corridor_09",
+        "kind": "corridor",
+        "expected_vehicles_per_hour": 100,
+        "flow_count": 6,
+        "assigned_booth_lanes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "edge_ids": [
+          "525074948",
+          "58858238#1-AddedOnRampEdge",
+          "58858238#1",
+          "58858238#2-AddedOnRampEdge",
+          "58858238#2",
+          "58858238#2-AddedOffRampEdge",
+          "396671501",
+          "396671501-AddedOffRampEdge",
+          "1224608699",
+          "489526373-AddedOnRampEdge",
+          "489526373",
+          "489526373-AddedOffRampEdge",
+          "507449308"
+        ]
+      },
+      {
+        "id": "corridor_10",
+        "kind": "corridor",
+        "expected_vehicles_per_hour": 100,
+        "flow_count": 6,
+        "assigned_booth_lanes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "edge_ids": [
+          "1224608699",
+          "489526373-AddedOnRampEdge",
+          "489526373",
+          "489526373-AddedOffRampEdge",
+          "507449308",
+          "507570571-AddedOnRampEdge",
+          "507570571",
+          "403953823#1",
+          "58858274",
+          "507449310#0",
+          "507449310#2",
+          "507449311",
+          "1224608701",
+          "489526338#0",
+          "489526338#1",
+          "489526338#2",
+          "418064372#0"
+        ]
+      },
+      {
+        "id": "corridor_11",
+        "kind": "corridor",
+        "expected_vehicles_per_hour": 100,
+        "flow_count": 6,
+        "assigned_booth_lanes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "edge_ids": [
+          "489526373-AddedOffRampEdge",
+          "507449308",
+          "507570571-AddedOnRampEdge",
+          "507570571",
+          "403953823#1",
+          "58858274",
+          "507449310#0",
+          "507449310#2",
+          "507449311",
+          "1224608701",
+          "489526338#0",
+          "489526338#1",
+          "489526338#2",
+          "418064372#0",
+          "418064372#1",
+          "418064372#2",
+          "418064372#3",
+          "392127256#0",
+          "392127256#1",
+          "392127256#2",
+          "392127256#3",
+          "554658448",
+          "775456751#0",
+          "775456751#1"
+        ]
+      },
+      {
+        "id": "corridor_12",
+        "kind": "corridor",
+        "expected_vehicles_per_hour": 100,
+        "flow_count": 1,
+        "assigned_booth_lanes": [],
+        "edge_ids": [
+          "418064372#0",
+          "418064372#1",
+          "418064372#2",
+          "418064372#3",
+          "392127256#0",
+          "392127256#1",
+          "392127256#2",
+          "392127256#3",
+          "554658448",
+          "775456751#0",
+          "775456751#1",
+          "775456751#2",
+          "775456751#3",
+          "775456751#5",
+          "775456751#6",
+          "555231771#0",
+          "555231771#1",
+          "555231771#2",
+          "555231771#3",
+          "488392556",
+          "600317492",
+          "600317490",
+          "488392551",
+          "474147431",
+          "561229641#0",
+          "561229641#1"
+        ]
+      },
+      {
+        "id": "corridor_13",
+        "kind": "corridor",
+        "expected_vehicles_per_hour": 100,
+        "flow_count": 1,
+        "assigned_booth_lanes": [],
+        "edge_ids": [
+          "775456751#1",
+          "775456751#2",
+          "775456751#3",
+          "775456751#5",
+          "775456751#6",
+          "555231771#0",
+          "555231771#1",
+          "555231771#2",
+          "555231771#3",
+          "488392556",
+          "600317492",
+          "600317490",
+          "488392551",
+          "474147431",
+          "561229641#0",
+          "561229641#1"
+        ]
+      },
+      {
+        "id": "feeder_14",
+        "kind": "feeder",
+        "expected_vehicles_per_hour": 100.0,
+        "flow_count": 1,
+        "assigned_booth_lanes": [],
+        "edge_ids": [
+          "517641031",
+          "517641003",
+          "1458160301",
+          "37402820",
+          "1458160296",
+          "1458160295",
+          "1458160294"
+        ]
+      },
+      {
+        "id": "feeder_15",
+        "kind": "feeder",
+        "expected_vehicles_per_hour": 100.0,
+        "flow_count": 1,
+        "assigned_booth_lanes": [],
+        "edge_ids": [
+          "-244214818#0",
+          "-244384770#12",
+          "-244384770#11",
+          "244214816",
+          "1502825268",
+          "1416040867#1",
+          "379943272#2"
+        ]
+      },
+      {
+        "id": "feeder_16",
+        "kind": "feeder",
+        "expected_vehicles_per_hour": 100.0,
+        "flow_count": 1,
+        "assigned_booth_lanes": [],
+        "edge_ids": [
+          "379943272#1",
+          "379943272#2",
+          "-477565914#4",
+          "-477565914#3",
+          "-477565914#2",
+          "-477565914#1",
+          "-477565914#0"
+        ]
+      },
+      {
+        "id": "feeder_17",
+        "kind": "feeder",
+        "expected_vehicles_per_hour": 100.0,
+        "flow_count": 1,
+        "assigned_booth_lanes": [],
+        "edge_ids": [
+          "65398740",
+          "1091571409#1",
+          "674432572",
+          "674432577",
+          "547990895#0",
+          "547990895#1",
+          "547990895#2"
+        ]
+      },
+      {
+        "id": "feeder_18",
+        "kind": "feeder",
+        "expected_vehicles_per_hour": 100.0,
+        "flow_count": 1,
+        "assigned_booth_lanes": [],
+        "edge_ids": [
+          "-304315357#1",
+          "1532298610#3",
+          "1532298610#4",
+          "1252436244#0",
+          "1252436244#1",
+          "1252436244#2",
+          "1252436244#4"
+        ]
+      },
+      {
+        "id": "feeder_19",
+        "kind": "feeder",
+        "expected_vehicles_per_hour": 100.0,
+        "flow_count": 1,
+        "assigned_booth_lanes": [],
+        "edge_ids": [
+          "218870950#10",
+          "1009647521#0",
+          "1009647521#1",
+          "1009647521#2",
+          "1252207934#0",
+          "1252207934#1",
+          "1009647520#0"
+        ]
+      },
+      {
+        "id": "feeder_20",
+        "kind": "feeder",
+        "expected_vehicles_per_hour": 100.0,
+        "flow_count": 1,
+        "assigned_booth_lanes": [],
+        "edge_ids": [
+          "1240606112",
+          "1224608697#0",
+          "1224608697#1",
+          "494997545",
+          "518362768#0",
+          "518362768#1",
+          "1252207931#0"
+        ]
+      },
+      {
+        "id": "feeder_21",
+        "kind": "feeder",
+        "expected_vehicles_per_hour": 60.0,
+        "flow_count": 1,
+        "assigned_booth_lanes": [],
+        "edge_ids": [
+          "374901747#1",
+          "187927807",
+          "581840279",
+          "1055237004",
+          "394405923",
+          "1360484180-AddedOnRampEdge",
+          "1360484180"
+        ]
+      },
+      {
+        "id": "feeder_22",
+        "kind": "feeder",
+        "expected_vehicles_per_hour": 60.0,
+        "flow_count": 1,
+        "assigned_booth_lanes": [],
+        "edge_ids": [
+          "1495778726",
+          "59054363-AddedOnRampEdge",
+          "59054363",
+          "59054363-AddedOffRampEdge",
+          "1224608698",
+          "59054368",
+          "59054369#0"
+        ]
+      },
+      {
+        "id": "feeder_23",
+        "kind": "feeder",
+        "expected_vehicles_per_hour": 60.0,
+        "flow_count": 1,
+        "assigned_booth_lanes": [],
+        "edge_ids": [
+          "525074942#1",
+          "58858238#1-AddedOnRampEdge",
+          "58858238#1",
+          "58858238#2-AddedOnRampEdge",
+          "58858238#2",
+          "58858238#2-AddedOffRampEdge",
+          "396671501"
+        ]
+      },
+      {
+        "id": "feeder_24",
+        "kind": "feeder",
+        "expected_vehicles_per_hour": 60.0,
+        "flow_count": 1,
+        "assigned_booth_lanes": [],
+        "edge_ids": [
+          "475582907#3",
+          "507570571-AddedOnRampEdge",
+          "507570571",
+          "403953823#1",
+          "58858274",
+          "507449310#0",
+          "507449310#2"
+        ]
+      },
+      {
+        "id": "feeder_25",
+        "kind": "feeder",
+        "expected_vehicles_per_hour": 60.0,
+        "flow_count": 1,
+        "assigned_booth_lanes": [],
+        "edge_ids": [
+          "1235185551",
+          "489526338#1",
+          "489526338#2",
+          "418064372#0",
+          "418064372#1",
+          "418064372#2",
+          "418064372#3"
+        ]
+      },
+      {
+        "id": "feeder_26",
+        "kind": "feeder",
+        "expected_vehicles_per_hour": 60.0,
+        "flow_count": 1,
+        "assigned_booth_lanes": [],
+        "edge_ids": [
+          "-479253513#1",
+          "775456751#1",
+          "775456751#2",
+          "775456751#3",
+          "775456751#5",
+          "775456751#6",
+          "555231771#0"
+        ]
+      },
+      {
+        "id": "uiwang_approach",
+        "kind": "toll_approach",
+        "expected_vehicles_per_hour": 1200,
+        "flow_count": 6,
+        "assigned_booth_lanes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "edge_ids": [
+          "1224608699",
+          "489526373-AddedOnRampEdge",
+          "489526373",
+          "489526373-AddedOffRampEdge",
+          "507449308",
+          "507570571-AddedOnRampEdge",
+          "507570571",
+          "403953823#1",
+          "58858274",
+          "507449310#0",
+          "507449310#2",
+          "507449311",
+          "1224608701"
+        ]
+      }
+    ]
+  },
+  "default_road_attributes": {
+    "motorway": {
+      "speed_kmh": 100,
+      "lanes": 2,
+      "oneway": true
+    },
+    "motorway_link": {
+      "speed_kmh": 60,
+      "lanes": 1,
+      "oneway": true
+    },
+    "trunk": {
+      "speed_kmh": 80,
+      "lanes": 2,
+      "oneway": false
+    },
+    "trunk_link": {
+      "speed_kmh": 50,
+      "lanes": 1,
+      "oneway": false
+    },
+    "primary": {
+      "speed_kmh": 50,
+      "lanes": 2,
+      "oneway": false
+    },
+    "primary_link": {
+      "speed_kmh": 40,
+      "lanes": 1,
+      "oneway": false
+    },
+    "secondary": {
+      "speed_kmh": 50,
+      "lanes": 2,
+      "oneway": false
+    },
+    "secondary_link": {
+      "speed_kmh": 40,
+      "lanes": 1,
+      "oneway": false
+    },
+    "tertiary": {
+      "speed_kmh": 40,
+      "lanes": 1,
+      "oneway": false
+    },
+    "tertiary_link": {
+      "speed_kmh": 30,
+      "lanes": 1,
+      "oneway": false
+    },
+    "unclassified": {
+      "speed_kmh": 30,
+      "lanes": 1,
+      "oneway": false
+    },
+    "residential": {
+      "speed_kmh": 30,
+      "lanes": 1,
+      "oneway": false
+    },
+    "living_street": {
+      "speed_kmh": 20,
+      "lanes": 1,
+      "oneway": false
+    },
+    "service": {
+      "speed_kmh": 20,
+      "lanes": 1,
+      "oneway": false
+    },
+    "road": {
+      "speed_kmh": 30,
+      "lanes": 1,
+      "oneway": false
+    }
+  },
+  "osm_tag_coverage": {
+    "all": {
+      "ways": 8911,
+      "maxspeed_tagged": 487,
+      "lanes_tagged": 735,
+      "oneway_tagged": 2266,
+      "bridge_tagged": 333,
+      "tunnel_tagged": 184
+    },
+    "route": {
+      "ways": 123,
+      "maxspeed_tagged": 27,
+      "lanes_tagged": 47,
+      "oneway_tagged": 88,
+      "bridge_tagged": 6,
+      "tunnel_tagged": 1
+    }
+  },
+  "assumptions": [
+    "OSM road topology; no surveyed lane geometry or signal timing",
+    "Missing speed/lanes use documented typemap defaults; OSM tags take precedence",
+    "Traffic light positions use explicit OSM signal tags and archived official datasets; programs are synthetic",
+    "Missing current official positions and unmatched records prevent a claim of complete present-day signal coverage",
+    "Ramp lane guesses and demand are synthetic",
+    "Public roads outside main gates; no campus internal driving",
+    "SUMO IDM ego uses built-in safety and automatic lane changes; no PPO model attached",
+    "OSRM identifies the download corridor; SUMO computes its own legal fastest route"
+  ],
+  "files_sha256": {
+    "skku_commute.net.xml": "1567b9b81838835b861abd88d447fc5bd148e74bd48dd9a421c770013df3672e",
+    "skku_commute.typ.xml": "a4ceab88b05374f884acc8c6bbaffafd164060fc154d2333a925c7daf7090404",
+    "skku_commute.rou.xml": "8285bcc1069d862763542407bfec460c16781fdf2fac98d0ab9d4c7f460aad89",
+    "skku_commute.sumocfg": "ddc6b6d66c9c698b8835b0061cc867718544d8a2d602cae7244294aacb46c864",
+    "route.json": "5ec0f3d744fcd5ecd0f4a99845297442fb46c2a339f608d648de644252ec2e37",
+    "gui.view.xml": "6ce77a84cc9d64120ea611cf56198b86c5fb7b6b45c26ce9588f98b1894ecb3f",
+    "campuses.add.xml": "d433b212409976d60626773ca9fd5e74839c82a38d0a6b118c4ee0641ad0fdf8",
+    "build.log": "5aa2cc4b797bb5bdb06398cba1c89ee48537e7485b959184170b99e21be5845e",
+    "buildings.poly.xml": "00de9156495c5bba0336b5e52f5026bb70629227f5c5d0828859ee830db244f7",
+    "buildings.manifest.json": "940d4eb016022b03a7443816a75acae468b792fa314b299a338876212524a8fb",
+    "signals.manifest.json": "afec8a8cc7b4c401198c87b98ae9de6183bfeb0aa1728b4f278d97917052fb81",
+    "landmarks.add.xml": "9eb1427939b8fa14848bc1498e130c633679a03a7908524ecd4d5bd2d82ec6b0",
+    "landmarks.manifest.json": "5618e9b8dc550979cca8ed6a6e5c31daae476708c1076e6fed47fc1e63a2852f",
+    "congestion.add.xml": "fd2ce2e1a48258be3df1552c4909225cff501a4afae7173430d19a47846a0cdb",
+    "congestion.manifest.json": "27c97ba9c1a105d60ea0c7063f079f357b198e0b2e4a9553c94689f156b1a620",
+    "lanes.edg.xml": "2182d3a1fb9bc5e84641717582509d4ddf4af6b107033709a985969fe2e8629c",
+    "lanes.con.xml": "1a740e431a4678c8a6110450300fc80d0f49573eeb1616c4ccda6f1b83deda97",
+    "lanes.nod.xml": "d62e67dcfd51fdf0077b5b587f44446d0cb3b1e23722cf989501bf825a44e5b2",
+    "lanes.manifest.json": "9905162c94435c60935be3aa4efccb9ddbfe90a1149b9e213422ebbd73d68239"
+  },
+  "signal_location_augmentation": {
+    "source_inputs": [
+      {
+        "path": "signals_source/seoul/normalized_signals.json",
+        "sha256": "43fd0cc960bf2676439bfd1ff3e08d1b25a9e55195795851531a6f8118b3931c",
+        "record_count": 650
+      },
+      {
+        "path": "signals_source/gyeonggi_normalized.json",
+        "sha256": "2e9075d735250ccda894f3c594195eaf196c98a0c2bd92e1d57fed18b0065054",
+        "record_count": 4369
+      }
+    ],
+    "selected_nodes": 46,
+    "matched_groups": 62,
+    "assumptions": [
+      "Signal programs are synthetic, not measured real cycles",
+      "A mounting arm point is not an exact stop line or intersection center",
+      "Datasets have different reference dates; complete current real-world coverage is not certified",
+      "Unmatched and unclassified positions require review, not arbitrary insertion"
+    ]
+  },
+  "building_footprints": {
+    "unique_osm_building_features": 18626,
+    "outer_footprint_polygons": 18715,
+    "courtyard_mask_polygons": 66,
+    "total_polygons": 18781,
+    "features_with_name": 3032,
+    "features_with_height_tag": 1896,
+    "features_with_levels_tag": 2598,
+    "known_source_closures_restored": 3,
+    "source_attribute_values_restored": 3,
+    "skipped_or_unsupported_records": 0,
+    "prepared_shapes_not_imported": 0
+  },
+  "lane_correction": {
+    "created_utc": "2026-09-24T11:50:59.438917+00:00",
+    "profile_version": 3,
+    "previous_correction": {
+      "created_utc": "2026-09-24T11:43:32.243102+00:00",
+      "profile_version": 2,
+      "previous_correction": {
+        "created_utc": "2026-09-24T11:42:09.834456+00:00",
+        "basis": "User-requested scenario correction: southbound mainline 4 lanes, Uiwang toll approach 6 lanes",
+        "field_survey_verified": false,
+        "toll_edge": "507449308",
+        "edges": [
+          {
+            "id": "59054363-AddedOnRampEdge",
+            "before": 4,
+            "after": 4,
+            "length_m": 98.87,
+            "outgoing_lanes": [
+              1,
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "59054363",
+            "before": 2,
+            "after": 4,
+            "length_m": 27.06,
+            "outgoing_lanes": [
+              1,
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "59054363-AddedOffRampEdge",
+            "before": 4,
+            "after": 4,
+            "length_m": 96.41,
+            "outgoing_lanes": [
+              3,
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "1224608698",
+            "before": 2,
+            "after": 4,
+            "length_m": 531.31,
+            "outgoing_lanes": [
+              1,
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "59054368",
+            "before": 2,
+            "after": 4,
+            "length_m": 741.44,
+            "outgoing_lanes": [
+              1,
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "59054369#0",
+            "before": 2,
+            "after": 4,
+            "length_m": 406.31,
+            "outgoing_lanes": [
+              1,
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "59054369#1-AddedOnRampEdge",
+            "before": 4,
+            "after": 4,
+            "length_m": 95.67,
+            "outgoing_lanes": [
+              1,
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "59054369#1",
+            "before": 4,
+            "after": 4,
+            "length_m": 57.56,
+            "outgoing_lanes": [
+              3,
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "1454713745",
+            "before": 2,
+            "after": 4,
+            "length_m": 474.99,
+            "outgoing_lanes": [
+              1,
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "1454713745-AddedOffRampEdge",
+            "before": 3,
+            "after": 4,
+            "length_m": 95.97,
+            "outgoing_lanes": [
+              2,
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "525074948",
+            "before": 2,
+            "after": 4,
+            "length_m": 1356.17,
+            "outgoing_lanes": [
+              1,
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "58858238#1-AddedOnRampEdge",
+            "before": 3,
+            "after": 4,
+            "length_m": 95.9,
+            "outgoing_lanes": [
+              1,
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "58858238#1",
+            "before": 2,
+            "after": 4,
+            "length_m": 275.33,
+            "outgoing_lanes": [
+              1,
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "58858238#2-AddedOnRampEdge",
+            "before": 4,
+            "after": 4,
+            "length_m": 96.39,
+            "outgoing_lanes": [
+              1,
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "58858238#2",
+            "before": 2,
+            "after": 4,
+            "length_m": 381.31,
+            "outgoing_lanes": [
+              1,
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "58858238#2-AddedOffRampEdge",
+            "before": 3,
+            "after": 4,
+            "length_m": 100.03,
+            "outgoing_lanes": [
+              2,
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "396671501",
+            "before": 2,
+            "after": 4,
+            "length_m": 57.45,
+            "outgoing_lanes": [
+              1,
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "396671501-AddedOffRampEdge",
+            "before": 4,
+            "after": 4,
+            "length_m": 95.93,
+            "outgoing_lanes": [
+              3,
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "1224608699",
+            "before": 2,
+            "after": 4,
+            "length_m": 1673.53,
+            "outgoing_lanes": [
+              1,
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "489526373-AddedOnRampEdge",
+            "before": 4,
+            "after": 4,
+            "length_m": 95.71,
+            "outgoing_lanes": [
+              1,
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "489526373",
+            "before": 2,
+            "after": 4,
+            "length_m": 613.47,
+            "outgoing_lanes": [
+              1,
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "489526373-AddedOffRampEdge",
+            "before": 3,
+            "after": 4,
+            "length_m": 46.15,
+            "outgoing_lanes": [
+              2,
+              1,
+              1,
+              3
+            ]
+          },
+          {
+            "id": "507449308",
+            "before": 2,
+            "after": 6,
+            "length_m": 540.88,
+            "outgoing_lanes": [
+              1,
+              1,
+              1,
+              1,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "507570571-AddedOnRampEdge",
+            "before": 3,
+            "after": 4,
+            "length_m": 100.04,
+            "outgoing_lanes": [
+              1,
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "507570571",
+            "before": 2,
+            "after": 4,
+            "length_m": 290.17,
+            "outgoing_lanes": [
+              1,
+              1,
+              1,
+              2
+            ]
+          },
+          {
+            "id": "403953823#1",
+            "before": 3,
+            "after": 4,
+            "length_m": 68.42,
+            "outgoing_lanes": [
+              1,
+              1,
+              1,
+              0
+            ]
+          }
+        ],
+        "command": [
+          "/usr/bin/netconvert",
+          "--sumo-net-file",
+          "/home/mk/bmil_ws/env/skku_commute/skku_commute.net.xml",
+          "--edge-files",
+          "/home/mk/bmil_ws/env/skku_commute/lanes.edg.xml",
+          "--connection-files",
+          "/home/mk/bmil_ws/env/skku_commute/lanes.con.xml",
+          "--output-file",
+          "/home/mk/bmil_ws/env/skku_commute/lanes.updated.net.xml",
+          "--offset.disable-normalization",
+          "true",
+          "--no-turnarounds",
+          "true",
+          "--tls.uncontrolled-within",
+          "true"
+        ],
+        "network_before_sha256": "6ac70300dfe4676accf2dd1146f3bdb6847e20cf6a4c1e7bd02651006da62b6d",
+        "network_after_sha256": "2ac40aef111d70cc12436f686faf03e48a9769ea100bd7c79c8506c89d1eb10a",
+        "archived_network": "lanes_source/6ac70300dfe4676accf2dd1146f3bdb6847e20cf6a4c1e7bd02651006da62b6d.net.xml.gz",
+        "offset_unchanged": true,
+        "active_signal_programs_unchanged": true,
+        "removed_unused_signal_programs": [
+          "cluster_11356881998_11521951182_11521951191_4683581782"
+        ],
+        "geometry": "Existing median boundary retained; added lanes extend towards outer shoulder"
+      },
+      "basis": "User-requested scenario correction: southbound mainline 4 lanes, Uiwang toll approach 6 lanes",
+      "field_survey_verified": false,
+      "toll_edge": "507449308",
+      "edges": [
+        {
+          "id": "59054363-AddedOnRampEdge",
+          "before": 4,
+          "after": 4,
+          "length_m": 98.87,
+          "outgoing_lanes": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "id": "59054363",
+          "before": 4,
+          "after": 4,
+          "length_m": 27.06,
+          "outgoing_lanes": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "id": "59054363-AddedOffRampEdge",
+          "before": 4,
+          "after": 4,
+          "length_m": 96.41,
+          "outgoing_lanes": [
+            3,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "id": "1224608698",
+          "before": 4,
+          "after": 4,
+          "length_m": 531.31,
+          "outgoing_lanes": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "id": "59054368",
+          "before": 4,
+          "after": 4,
+          "length_m": 741.44,
+          "outgoing_lanes": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "id": "59054369#0",
+          "before": 4,
+          "after": 4,
+          "length_m": 406.31,
+          "outgoing_lanes": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "id": "59054369#1-AddedOnRampEdge",
+          "before": 4,
+          "after": 4,
+          "length_m": 95.67,
+          "outgoing_lanes": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "id": "59054369#1",
+          "before": 4,
+          "after": 4,
+          "length_m": 57.56,
+          "outgoing_lanes": [
+            3,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "id": "1454713745",
+          "before": 4,
+          "after": 4,
+          "length_m": 474.99,
+          "outgoing_lanes": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "id": "1454713745-AddedOffRampEdge",
+          "before": 4,
+          "after": 4,
+          "length_m": 95.97,
+          "outgoing_lanes": [
+            2,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "id": "525074948",
+          "before": 4,
+          "after": 4,
+          "length_m": 1356.17,
+          "outgoing_lanes": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "id": "58858238#1-AddedOnRampEdge",
+          "before": 4,
+          "after": 4,
+          "length_m": 95.9,
+          "outgoing_lanes": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "id": "58858238#1",
+          "before": 4,
+          "after": 4,
+          "length_m": 275.33,
+          "outgoing_lanes": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "id": "58858238#2-AddedOnRampEdge",
+          "before": 4,
+          "after": 4,
+          "length_m": 96.39,
+          "outgoing_lanes": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "id": "58858238#2",
+          "before": 4,
+          "after": 4,
+          "length_m": 381.31,
+          "outgoing_lanes": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "id": "58858238#2-AddedOffRampEdge",
+          "before": 4,
+          "after": 4,
+          "length_m": 100.03,
+          "outgoing_lanes": [
+            2,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "id": "396671501",
+          "before": 4,
+          "after": 4,
+          "length_m": 57.45,
+          "outgoing_lanes": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "id": "396671501-AddedOffRampEdge",
+          "before": 4,
+          "after": 4,
+          "length_m": 95.93,
+          "outgoing_lanes": [
+            3,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "id": "1224608699",
+          "before": 4,
+          "after": 4,
+          "length_m": 1673.53,
+          "outgoing_lanes": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "id": "489526373-AddedOnRampEdge",
+          "before": 4,
+          "after": 4,
+          "length_m": 95.71,
+          "outgoing_lanes": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "id": "489526373",
+          "before": 4,
+          "after": 4,
+          "length_m": 613.47,
+          "outgoing_lanes": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "id": "489526373-AddedOffRampEdge",
+          "before": 4,
+          "after": 4,
+          "length_m": 46.15,
+          "outgoing_lanes": [
+            4,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "id": "507449308",
+          "before": 6,
+          "after": 6,
+          "length_m": 540.88,
+          "outgoing_lanes": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "id": "507570571-AddedOnRampEdge",
+          "before": 4,
+          "after": 4,
+          "length_m": 100.04,
+          "outgoing_lanes": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "id": "507570571",
+          "before": 4,
+          "after": 4,
+          "length_m": 290.17,
+          "outgoing_lanes": [
+            1,
+            1,
+            1,
+            2
+          ]
+        },
+        {
+          "id": "403953823#1",
+          "before": 4,
+          "after": 4,
+          "length_m": 68.42,
+          "outgoing_lanes": [
+            1,
+            1,
+            1,
+            0
+          ]
+        }
+      ],
+      "command": [
+        "/usr/bin/netconvert",
+        "--sumo-net-file",
+        "/home/mk/bmil_ws/env/skku_commute/skku_commute.net.xml",
+        "--edge-files",
+        "/home/mk/bmil_ws/env/skku_commute/lanes.edg.xml",
+        "--connection-files",
+        "/home/mk/bmil_ws/env/skku_commute/lanes.con.xml",
+        "--output-file",
+        "/home/mk/bmil_ws/env/skku_commute/lanes.updated.net.xml",
+        "--offset.disable-normalization",
+        "true",
+        "--no-turnarounds",
+        "true",
+        "--tls.uncontrolled-within",
+        "true"
+      ],
+      "network_before_sha256": "2ac40aef111d70cc12436f686faf03e48a9769ea100bd7c79c8506c89d1eb10a",
+      "network_after_sha256": "959f64f55896b9decd92b302d78a3e8bc78af36b74b720e7bc24726e0a3ff0d7",
+      "archived_network": "lanes_source/2ac40aef111d70cc12436f686faf03e48a9769ea100bd7c79c8506c89d1eb10a.net.xml.gz",
+      "offset_unchanged": true,
+      "active_signal_programs_unchanged": true,
+      "removed_unused_signal_programs": [],
+      "geometry": "Existing median boundary retained; added lanes extend towards outer shoulder"
+    },
+    "merge_type": "zipper",
+    "basis": "User-requested scenario correction: southbound mainline 4 lanes, Uiwang toll approach 6 lanes",
+    "field_survey_verified": false,
+    "toll_edge": "507449308",
+    "edges": [
+      {
+        "id": "59054363-AddedOnRampEdge",
+        "before": 4,
+        "after": 4,
+        "length_m": 98.87,
+        "outgoing_lanes": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "id": "59054363",
+        "before": 4,
+        "after": 4,
+        "length_m": 27.06,
+        "outgoing_lanes": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "id": "59054363-AddedOffRampEdge",
+        "before": 4,
+        "after": 4,
+        "length_m": 96.41,
+        "outgoing_lanes": [
+          3,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "id": "1224608698",
+        "before": 4,
+        "after": 4,
+        "length_m": 531.31,
+        "outgoing_lanes": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "id": "59054368",
+        "before": 4,
+        "after": 4,
+        "length_m": 741.44,
+        "outgoing_lanes": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "id": "59054369#0",
+        "before": 4,
+        "after": 4,
+        "length_m": 406.31,
+        "outgoing_lanes": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "id": "59054369#1-AddedOnRampEdge",
+        "before": 4,
+        "after": 4,
+        "length_m": 95.67,
+        "outgoing_lanes": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "id": "59054369#1",
+        "before": 4,
+        "after": 4,
+        "length_m": 57.56,
+        "outgoing_lanes": [
+          3,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "id": "1454713745",
+        "before": 4,
+        "after": 4,
+        "length_m": 474.99,
+        "outgoing_lanes": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "id": "1454713745-AddedOffRampEdge",
+        "before": 4,
+        "after": 4,
+        "length_m": 95.97,
+        "outgoing_lanes": [
+          2,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "id": "525074948",
+        "before": 4,
+        "after": 4,
+        "length_m": 1356.17,
+        "outgoing_lanes": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "id": "58858238#1-AddedOnRampEdge",
+        "before": 4,
+        "after": 4,
+        "length_m": 95.9,
+        "outgoing_lanes": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "id": "58858238#1",
+        "before": 4,
+        "after": 4,
+        "length_m": 275.33,
+        "outgoing_lanes": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "id": "58858238#2-AddedOnRampEdge",
+        "before": 4,
+        "after": 4,
+        "length_m": 96.39,
+        "outgoing_lanes": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "id": "58858238#2",
+        "before": 4,
+        "after": 4,
+        "length_m": 381.31,
+        "outgoing_lanes": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "id": "58858238#2-AddedOffRampEdge",
+        "before": 4,
+        "after": 4,
+        "length_m": 100.03,
+        "outgoing_lanes": [
+          2,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "id": "396671501",
+        "before": 4,
+        "after": 4,
+        "length_m": 57.45,
+        "outgoing_lanes": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "id": "396671501-AddedOffRampEdge",
+        "before": 4,
+        "after": 4,
+        "length_m": 95.93,
+        "outgoing_lanes": [
+          3,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "id": "1224608699",
+        "before": 4,
+        "after": 4,
+        "length_m": 1673.53,
+        "outgoing_lanes": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "id": "489526373-AddedOnRampEdge",
+        "before": 4,
+        "after": 4,
+        "length_m": 95.71,
+        "outgoing_lanes": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "id": "489526373",
+        "before": 4,
+        "after": 4,
+        "length_m": 613.47,
+        "outgoing_lanes": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "id": "489526373-AddedOffRampEdge",
+        "before": 4,
+        "after": 4,
+        "length_m": 46.15,
+        "outgoing_lanes": [
+          4,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "id": "507449308",
+        "before": 6,
+        "after": 6,
+        "length_m": 540.88,
+        "outgoing_lanes": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "id": "507570571-AddedOnRampEdge",
+        "before": 4,
+        "after": 4,
+        "length_m": 100.04,
+        "outgoing_lanes": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "id": "507570571",
+        "before": 4,
+        "after": 4,
+        "length_m": 290.17,
+        "outgoing_lanes": [
+          1,
+          1,
+          1,
+          2
+        ]
+      },
+      {
+        "id": "403953823#1",
+        "before": 4,
+        "after": 4,
+        "length_m": 68.42,
+        "outgoing_lanes": [
+          1,
+          1,
+          1,
+          0
+        ]
+      }
+    ],
+    "command": [
+      "/usr/bin/netconvert",
+      "--sumo-net-file",
+      "/home/mk/bmil_ws/env/skku_commute/skku_commute.net.xml",
+      "--edge-files",
+      "/home/mk/bmil_ws/env/skku_commute/lanes.edg.xml",
+      "--connection-files",
+      "/home/mk/bmil_ws/env/skku_commute/lanes.con.xml",
+      "--node-files",
+      "/home/mk/bmil_ws/env/skku_commute/lanes.nod.xml",
+      "--output-file",
+      "/home/mk/bmil_ws/env/skku_commute/lanes.updated.net.xml",
+      "--offset.disable-normalization",
+      "true",
+      "--no-turnarounds",
+      "true",
+      "--tls.uncontrolled-within",
+      "true"
+    ],
+    "network_before_sha256": "959f64f55896b9decd92b302d78a3e8bc78af36b74b720e7bc24726e0a3ff0d7",
+    "network_after_sha256": "1567b9b81838835b861abd88d447fc5bd148e74bd48dd9a421c770013df3672e",
+    "archived_network": "lanes_source/959f64f55896b9decd92b302d78a3e8bc78af36b74b720e7bc24726e0a3ff0d7.net.xml.gz",
+    "offset_unchanged": true,
+    "active_signal_programs_unchanged": true,
+    "removed_unused_signal_programs": [],
+    "geometry": "Existing median boundary retained; added lanes extend towards outer shoulder"
+  }
+}

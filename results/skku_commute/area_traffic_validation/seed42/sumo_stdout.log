@@ -1,0 +1,30 @@
+***Starting server on port 32819 ***
+Loading net-file from '/home/mk/bmil_ws/env/skku_commute/skku_commute.net.xml' ... done (1460ms).
+Loading additional-files from '/home/mk/bmil_ws/env/skku_commute/campuses.add.xml' ... done (0ms).
+Loading additional-files from '/home/mk/bmil_ws/env/skku_commute/buildings.poly.xml' ... done (206ms).
+Loading additional-files from '/home/mk/bmil_ws/env/skku_commute/landmarks.add.xml' ... done (1ms).
+Loading additional-files from '/home/mk/bmil_ws/env/skku_commute/congestion.add.xml' ... done (0ms).
+Loading route-files incrementally from '/home/mk/bmil_ws/env/skku_commute/skku_commute.rou.xml'
+Loading done.
+Simulation version 1.27.1 started with time: 0.00.
+Simulation ended at time: 7200.00.
+Reason: TraCI requested termination.
+Performance:
+ Duration: 154.00s
+ TraCI-Duration: 4.74s
+ Real time factor: 46.7536
+ UPS: 192595.451919
+Vehicles:
+ Inserted: 24746 (Loaded: 25905)
+ Running: 2657
+ Waiting: 1159
+ Teleports: 0 (Collisions: 2)
+ Emergency Braking: 439
+Statistics (avg of 24746):
+ RouteLength: 3203.97
+ Speed: 9.28
+ Duration: 599.28
+ WaitingTime: 210.38
+ TimeLoss: 355.51
+ DepartDelay: 7.14
+ DepartDelayWaiting: 2147.92

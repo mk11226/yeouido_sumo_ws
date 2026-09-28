@@ -1,9 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<types>
-  <type id="highway.primary" priority="13" numLanes="2" speed="13.89" oneway="false" allow="passenger bus taxi delivery emergency" />
-  <type id="highway.primary_link" priority="13" numLanes="1" speed="13.89" oneway="false" allow="passenger bus taxi delivery emergency" />
-  <type id="highway.secondary" priority="12" numLanes="2" speed="13.89" oneway="false" allow="passenger bus taxi delivery emergency" />
-  <type id="highway.secondary_link" priority="12" numLanes="1" speed="13.89" oneway="false" allow="passenger bus taxi delivery emergency" />
-  <type id="highway.tertiary" priority="11" numLanes="1" speed="8.33" oneway="false" allow="passenger bus taxi delivery emergency" />
-  <type id="highway.tertiary_link" priority="11" numLanes="1" speed="8.33" oneway="false" allow="passenger bus taxi delivery emergency" />
-</types>

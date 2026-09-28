@@ -1,0 +1,10 @@
+***Starting server on port 37787 ***
+Loading net-file from '/home/mk/bmil_ws/env/skku_commute/skku_commute.net.xml' ... done (1572ms).
+Loading additional-files from '/home/mk/bmil_ws/env/skku_commute/campuses.add.xml' ... done (0ms).
+Loading additional-files from '/home/mk/bmil_ws/env/skku_commute/buildings.poly.xml' ... done (213ms).
+Loading additional-files from '/home/mk/bmil_ws/env/skku_commute/landmarks.add.xml' ... done (0ms).
+Loading additional-files from '/home/mk/bmil_ws/env/skku_commute/congestion.add.xml' ... done (0ms).
+Loading additional-files from '/home/mk/bmil_ws/env/skku_commute/station_signals.add.xml' ... done (0ms).
+Loading route-files incrementally from '/home/mk/bmil_ws/env/skku_commute/skku_commute.rou.xml'
+Loading done.
+Simulation version 1.27.1 started with time: 0.00.

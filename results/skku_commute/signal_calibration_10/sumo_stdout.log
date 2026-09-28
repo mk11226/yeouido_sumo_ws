@@ -1,0 +1,31 @@
+***Starting server on port 37489 ***
+Loading net-file from '/tmp/skku_signal_calibration/10/skku_commute.net.xml' ... done (1551ms).
+Loading additional-files from '/tmp/skku_signal_calibration/10/campuses.add.xml' ... done (1ms).
+Loading additional-files from '/tmp/skku_signal_calibration/10/buildings.poly.xml' ... done (213ms).
+Loading additional-files from '/tmp/skku_signal_calibration/10/landmarks.add.xml' ... done (0ms).
+Loading additional-files from '/tmp/skku_signal_calibration/10/congestion.add.xml' ... done (1ms).
+Loading additional-files from '/tmp/skku_signal_calibration/10/station_signals.add.xml' ... done (0ms).
+Loading route-files incrementally from '/tmp/skku_signal_calibration/10/skku_commute.rou.xml'
+Loading done.
+Simulation version 1.27.1 started with time: 0.00.
+Simulation ended at time: 3500.00.
+Reason: TraCI requested termination.
+Performance:
+ Duration: 108.30s
+ TraCI-Duration: 2.49s
+ Real time factor: 32.3182
+ UPS: 126883.441984
+Vehicles:
+ Inserted: 14666 (Loaded: 14916)
+ Running: 2894
+ Waiting: 250
+ Teleports: 0 (Collisions: 1)
+ Emergency Braking: 252
+Statistics (avg of 14666):
+ RouteLength: 3409.97
+ Speed: 11.52
+ Duration: 468.47
+ WaitingTime: 80.24
+ TimeLoss: 246.53
+ DepartDelay: 3.35
+ DepartDelayWaiting: 970.09
