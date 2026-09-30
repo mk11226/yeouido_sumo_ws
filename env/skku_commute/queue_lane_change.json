@@ -404,6 +404,9 @@
   },
   "hold_from_m": 4500,
   "queue_response_distance_m": 1400,
+  "local_queue_distance_m": 120,
+  "local_queue_speed_mps": 5,
+  "alignment_distance_m": 500,
   "queue_edges": [
     "1224608699",
     "489526373",

@@ -13,6 +13,12 @@ python3 run_skku_commute.py --gui --background --viewport-m 400 --keep-open
 
 빨간 ego 차량을 자동 추적한다. 지명을 넓게 보려면 `--viewport-m 800`을 사용한다. 배경 교통을 시뮬레이션 300초 동안 먼저 형성한 뒤 ego가 출발한다. 기본 검사 제한은 혼잡을 고려해 시뮬레이션 3시간이며 ego 도착 시 종료한다. 결과는 `results/skku_commute/`에 저장한다.
 
+실행기는 의왕톨게이트 4→6차로 진입·6→4차로 합류의 내부 연결 차로 12개에서 모든 차량의 좌우 차로 변경을 제한한다. 갈라지거나 모이는 연결 구간 안에서의 측면 충돌을 방지하기 위한 것으로, 진입 전 본선과 요금소 본체에서는 차로 변경이 가능하다. 충돌 검사·3초 차로 변경·요금소 정차는 유지하며, 적용 차로는 실행 결과의 `protected_toll_connector_lanes`에 기록한다. 변경 사항은 실행기를 다시 시작하면 적용된다.
+
+톨게이트 접근 시 ego는 본선 1차선(맨 왼쪽)을 유지하다 전방 120m 내 느린 차량을 감지하면 2→3→4차선으로 이동을 요청한다. 정체가 없으면 마지막 500m에서 요금소 진입을 위한 정렬을 시작한다. 차로 변경 의사를 먼저 SUMO에 전달하되 안전 간격 검사는 유지한다. 간격이 부족하면 같은 도로의 인접 차로 뒤 차량 한 대에 최대 8초간 간격 확보를 요청한다(협조 운전자 가정, 추가 감속 한도 2m/s²). 변경 완료·구간 이탈·기한 만료 시 양보 제어를 해제한다. ego의 현재 저속을 반복 고정하는 감속 명령은 사용하지 않는다. 실제 이동은 안전 조건에 따라 지연될 수 있다. 톨게이트 직전 약 755m와 요금소 약 541m 및 그 연결부의 제한속도는 30km/h이며, 요금소 6초 정차는 유지한다.
+
+협조 합류 검증: 통과 경로 수요 2,430대/시간에서 [seed 42](results/skku_commute/toll_cooperative_bounded_seed42/summary.json)와 [seed 43](results/skku_commute/toll_cooperative_bounded_seed43/summary.json) 모두 ego 충돌·텔레포트 없이 약 38.34km를 완주했다. 정체 감지부터 본선 4차선 도달까지 각각 38초와 107.5초였다. 이는 합류 불능 개선 검증이며, 4차선 이동 후 톨게이트 대기시간 제거를 의미하지 않는다. 두 실행에서 다른 도심 교차로의 배경 차량 충돌은 각각 2건·4건 남아 있다.
+
 ```bash
 # GUI 없이 배경 교통과 주행
 python3 run_skku_commute.py --background --seed 42
@@ -50,13 +56,13 @@ python3 -m Road_Environment.validation.audit_skku_queue --help
 python3 -m unittest discover -s tests -p 'test_skku*.py' -v
 ```
 
-각 도구의 위치와 문서 6~13번은 [Road_Environment 안내](Road_Environment/README.md)에 모았다.
+각 도구의 위치와 문서 6~14번은 [Road_Environment 안내](Road_Environment/README.md)에 모았다.
 
 ## 파일 구성
 
 | 경로 | 내용 |
 |---|---|
-| [Road_Environment/](Road_Environment/README.md) | 서울→수원 구축 문서 6~13번과 도구 모음 |
+| [Road_Environment/](Road_Environment/README.md) | 서울→수원 구축 문서 6~14번과 도구 모음 |
 | `Road_Environment/control/` | 정체 감지 및 차로 변경 제어 |
 | `run_skku_commute.py` | 주행·GUI 실행, 차량 추적, 결과 기록 |
 | `Road_Environment/download/` | 도로·건물·지명 원본 수집 |
@@ -85,7 +91,7 @@ python3 -m unittest discover -s tests -p 'test_skku*.py' -v
 
 역 주변 직진 신호 연장은 [12번 문서](Road_Environment/12_SKKU_역주변_직진신호_연장.md)를 참고한다.
 
-최신 교통·신호·1차로 정체 대응은 [13번 문서](Road_Environment/13_SKKU_정체수준_주변교통_차로변경.md)를 참고한다.
+교통·신호·1차로 정체 대응의 이전 설정은 [13번 문서](Road_Environment/13_SKKU_정체수준_주변교통_차로변경.md), 최신 협조 합류 수정과 검증은 [14번 문서](Road_Environment/14_SKKU_톨게이트_협조합류_0930.md)를 참고한다.
 
 
 ## 기존 공용 학습·실습 자료

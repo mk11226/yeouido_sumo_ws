@@ -187,8 +187,10 @@ def run(args):
                         conn.vehicletype.setShapeClass(type_id, "passenger/sedan")
             plan_path = scenario / "queue_lane_change.json"
             if plan_path.exists():
-                from Road_Environment.control.skku_queue_lane_change import QueueLaneChange
+                from Road_Environment.control.skku_queue_lane_change import QueueLaneChange, protect_toll_connections
                 plan = json.loads(plan_path.read_text())
+                report['protected_toll_connector_lanes'] = protect_toll_connections(
+                    conn, net_files[0], plan['toll_edge'])
                 if plan.get("enabled"):
                     maneuver = QueueLaneChange(conn, plan)
                     report["queue_lane_change_source_sha256"] = hashlib.sha256((ROOT / "Road_Environment/control/skku_queue_lane_change.py").read_bytes()).hexdigest()

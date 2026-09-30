@@ -1,9 +1,11 @@
 {
-  "created_utc": "2026-09-24T12:05:39.230194+00:00",
+  "created_utc": "2026-09-28T11:35:55.342522+00:00",
   "sumo_version": "Eclipse SUMO sumo 1.27.1",
   "source_manifest": "source/manifest.json",
+  "station_signal_overrides": "station_signals.manifest.json",
+  "queue_lane_change": "queue_lane_change.json",
   "source_osm_sha256": "ef7b4e3119e3e5a20bdcbc49ea895fe705420df986171675f0a4c56761da8720",
-  "builder_sha256": "49910d395cfc64956f0f72f2924cfd2b16dd0a1e00f255bd6db247a25179853e",
+  "builder_sha256": "812c3fd56d398aac9d91f336c76ecc4f5b1811a8e970ea9fedc4c48707f431e1",
   "netconvert_command": [
     "/home/mk/bmil_ws/.venv-hyehwa/bin/netconvert",
     "--osm-files",
@@ -107,6 +109,7 @@
   },
   "background": {
     "synthetic": true,
+    "end_time_s": 10800,
     "segment_vph": 100,
     "expected_total_departures_per_hour": 15285.556390977443,
     "routes": [
@@ -5707,8 +5710,7 @@
           "507449307"
         ]
       }
-    ],
-    "end_time_s": 10800
+    ]
   },
   "default_road_attributes": {
     "motorway": {
@@ -5818,7 +5820,7 @@
   "files_sha256": {
     "skku_commute.net.xml": "1567b9b81838835b861abd88d447fc5bd148e74bd48dd9a421c770013df3672e",
     "skku_commute.typ.xml": "a4ceab88b05374f884acc8c6bbaffafd164060fc154d2333a925c7daf7090404",
-    "skku_commute.rou.xml": "ee5fde69b6ae507b5e22e288372349d7a3c010a97d82d22b33159d632879852c",
+    "skku_commute.rou.xml": "1505978655a8c8318f968ab5e22718b0f5c7f77510723c2d97ff7a97e1c8ce57",
     "skku_commute.sumocfg": "e0837b12066dae2e5e8555cb54104f779313506dc002ded25a14d8c587948434",
     "route.json": "5ec0f3d744fcd5ecd0f4a99845297442fb46c2a339f608d648de644252ec2e37",
     "gui.view.xml": "6ce77a84cc9d64120ea611cf56198b86c5fb7b6b45c26ce9588f98b1894ecb3f",
@@ -5828,16 +5830,16 @@
     "buildings.manifest.json": "940d4eb016022b03a7443816a75acae468b792fa314b299a338876212524a8fb",
     "signals.manifest.json": "afec8a8cc7b4c401198c87b98ae9de6183bfeb0aa1728b4f278d97917052fb81",
     "landmarks.add.xml": "9eb1427939b8fa14848bc1498e130c633679a03a7908524ecd4d5bd2d82ec6b0",
-    "landmarks.manifest.json": "5618e9b8dc550979cca8ed6a6e5c31daae476708c1076e6fed47fc1e63a2852f",
-    "congestion.add.xml": "fd2ce2e1a48258be3df1552c4909225cff501a4afae7173430d19a47846a0cdb",
-    "congestion.manifest.json": "27c97ba9c1a105d60ea0c7063f079f357b198e0b2e4a9553c94689f156b1a620",
+    "landmarks.manifest.json": "3e9d15e0069a9189c1792ad1a08e89cbebf667f76b2cbdc08ea2baeee45d9a0c",
+    "congestion.add.xml": "33ff4f14136083a9836fb4a5b1bcc64fcbc6a7eb1be05debef113d7bf34a2924",
+    "congestion.manifest.json": "a551ac01739fbc8cfcb0a526b746a853bb9f77e0709b09f9ad47c69873bd8a00",
+    "station_signals.add.xml": "8dd0c692c74dcb508d46ac66b152d8ed357552a42d486321365dc999cf604cae",
+    "station_signals.manifest.json": "db5562626f091836b8027586a2efad3e9009b4d21e2b04b44884e44a48d2b22b",
+    "queue_lane_change.json": "c5f60d3d259b61a1cd6b9265b1403297673c942dbadc5ba04c39c8dce671b2d9",
     "lanes.edg.xml": "2182d3a1fb9bc5e84641717582509d4ddf4af6b107033709a985969fe2e8629c",
     "lanes.con.xml": "1a740e431a4678c8a6110450300fc80d0f49573eeb1616c4ccda6f1b83deda97",
     "lanes.nod.xml": "d62e67dcfd51fdf0077b5b587f44446d0cb3b1e23722cf989501bf825a44e5b2",
-    "lanes.manifest.json": "9905162c94435c60935be3aa4efccb9ddbfe90a1149b9e213422ebbd73d68239",
-    "station_signals.add.xml": "8dd0c692c74dcb508d46ac66b152d8ed357552a42d486321365dc999cf604cae",
-    "station_signals.manifest.json": "db5562626f091836b8027586a2efad3e9009b4d21e2b04b44884e44a48d2b22b",
-    "queue_lane_change.json": "704341efaf1271abb206cc575717889a55c6222bf997b3721451f3149c8ff446"
+    "lanes.manifest.json": "9905162c94435c60935be3aa4efccb9ddbfe90a1149b9e213422ebbd73d68239"
   },
   "signal_location_augmentation": {
     "source_inputs": [
@@ -6918,7 +6920,5 @@
     "active_signal_programs_unchanged": true,
     "removed_unused_signal_programs": [],
     "geometry": "Existing median boundary retained; added lanes extend towards outer shoulder"
-  },
-  "station_signal_overrides": "station_signals.manifest.json",
-  "queue_lane_change": "queue_lane_change.json"
+  }
 }

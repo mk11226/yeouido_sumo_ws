@@ -589,11 +589,11 @@
   ],
   "source_sha256": {
     "bridges.json": "3837017e6248ad1aee15d0a4ef3800346fd38bdd8cf12999078f94bc55b461bf",
-    "water.json": "a6b93223f41e78d3e8efabae0d7010dab888b199ea3e2381fb5350db413cf93a",
     "request.json": "bf6a0544e035506ff0b8331ac08fef77ab5f91f90086052f235a539db939b32a",
-    "features.json": "55f5c65beec737addd3cd9476605db5bce9033621476480ed4259c530567090d",
     "bridges_request.json": "6ff59c56825b27f2e284510427a9f299d5ae871bcdbd285c640770d4daf5d096",
-    "water_request.json": "017589bc6f93a05831a9c70372b94f353a04963a69ee5cdeb318b3da7be55fe7"
+    "water_request.json": "017589bc6f93a05831a9c70372b94f353a04963a69ee5cdeb318b3da7be55fe7",
+    "features.json": "55f5c65beec737addd3cd9476605db5bce9033621476480ed4259c530567090d",
+    "water.json": "a6b93223f41e78d3e8efabae0d7010dab888b199ea3e2381fb5350db413cf93a"
   },
   "font": "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
   "attribution": "© OpenStreetMap contributors, ODbL 1.0",

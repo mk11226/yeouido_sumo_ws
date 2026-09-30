@@ -395,14 +395,25 @@ def toll_approach(net, path):
 
 def congestion(net, path):
     edge = toll_approach(net, path)
+    ti = path.index(edge)
+    controlled = path[max(0, ti-3):ti+1]
+    ids = {e.getID() for e in controlled}
+    lanes = [l.getID() for e in controlled for l in e.getLanes() if l.allows('passenger')]
+    for e in controlled:
+        for target, connections in e.getOutgoing().items():
+            if target.getID() in ids or e == edge:
+                lanes.extend(c.getViaLaneID() for c in connections if c.getViaLaneID())
+    speed = 30 / 3.6
     root = ET.Element("additional")
     vss = ET.SubElement(root, "variableSpeedSign", id="uiwang_toll_capacity",
-                        lanes=" ".join(l.getID() for l in edge.getLanes() if l.allows("passenger")))
-    ET.SubElement(vss, "step", time="0", speed="2.0")
+                        lanes=" ".join(sorted(set(lanes))))
+    ET.SubElement(vss, "step", time="0", speed=str(speed))
     write_xml(OUT / "congestion.add.xml", root)
     write_json(OUT / "congestion.manifest.json", dict(synthetic=True, toll_osm_node="1142439460",
-               toll_edge=edge.getID(), controlled_length_m=edge.getLength(), speed_mps=2.0,
+               toll_edge=edge.getID(), controlled_length_m=sum(e.getLength() for e in controlled),
+               controlled_edges=[e.getID() for e in controlled], speed_mps=speed, speed_kmh=30,
                ego_warmup_s=300, seoul_corridor_multiplier=2.0, seoul_south_multiplier=1.3, toll_demand_multiplier=12,
+               other_toll_route_multiplier=1.0,
                booth_service_duration_s=6, booth_lane_share=[1/6]*6,
                ego_booth_lane=0, lanechange_duration_s=3,
                booth_positions_m=toll_booth_positions(net, edge),
