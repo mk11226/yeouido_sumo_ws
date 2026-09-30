@@ -11,6 +11,28 @@ cd /home/mk/bmil_ws
 python3 run_skku_commute.py --gui --background --viewport-m 400 --keep-open
 ```
 
+### 실행이 안 될 때: 가상환경으로 실행
+
+위 명령에서 `SUMO is unavailable` 또는 Python 모듈을 찾을 수 없다는 오류가 발생하면, 저장소 루트에서 가상환경을 만들고 필요한 패키지를 설치한 뒤 실행한다.
+
+```bash
+python3 -m venv .venv-skku
+.venv-skku/bin/python -m pip install --upgrade pip
+.venv-skku/bin/python -m pip install -r requirements-skku.txt
+
+.venv-skku/bin/python run_skku_commute.py \
+  --gui --background --viewport-m 400 --keep-open
+```
+
+설치를 마친 뒤에는 가상환경을 다시 만들 필요 없이 아래 명령으로 실행하면 된다. 가상환경의 Python을 직접 지정하므로 별도의 `activate`도 필요하지 않다.
+
+```bash
+.venv-skku/bin/python run_skku_commute.py \
+  --gui --background --viewport-m 400 --keep-open
+```
+
+### 실행 동작과 옵션
+
 빨간 ego 차량을 자동 추적한다. 지명을 넓게 보려면 `--viewport-m 800`을 사용한다. 배경 교통을 시뮬레이션 300초 동안 먼저 형성한 뒤 ego가 출발한다. 기본 검사 제한은 혼잡을 고려해 시뮬레이션 3시간이며 ego 도착 시 종료한다. 결과는 `results/skku_commute/`에 저장한다.
 
 실행기는 의왕톨게이트 4→6차로 진입·6→4차로 합류의 내부 연결 차로 12개에서 모든 차량의 좌우 차로 변경을 제한한다. 갈라지거나 모이는 연결 구간 안에서의 측면 충돌을 방지하기 위한 것으로, 진입 전 본선과 요금소 본체에서는 차로 변경이 가능하다. 충돌 검사·3초 차로 변경·요금소 정차는 유지하며, 적용 차로는 실행 결과의 `protected_toll_connector_lanes`에 기록한다. 변경 사항은 실행기를 다시 시작하면 적용된다.
