@@ -699,6 +699,36 @@ class SumoHighwayEnv(gym.Env):
         except traci.TraCIException:
             return {"ego_alive": False}
 
+    def _target_speed(self, v: float, accel_cmd: float) -> float:
+        """가감속 명령(m/s^2) → 다음 스텝 목표 속도.
+
+        하위 클래스(env/yeouido_env.py)가 신호·제한속도 같은 도로 제약을 덧붙인다.
+        """
+        return float(np.clip(v + accel_cmd * self.step_length, 0.0, self.vmax))
+
+    def _driving_reward(self, ego_speed: float, leader) -> float:
+        """주행 보상 (속도 + 차간거리 + 막힘). leader = 같은 차선 앞차 (gap, 속도) 또는 None.
+
+        하위 클래스(env/yeouido_env.py)가 도심 주행에 맞게 바꾼다.
+        """
+        ego_gap = None if leader is None else leader[0]
+        reward = float(self.rw["speed_weight"]) * ego_speed / self.vmax
+        if (ego_gap is not None and
+                ego_gap < float(self.rw["close_gap_threshold"])):
+            reward -= float(self.rw["close_gap_penalty"])
+
+        # ---- 막힘 페널티: 느린 앞차 뒤에 갇혀 있는 동안 매 스텝 감점 ----
+        # "차선을 유지한 채 막혀 있기"와 "변경으로 탈출하기" 사이에
+        # 즉각적인 보상 차등을 만들어 추월 학습 신호를 조밀하게 한다.
+        # (자세한 설계 이유는 env/mdp_config.py의 REWARD 주석 참고)
+        bp = float(self.rw.get("blocked_penalty", 0.0))
+        if (bp > 0.0 and ego_gap is not None
+                and ego_gap < float(self.rw.get("blocked_gap", 20.0))
+                and ego_speed < float(self.rw.get("blocked_speed_frac", 0.7))
+                    * self.vmax):
+            reward -= bp
+        return reward
+
     def step(self, action):
         # action = [가감속 raw, 차선변경 raw]
         action_arr = np.asarray(action, dtype=np.float32).reshape(-1)
@@ -719,9 +749,7 @@ class SumoHighwayEnv(gym.Env):
 
             accel_cmd = (accel_raw * self.max_accel
                          if accel_raw >= 0.0 else accel_raw * self.max_decel)
-            dv = accel_cmd * self.step_length
-            traci.vehicle.setSpeed(
-                self.ego_id, float(np.clip(v + dv, 0.0, self.vmax)))
+            traci.vehicle.setSpeed(self.ego_id, self._target_speed(v, accel_cmd))
 
             lane_change_applied = self._apply_lane_change(lane_change)
 
@@ -754,21 +782,7 @@ class SumoHighwayEnv(gym.Env):
             same_lane_leader = self._neighbor(0, leader=True)
             if same_lane_leader is not None:
                 ego_gap = same_lane_leader[0]
-            reward = float(self.rw["speed_weight"]) * ego_speed / self.vmax
-            if (ego_gap is not None and
-                    ego_gap < float(self.rw["close_gap_threshold"])):
-                reward -= float(self.rw["close_gap_penalty"])
-
-            # ---- 막힘 페널티: 느린 앞차 뒤에 갇혀 있는 동안 매 스텝 감점 ----
-            # "차선을 유지한 채 막혀 있기"와 "변경으로 탈출하기" 사이에
-            # 즉각적인 보상 차등을 만들어 추월 학습 신호를 조밀하게 한다.
-            # (자세한 설계 이유는 env/mdp_config.py의 REWARD 주석 참고)
-            bp = float(self.rw.get("blocked_penalty", 0.0))
-            if (bp > 0.0 and ego_gap is not None
-                    and ego_gap < float(self.rw.get("blocked_gap", 20.0))
-                    and ego_speed < float(self.rw.get("blocked_speed_frac", 0.7))
-                        * self.vmax):
-                reward -= bp
+            reward = self._driving_reward(ego_speed, same_lane_leader)
 
             # ---- 차선변경 보상 항 ----
             # lane_change        : 이번 스텝에 policy가 낸 양자화 명령 (-1/0/+1)

@@ -5,3 +5,7 @@ __pycache__/
 .env
 .env.*
 !.env.example
+
+# 여의도: 국가표준노드링크 원본 (약 1 GB, its.go.kr에서 직접 받기 — yeouido/README.md)
+env/yeouido/source/nodelink/raw/
+env/yeouido/source/nodelink/*.zip

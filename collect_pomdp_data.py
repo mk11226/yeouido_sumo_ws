@@ -25,6 +25,7 @@
     python collect_pomdp_data.py --episodes 100
     python collect_pomdp_data.py --episodes 10 --gui
     python collect_pomdp_data.py --policy keep-lane --episodes 20
+    python collect_pomdp_data.py --policy sumo-expert --episodes 500 --workers 4   # BC용 선생님 데이터
     python collect_pomdp_data.py --model results/run_xxx/model.pt --episodes 100   # 학습한 PPO로 수집
     python collect_pomdp_data.py --model results/run_xxx/model.pt --stochastic    # 샘플링 행동
     python collect_pomdp_data.py --episodes 200 --workers 8   # SUMO 8개 병렬 수집
@@ -56,7 +57,7 @@ import numpy as np
 from env.road_config import ROAD, EGO, TRAFFIC
 from env.mdp_config import SIMULATION, OBSERVATION, ACTION
 from env import road_builder
-from env.sumo_env import SumoHighwayEnv
+from env.yeouido_env import make_env   # ROAD['type']에 맞는 환경 (직선/여의도)
 from train import HPARAMS, REWARD  # 학습과 같은 보상 조건 + PPO 네트워크 구조
 
 BASE = os.path.dirname(os.path.abspath(__file__))
@@ -101,6 +102,12 @@ def make_policy(args, env, worker_seed: int):
         def act(obs):
             return np.clip(model.predict(obs), -1.0, 1.0).astype(np.float32)
         return act
+
+    if args.policy == "sumo-expert":
+        # SUMO 운전자 모델을 선생님으로 (algorithms/sumo_expert.py). BC 학습 데이터용.
+        from algorithms.sumo_expert import SumoExpert
+        expert = SumoExpert(env)
+        return lambda obs: expert.predict(obs)
 
     if args.policy == "keep-lane":
         # 완만한 가속 + 차선 유지. GUI/파이프라인 점검용.
@@ -176,7 +183,7 @@ def collect(args, sumocfg, episodes, worker_id, jsonl_path, npz_path, tag=""):
         except ImportError:
             pass
 
-    env = SumoHighwayEnv(
+    env = make_env(
         cfg_path=sumocfg,
         road=ROAD, ego=EGO,
         mdp_sim=SIMULATION, mdp_obs=OBSERVATION,
@@ -325,7 +332,7 @@ def merge_parts(parts, jsonl_path, npz_path):
 def main():
     parser = argparse.ArgumentParser(description="SUMO POMDP trajectory collector")
     parser.add_argument("--episodes", type=int, default=50)
-    parser.add_argument("--policy", choices=["random", "keep-lane", "ppo", "bc"], default=None,
+    parser.add_argument("--policy", choices=["random", "keep-lane", "sumo-expert", "ppo", "bc"], default=None,
                         help="행동 정책. 생략 시 --model이 있으면 파일을 보고 ppo/bc 자동 판별, "
                              "없으면 random")
     parser.add_argument("--model", default=None,

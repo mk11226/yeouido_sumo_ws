@@ -1,0 +1,408 @@
+"""2단계: 국가표준노드링크 → SUMO 도로망(yeouido.net.xml).
+
+    python -m yeouido.build_net        (먼저 python -m yeouido.nodelink)
+
+표준노드링크는 국토교통부가 관리하는 공식 도로망이라 OSM보다 시뮬레이션에 맞다.
+  - 모든 링크에 차로 수·제한속도·도로명이 있다 (OSM은 차로 수가 80% 비어 있었다).
+  - 지하차도·고가차도는 별도 링크라서 위·아래로 지나가는 도로가 만나지 않는다.
+  - 교차로는 진입·진출 지점마다 노드가 있지만 같은 교차로 이름을 공유한다
+    → 이름이 같고 가까운 노드를 하나의 교차로로 합친다 (join_clusters).
+  - 회전 제한(좌회전·직진·우회전 금지)을 실제 자료대로 넣는다 (TURNINFO).
+신호 위치는 표준노드링크에 없으므로 OSM 신호 표시와 간선 교차로 기준으로 정한다.
+"""
+import json
+import math
+import re
+import subprocess
+import xml.etree.ElementTree as ET
+from collections import defaultdict
+
+from yeouido.config import BBOX, NET, OUT, south_of_river, sumo_bin
+from yeouido.download import osm_path
+from yeouido.nodelink import REGION
+
+PLAIN = OUT / "plain"
+# 도시고속도로(올림픽대로·서부간선도로 등)와 고속국도는 뺀다. 측정값이 없어 교통량을
+# 정할 수 없고, 거기서 내려오는 램프는 범위 입구(차가 들어오고 나가는 곳)가 된다.
+EXCLUDED_RANKS = {"101", "102"}
+# 1차로 골목길("○○로8길", "○○가길", 이름 없는 도로)은 뺀다. 전체 링크의 약 1/3이고,
+# 큰길에 붙은 골목 교차로가 교차로 모양을 복잡하게 만들어 교차로 안 충돌의 원인이 됐다.
+# 2차로 이상 골목길과 연결로(램프)는 남긴다.
+ALLEY = re.compile(r"길$")
+
+
+def is_minor_alley(link):
+    return ((ALLEY.search(link["name"]) or link["name"] in ("", "-"))
+            and link["lanes"] <= 1 and not link["connect"])
+
+
+# 이름이 같은 교차로 노드를 잇는 링크가 이보다 짧으면 합친다 (m). 교차로 내부 링크는 보통
+# 12~14 m 이다. 더 크게 잡으면 마포대교 남단 교차로와 35 m 떨어진 "마포대교앞" 합류점
+# (여의대로 우회전 전용 차로가 들어오는 곳)까지 하나로 합쳐져 교차로가 엉켰다.
+JOIN_DIST = 30.0
+JOIN_SHORT = 20.0      # 이름과 상관없이 교차로 노드를 잇는 링크가 이보다 짧으면 합친다 (m)
+SIGNAL_SNAP = 35.0     # OSM 신호 표시를 교차로에 붙이는 최대 거리 (m)
+MIN_PIECE = 5.0        # 범위 경계에서 잘리고 남은 조각이 이보다 짧으면 버린다 (m)
+# 표준노드링크 회전 제한 중 승용차가 그 방향으로 못 가는 것
+FORBIDDEN_TURNS = {"003", "002", "101", "102", "103"}   # 회전금지, 버스만, 좌·직·우 금지
+
+# 신호 공통 설정. 실제 신호 시간 계획은 공개되어 있지 않아 감응식으로 추정한다.
+# - layout incoming: 진입 방향별로 차례로 녹색(직진+좌회전 동시). 한국 도심 교차로의 일반적인
+#   방향별 순차 신호이며, 맞은편 직진과 비보호 좌회전이 섞이지 않아 교차로 안 교착·충돌이 없다.
+#   (SUMO 기본 opposites 방식에서는 마포대교 남단 등에서 좌회전 차가 교차로 안에 갇혔다)
+# - all-red 2초: 노란불 끝에 교차로 안에 남은 차가 빠져나간 뒤 다음 방향에 녹색을 준다.
+TLS_OPTIONS = ["--tls.default-type", "actuated", "--tls.layout", "opposites", "--tls.left-green.time", "8",
+               "--tls.cycle.time", "90", "--tls.yellow.time", "3", "--tls.allred.time", "2"]
+
+
+def _dist(a, b):
+    """위경도 두 점 사이 거리 (m, 짧은 거리용 근사)."""
+    dx = (a[0] - b[0]) * 111320 * math.cos(math.radians(a[1]))
+    dy = (a[1] - b[1]) * 110540
+    return math.hypot(dx, dy)
+
+
+def _inside(lon, lat):
+    b = BBOX
+    return (b["west"] <= lon <= b["east"] and b["south"] <= lat <= b["north"]
+            and south_of_river(lon, lat))
+
+
+def _cross(p, q):
+    """p(안)–q(밖) 사이 경계점을 이분법으로 찾는다."""
+    lo, hi = 0.0, 1.0
+    for _ in range(30):
+        mid = (lo + hi) / 2
+        if _inside(p[0] + (q[0] - p[0]) * mid, p[1] + (q[1] - p[1]) * mid):
+            lo = mid
+        else:
+            hi = mid
+    return [p[0] + (q[0] - p[0]) * lo, p[1] + (q[1] - p[1]) * lo]
+
+
+def clip(links, nodes):
+    """범위 밖으로 나가는 링크를 경계점에서 자른다. 잘린 끝에는 새 노드(경계 노드)를 만든다."""
+    out, new_nodes = [], {}
+    for l in links:
+        if l["rank"] in EXCLUDED_RANKS:
+            continue
+        pts = l["shape"]
+        flags = [_inside(*p) for p in pts]
+        if all(flags):
+            out.append(l)
+            continue
+        pieces, cur, start_cut = [], [], False
+        for i, (p, f) in enumerate(zip(pts, flags)):
+            if f:
+                if not cur:
+                    start_cut = i > 0
+                    if start_cut:
+                        cur.append(_cross(p, pts[i - 1]))
+                cur.append(p)
+            elif cur:
+                cur.append(_cross(pts[i - 1], p))
+                pieces.append((cur, start_cut, True))
+                cur = []
+        if cur:
+            pieces.append((cur, start_cut, False))
+        for k, (shape, cut_start, cut_end) in enumerate(pieces):
+            length = sum(_dist(a, b) for a, b in zip(shape, shape[1:]))
+            if length < MIN_PIECE:
+                continue
+            piece = dict(l, id=l["id"] if len(pieces) == 1 else f"{l['id']}_{k}", shape=shape)
+            if cut_start:
+                piece["from_node"] = f"B{l['id']}_{k}s"
+                new_nodes[piece["from_node"]] = dict(type="boundary", name="", lon=shape[0][0],
+                                                     lat=shape[0][1])
+            if cut_end:
+                piece["to_node"] = f"B{l['id']}_{k}e"
+                new_nodes[piece["to_node"]] = dict(type="boundary", name="", lon=shape[-1][0],
+                                                   lat=shape[-1][1])
+            out.append(piece)
+    used = {n for l in out for n in (l["from_node"], l["to_node"])}
+    all_nodes = {**{k: v for k, v in nodes.items() if k in used}, **new_nodes}
+    return out, all_nodes
+
+
+def largest_component(links, nodes, group_of=None):
+    """서로 이어진 가장 큰 도로망만 남긴다. (골목길을 빼면 공원 내부 도로 같은 조각이 끊어져
+    남는데, netconvert가 이를 먼저 지우면 교차로 합치기 목록이 깨지므로 여기서 미리 정리)
+    group_of 를 주면 합쳐질 교차로 노드들을 하나로 보고 연결 여부를 판단한다."""
+    g = group_of or {}
+    adj = defaultdict(set)
+    for l in links:
+        a, b = g.get(l["from_node"], l["from_node"]), g.get(l["to_node"], l["to_node"])
+        adj[a].add(b)
+        adj[b].add(a)
+    best, seen = set(), set()
+    for start in adj:
+        if start in seen:
+            continue
+        comp, stack = set(), [start]
+        while stack:
+            n = stack.pop()
+            if n in comp:
+                continue
+            comp.add(n)
+            stack.extend(adj[n] - comp)
+        seen |= comp
+        if len(comp) > len(best):
+            best = comp
+    links = [l for l in links if g.get(l["from_node"], l["from_node"]) in best]
+    used = {n for l in links for n in (l["from_node"], l["to_node"])}
+    return links, {k: v for k, v in nodes.items() if k in used}
+
+
+def _base_name(name):
+    """교차로 이름 표기 차이를 없앤다.
+    예) "서강대교(남측)", "서강대교남단", "서강대교남측교차로" → "서강대교남" """
+    n = re.sub(r"[\s()]", "", name)
+    n = re.sub(r"(교차로|사거리|삼거리|오거리)$", "", n)
+    for side in "남북동서":
+        n = re.sub(f"{side}(측|단)$", side, n)
+    return n
+
+
+def _levels(links):
+    """노드가 고가·지하(고가차도 001, 지하차도 002) 링크에만 붙어 있으면 그 높이를 돌려준다.
+    지상 링크가 하나라도 붙어 있으면(진출입구 포함) 지상(000)으로 본다."""
+    kinds = defaultdict(set)
+    for l in links:
+        lvl = l["type"] if l["type"] in ("001", "002") else "000"
+        kinds[l["from_node"]].add(lvl)
+        kinds[l["to_node"]].add(lvl)
+    return {n: ("000" if "000" in k else min(k)) for n, k in kinds.items()}
+
+
+def join_clusters(nodes, links):
+    """같은 교차로에 속한 노드들을 하나로 묶는다 (union-find).
+
+    표준노드링크는 한 교차로를 진입·진출 지점마다 노드로 나누고, 그 사이를 짧은 링크로
+    잇는다 (중앙분리대가 있는 도로끼리 만나면 네모 모양 노드 4개). 그래서
+      - 교차로 노드 두 개가 링크로 직접 이어져 있고
+      - 그 링크가 JOIN_SHORT m 이하이거나, 이름(표기 차이 정리 후)이 같고 JOIN_DIST m 이하이면
+    같은 교차로로 본다. 이름만 같고 연결되지 않은 노드(예: 신도림고가차도 옆 도림천로 분기점)나
+    주소로 이름이 제각각인 귀퉁이 노드(예: 선유로×문래북로)도 이 기준으로 바르게 처리된다.
+    높이가 다른 노드(고가 위 / 지하 / 지상)는 묶지 않는다 → 고가·지하차도가 평면 교차로가 되지 않는다.
+
+    돌려주는 값: (묶음 목록, 연결된 큰 도로망의 링크, 그 노드)
+    """
+    parent = {n: n for n in nodes}
+
+    def find(n):
+        while parent[n] != n:
+            parent[n] = parent[parent[n]]
+            n = parent[n]
+        return n
+
+    level = _levels(links)
+    junction_like = {n for n, v in nodes.items() if v["type"] in ("101", "104", "106")}
+    for l in links:
+        a, b = l["from_node"], l["to_node"]
+        if a not in junction_like or b not in junction_like or l["type"] in ("001", "002"):
+            continue
+        if level.get(a) != level.get(b):
+            continue
+        same = (nodes[a]["name"] and _base_name(nodes[a]["name"]) == _base_name(nodes[b]["name"]))
+        if l["length"] <= JOIN_SHORT or (same and l["length"] <= JOIN_DIST):
+            parent[find(a)] = find(b)
+
+    group_of = {n: find(n) for n in nodes}
+    # 1차로 골목길은 여기서 뺀다. 단, 교차로 내부를 잇는 링크는 이름이 "○○길"이어도 남긴다.
+    # (영등포로터리는 고리 모양 노드 4개 중 한 변이 "영등포로53길"이라 먼저 지우면 교차로가
+    #  둘로 쪼개져 서로 막는 교착이 생겼다)
+    links = [l for l in links
+             if not is_minor_alley(l) or group_of[l["from_node"]] == group_of[l["to_node"]]]
+    # 교차로 내부 링크는 그대로 두면 netconvert가 합치면서 지우고, 그 링크를 근거로 교차로를
+    # 지나는 차로 연결을 만든다. (직접 지우면 연결 근거가 사라져 교차로 절반이 막혔다)
+    # 합쳐질 교차로를 한 점으로 보고 연결된 큰 도로망만 남긴다.
+    links, nodes = largest_component(links, nodes, group_of)
+    groups = defaultdict(list)
+    for nid in nodes:
+        groups[group_of[nid]].append(nid)
+    return [g for g in groups.values() if len(g) > 1], links, nodes
+
+
+def osm_signals():
+    root = ET.parse(osm_path()).getroot()
+    return [(float(n.get("lon")), float(n.get("lat"))) for n in root.iter("node")
+            if any(t.get("k") == "highway" and t.get("v") == "traffic_signals"
+                   for t in n.findall("tag"))]
+
+
+def signal_nodes(links, nodes, clusters):
+    """신호를 둘 교차로(노드 묶음)를 정한다.
+
+    - OSM에 신호 표시가 SIGNAL_SNAP m 안에 있는 교차로, 또는
+    - 들어오는 링크가 3개 이상이고, 도로 이름이 2개 이상이며, 2차로 이상 도로가 있는 교차로
+      (서울 간선도로 교차로는 거의 모두 신호 교차로다)
+    """
+    member = {n: tuple(sorted(g)) for g in clusters for n in g}
+    incoming = defaultdict(list)
+    for l in links:
+        incoming[member.get(l["to_node"], (l["to_node"],))].append(l)
+    signals = osm_signals()
+    chosen = set()
+    for group, inc in incoming.items():
+        if any(nodes[n]["type"] == "boundary" for n in group):
+            continue
+        pts = [(nodes[n]["lon"], nodes[n]["lat"]) for n in group]
+        near_signal = any(_dist(p, s) <= SIGNAL_SNAP for p in pts for s in signals)
+        sources = {l["from_node"] for l in inc}
+        names = {l["name"] for l in inc if l["name"]}
+        major = len(sources) >= 3 and len(names) >= 2 and max(l["lanes"] for l in inc) >= 2
+        if near_signal or major:
+            chosen.add(group)
+    return chosen
+
+
+def write_plain(links, nodes, clusters, tls_groups, turns):
+    PLAIN.mkdir(parents=True, exist_ok=True)
+    tls_nodes = {n for g in tls_groups for n in g}
+    nod = ["<nodes>"]
+    for nid, n in nodes.items():
+        kind = "traffic_light" if nid in tls_nodes else "priority"
+        nod.append(f'    <node id="{nid}" x="{n["lon"]:.7f}" y="{n["lat"]:.7f}" type="{kind}"/>')
+    for g in clusters:
+        nod.append(f'    <join nodes="{" ".join(g)}"/>')
+    nod.append("</nodes>")
+    (PLAIN / "nl.nod.xml").write_text("\n".join(nod) + "\n")
+
+    prio = {"103": 12, "104": 10, "105": 9, "106": 9, "107": 7, "108": 6}
+    edg = ["<edges>"]
+    for l in links:
+        shape = " ".join(f"{x:.7f},{y:.7f}" for x, y in l["shape"])
+        speed = max(l["max_speed"], 20) / 3.6
+        name = l["name"].replace("&", "&amp;").replace('"', "&quot;")
+        edg.append(f'    <edge id="{l["id"]}" from="{l["from_node"]}" to="{l["to_node"]}" '
+                   f'numLanes="{max(l["lanes"], 1)}" speed="{speed:.2f}" '
+                   f'priority="{prio.get(l["rank"], 6) + min(l["lanes"], 4)}" '
+                   f'name="{name}" type="nl.{l["rank"]}.{l["type"]}" shape="{shape}" '
+                   f'spreadType="center"/>')
+    edg.append("</edges>")
+    (PLAIN / "nl.edg.xml").write_text("\n".join(edg) + "\n")
+
+    ids = {l["id"] for l in links}
+    con = ["<connections>"]
+    n_del = 0
+    for t in turns:
+        if t["type"] in FORBIDDEN_TURNS and t["from_link"] in ids and t["to_link"] in ids:
+            con.append(f'    <delete from="{t["from_link"]}" to="{t["to_link"]}"/>')
+            n_del += 1
+    con.append("</connections>")
+    (PLAIN / "nl.con.xml").write_text("\n".join(con) + "\n")
+    return n_del
+
+
+def merge_nodes(net):
+    """신호 없는 단순 합류 지점(여러 도로 → 도로 하나)을 찾는다.
+
+    SUMO 기본 우선순위 합류에서는 정체 중 양쪽 차가 같은 차로로 조금씩 밀고 들어가다
+    접촉 사고가 났다. 이런 곳은 zipper(지퍼식 교대 합류) 교차로로 바꾼다.
+    """
+    nodes = []
+    for n in net.getNodes():
+        if n.getType() not in ("priority", "right_before_left"):
+            continue
+        inc = [e for e in n.getIncoming() if e.getFunction() != "internal"]
+        out = [e for e in n.getOutgoing() if e.getFunction() != "internal"]
+        # 지퍼 합류는 비슷한 두 도로가 하나로 모이면서 차로가 실제로 줄어들 때만 쓴다.
+        # - 셋 이상이 모이거나 차로가 충분하면 지퍼 규칙 때문에 오히려 양보 교착이 생겼다.
+        # - 본선에 우회전 전용 차로 같은 보조 도로가 붙는 곳(도로 우선순위가 다름)은 본선 우선이
+        #   실제와 맞다. 지퍼로 하면 마포대교 남단처럼 본선이 막혀 교차로까지 정체가 찼다.
+        lanes_in = sum(e.getLaneNumber() for e in inc)
+        if (len(inc) == 2 and len(out) == 1 and lanes_in > out[0].getLaneNumber()
+                and inc[0].getPriority() == inc[1].getPriority()):
+            nodes.append(n.getID())
+    return nodes
+
+
+CLEAR_SPEED = 7.0              # 교차로 안을 빠져나가는 속도 가정 (m/s, 약 25 km/h)
+ALLRED_MIN, ALLRED_MAX = 2, 8  # 전체 적색 시간 범위 (초)
+
+
+def set_clearance_times(path):
+    """신호 교차로마다 전체 적색 시간을 교차로 크기에 맞춘다.
+
+    노란불 3초 + 전체 적색 2초로는 여의대로(왕복 10차로)처럼 넓은 교차로를 다 건너지 못한
+    차가 교차로 안에 남고, 다음 방향 녹색 흐름이 끊길 때까지 수십 초씩 갇혔다 (마포대교 남단).
+    교차로 안 가장 긴 경로를 CLEAR_SPEED 로 지나는 시간 - 노란불 시간 을 전체 적색으로 준다.
+    """
+    tree = ET.parse(path)
+    root = tree.getroot()
+    lane_len = {l.get("id"): float(l.get("length")) for e in root.iter("edge")
+                if e.get("function") == "internal" for l in e.findall("lane")}
+    longest = defaultdict(float)
+    for c in root.iter("connection"):
+        if c.get("tl") and c.get("via") in lane_len:
+            longest[c.get("tl")] = max(longest[c.get("tl")], lane_len[c.get("via")])
+    changed = []
+    for tl in root.iter("tlLogic"):
+        need = longest.get(tl.get("id"), 0) / CLEAR_SPEED
+        phases = tl.findall("phase")
+        for i, ph in enumerate(phases):
+            state = ph.get("state")
+            prev = phases[i - 1].get("state")
+            if set(state) == {"r"} and "y" in prev:
+                yellow = float(phases[i - 1].get("duration"))
+                allred = min(max(round(need - yellow), ALLRED_MIN), ALLRED_MAX)
+                if allred != float(ph.get("duration")):
+                    ph.set("duration", str(allred))
+                    changed.append(allred)
+    tree.write(path, encoding="utf-8", xml_declaration=True)
+    return changed
+
+
+def _run(cmd, log):
+    with open(log, "a") as f:
+        r = subprocess.run(cmd, stdout=f, stderr=subprocess.STDOUT)
+    if r.returncode != 0:
+        raise RuntimeError(f"netconvert 실패 — 로그 확인: {log}")
+
+
+def main():
+    OUT.mkdir(parents=True, exist_ok=True)
+    region = json.loads(REGION.read_text())
+    links, nodes = clip(region["links"], region["nodes"])
+    links, nodes = largest_component(links, nodes)
+    clusters, links, nodes = join_clusters(nodes, links)
+    tls_groups = signal_nodes(links, nodes, clusters)
+    n_del = write_plain(links, nodes, clusters, tls_groups, region["turns"])
+    print(f"[net] 표준노드링크 링크 {len(links)}개, 노드 {len(nodes)}개, "
+          f"교차로 합치기 {len(clusters)}곳, 신호 교차로 {len(tls_groups)}곳, 회전 금지 {n_del}개")
+
+    log = OUT / "netconvert.log"
+    log.write_text("")
+    _run([sumo_bin("netconvert"),
+          "--node-files", str(PLAIN / "nl.nod.xml"), "--edge-files", str(PLAIN / "nl.edg.xml"),
+          "--connection-files", str(PLAIN / "nl.con.xml"),
+          "--proj.utm",                         # 위경도 입력 → UTM 평면 좌표
+          "-o", str(NET),
+          # 연결된 큰 도로망만 남기는 일은 join_clusters 에서 합친 교차로 기준으로 이미 했다.
+          # (netconvert의 components 옵션은 교차로를 합치기 전에 판단해 필요한 노드를 지운다)
+          "--output.street-names", "--no-turnarounds",
+          "--junctions.corner-detail", "5",
+          "--tls.join", *TLS_OPTIONS], log)
+
+    import sumolib
+    # 2차: 단순 합류 지점 → zipper 합류 (같은 도로망을 다시 읽어 ID 유지)
+    merges = merge_nodes(sumolib.net.readNet(str(NET)))
+    patch = PLAIN / "zipper.nod.xml"
+    patch.write_text("<nodes>\n" + "".join(f'    <node id="{n}" type="zipper"/>\n' for n in merges)
+                     + "</nodes>\n")
+    _run([sumo_bin("netconvert"), "-s", str(NET), "-n", str(patch), "-o", str(NET),
+          *TLS_OPTIONS], log)
+
+    changed = set_clearance_times(NET)
+    print(f"[net] 넓은 교차로 전체 적색 시간 조정: {len(changed)}개 단계 "
+          f"(최대 {max(changed, default=ALLRED_MIN)}초)")
+    net = sumolib.net.readNet(str(NET))
+    edges = [e for e in net.getEdges() if e.getFunction() != "internal"]
+    km = sum(e.getLength() for e in edges) / 1000
+    print(f"[net] {NET}")
+    print(f"      edge {len(edges)}개, 총 {km:.1f} km, 교차로 {len(net.getNodes())}개, "
+          f"신호 {len(net.getTrafficLights())}개, zipper 합류 {len(merges)}곳 (경고는 {log})")
+
+
+if __name__ == "__main__":
+    main()

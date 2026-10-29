@@ -1,0 +1,11 @@
+# 여의도 환경 생성 도구 (yeouido/) 추가 의존성. 수업 기본 환경(sumo-rl)에 더해 설치한다.
+#   pip install -r yeouido/requirements.txt
+eclipse-sumo==1.27.1   # PROJ 포함 netconvert (OSM 좌표 변환에 필요)
+sumo-data==1.27.1      # eclipse-sumo가 쓰는 공용 라이브러리
+sumolib==1.27.1
+traci==1.27.1
+pyproj
+rtree                  # sumolib 근처 도로 검색 가속
+openpyxl               # TOPIS 엑셀 읽기
+matplotlib             # 도로망 그림
+pyshp                  # 국가표준노드링크 shapefile 읽기 (nodelink.py)

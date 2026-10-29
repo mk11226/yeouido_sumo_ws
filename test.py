@@ -16,7 +16,7 @@ import torch
 from env.road_config import ROAD, EGO, TRAFFIC
 from env.mdp_config import SIMULATION, OBSERVATION, ACTION
 from env import road_builder
-from env.sumo_env import SumoHighwayEnv
+from env.yeouido_env import make_env   # ROAD['type']에 맞는 환경 (직선/여의도)
 
 from algorithms.ppo import PPO
 from algorithms.bc import BCPolicy
@@ -96,7 +96,7 @@ if __name__ == "__main__":
     # 그 run의 설정 스냅샷은 model.pt와 같은 폴더의 *_config.py 에서 확인 가능.
     sumocfg = road_builder.build(ROAD, EGO, TRAFFIC,
                                  os.path.join(BASE, "env", "sumo"))
-    env = SumoHighwayEnv(
+    env = make_env(
         cfg_path=sumocfg,
         road=ROAD, ego=EGO,
         mdp_sim=SIMULATION, mdp_obs=OBSERVATION,

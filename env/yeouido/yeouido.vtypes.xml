@@ -1,0 +1,7 @@
+<routes>
+    <vType id="ego_type" accel="3.0" decel="4.5" maxSpeed="22.22" color="1,0,0" vClass="passenger" guiShape="passenger/sedan"/>
+    <vTypeDistribution id="hv">
+        <vType id="hv_krauss" probability="0.7" carFollowModel="Krauss" accel="2.6" decel="4.5" sigma="0.5" tau="1.0" color="1,1,0" lcAssertive="1.5" lcCooperative="1.0" lcStrategic="1.0" lcLookaheadLeft="2.0" speedFactor="normc(1.0,0.1,0.7,1.3)" minGap="2.5" vClass="passenger" guiShape="passenger/sedan"/>
+        <vType id="hv_idm" probability="0.3" carFollowModel="IDM" accel="2.0" decel="4.0" tau="1.2" color="0,0.8,1" lcAssertive="1.5" lcCooperative="1.0" lcStrategic="1.0" lcLookaheadLeft="2.0" speedFactor="normc(1.0,0.1,0.7,1.3)" minGap="2.5" vClass="passenger" guiShape="passenger/sedan"/>
+    </vTypeDistribution>
+</routes>

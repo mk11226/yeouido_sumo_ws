@@ -31,6 +31,15 @@ def build(road: dict, ego: dict, traffic: dict, out_dir: str) -> str:
         traffic: configs.road_config.TRAFFIC (배경 교통류)
         out_dir: 생성 위치 (보통 프로젝트의 sumo/ 폴더)
     """
+    if road.get("type") == "yeouido":
+        # 실제 도로는 yeouido/ 파이프라인이 미리 만들어 둔 파일을 쓴다 (env/yeouido_env.py).
+        cfg = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                           "yeouido", "yeouido_rush.sumocfg")
+        if not os.path.exists(cfg):
+            raise FileNotFoundError(
+                f"{cfg} 가 없습니다. 먼저 python -m yeouido.run_all 을 실행하세요.")
+        return cfg
+
     os.makedirs(out_dir, exist_ok=True)
 
     # ──────────────────────────────────────────────────────

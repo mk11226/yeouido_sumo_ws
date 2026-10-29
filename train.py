@@ -21,7 +21,7 @@ from env.road_config import ROAD, EGO, TRAFFIC
 from env.mdp_config import SIMULATION, OBSERVATION, ACTION
 from env.mdp_config import REWARD as REWARD_DEFAULTS
 from env import road_builder
-from env.sumo_env import SumoHighwayEnv
+from env.yeouido_env import make_env   # ROAD['type']에 맞는 환경 (직선/여의도)
 
 from algorithms.ppo import PPO
 from utils.buffer import RolloutBuffer
@@ -53,6 +53,14 @@ REWARD_OVERRIDES = dict(
     lane_change_penalty=0.0,   # 변경 실행당 감점 (커리큘럼: 초기 0,
     invalid_action_penalty=0.0,#  추월 학습 후 지그재그 과하면 0.02~0.05)
 )
+# 여의도 실제 도로: 속도 보상 대신 진행 거리 보상 (env/mdp_config.py REWARD의 "여의도 전용" 주석)
+if ROAD.get("type") == "yeouido":
+    REWARD_OVERRIDES.update(
+        speed_weight=0.0,
+        progress_weight=0.002,     # 목적지 쪽으로 1 m당
+        time_penalty=0.002,        # 스텝당
+        red_light_penalty=2.0,
+    )
 REWARD = {**REWARD_DEFAULTS, **REWARD_OVERRIDES}
 
 
@@ -64,7 +72,9 @@ HPARAMS = dict(
     minibatch_size=64,
 
     # ---- 할인 / advantage ----
-    gamma=0.99,              # 할인율 γ. 0.99 ≈ 100스텝(50초) 앞을 내다봄
+    gamma=0.995 if ROAD.get("type") == "yeouido" else 0.99,
+                             # 할인율 γ. 0.99 ≈ 100스텝(50초), 0.995 ≈ 200스텝(100초) 앞을 내다봄.
+                             # 도심 주행은 신호 대기만 1~2분이라 더 멀리 봐야 한다.
     gae_lambda=0.95,         # GAE λ. 1에 가까울수록 분산↑편향↓
 
     # ---- PPO 고유 ----
@@ -146,8 +156,11 @@ if __name__ == "__main__":
     sumocfg = road_builder.build(ROAD, EGO, TRAFFIC,
                                  os.path.join(BASE, "env", "sumo"))
     print(f"도로 생성 완료: {sumocfg}")
-    print(f"  길이 {ROAD['length']}m, {ROAD['num_lanes']}차선, "
-          f"교통량 {TRAFFIC['vehs_per_hour']}대/시간")
+    if ROAD.get("type") == "yeouido":
+        print(f"  여의도 실제 도로, 시간대 {list(ROAD['levels'])}, 출발·도착 {ROAD['places']}")
+    else:
+        print(f"  길이 {ROAD['length']}m, {ROAD['num_lanes']}차선, "
+              f"교통량 {TRAFFIC['vehs_per_hour']}대/시간")
 
     # 2) 결과 폴더 + 로거
     run_dir = make_run_dir()
@@ -155,7 +168,7 @@ if __name__ == "__main__":
     print(f"결과 폴더: {run_dir}")
 
     # 3) 환경
-    env = SumoHighwayEnv(
+    env = make_env(
         cfg_path=sumocfg,
         road=ROAD, ego=EGO,
         mdp_sim=SIMULATION, mdp_obs=OBSERVATION,

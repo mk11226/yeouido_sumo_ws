@@ -1,0 +1,200 @@
+{
+ "counts": {
+  "C-05/유입": {
+   "edge": "1180003800",
+   "street": "선유로",
+   "dist_m": 2.5,
+   "lanes": 4,
+   "name_match": true
+  },
+  "C-05/유출": {
+   "edge": "1180003700",
+   "street": "선유로",
+   "dist_m": 9.5,
+   "lanes": 4,
+   "name_match": true
+  },
+  "C-06/유입": {
+   "edge": "1180041104",
+   "street": "국회대로",
+   "dist_m": 2.4,
+   "lanes": 3,
+   "name_match": true
+  },
+  "C-06/유출": {
+   "edge": "1180041004",
+   "street": "국회대로",
+   "dist_m": 9.6,
+   "lanes": 3,
+   "name_match": true
+  },
+  "C-07/유입": {
+   "edge": "1180002604",
+   "street": "여의대로",
+   "dist_m": 0.3,
+   "lanes": 5,
+   "name_match": true
+  },
+  "C-07/유출": {
+   "edge": "1180002504",
+   "street": "여의대로",
+   "dist_m": 4.1,
+   "lanes": 5,
+   "name_match": true
+  },
+  "C-08/유입": {
+   "edge": "1180031700",
+   "street": "여의대방로",
+   "dist_m": 2.5,
+   "lanes": 2,
+   "name_match": true
+  },
+  "C-08/유출": {
+   "edge": "1180031601",
+   "street": "여의대방로",
+   "dist_m": 3.3,
+   "lanes": 2,
+   "name_match": true
+  },
+  "D-23/유입": {
+   "edge": "1160002812",
+   "street": "경인로",
+   "dist_m": 13.1,
+   "lanes": 3,
+   "name_match": true
+  },
+  "D-23/유출": {
+   "edge": "1160002705",
+   "street": "경인로",
+   "dist_m": 8.5,
+   "lanes": 3,
+   "name_match": true
+  },
+  "D-25/유입": {
+   "edge": "1180026802",
+   "street": "영등포로",
+   "dist_m": 7.3,
+   "lanes": 3,
+   "name_match": true
+  },
+  "D-25/유출": {
+   "edge": "1180026901",
+   "street": "영등포로",
+   "dist_m": 6.9,
+   "lanes": 3,
+   "name_match": true
+  },
+  "D-27/유입": {
+   "edge": "1180031502",
+   "street": "국회대로",
+   "dist_m": 12.6,
+   "lanes": 4,
+   "name_match": true
+  },
+  "D-27/유출": {
+   "edge": "1180031402",
+   "street": "국회대로",
+   "dist_m": 26.4,
+   "lanes": 4,
+   "name_match": true
+  },
+  "D-28/유입": {
+   "edge": "1180001601",
+   "street": "경인로",
+   "dist_m": 18.2,
+   "lanes": 4,
+   "name_match": true
+  },
+  "D-28/유출": {
+   "edge": "1180001501",
+   "street": "경인로",
+   "dist_m": 6.0,
+   "lanes": 4,
+   "name_match": true
+  },
+  "D-29/유입": {
+   "edge": "1190007003",
+   "street": "여의대방로",
+   "dist_m": 13.7,
+   "lanes": 4,
+   "name_match": true
+  },
+  "D-29/유출": {
+   "edge": "1190006902",
+   "street": "여의대방로",
+   "dist_m": 3.9,
+   "lanes": 4,
+   "name_match": true
+  },
+  "D-41/유입": {
+   "edge": "1180119700",
+   "street": "노들로",
+   "dist_m": 14.6,
+   "lanes": 2,
+   "name_match": true
+  },
+  "D-41/유출": {
+   "edge": "1180119602",
+   "street": "노들로",
+   "dist_m": 16.6,
+   "lanes": 2,
+   "name_match": true
+  }
+ },
+ "gates": {
+  "A": {
+   "point": "C-06",
+   "name": "서강대교",
+   "in": "1180041004",
+   "out": "1180041104"
+  },
+  "B": {
+   "point": "C-07",
+   "name": "마포대교",
+   "in": "1180002504",
+   "out": "1180002604"
+  },
+  "C": {
+   "point": "C-08",
+   "name": "원효대교",
+   "in": "1180031601",
+   "out": "1180031700"
+  },
+  "D": {
+   "point": "D-29",
+   "name": "여의대방로(여의교)",
+   "in": "1190007003",
+   "out": "1190006902"
+  },
+  "E": {
+   "point": "D-28",
+   "name": "경인로(서울교)",
+   "in": "1180001601",
+   "out": "1180001501"
+  },
+  "F": {
+   "point": "D-27",
+   "name": "국회대로(여의2교)",
+   "in": "1180031502",
+   "out": "1180031402"
+  },
+  "G": {
+   "point": "C-05",
+   "name": "양화대교",
+   "in": "1180003700",
+   "out": "1180003800"
+  },
+  "H": {
+   "point": "D-25",
+   "name": "영등포로(오목교)",
+   "in": "1180026802",
+   "out": "1180026901"
+  },
+  "I": {
+   "point": "D-23",
+   "name": "경인로(거리공원)",
+   "in": "1160002812",
+   "out": "1160002705"
+  }
+ }
+}

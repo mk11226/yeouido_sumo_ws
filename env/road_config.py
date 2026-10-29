@@ -23,6 +23,59 @@ ROAD = {
                            # 관측/보상에서 속도를 정규화하는 기준(vmax)
 }
 
+# 학습·평가에 쓸 도로: "straight" = 위 ROAD (직선 도로), "yeouido" = 아래 YEOUIDO_ROAD
+ROAD_TYPE = "yeouido"
+
+# ──────────────────────────────────────────────────────────────
+# 1-2) 실제 도로: 영등포구 북부(여의도) — env/yeouido_env.py
+#
+#    도로망·교통량은 yeouido/ 파이프라인이 만든 env/yeouido/ 파일을 쓴다
+#    (국가표준노드링크 + TOPIS 실측, 자세한 내용은 yeouido/README.md).
+#    road_builder는 이 도로를 만들지 않는다.
+#
+#    에피소드마다:
+#      - 시간대(심야/주간/출근)를 levels 비율로 뽑고
+#      - 그 시간대의 워밍업 상태(snapshot_times 중 하나)를 불러온 뒤
+#      - 랜드마크 두 곳을 골라 ego가 출발지 → 목적지로 주행한다.
+#    목적지 도착 = 완주(arrival_bonus).
+# ──────────────────────────────────────────────────────────────
+YEOUIDO_ROAD = {
+    "type": "yeouido",
+    "levels": {"night": 1.0, "day": 1.0, "rush": 1.0},   # 시간대 뽑는 비율 (0이면 제외)
+    "places": "landmarks",     # 출발·도착 후보: "landmarks" (7곳)
+                               #   | "landmarks+gates" (+ 범위 경계 게이트 A~I)
+    "min_trip": 1000,          # 출발~도착 경로가 이 길이(m)보다 짧은 쌍은 뽑지 않음
+    # 배경 교통 워밍업 상태를 저장해 둘 시각(s). 에피소드마다 하나를 골라 불러온다.
+    # 처음 한 번 env/yeouido/states/ 에 만들어지고(시간대당 수 초), 이후 리셋은 0.1초.
+    "snapshot_times": [600, 1200, 1800, 2400],
+    "speed_limit": 22.22,      # 속도 정규화 기준 vmax (도로망 최고 80 km/h)
+    "num_lanes": 3,            # (직선 도로용 값. 이 도로에서는 쓰지 않음)
+    "length": 0,               # 경로 길이는 에피소드마다 다름 (info["route_length"])
+    "max_steps": 3600,         # 0.5 s × 3600 = 30분 안에 못 가면 시간 초과
+    "warmup_steps": 0,
+
+    # ---- 1단계 보조 장치 (2단계에서 정책이 직접 배우도록 바꿀 수 있음) ----
+    # signal_assist: 앞 신호가 빨간불(또는 멈출 수 있는 노란불)이면 정지선에서
+    #   멈출 수 있는 속도로 목표 속도를 제한한다. 끄면 ego가 신호를 무시한다.
+    #   (ego는 speedMode=0이라 SUMO가 신호를 대신 지켜 주지 않는다)
+    "signal_assist": True,
+    "obey_speed_limit": True,  # 목표 속도를 그 도로의 제한속도 이하로 제한
+    # lane_change_mode: SUMO 차로 변경 모드. 1 = 경로상 꼭 필요한 차로 변경(좌회전
+    #   차로로 들어가기 등)만 SUMO가 하고, 정책의 차로 변경 명령이 우선한다.
+    #   0 = 정책만 차로를 바꿈 (경로에 맞는 차로를 놓치면 교차로에서 멈춰 버림).
+    "lane_change_mode": 1,
+    # 교차로 안 충돌도 검사 (SUMO 기본은 차로 위만). 신호 없는 교차로에서 양보 없이
+    # 끼어드는 것을 충돌로 잡는다. (배경 차량끼리 교차로 안에서 겹치는 일이 출근 시간에
+    #  시간당 약 10건 있는데, 그 차들은 지워질 뿐 ego 에피소드에는 영향 없음)
+    "check_junction_collisions": True,
+
+    "gui_zoom": 2500.0,        # ego 추적 확대 배율 (약 6 km 도로망 기준 시야 ~250 m)
+    "gui_track_ego": True,
+}
+
+if ROAD_TYPE == "yeouido":
+    ROAD = YEOUIDO_ROAD
+
 # ──────────────────────────────────────────────────────────────
 # 2) ego 차량 (RL 에이전트가 조종하는 빨간 차)
 #    accel/decel은 SUMO 물리엔진이 허용하는 "한계치"이고,

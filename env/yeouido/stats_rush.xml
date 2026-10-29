@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2026-10-29T16:44:16.898036+09:00 by Eclipse SUMO sumo 1.27.1
+<sumoConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
+
+    <input>
+        <net-file value="/Users/junochun/Documents/auto_driving/Artificial-Intelligence-and-Control-for-Autonomous-Driving/env/yeouido/yeouido.net.xml"/>
+        <route-files value="/Users/junochun/Documents/auto_driving/Artificial-Intelligence-and-Control-for-Autonomous-Driving/env/yeouido/yeouido.vtypes.xml,/Users/junochun/Documents/auto_driving/Artificial-Intelligence-and-Control-for-Autonomous-Driving/env/yeouido/rush.rou.xml"/>
+        <additional-files value="/Users/junochun/Documents/auto_driving/Artificial-Intelligence-and-Control-for-Autonomous-Driving/env/yeouido/measure_rush.add.xml"/>
+    </input>
+
+    <output>
+        <statistic-output value="/Users/junochun/Documents/auto_driving/Artificial-Intelligence-and-Control-for-Autonomous-Driving/env/yeouido/stats_rush.xml"/>
+    </output>
+
+    <time>
+        <begin value="0"/>
+        <end value="4200"/>
+        <step-length value="0.5"/>
+    </time>
+
+    <processing>
+        <ignore-route-errors value="true"/>
+        <collision.action value="warn"/>
+        <collision.check-junctions value="false"/>
+        <time-to-teleport value="300"/>
+    </processing>
+
+    <report>
+        <no-warnings value="true"/>
+        <duration-log.statistics value="true"/>
+        <no-step-log value="true"/>
+    </report>
+
+    <random_number>
+        <seed value="42"/>
+    </random_number>
+
+</sumoConfiguration>
+-->
+
+<statistics xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/statistic_file.xsd">
+    <performance clockBegin="1793259856.91" clockEnd="1793259876.20" clockDuration="19.29" traciDuration="4.37" realTimeFactor="217.68" vehicleUpdatesPerSecond="451402.56" personUpdatesPerSecond="0.00" begin="0.00" end="4200.00" duration="4200.00"/>
+    <vehicles loaded="9262" inserted="9247" running="1173" waiting="14"/>
+    <teleports total="2" jam="0" yield="2" wrongLane="0"/>
+    <safety collisions="0" emergencyStops="0" emergencyBraking="40"/>
+    <persons loaded="0" running="0" jammed="0"/>
+    <personTeleports total="0" abortWait="0" wrongDest="0"/>
+    <vehicleTripStatistics count="8074" routeLength="4580.53" speed="9.71" duration="489.82" waitingTime="71.30" timeLoss="149.00" departDelay="3.31" departDelayWaiting="-1.00" totalTravelTime="3954841.00" totalDepartDelay="26731.18"/>
+    <pedestrianStatistics number="0" routeLength="0.00" duration="0.00" timeLoss="0.00"/>
+    <rideStatistics number="0"/>
+    <transportStatistics number="0"/>
+</statistics>
