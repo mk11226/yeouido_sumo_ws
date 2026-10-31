@@ -42,8 +42,9 @@ ROAD_TYPE = "yeouido"
 YEOUIDO_ROAD = {
     "type": "yeouido",
     "levels": {"night": 1.0, "day": 1.0, "rush": 1.0},   # 시간대 뽑는 비율 (0이면 제외)
-    "places": "landmarks",     # 출발·도착 후보: "landmarks" (7곳)
-                               #   | "landmarks+gates" (+ 범위 경계 게이트 A~I)
+    "places": "landmarks+gates",  # 출발·도착 후보: "landmarks" (7곳)
+                               #   | "landmarks+gates" (+ 게이트 A~I: 경계 6곳 + 샛강 다리 D·E·F)
+                               #   랜드마크만이면 경로가 도로의 28%, 게이트를 더하면 51%를 지난다.
     "min_trip": 1000,          # 출발~도착 경로가 이 길이(m)보다 짧은 쌍은 뽑지 않음
     # 배경 교통 워밍업 상태를 저장해 둘 시각(s). 에피소드마다 하나를 골라 불러온다.
     # 처음 한 번 env/yeouido/states/ 에 만들어지고(시간대당 수 초), 이후 리셋은 0.1초.

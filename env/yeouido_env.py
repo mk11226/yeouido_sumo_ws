@@ -128,13 +128,15 @@ class YeouidoEnv(SumoHighwayEnv):
     # ==================================================================
     # SUMO 시작 / 리셋
     # ==================================================================
-    def _start_sumo(self):
+    def _start_sumo(self, sumo_seed=None):
         binary = checkBinary("sumo-gui" if self.gui else "sumo")
+        if sumo_seed is None:
+            sumo_seed = np.random.randint(0, 100000)
         cmd = [binary, "-c", self._cfg(self.level),
                "--step-length", str(self.step_length),
                "--collision.action", "remove",
                "--no-warnings", "true", "--no-step-log", "true",
-               "--seed", str(np.random.randint(0, 100000))]
+               "--seed", str(int(sumo_seed))]
         if self.check_junctions:
             # 교차로 안 충돌도 검사 (기본은 차로 위만). 신호 없는 교차로에서 양보하지 않고
             # 끼어들면 충돌로 끝나도록 한다.
@@ -163,7 +165,8 @@ class YeouidoEnv(SumoHighwayEnv):
         if self.level not in ("night", "day", "rush"):
             raise ValueError(f"알 수 없는 시간대: {self.level}")
         names = list(self.places)
-        origin = options.get("origin") or str(rng.choice(names))
+        origin = options.get("origin") or str(
+            rng.choice([n for n in names if n != options.get("destination")]))
         destination = options.get("destination") or str(
             rng.choice([n for n in names if n != origin]))
         snapshot_time = options.get("snapshot_time") or float(rng.choice(self.snapshot_times))
@@ -180,6 +183,12 @@ class YeouidoEnv(SumoHighwayEnv):
         gym.Env.reset(self, seed=seed)
         options = dict(options or {})
         fixed = {k: options.get(k) for k in ("origin", "destination")}
+        # 평가 시험지: sumo_seed가 있으면 그 시드로 SUMO를 새로 켠다 (배경 차량의 무작위 움직임까지 재현).
+        # SUMO 시드는 켤 때만 적용되므로, 켜 둔 SUMO를 재사용하는 학습과 달리 매번 다시 켠다.
+        sumo_seed = options.get("sumo_seed")
+        if sumo_seed is not None and self._started:
+            traci.close()
+            self._started = False
 
         for _attempt in range(20):
             origin, destination, snapshot_time = self._pick({**options, **fixed})
@@ -187,7 +196,7 @@ class YeouidoEnv(SumoHighwayEnv):
                 traci.close()
                 self._started = False
             if not self._started:
-                self._start_sumo()
+                self._start_sumo(sumo_seed)
             traci.simulation.loadState(self._snapshot(self.level, snapshot_time))
             if self._insert_ego(origin, destination):
                 break
