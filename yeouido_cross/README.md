@@ -33,13 +33,20 @@ python -m yeouido_cross.build_routes --gui    # 생성 후 sumo-gui로 경로 �
 - 다른 연결로를 한 번 더 건너는 경로는 뺀다.
 - 출발·도착 위치와 길이 계산은 `YeouidoEnv._insert_ego` 와 같다 (출발은 edge 끝에서 20 m 이상 남김).
 
+**섬 안 경로** (id `i000`~`i041`, 42개): 섬 랜드마크 4곳(국회의사당, IFC 서울, 63빌딩, 여의도공원)과 섬에 닿는
+북쪽 다리 게이트 3곳(A 서강대교, B 마포대교, C 원효대교) 사이의 모든 쌍. 샛강을 건너지 않는 가장 빠른 경로 하나씩이고,
+1 km 미만인 쌍은 없다 (1.3~3.8 km). 샛강 다리 위 게이트(D·E·F)는 섬 안이 아니라서 넣지 않았다.
+`routes.json` 에서는 `direction: "여의도 안"`, `bridge: null`, GUI에서는 주황색 선.
+
+총 126개 (연결로 경로 84 + 섬 안 42).
+
 결과 (`output/`):
 
 | 파일 | 내용 |
 |---|---|
 | `routes.json` | `{id, origin, destination, direction, bridge, fastest, length_m, free_time_s, detour, edges}` |
 | `routes.rou.xml` | SUMO `<route>` 정의 (id = `routes.json` 의 id) |
-| `routes.poly.xml` | sumo-gui 겹쳐 보기용 선. 연결로별 색 (빨강 여의2교, 파랑 서울교, 초록 여의교, 보라 램프), 가장 빠른 경로는 굵게 |
+| `routes.poly.xml` | sumo-gui 겹쳐 보기용 선. 연결로별 색 (빨강 여의2교, 파랑 서울교, 초록 여의교, 보라 램프, 주황 섬 안), 가장 빠른 경로는 굵게 |
 
 `detour` = 그 쌍에서 가장 빠른 연결로 대비 시간 비율 (1.0 = 가장 빠름).
 
