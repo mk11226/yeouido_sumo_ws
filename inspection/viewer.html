@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>여의도 도로망 검수</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+  :root {
+    --panel: rgba(22, 26, 32, 0.92);
+    --text: #e8ecf1;
+    --muted: #9aa5b1;
+    --accent: #00e5ff;
+    --line: rgba(255, 255, 255, 0.12);
+  }
+  html, body { margin: 0; height: 100%; background: #111; color: var(--text);
+    font: 13px/1.45 system-ui, "Noto Sans KR", sans-serif; }
+  #map { position: absolute; inset: 0; }
+  .panel { position: absolute; z-index: 1000; background: var(--panel); border: 1px solid var(--line);
+    border-radius: 8px; padding: 10px 12px; box-shadow: 0 4px 16px rgba(0,0,0,.4); }
+  #controls { top: 10px; left: 56px; width: 250px; }
+  #controls h1 { font-size: 14px; margin: 0 0 8px; }
+  #controls label { display: flex; align-items: center; gap: 6px; margin: 3px 0; cursor: pointer; }
+  #controls .row { display: flex; gap: 6px; align-items: center; margin: 6px 0; }
+  #controls select, #controls input[type=text] { flex: 1; min-width: 0; background: #1d232b; color: var(--text);
+    border: 1px solid var(--line); border-radius: 4px; padding: 4px 6px; font: inherit; }
+  #controls input[type=range] { flex: 1; }
+  #controls button, #info button { background: #2a323d; color: var(--text); border: 1px solid var(--line);
+    border-radius: 4px; padding: 4px 8px; font: inherit; cursor: pointer; }
+  #controls button:hover, #info button:hover { background: #36404d; }
+  .section { border-top: 1px solid var(--line); margin-top: 8px; padding-top: 8px; }
+  .hint { color: var(--muted); font-size: 12px; }
+  kbd { background: #2a323d; border: 1px solid var(--line); border-radius: 3px; padding: 0 4px; font-size: 11px; }
+  #legend .item { display: flex; align-items: center; gap: 6px; }
+  #legend .sw { width: 18px; height: 4px; border-radius: 2px; }
+  #info { top: 10px; right: 10px; width: 280px; display: none; }
+  #info h2 { font-size: 14px; margin: 0 0 6px; }
+  #info table { width: 100%; border-collapse: collapse; }
+  #info td { padding: 2px 0; vertical-align: top; }
+  #info td:first-child { color: var(--muted); width: 88px; }
+  #info .buttons { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+  #status { bottom: 10px; left: 10px; padding: 4px 10px; font: 12px ui-monospace, monospace; color: var(--muted); }
+  #toast { position: absolute; z-index: 1100; bottom: 40px; left: 50%; transform: translateX(-50%);
+    background: var(--panel); padding: 6px 14px; border-radius: 6px; display: none; }
+  #loading { position: absolute; z-index: 1200; inset: 0; display: flex; align-items: center;
+    justify-content: center; background: rgba(0,0,0,.5); font-size: 15px; }
+  @media (max-width: 640px) {
+    #controls { left: 10px; right: 10px; width: auto; top: auto; bottom: 40px; max-height: 45vh; overflow: auto; }
+    #info { left: 10px; right: 10px; width: auto; }
+  }
+</style>
+</head>
+<body>
+<div id="map"></div>
+<div id="loading">도로망 불러오는 중…</div>
+
+<div id="controls" class="panel">
+  <h1>여의도 도로망 검수</h1>
+  <label><input type="checkbox" id="show-sumo" checked> SUMO 도로망 <kbd>S</kbd></label>
+  <label><input type="checkbox" id="show-marks" checked> 차로 경계선 <kbd>L</kbd></label>
+  <label><input type="checkbox" id="show-lanes" checked> 차로 중심선</label>
+  <label><input type="checkbox" id="show-conns" checked> 교차로 안 연결 경로</label>
+  <label><input type="checkbox" id="show-junctions" checked> 교차로 영역</label>
+  <div class="section">
+    <label><input type="checkbox" id="show-nl" checked> 국가표준노드링크 링크 <kbd>N</kbd></label>
+    <label><input type="checkbox" id="show-nl-nodes"> 노드링크 노드</label>
+    <label><input type="checkbox" id="show-nl-unused"> SUMO에서 뺀 링크도 보기</label>
+  </div>
+  <div class="row">투명도 <input type="range" id="opacity" min="0.1" max="1" step="0.05" value="0.9"></div>
+  <div class="row">색 기준
+    <select id="color-mode">
+      <option value="uniform">단일색</option>
+      <option value="lanes">차로 수</option>
+      <option value="speed">제한속도</option>
+      <option value="level">도로 유형 (지상·고가·지하)</option>
+    </select>
+  </div>
+  <div id="legend"></div>
+  <div class="section">
+    <div class="row"><input type="text" id="search" placeholder="도로·차로·교차로 ID 또는 도로명"><button id="search-btn">찾기</button></div>
+    <div class="hint" id="search-result"></div>
+  </div>
+  <div class="section hint">
+    도로나 교차로를 누르면 상세 정보가 나옵니다.<br>
+    <kbd>S</kbd>를 눌러 SUMO를 껐다 켜면서 항공사진과 비교하세요.<br>
+    지하차도는 항공사진에 보이지 않습니다.
+  </div>
+</div>
+
+<div id="info" class="panel"></div>
+<div id="status" class="panel">-</div>
+<div id="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.11.0/proj4.js"></script>
+<script src="/config.js"></script>
+<script>
+"use strict";
+
+// ── 배경 지도 ───────────────────────────────────────────────
+const KEY = window.VWORLD_KEY || "";
+const vworld = (layer, ext) => L.tileLayer(
+  `https://api.vworld.kr/req/wmts/1.0.0/${KEY}/${layer}/{z}/{y}/{x}.${ext}`,
+  { maxNativeZoom: 19, maxZoom: 22, attribution: "VWorld" });
+const osm = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+  { maxNativeZoom: 19, maxZoom: 22, attribution: "© OpenStreetMap" });
+
+const bases = KEY
+  ? { "항공사진 (VWorld)": vworld("Satellite", "jpeg"), "일반지도 (VWorld)": vworld("Base", "png"), "OSM": osm }
+  : { "OSM": osm };
+const overlays = KEY ? { "도로명·지명 (VWorld)": vworld("Hybrid", "png") } : {};
+
+const map = L.map("map", { zoomControl: true, maxZoom: 22, preferCanvas: true });
+Object.values(bases)[0].addTo(map);
+L.control.layers(bases, overlays, { position: "bottomright" }).addTo(map);
+L.control.scale({ imperial: false, position: "bottomright" }).addTo(map);
+const renderer = L.canvas({ tolerance: 6 });
+
+// ── 색 기준 ────────────────────────────────────────────────
+const MARK_COLOR = "#00e5ff";
+const COLOR_MODES = {
+  uniform: { color: () => "#ff3df2", legend: [["#ff3df2", "차로 중심선"]] },
+  lanes: {
+    color: p => ({ 1: "#4dabf7", 2: "#51cf66", 3: "#fcc419", 4: "#ff922b" })[p.lanes] || "#f03e3e",
+    legend: [["#4dabf7", "1차로"], ["#51cf66", "2차로"], ["#fcc419", "3차로"], ["#ff922b", "4차로"], ["#f03e3e", "5차로 이상"]],
+  },
+  speed: {
+    color: p => p.speed_kmh <= 30 ? "#4dabf7" : p.speed_kmh <= 50 ? "#51cf66" : p.speed_kmh <= 60 ? "#fcc419" : "#f03e3e",
+    legend: [["#4dabf7", "30 km/h 이하"], ["#51cf66", "50 km/h 이하"], ["#fcc419", "60 km/h 이하"], ["#f03e3e", "60 km/h 초과"]],
+  },
+  level: {
+    color: p => ({ "고가차도": "#fcc419", "지하차도": "#9775fa", "교량": "#4dabf7", "터널": "#868e96" })[p.level] || "#ff3df2",
+    legend: [["#ff3df2", "일반도로"], ["#fcc419", "고가차도"], ["#9775fa", "지하차도"], ["#4dabf7", "교량"], ["#868e96", "터널"]],
+  },
+};
+let colorMode = "uniform";
+let opacity = 0.9;
+
+// 교차로 안 연결 경로는 색 기준과 상관없이 방향별 색 (직진은 차로 중심선과 같은 색)
+const CONN_COLORS = { "직진": "#ff3df2", "좌회전": "#fcc419", "약간 좌회전": "#fcc419",
+                      "우회전": "#51cf66", "약간 우회전": "#51cf66", "U턴": "#f03e3e" };
+
+function drawLegend() {
+  const items = COLOR_MODES[colorMode].legend
+    .concat([[MARK_COLOR, "차로 경계선"], ["#fcc419", "연결: 좌회전"], ["#51cf66", "연결: 우회전"], ["#f03e3e", "연결: U턴"],
+             [NL_COLOR, "노드링크 (원본)"], [NL_UNUSED_COLOR, "노드링크 (SUMO에서 뺌)"]])
+    .map(([c, t]) => `<div class="item"><span class="sw" style="background:${c}"></span>${t}</div>`);
+  document.getElementById("legend").innerHTML = items.join("");
+}
+
+// ── SUMO 레이어 ─────────────────────────────────────────────
+let meta, lanesLayer, marksLayer, connsLayer, junctionsLayer, selected = null;
+let nlLayer, nlUnusedLayer, nlNodesLayer;
+const byEdge = new Map(), byLane = new Map(), byJunction = new Map(), byConn = new Map();
+const byNlLink = new Map(), byNlNode = new Map();
+const NL_COLOR = "#ff6d00", NL_UNUSED_COLOR = "#ced4da";
+
+const nlStyle = f => f.properties.sumo.length
+  ? { color: NL_COLOR, weight: 2.5, opacity }
+  : { color: NL_UNUSED_COLOR, weight: 1.5, opacity: 0.8 * opacity, dashArray: "4 4" };
+const nlNodeStyle = f => ({ radius: 3.5, color: "#111", weight: 1, opacity,
+  fillColor: f.properties.in_sumo ? NL_COLOR : NL_UNUSED_COLOR, fillOpacity: opacity });
+
+const laneStyle = f => ({ color: COLOR_MODES[colorMode].color(f.properties), weight: 2, opacity });
+const connStyle = f => ({ color: CONN_COLORS[f.properties.direction] || "#ff3df2", weight: 1.5, opacity });
+const markStyle = f => ({ color: MARK_COLOR, weight: 1.5, opacity,
+                          dashArray: f.properties.style === "dashed" ? "6 6" : null });
+const junctionStyle = f => ({ color: f.properties.tls ? "#ff922b" : "#adb5bd", weight: 1,
+                              opacity, fillOpacity: 0.18 * opacity });
+
+function restyle() {
+  lanesLayer.setStyle(laneStyle);
+  marksLayer.setStyle(markStyle);
+  connsLayer.setStyle(connStyle);
+  junctionsLayer.setStyle(junctionStyle);
+  nlLayer.setStyle(nlStyle);
+  nlUnusedLayer.setStyle(nlStyle);
+  nlNodesLayer.setStyle(nlNodeStyle);
+  if (selected) highlight(selected);
+}
+
+function highlight(sel) {
+  const weight = { junction: 3, nl_node: 3 }[sel.kind] || 5;
+  sel.layers.forEach(l => l.setStyle({ color: "#ffffff", weight, opacity: 1 }));
+  sel.layers.forEach(l => l.bringToFront());
+}
+
+function clearSelection() {
+  if (!selected) return;
+  const owner = { junction: junctionsLayer, conn: connsLayer, edge: lanesLayer, nl_node: nlNodesLayer }[selected.kind];
+  if (selected.kind === "nl_link") selected.layers.forEach(l => l.setStyle(nlStyle(l.feature)));
+  else selected.layers.forEach(l => owner.resetStyle(l));
+  selected = null;
+  document.getElementById("info").style.display = "none";
+}
+
+const fmtXY = xy => `${xy[0].toFixed(2)}, ${xy[1].toFixed(2)}`;
+
+function copy(text, what) {
+  navigator.clipboard.writeText(text).then(() => toast(`${what} 복사: ${text}`));
+}
+
+function toast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg; t.style.display = "block";
+  clearTimeout(toast.timer);
+  toast.timer = setTimeout(() => t.style.display = "none", 1800);
+}
+
+function showInfo(title, rows, buttons) {
+  const info = document.getElementById("info");
+  info.innerHTML = `<h2>${title}</h2><table>${rows.map(([k, v]) => `<tr><td>${k}</td><td>${v}</td></tr>`).join("")}</table>
+    <div class="buttons">${buttons.map((b, i) => `<button data-i="${i}">${b[0]}</button>`).join("")}<button data-close>닫기</button></div>`;
+  info.querySelectorAll("button[data-i]").forEach(btn => btn.onclick = () => buttons[btn.dataset.i][1]());
+  info.querySelector("button[data-close]").onclick = clearSelection;
+  info.style.display = "block";
+}
+
+function selectEdge(edgeId, laneId) {
+  clearSelection();
+  const layers = byEdge.get(edgeId);
+  if (!layers) return;
+  selected = { kind: "edge", id: edgeId, layers };
+  highlight(selected);
+  const p = (laneId && byLane.get(laneId) || layers[0]).feature.properties;
+  showInfo(p.name || "(이름 없음)", [
+    ["도로 ID", p.edge],
+    ["차로", `${p.lanes}차로` + (laneId ? ` · 선택 ${p.index}번 (0 = 맨 오른쪽)` : "")],
+    ["제한속도", `${p.speed_kmh} km/h`],
+    ["차로 폭", `${p.width} m`],
+    ["길이", `${p.length} m`],
+    ["도로 등급", p.rank],
+    ["도로 유형", p.level],
+    ["시작 → 끝", `${p.from_node}<br>→ ${p.to_node}`],
+    ["SUMO 좌표", fmtXY(p.xy)],
+  ], [
+    ["도로 ID 복사", () => copy(p.edge, "도로 ID")],
+    ["SUMO 좌표 복사", () => copy(fmtXY(p.xy), "SUMO 좌표")],
+  ]);
+  return L.featureGroup(layers).getBounds();
+}
+
+function selectJunction(id) {
+  clearSelection();
+  const layer = byJunction.get(id);
+  if (!layer) return;
+  selected = { kind: "junction", id, layers: [layer] };
+  highlight(selected);
+  const p = layer.feature.properties;
+  showInfo(p.tls ? "신호 교차로" : "교차로", [
+    ["교차로 ID", `<span style="word-break:break-all">${p.id}</span>`],
+    ["종류", p.junction_type],
+    ["들어오는 도로", p.incoming],
+    ["나가는 도로", p.outgoing],
+    ["SUMO 좌표", fmtXY(p.xy)],
+  ], [
+    ["교차로 ID 복사", () => copy(p.id, "교차로 ID")],
+    ["SUMO 좌표 복사", () => copy(fmtXY(p.xy), "SUMO 좌표")],
+  ]);
+  return layer.getBounds();
+}
+
+function selectConn(id) {
+  clearSelection();
+  const layer = byConn.get(id);
+  if (!layer) return;
+  selected = { kind: "conn", id, layers: [layer] };
+  highlight(selected);
+  const p = layer.feature.properties;
+  showInfo(`교차로 안 연결 · ${p.direction}`, [
+    ["들어오는 차로", `${p.from_lane}<br>${p.from_name}`],
+    ["나가는 차로", `${p.to_lane}<br>${p.to_name}`],
+    ["교차로 ID", `<span style="word-break:break-all">${p.junction}</span>`],
+    ["신호", p.tls ? "신호 제어" : "없음"],
+    ["연결 ID", p.id],
+    ["SUMO 좌표", fmtXY(p.xy)],
+  ], [
+    ["교차로 보기", () => map.fitBounds(selectJunction(p.junction), { maxZoom: 19 })],
+    ["SUMO 좌표 복사", () => copy(fmtXY(p.xy), "SUMO 좌표")],
+  ]);
+  return layer.getBounds();
+}
+
+function selectNlLink(id) {
+  clearSelection();
+  const layer = byNlLink.get(id);
+  if (!layer) return;
+  selected = { kind: "nl_link", id, layers: [layer] };
+  highlight(selected);
+  const p = layer.feature.properties;
+  const sumoP = p.sumo.length ? byEdge.get(p.sumo[0])[0].feature.properties : null;
+  // SUMO 도로와 값이 다르면 빨간색으로 표시
+  const diff = (a, b) => sumoP && a !== b ? ` <span style="color:#ff6b6b">(SUMO ${b})</span>` : "";
+  showInfo(`노드링크 · ${p.name || "(이름 없음)"}`, [
+    ["링크 ID", p.id],
+    ["차로", `${p.lanes}차로` + diff(p.lanes, sumoP && sumoP.lanes)],
+    ["제한속도", `${p.speed_kmh} km/h` + diff(p.speed_kmh, sumoP && sumoP.speed_kmh)],
+    ["도로 등급", p.rank],
+    ["도로 유형", p.level],
+    ["길이", `${p.length} m`],
+    ["시작 → 끝 노드", `${p.from_node}<br>→ ${p.to_node}`],
+    ["SUMO 도로", p.sumo.length ? p.sumo.join(", ") : "<span style='color:#ff6b6b'>없음 (도로망에서 뺌)</span>"],
+  ], [
+    ["링크 ID 복사", () => copy(p.id, "링크 ID")],
+    ...(p.sumo.length ? [["SUMO 도로 보기", () => selectEdge(p.sumo[0])]] : []),
+  ]);
+  return layer.getBounds();
+}
+
+function selectNlNode(id) {
+  clearSelection();
+  const layer = byNlNode.get(id);
+  if (!layer) return;
+  selected = { kind: "nl_node", id, layers: [layer] };
+  highlight(selected);
+  const p = layer.feature.properties;
+  showInfo(`노드링크 노드 · ${p.node_type}`, [
+    ["노드 ID", p.id],
+    ["이름", p.name || "-"],
+    ["종류", p.node_type],
+    ["SUMO", p.in_sumo ? "쓰임" : "안 쓰임"],
+  ], [["노드 ID 복사", () => copy(p.id, "노드 ID")]]);
+  return L.latLngBounds([layer.getLatLng()]);
+}
+
+function setVisible(layer, on) {
+  if (on && !map.hasLayer(layer)) layer.addTo(map);
+  if (!on && map.hasLayer(layer)) map.removeLayer(layer);
+}
+
+function syncLayers() {
+  const sumo = document.getElementById("show-sumo").checked;
+  setVisible(junctionsLayer, sumo && document.getElementById("show-junctions").checked);
+  setVisible(marksLayer, sumo && document.getElementById("show-marks").checked);
+  setVisible(connsLayer, sumo && document.getElementById("show-conns").checked);
+  setVisible(lanesLayer, sumo && document.getElementById("show-lanes").checked);
+  const nl = document.getElementById("show-nl").checked;
+  setVisible(nlUnusedLayer, nl && document.getElementById("show-nl-unused").checked);
+  setVisible(nlLayer, nl);
+  setVisible(nlNodesLayer, nl && document.getElementById("show-nl-nodes").checked);
+}
+
+// ── 검색 ───────────────────────────────────────────────────
+function search(q) {
+  q = q.trim();
+  const out = document.getElementById("search-result");
+  if (!q) return;
+  let bounds = null;
+  out.textContent = "";
+  if (byJunction.has(q)) bounds = selectJunction(q);
+  else if (byEdge.has(q)) bounds = selectEdge(q);
+  else if (byLane.has(q)) bounds = selectEdge(byLane.get(q).feature.properties.edge, q);
+  else if (byConn.has(q)) bounds = selectConn(q);
+  else if (byNlLink.has(q)) bounds = selectNlLink(q);
+  else if (byNlNode.has(q)) bounds = selectNlNode(q);
+  else {
+    // 도로명으로 찾으면 그 이름의 도로 전체로 이동
+    const hits = [...byEdge.entries()].filter(([, ls]) => ls[0].feature.properties.name.includes(q));
+    if (hits.length) {
+      clearSelection();
+      bounds = L.featureGroup(hits.flatMap(([, ls]) => ls)).getBounds();
+      out.textContent = `"${q}" 도로 ${hits.length}개`;
+    }
+  }
+  if (bounds) map.fitBounds(bounds, { maxZoom: 19, padding: [40, 40] });
+  else out.textContent = `"${q}"를 찾지 못했습니다`;
+}
+
+// ── 불러오기 ────────────────────────────────────────────────
+fetch("out/net.geojson").then(r => r.json()).then(data => {
+  meta = data.meta;
+  const lanes = [], marks = [], conns = [], junctions = [], nlUsed = [], nlUnused = [], nlNodes = [];
+  for (const f of data.features) {
+    const k = f.properties.kind;
+    if (k === "nl_link") (f.properties.sumo.length ? nlUsed : nlUnused).push(f);
+    else {
+      const bucket = ({ lane: lanes, mark: marks, conn: conns, junction: junctions, nl_node: nlNodes })[k];
+      if (bucket) bucket.push(f);   // 차로 면(area)은 구간 화면 전용
+    }
+  }
+
+  const nlEach = (f, l) => { byNlLink.set(f.properties.id, l);
+    l.on("click", e => { L.DomEvent.stop(e); selectNlLink(f.properties.id); }); };
+  nlUnusedLayer = L.geoJSON(nlUnused, { renderer, style: nlStyle, onEachFeature: nlEach });
+  nlLayer = L.geoJSON(nlUsed, { renderer, style: nlStyle, onEachFeature: nlEach });
+  nlNodesLayer = L.geoJSON(nlNodes, { renderer, style: nlNodeStyle,
+    pointToLayer: (f, latlng) => L.circleMarker(latlng, { renderer }),
+    onEachFeature: (f, l) => { byNlNode.set(f.properties.id, l);
+      l.on("click", e => { L.DomEvent.stop(e); selectNlNode(f.properties.id); }); } });
+
+  junctionsLayer = L.geoJSON(junctions, { renderer, style: junctionStyle,
+    onEachFeature: (f, l) => { byJunction.set(f.properties.id, l);
+      l.on("click", e => { L.DomEvent.stop(e); selectJunction(f.properties.id); }); } });
+  marksLayer = L.geoJSON(marks, { renderer, style: markStyle, interactive: false });
+  connsLayer = L.geoJSON(conns, { renderer, style: connStyle,
+    onEachFeature: (f, l) => { byConn.set(f.properties.id, l);
+      l.on("click", e => { L.DomEvent.stop(e); selectConn(f.properties.id); }); } });
+  lanesLayer = L.geoJSON(lanes, { renderer, style: laneStyle,
+    onEachFeature: (f, l) => {
+      const p = f.properties;
+      byLane.set(p.id, l);
+      if (!byEdge.has(p.edge)) byEdge.set(p.edge, []);
+      byEdge.get(p.edge).push(l);
+      l.on("click", e => { L.DomEvent.stop(e); selectEdge(p.edge, p.id); });
+    } });
+
+  syncLayers();
+  map.fitBounds(meta.bounds.map(([lon, lat]) => [lat, lon]));
+  // 교차로 카드에서 "전체 지도에서 보기"로 열면 주소 뒤 #<ID> 로 바로 이동
+  if (location.hash.length > 1) search(decodeURIComponent(location.hash.slice(1)));
+  drawLegend();
+  document.getElementById("loading").style.display = "none";
+}).catch(err => {
+  document.getElementById("loading").textContent = "도로망을 불러오지 못했습니다: " + err;
+});
+
+// ── 조작 ───────────────────────────────────────────────────
+["show-sumo", "show-marks", "show-lanes", "show-conns", "show-junctions",
+ "show-nl", "show-nl-nodes", "show-nl-unused"].forEach(id =>
+  document.getElementById(id).addEventListener("change", syncLayers));
+document.getElementById("opacity").addEventListener("input", e => { opacity = +e.target.value; restyle(); });
+document.getElementById("color-mode").addEventListener("change", e => { colorMode = e.target.value; restyle(); drawLegend(); });
+document.getElementById("search-btn").onclick = () => search(document.getElementById("search").value);
+document.getElementById("search").addEventListener("keydown", e => { if (e.key === "Enter") search(e.target.value); });
+map.on("click", clearSelection);
+
+document.addEventListener("keydown", e => {
+  if (e.target.tagName === "INPUT" || e.target.tagName === "SELECT") return;
+  const toggle = id => { const c = document.getElementById(id); c.checked = !c.checked; syncLayers(); };
+  if (e.key === "s" || e.key === "S") toggle("show-sumo");
+  if (e.key === "l" || e.key === "L") toggle("show-marks");
+  if (e.key === "n" || e.key === "N") toggle("show-nl");
+  if (e.key === "Escape") clearSelection();
+});
+
+// 마우스 위치: 위경도 + SUMO 좌표 (sumo-gui 에서 같은 곳 찾기)
+map.on("mousemove", e => {
+  let xy = "";
+  if (meta) {
+    const [ux, uy] = proj4(meta.proj, [e.latlng.lng, e.latlng.lat]);
+    xy = `  SUMO ${(ux + meta.net_offset[0]).toFixed(1)}, ${(uy + meta.net_offset[1]).toFixed(1)}`;
+  }
+  document.getElementById("status").textContent =
+    `${e.latlng.lat.toFixed(6)}, ${e.latlng.lng.toFixed(6)}${xy}  z${map.getZoom()}`;
+});
+</script>
+</body>
+</html>

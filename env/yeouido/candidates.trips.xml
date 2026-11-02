@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2026-10-29 16:43:03.894682 by Eclipse SUMO randomTrips.py v1.27.1
+<!-- generated on 2026-11-02 23:12:37.475955 by Eclipse SUMO randomTrips.py v1.27.1
 <configuration>
-    <net-file value="/Users/junochun/Documents/auto_driving/Artificial-Intelligence-and-Control-for-Autonomous-Driving/env/yeouido/yeouido.net.xml"/>
-    <output-trip-file value="/Users/junochun/Documents/auto_driving/Artificial-Intelligence-and-Control-for-Autonomous-Driving/env/yeouido/candidates.trips.xml"/>
-    <route-file value="/Users/junochun/Documents/auto_driving/Artificial-Intelligence-and-Control-for-Autonomous-Driving/env/yeouido/candidates.rou.xml"/>
+    <net-file value="/home/jo/bmil_ws/env/yeouido/yeouido.net.xml"/>
+    <output-trip-file value="/home/jo/bmil_ws/env/yeouido/candidates.trips.xml"/>
+    <route-file value="/home/jo/bmil_ws/env/yeouido/candidates.rou.xml"/>
     <fringe-factor value="max"/>
     <edge-permission value="passenger"/>
     <min-distance value="400.0"/>

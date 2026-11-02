@@ -103,4 +103,33 @@
     <delete from="1180099000" to="1180032602"/>
     <delete from="1180001403" to="1180027902"/>
     <delete from="1190004205" to="1190006001"/>
+    <connection from="1180031502" to="1180031502_pocket" fromLane="0" toLane="0"/>
+    <connection from="1180031502" to="1180031502_pocket" fromLane="1" toLane="1"/>
+    <connection from="1180031502" to="1180031502_pocket" fromLane="2" toLane="2"/>
+    <connection from="1180031502" to="1180031502_pocket" fromLane="3" toLane="3"/>
+    <connection from="1180031502" to="1180031502_pocket" fromLane="4" toLane="4"/>
+    <connection from="1180031502" to="1180031502_pocket" fromLane="4" toLane="5"/>
+    <connection from="1180033207" to="1180033207_pocket" fromLane="0" toLane="0"/>
+    <connection from="1180033207" to="1180033207_pocket" fromLane="1" toLane="1"/>
+    <connection from="1180033207" to="1180033207_pocket" fromLane="2" toLane="2"/>
+    <connection from="1180033207" to="1180033207_pocket" fromLane="3" toLane="3"/>
+    <connection from="1180033207" to="1180033207_pocket" fromLane="3" toLane="4"/>
+    <connection from="1180029302" to="1180029302_pocket" fromLane="0" toLane="0"/>
+    <connection from="1180029302" to="1180029302_pocket" fromLane="0" toLane="1"/>
+    <connection from="1180031502_pocket" to="1180038101" fromLane="5" toLane="0"/>
+    <connection from="1180031502_pocket" to="1180029202" fromLane="0" toLane="0"/>
+    <connection from="1180031502_pocket" to="1180033301" fromLane="0" toLane="0"/>
+    <connection from="1180031502_pocket" to="1180033301" fromLane="1" toLane="1"/>
+    <connection from="1180031502_pocket" to="1180033301" fromLane="2" toLane="2"/>
+    <connection from="1180031502_pocket" to="1180033301" fromLane="3" toLane="3"/>
+    <connection from="1180031502_pocket" to="1180038101" fromLane="4" toLane="0"/>
+    <connection from="1180033207_pocket" to="1180029202" fromLane="4" toLane="1"/>
+    <connection from="1180033207_pocket" to="1180038101" fromLane="0" toLane="0"/>
+    <connection from="1180033207_pocket" to="1180031402" fromLane="0" toLane="0"/>
+    <connection from="1180033207_pocket" to="1180031402" fromLane="1" toLane="1"/>
+    <connection from="1180033207_pocket" to="1180031402" fromLane="2" toLane="2"/>
+    <connection from="1180033207_pocket" to="1180031402" fromLane="3" toLane="3"/>
+    <connection from="1180029302_pocket" to="1180031402" fromLane="1" toLane="3"/>
+    <connection from="1180029302_pocket" to="1180033301" fromLane="0" toLane="0"/>
+    <connection from="1180029302_pocket" to="1180038101" fromLane="0" toLane="0"/>
 </connections>

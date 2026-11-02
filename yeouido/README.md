@@ -22,6 +22,8 @@ pip install -r yeouido/requirements.txt
 국가교통정보센터(its.go.kr) → 교통데이터 → 표준노드링크 → 최신 zip을
 `env/yeouido/source/nodelink/raw/` 에 압축 해제 (`MOCT_LINK.*`, `MOCT_NODE.*`, `TURNINFO.dbf`).
 현재 사용본: 2026-10-14.
+원본이 없으면 `run_all` 은 추출 단계를 건너뛰고 git 에 있는 `source/nodelink/region.json` 을 그대로 쓴다
+(범위를 바꾸거나 새 노드링크를 쓸 때만 원본이 필요).
 
 ## 실행
 
@@ -68,6 +70,19 @@ python -m yeouido.view --level rush        # sumo-gui, 한 시간대 고정 (nig
 7. **전체 적색 시간을 교차로 크기에 맞춤** (2~8초): 여의대로처럼 넓은 교차로는 2초 안에 다 건너지
    못한 차가 교차로 안에 갇혔다 (마포대교 남단).
 8. 신호 없는 합류는 비슷한 두 도로가 만나 차로가 줄 때만 지퍼식 교대 합류, 보조 차로가 붙는 곳은 본선 우선.
+9. **검수 수정 목록** (`yeouido/corrections.json`, `corrections.py`): 항공사진 검수로 확인한 차이만 원본 위에
+   덧붙인다. 지원하는 수정은 세 가지다 (형식은 `corrections.py` 설명).
+   - 차로 수 (`lane_counts`): 도로 전체 차로 수를 노드링크 값 대신 쓴다. 중앙선 쪽 가장자리는 그대로 두고
+     바깥쪽으로만 넓히거나 좁힌다 (도로선을 바뀐 폭의 절반만큼 오른쪽으로 옮김). 우선순위는 원래 차로 수 기준 그대로.
+   - 좌회전·우회전 포켓 (`turn_pockets`): 교차로 직전에 늘어나는 회전 전용 차로. 노드링크는 링크마다
+     차로 수가 하나라 이런 차로가 빠지고, 맨 왼쪽(오른쪽) 차로가 직진·회전 공용이 된다. 이 경우 `opposites`
+     신호는 보호 좌회전 단계를 만들지 않는다 (좌회전 전용 차로가 있어야 만든다).
+     포켓 도로의 차로별 연결은 직접 정하고(새 차로 = 그 회전 전용, 원래 차로에서 그 회전을 뺌), 포켓 길이는
+     정지선부터 잰 길이가 되도록 만든 뒤 재서 맞춘다.
+   - 차로별 방향 (`lane_moves`): 정지선 차로 하나의 직진·좌회전·우회전. netconvert 가 추정한 연결 대신
+     그 진입로의 차로별 연결을 전부 직접 적는다. 도로 단위로 갈 수 있는 곳은 바뀌지 않는다.
+   검수 도구 카드의 버튼·단축키로 고친다 (`inspection/README.md`).
+   수정 전후 비교: `python -m inspection.compare_nets --sim rush` (`inspection/README.md`).
 
 이전 OSM 기반 방식은 `build_net_osm.py` 에 참고용으로 남겨 두었다 (비교: `env/yeouido/compare_yeouigyo.png`).
 

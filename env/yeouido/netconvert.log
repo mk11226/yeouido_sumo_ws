@@ -1,3 +1,4 @@
+Warning: Environment variable SUMO_HOME is not set properly, disabling XML validation. Set 'auto' or 'always' for web lookups.
 Warning: Found sharp turn with radius 5.95 at the start of edge '1160078500'.
 Warning: Found sharp turn with radius 8.40 at the end of edge '1180074400'.
 Warning: Found sharp turn with radius 3.86 at the start of edge '1180095500'.
@@ -34,6 +35,7 @@ Warning: 7 total messages of type: Could not build program '%' for traffic light
 Warning: 7 total messages of type: Shape for junction '%' has distance % to its given position.
 Warning: 7 total messages of type: The traffic light '%' does not control any links; it will not be build.
 Success.
+Warning: Environment variable SUMO_HOME is not set properly, disabling XML validation. Set 'auto' or 'always' for web lookups.
 Warning: Found sharp turn with radius 5.95 at the start of edge '1160078500'.
 Warning: Found sharp turn with radius 8.40 at the end of edge '1180074400'.
 Warning: Found sharp turn with radius 3.86 at the start of edge '1180095500'.

@@ -2,21 +2,22 @@
 
     python -m yeouido.build_net        (먼저 python -m yeouido.nodelink)
 
-표준노드링크는 국토교통부가 관리하는 공식 도로망이라 OSM보다 시뮬레이션에 맞다.
-  - 모든 링크에 차로 수·제한속도·도로명이 있다 (OSM은 차로 수가 80% 비어 있었다).
-  - 지하차도·고가차도는 별도 링크라서 위·아래로 지나가는 도로가 만나지 않는다.
-  - 교차로는 진입·진출 지점마다 노드가 있지만 같은 교차로 이름을 공유한다
-    → 이름이 같고 가까운 노드를 하나의 교차로로 합친다 (join_clusters).
-  - 회전 제한(좌회전·직진·우회전 금지)을 실제 자료대로 넣는다 (TURNINFO).
 신호 위치는 표준노드링크에 없으므로 OSM 신호 표시와 간선 교차로 기준으로 정한다.
+검수로 확인한 수정(차로 수, 회전 포켓, 차로별 방향)은 yeouido/corrections.json 에 적고 마지막에 덧붙인다.
+
+    python -m yeouido.build_net --no-corrections          # 수정 목록 없이 (원본 그대로)
+    python -m yeouido.build_net --out 다른/경로/net.xml    # 다른 곳에 만들어 비교 (env 파일은 그대로)
 """
+import argparse
 import json
 import math
 import re
 import subprocess
 import xml.etree.ElementTree as ET
 from collections import defaultdict
+from pathlib import Path
 
+from yeouido import corrections
 from yeouido.config import BBOX, NET, OUT, south_of_river, sumo_bin
 from yeouido.download import osm_path
 from yeouido.nodelink import REGION
@@ -256,8 +257,12 @@ def signal_nodes(links, nodes, clusters):
     return chosen
 
 
-def write_plain(links, nodes, clusters, tls_groups, turns):
-    PLAIN.mkdir(parents=True, exist_ok=True)
+def write_plain(links, nodes, clusters, tls_groups, turns, plain=PLAIN, splits=None, extra_con=()):
+    """splits: {도로 ID: dict(pos, lanes, id_after)} — 도로 끝을 잘라 차로를 늘린다 (corrections).
+    extra_con: 포켓·차로 방향 수정 도로의 차로별 연결 (corrections.connections).
+    차로 수를 고친 도로(lanes0 있음)도 우선순위는 원래 차로 수로 정한다 (교차로 양보 관계 유지)."""
+    splits = splits or {}
+    plain.mkdir(parents=True, exist_ok=True)
     tls_nodes = {n for g in tls_groups for n in g}
     nod = ["<nodes>"]
     for nid, n in nodes.items():
@@ -266,7 +271,7 @@ def write_plain(links, nodes, clusters, tls_groups, turns):
     for g in clusters:
         nod.append(f'    <join nodes="{" ".join(g)}"/>')
     nod.append("</nodes>")
-    (PLAIN / "nl.nod.xml").write_text("\n".join(nod) + "\n")
+    (plain / "nl.nod.xml").write_text("\n".join(nod) + "\n")
 
     prio = {"103": 12, "104": 10, "105": 9, "106": 9, "107": 7, "108": 6}
     edg = ["<edges>"]
@@ -274,13 +279,21 @@ def write_plain(links, nodes, clusters, tls_groups, turns):
         shape = " ".join(f"{x:.7f},{y:.7f}" for x, y in l["shape"])
         speed = max(l["max_speed"], 20) / 3.6
         name = l["name"].replace("&", "&amp;").replace('"', "&quot;")
-        edg.append(f'    <edge id="{l["id"]}" from="{l["from_node"]}" to="{l["to_node"]}" '
-                   f'numLanes="{max(l["lanes"], 1)}" speed="{speed:.2f}" '
-                   f'priority="{prio.get(l["rank"], 6) + min(l["lanes"], 4)}" '
-                   f'name="{name}" type="nl.{l["rank"]}.{l["type"]}" shape="{shape}" '
-                   f'spreadType="center"/>')
+        head = (f'    <edge id="{l["id"]}" from="{l["from_node"]}" to="{l["to_node"]}" '
+                f'numLanes="{max(l["lanes"], 1)}" speed="{speed:.2f}" '
+                f'priority="{prio.get(l["rank"], 6) + min(l.get("lanes0", l["lanes"]), 4)}" '
+                f'name="{name}" type="nl.{l["rank"]}.{l["type"]}" shape="{shape}" '
+                f'spreadType="center"')
+        s = splits.get(l["id"])
+        if s:
+            # 끝에서 -pos m 지점부터 차로를 늘린다 (어느 차로가 새 차로인지는 extra_con 의 연결로 정한다)
+            lanes = " ".join(str(i) for i in range(s["lanes"]))
+            edg.append(f'{head}>\n        <split pos="{s["pos"]:.1f}" lanes="{lanes}" '
+                       f'idBefore="{l["id"]}" idAfter="{s["id_after"]}"/>\n    </edge>')
+        else:
+            edg.append(head + "/>")
     edg.append("</edges>")
-    (PLAIN / "nl.edg.xml").write_text("\n".join(edg) + "\n")
+    (plain / "nl.edg.xml").write_text("\n".join(edg) + "\n")
 
     ids = {l["id"] for l in links}
     con = ["<connections>"]
@@ -289,8 +302,9 @@ def write_plain(links, nodes, clusters, tls_groups, turns):
         if t["type"] in FORBIDDEN_TURNS and t["from_link"] in ids and t["to_link"] in ids:
             con.append(f'    <delete from="{t["from_link"]}" to="{t["to_link"]}"/>')
             n_del += 1
+    con += list(extra_con)
     con.append("</connections>")
-    (PLAIN / "nl.con.xml").write_text("\n".join(con) + "\n")
+    (plain / "nl.con.xml").write_text("\n".join(con) + "\n")
     return n_del
 
 
@@ -360,49 +374,117 @@ def _run(cmd, log):
         raise RuntimeError(f"netconvert 실패 — 로그 확인: {log}")
 
 
-def main():
-    OUT.mkdir(parents=True, exist_ok=True)
-    region = json.loads(REGION.read_text())
-    links, nodes = clip(region["links"], region["nodes"])
-    links, nodes = largest_component(links, nodes)
-    clusters, links, nodes = join_clusters(nodes, links)
-    tls_groups = signal_nodes(links, nodes, clusters)
-    n_del = write_plain(links, nodes, clusters, tls_groups, region["turns"])
-    print(f"[net] 표준노드링크 링크 {len(links)}개, 노드 {len(nodes)}개, "
-          f"교차로 합치기 {len(clusters)}곳, 신호 교차로 {len(tls_groups)}곳, 회전 금지 {n_del}개")
-
-    log = OUT / "netconvert.log"
-    log.write_text("")
+def _convert(plain, net_out, log):
+    """plain 파일(노드·도로·연결) → SUMO 도로망 (1차, 신호·교차로 생성)."""
     _run([sumo_bin("netconvert"),
-          "--node-files", str(PLAIN / "nl.nod.xml"), "--edge-files", str(PLAIN / "nl.edg.xml"),
-          "--connection-files", str(PLAIN / "nl.con.xml"),
+          "--node-files", str(plain / "nl.nod.xml"), "--edge-files", str(plain / "nl.edg.xml"),
+          "--connection-files", str(plain / "nl.con.xml"),
           "--proj.utm",                         # 위경도 입력 → UTM 평면 좌표
-          "-o", str(NET),
+          "-o", str(net_out),
           # 연결된 큰 도로망만 남기는 일은 join_clusters 에서 합친 교차로 기준으로 이미 했다.
           # (netconvert의 components 옵션은 교차로를 합치기 전에 판단해 필요한 노드를 지운다)
           "--output.street-names", "--no-turnarounds",
           "--junctions.corner-detail", "5",
           "--tls.join", *TLS_OPTIONS], log)
 
+
+def landmark_edges():
+    """랜드마크가 붙은 도로 (자르면 랜드마크 위치가 바뀌므로 수정하지 않는다)."""
+    path = OUT / "landmarks.json"
+    return {v["edge"] for v in json.loads(path.read_text()).values()} if path.exists() else set()
+
+
+def main(argv=None):
+    ap = argparse.ArgumentParser(description=__doc__,
+                                 formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--out", type=Path, default=NET, help="만들 도로망 파일 (기본: env/yeouido/yeouido.net.xml)")
+    ap.add_argument("--no-corrections", action="store_true", help="yeouido/corrections.json 을 반영하지 않음")
+    args = ap.parse_args(argv)
+    net_out = args.out.resolve()
+    # 기본 위치가 아니면 plain 파일·로그도 그 옆에 따로 둔다 (env/yeouido 는 건드리지 않음)
+    default = net_out == NET.resolve()
+    plain = PLAIN if default else net_out.parent / f"{net_out.stem}_plain"
+    log = OUT / "netconvert.log" if default else net_out.with_name(f"{net_out.stem}.netconvert.log")
+    net_out.parent.mkdir(parents=True, exist_ok=True)
+
+    OUT.mkdir(parents=True, exist_ok=True)
+    region = json.loads(REGION.read_text())
+    links, nodes = clip(region["links"], region["nodes"])
+    links, nodes = largest_component(links, nodes)
+    clusters, links, nodes = join_clusters(nodes, links)
+    tls_groups = signal_nodes(links, nodes, clusters)
     import sumolib
+
+    data = {} if args.no_corrections else corrections.load()
+    links, skipped = corrections.lane_counts(links, data.get("lane_counts", []))
+    plans, more = corrections.turn_pockets(links, data.get("turn_pockets", []), landmark_edges())
+    skipped += more
+    moves = data.get("lane_moves", [])
+    splits, extra_con = {}, []
+    if plans or moves:
+        # 차로별 연결을 정하려면 원래 차로마다 어디로 가는지 알아야 해서, 먼저 차로 수 수정만 넣고 만든다
+        write_plain(links, nodes, clusters, tls_groups, region["turns"], plain)
+        net0 = plain / "no_corrections.net.xml"
+        log0 = plain / "no_corrections.netconvert.log"
+        log0.write_text("")
+        _convert(plain, net0, log0)
+        extra_con, more = corrections.connections(sumolib.net.readNet(str(net0)), plans, moves)
+        skipped += more
+        by_id = {l["id"]: l for l in links}
+        splits = {eid: corrections.split_spec(by_id[eid], p) for eid, p in plans.items()}
+    n_del = write_plain(links, nodes, clusters, tls_groups, region["turns"], plain, splits, extra_con)
+    print(f"[net] 표준노드링크 링크 {len(links)}개, 노드 {len(nodes)}개, "
+          f"교차로 합치기 {len(clusters)}곳, 신호 교차로 {len(tls_groups)}곳, 회전 금지 {n_del}개")
+    if not args.no_corrections:
+        n_moves = len(moves) - sum(s["type"] == "lane_moves" for s in skipped)
+        print(f"[net] 수정 목록 (yeouido/corrections.json): 차로 수 "
+              f"{sum('lanes0' in l for l in links)}곳, 좌회전 포켓 "
+              f"{sum(1 for p in plans.values() if p['left'])}곳, 우회전 포켓 "
+              f"{sum(1 for p in plans.values() if p['right'])}곳, 차로 방향 {n_moves}곳 반영"
+              + "".join(f"\n      건너뜀 {corrections.label(s)}: {s['why']}" for s in skipped))
+    # 검수 도구가 읽는 건너뛴 항목 목록
+    (plain / "skipped.json").write_text(json.dumps(skipped, ensure_ascii=False, indent=1) + "\n")
+
+    log.write_text("")
+    _convert(plain, net_out, log)
+    if splits:
+        # 포켓 길이는 정지선부터 잰 길이여야 한다. 자르는 위치는 교차로 중심 기준이라 교차로 영역만큼
+        # 짧아지므로, 만든 뒤 재서 모자란 만큼 더 앞에서 자르고 다시 만든다 (보통 한 번이면 맞음).
+        by_id = {l["id"]: l for l in links}
+        for _ in range(2):
+            got = sumolib.net.readNet(str(net_out))
+            fix = {}
+            for eid, s in splits.items():
+                short = plans[eid]["length"] - got.getEdge(s["id_after"]).getLength()
+                limit = -(corrections._length(by_id[eid]["shape"]) - corrections.MIN_REST)
+                if abs(short) > 1.0 and s["pos"] - short >= limit:
+                    fix[eid] = s["pos"] - short
+            if not fix:
+                break
+            for eid, pos in fix.items():
+                splits[eid]["pos"] = pos
+            write_plain(links, nodes, clusters, tls_groups, region["turns"], plain, splits, extra_con)
+            log.write_text("")
+            _convert(plain, net_out, log)
     # 2차: 단순 합류 지점 → zipper 합류 (같은 도로망을 다시 읽어 ID 유지)
-    merges = merge_nodes(sumolib.net.readNet(str(NET)))
-    patch = PLAIN / "zipper.nod.xml"
+    merges = merge_nodes(sumolib.net.readNet(str(net_out)))
+    patch = plain / "zipper.nod.xml"
     patch.write_text("<nodes>\n" + "".join(f'    <node id="{n}" type="zipper"/>\n' for n in merges)
                      + "</nodes>\n")
-    _run([sumo_bin("netconvert"), "-s", str(NET), "-n", str(patch), "-o", str(NET),
+    _run([sumo_bin("netconvert"), "-s", str(net_out), "-n", str(patch), "-o", str(net_out),
           *TLS_OPTIONS], log)
 
-    changed = set_clearance_times(NET)
+    changed = set_clearance_times(net_out)
     print(f"[net] 넓은 교차로 전체 적색 시간 조정: {len(changed)}개 단계 "
           f"(최대 {max(changed, default=ALLRED_MIN)}초)")
-    net = sumolib.net.readNet(str(NET))
+    net = sumolib.net.readNet(str(net_out))
     edges = [e for e in net.getEdges() if e.getFunction() != "internal"]
     km = sum(e.getLength() for e in edges) / 1000
-    print(f"[net] {NET}")
+    print(f"[net] {net_out}")
     print(f"      edge {len(edges)}개, 총 {km:.1f} km, 교차로 {len(net.getNodes())}개, "
           f"신호 {len(net.getTrafficLights())}개, zipper 합류 {len(merges)}곳 (경고는 {log})")
 
 
 if __name__ == "__main__":
-    main()
+    import sys
+    main(sys.argv[1:])

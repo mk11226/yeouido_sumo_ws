@@ -1,3 +1,4 @@
+Warning: Environment variable SUMO_HOME is not set properly, disabling XML validation. Set 'auto' or 'always' for web lookups.
 Warning: Could not import polygon from relation '4079885' (name:상도 래미안 1차 reason: found gap of 112.32m).
 Warning: Could not import polygon from relation '8549518' (missing ways)
 Warning: Could not import polygon from relation '8616724' (name: reason: found gap of 23.07m).

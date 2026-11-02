@@ -9,3 +9,6 @@ __pycache__/
 # 여의도: 국가표준노드링크 원본 (약 1 GB, its.go.kr에서 직접 받기 — yeouido/README.md)
 env/yeouido/source/nodelink/raw/
 env/yeouido/source/nodelink/*.zip
+
+# 검수 도구: 도로망에서 다시 만드는 결과물 (python -m inspection.serve 가 자동 생성)
+inspection/out/
