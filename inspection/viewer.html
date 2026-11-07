@@ -367,7 +367,7 @@ function search(q) {
 }
 
 // ── 불러오기 ────────────────────────────────────────────────
-fetch("out/net.geojson").then(r => r.json()).then(data => {
+fetch("out/net.geojson", { cache: "no-store" }).then(r => r.json()).then(data => {
   meta = data.meta;
   const lanes = [], marks = [], conns = [], junctions = [], nlUsed = [], nlUnused = [], nlNodes = [];
   for (const f of data.features) {

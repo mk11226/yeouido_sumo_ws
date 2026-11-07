@@ -143,6 +143,12 @@ def turn_hints(net):
     hints, rules = defaultdict(list), defaultdict(list)
     if not REGION.exists():
         return hints, rules
+    from yeouido import corrections
+    try:   # 수정 목록에서 지운 회전 제한은 "지움" 으로 표시하고 오류 힌트를 내지 않는다
+        removed = {(corrections.link_id(c["from"]), corrections.link_id(c["to"]))
+                   for c in corrections.load()["remove_turns"]}
+    except ValueError:
+        removed = set()
     pieces = defaultdict(list)
     for e in net.getEdges():
         pieces[e.getID().split("_")[0]].append(e)
@@ -156,8 +162,11 @@ def turn_hints(net):
         connected = bool(a.getConnections(b))
         name = TURN_TYPE.get(t["type"], t["type"])
         what = f"{a.getName() or a.getID()} → {b.getName() or b.getID()}"
+        gone = (t["from_link"], t["to_link"]) in removed
         rules[(node, a.getID())].append(dict(to=b.getID(), to_name=b.getName() or "", rule=name,
-                                             connected=connected, all_day=t.get("all_day", True)))
+                                             connected=connected, all_day=t.get("all_day", True), removed=gone))
+        if gone:
+            continue
         if t["type"] in FORBIDDEN and connected:
             hints[node].append(dict(level="bad", text=f"노드링크는 {name}인데 SUMO에 연결이 있음",
                                     detail=what))

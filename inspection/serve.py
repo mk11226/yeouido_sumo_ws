@@ -15,6 +15,8 @@
 - 수정 목록(yeouido/corrections.json) 반영본을 inspection/out/compare/new.net.xml 에 만들어, 카드 화면
   왼쪽에서 "원래 / 수정 후" 를 바꿔 볼 수 있다. 카드의 버튼·키로 차로 수, 회전 포켓, 차로별 방향을 고치면
   목록을 고치고 반영본을 바로 다시 만든다 (env/yeouido 도로망은 그대로).
+- yeouido/corrections.json 을 편집기로 직접 고쳐 저장해도 1~2초 안에 알아채고 반영본을 다시 만든다
+  (열려 있는 카드 화면도 자동으로 새로 그린다. JSON 오류·도로망 실패는 화면 위쪽 줄에 나온다).
 - 검수 기록은 inspection/records/{junctions,roads}.json 에 저장한다 (팀 공유용, git 으로 관리).
 - "문제"·"보류" 로 판정한 카드는 메모를 inspection/issues.md 에 따로 모아 적는다 (기록할 때마다 다시 씀).
 - 이 PC 안(127.0.0.1)에서만 열린다.
@@ -26,6 +28,7 @@ import os
 import subprocess
 import sys
 import threading
+import time
 import webbrowser
 from datetime import date
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
@@ -42,6 +45,8 @@ NEW_NET = HERE / "out" / "compare" / "new.net.xml"     # yeouido/corrections.jso
 NEW_GEOJSON = HERE / "out" / "net_new.geojson"
 ISSUES = HERE / "issues.md"       # 문제·보류 카드 메모 모음
 _lock = threading.Lock()
+# 수정 목록 상태 (화면이 /api/corrections/status 로 2초마다 본다). version 이 오르면 화면이 다시 불러온다.
+_watch = {"version": 0, "state": "ok", "message": "", "skipped": [], "mtime": None}
 
 
 def vworld_key():
@@ -87,15 +92,79 @@ def rebuild_fixed():
     return json.loads((NEW_NET.parent / f"{NEW_NET.stem}_plain" / "skipped.json").read_text())
 
 
+def orphan_note():
+    """도로 삭제 때문에 끊겨서 같이 빠진 도로 → 안내 문구 (없으면 빈 문자열)."""
+    path = NEW_NET.parent / f"{NEW_NET.stem}_plain" / "removed.json"
+    orphans = json.loads(path.read_text())["orphans"] if path.exists() else []
+    if not orphans:
+        return ""
+    return f"삭제로 끊겨서 같이 빠진 도로 {len(orphans)}개: {', '.join(orphans[:6])}" + (" …" if len(orphans) > 6 else "")
+
+
 def _key(kind, c):
-    """수정 항목을 찾는 열쇠: 차로 수 = 도로, 포켓 = 도로·쪽, 차로 방향 = 도로·차로."""
+    """수정 항목을 찾는 열쇠: 차로 수 = 도로, 포켓 = 도로·쪽, 차로 방향 = 도로·차로, 회전 제한 = 진입·나감."""
+    if kind == "remove_turns":
+        return (kind, c["from"], c["to"])
     return (kind, c["edge"], c.get("side", "left") if kind == "turn_pockets" else c.get("lane"))
+
+
+def _mtime():
+    return corrections.CORRECTIONS.stat().st_mtime_ns if corrections.CORRECTIONS.exists() else None
+
+
+def _done(state="ok", message="", skipped=()):
+    """반영본이 바뀌었음을 화면에 알린다 (지금 파일 시각을 기억해 같은 저장을 두 번 반영하지 않는다)."""
+    _watch.update(version=_watch["version"] + 1, state=state, message=message,
+                  skipped=list(skipped), mtime=_mtime())
+
+
+def watch_corrections():
+    """yeouido/corrections.json 을 직접 고쳐 저장하면 반영본을 다시 만든다 (1.5초마다 파일 시각 확인).
+    직접 고친 항목은 반영이 안 돼도 목록에서 빼지 않고 이유만 알린다."""
+    while True:
+        time.sleep(1.5)
+        if _mtime() == _watch["mtime"] or _lock.locked():   # 버튼으로 다시 만드는 중이면 끝난 뒤에 본다
+            continue
+        _watch.update(state="building", message="corrections.json 바뀜 → 도로망 다시 만드는 중… (5~10초)")
+        with _lock:
+            if _mtime() == _watch["mtime"]:     # 화면 버튼으로 저장한 것 (이미 반영됨)
+                _watch.update(state="ok", message="")
+                continue
+            mtime = _mtime()
+            try:
+                data = corrections.load()
+            except ValueError as e:
+                where = f"{e.lineno}째 줄 {e.colno}칸: {e.msg}" if hasattr(e, "lineno") else str(e)
+                _watch.update(state="error", mtime=mtime,
+                              message=f"corrections.json 을 읽지 못함 ({where}) — 고쳐서 다시 저장하세요")
+                print(f"[serve] {_watch['message']}")
+                continue
+            try:
+                if any(data.values()):
+                    skipped = rebuild_fixed()
+                else:
+                    skipped = []
+                    NEW_GEOJSON.unlink(missing_ok=True)
+            except Exception as e:
+                last = str(e).strip().splitlines()[-1:] or [""]
+                _watch.update(state="error", mtime=mtime,
+                              message=f"도로망을 만들지 못함 (왼쪽 '수정 후'는 예전 그대로): {last[0]}")
+                print(f"[serve] {_watch['message']}")
+                continue
+            for s in skipped:
+                s["label"] = corrections.label(s)
+            n = sum(map(len, data.values()))
+            note = orphan_note() if skipped is not None and any(data.values()) else ""
+            _done(message=f"corrections.json 반영됨 (수정 {n}개)" + (f" · {note}" if note else ""), skipped=skipped)
+            print(f"[serve] {_watch['message']}" + "".join(f"\n  건너뜀 {s['label']}: {s['why']}" for s in skipped))
 
 
 def change_corrections(msg):
     """검수 화면 버튼·키: 수정 항목 여러 개를 한 번에 넣고 빼기 → 수정 목록 저장 → 반영본 다시 만들기.
 
-    msg = {"changes": [{"type": "lane_counts", "edge", "lanes"}
+    msg = {"changes": [{"type": "remove_turns", "from", "to", "remove": true}
+                       | {"type": "remove_links", "edge", "remove": true}
+                       | {"type": "lane_counts", "edge", "lanes"}
                        | {"type": "turn_pockets", "edge", "side", "length"}
                        | {"type": "lane_moves", "edge", "lane", "moves"}],   값이 null 이면 그 항목을 지움
            "reviewer"}   (항목마다 "card", "road" 를 붙이면 근거 기록에 남는다)
@@ -111,24 +180,25 @@ def change_corrections(msg):
         kind = ch["type"]
         if kind not in corrections.KINDS:
             raise ValueError(f"알 수 없는 수정 종류 {kind}")
-        value = {"lane_counts": "lanes", "turn_pockets": "length", "lane_moves": "moves"}[kind]
+        value = {"remove_turns": "remove", "remove_links": "remove", "lane_counts": "lanes", "turn_pockets": "length",
+                 "lane_moves": "moves"}[kind]
         if kind == "turn_pockets" and ch.get("side") not in corrections.SIDES:
             raise ValueError("side 는 left / right")
         key = _key(kind, ch)
         data[kind] = [c for c in data[kind] if _key(kind, c) != key]
         if ch.get(value) is not None:
-            item = dict(edge=ch["edge"])
+            item = {"from": ch["from"], "to": ch["to"]} if kind == "remove_turns" else dict(edge=ch["edge"])
             if kind == "turn_pockets":
                 item.update(side=ch["side"], length=float(ch["length"]))
             elif kind == "lane_moves":
                 item.update(lane=int(ch["lane"]), moves=[m for m in "slr" if m in ch["moves"]])
-            else:
+            elif kind == "lane_counts":
                 item.update(lanes=int(ch["lanes"]))
             item.update(why=f"검수 화면에서 수정 — {ch.get('road', '')}".rstrip(" —"),
                         checked=f"inspection 카드 {ch.get('card', '')} · {who} · {date.today().isoformat()}")
             data[kind].append(item)
             added.add(key)
-        if kind != "lane_moves":
+        if kind not in ("lane_moves", "remove_turns"):
             gone = [c for c in data["lane_moves"] if c["edge"] == ch["edge"]]
             if gone:
                 data["lane_moves"] = [c for c in data["lane_moves"] if c["edge"] != ch["edge"]]
@@ -148,10 +218,16 @@ def change_corrections(msg):
             rebuild_fixed()
         except Exception:
             pass
+        _done()
         raise
     for s in skipped + rejected:
         s["label"] = corrections.label(s)
-    return dict(ok=not rejected, corrections=data, skipped=skipped, rejected=rejected, notes=notes)
+    note = orphan_note()
+    if note:
+        notes.append(note)
+    _done(skipped=skipped)
+    return dict(ok=not rejected, corrections=data, skipped=skipped, rejected=rejected, notes=notes,
+                version=_watch["version"])
 
 
 def load_records(kind):
@@ -191,11 +267,17 @@ def records_kind(path):
 class Handler(SimpleHTTPRequestHandler):
     key = ""
 
+    def end_headers(self):
+        # 카드·도로망 파일(out/*.json, *.geojson)과 화면 파일도 캐시하지 않는다.
+        # 캐시하면 도로망을 다시 만든 뒤에도 브라우저가 예전 카드 목록·도로망을 보여 준다
+        # (예: 교차로를 합쳐 ID가 바뀌었는데 예전 카드가 열림).
+        self.send_header("Cache-Control", "no-store")
+        super().end_headers()
+
     def _send(self, body, ctype, code=200):
         self.send_response(code)
         self.send_header("Content-Type", ctype)
         self.send_header("Content-Length", str(len(body)))
-        self.send_header("Cache-Control", "no-store")
         self.end_headers()
         self.wfile.write(body)
 
@@ -208,6 +290,9 @@ class Handler(SimpleHTTPRequestHandler):
                        "application/javascript; charset=utf-8")
             return
         path, _, query = self.path.partition("?")
+        if path == "/api/corrections/status":     # 잠금 없이 (다시 만드는 중에도 바로 답한다)
+            self._json(dict(_watch, mtime=None, has_fixed=NEW_GEOJSON.exists()))
+            return
         if path == "/api/corrections":
             with _lock:
                 self._json(corrections.load())
@@ -217,7 +302,7 @@ class Handler(SimpleHTTPRequestHandler):
             with _lock:
                 self._json(load_records(kind))
             return
-        if path in ("/", ""):   # 주소 뒤 ?v=fixed 같은 값은 화면(cards.html)이 읽는다
+        if path in ("/", ""):   # 주소 뒤 ?v=base 같은 값은 화면(cards.html)이 읽는다
             self.path = "/cards.html" + (f"?{query}" if query else "")
         super().do_GET()
 
@@ -270,6 +355,8 @@ def main(argv=None):
     args = ap.parse_args(argv)
 
     refresh()
+    _watch["mtime"] = _mtime()
+    threading.Thread(target=watch_corrections, daemon=True).start()
     Handler.key = vworld_key()
     if not Handler.key:
         print("[serve] .env 에 VWORLD_API_KEY 가 없습니다 → 항공사진 없이 OSM 지도만 표시합니다")

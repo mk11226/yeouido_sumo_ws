@@ -43,6 +43,8 @@ DIR = HERE / "out" / "compare"
 BASE, NEW = DIR / "base.net.xml", DIR / "new.net.xml"
 SUFFIX = corrections.POCKET_SUFFIX
 root_id = lambda eid: eid[:-len(SUFFIX)] if eid.endswith(SUFFIX) else eid   # noqa: E731
+# 새 도로를 붙이려고 자른 도로의 앞 조각 (<도로 ID>_a) → 원래 도로로 본다
+cut_root = lambda eid: eid[:-2] if eid.endswith("_a") else eid   # noqa: E731
 
 
 def build():
@@ -99,11 +101,26 @@ def structure(base, new):
     # 차로 수·차로 방향을 고친 도로 (수정 목록 기준)
     data = corrections.load()
     edited = split_edges | {c["edge"] for k in ("lane_counts", "lane_moves") for c in data[k] if c["edge"] in eb}
+    # 새 도로 (add_links) 와 그 때문에 자른 도로
+    new_roads = {c["id"] for c in data["add_links"]} & set(en)
+    moved = {c["edge"] for c in data["lane_moves"]}
+    edited |= {cut_root(e) for e in set(en) - set(eb) if e.endswith("_a") and cut_root(e) in eb}
+    edited |= {c["from"] for c in data["add_links"] if c.get("replace") and c.get("from") in eb and c.get("from") in en}
     # 수정한 도로의 앞뒤 교차로 + 잘린 곳에 새로 생긴 점 = 바뀌어도 되는 곳
     expected = set()
     for eid in edited:
         expected |= {eb[eid].getFromNode().getID(), eb[eid].getToNode().getID(),
                      en[eid].getToNode().getID()}
+    # 삭제한 도로 (끊겨서 같이 빠진 조각 포함) 의 양 끝 교차로도 바뀌어도 된다
+    gone = set(eb) - set(en)
+    for eid in gone:
+        expected |= {eb[eid].getFromNode().getID(), eb[eid].getToNode().getID()}
+    for eid in new_roads:
+        expected |= {en[eid].getFromNode().getID(), en[eid].getToNode().getID()}
+    # 지운 회전 제한: 그 회전이 새로 생기는 것은 정상
+    freed = {(corrections.link_id(c["from"]), corrections.link_id(c["to"])) for c in data["remove_turns"]}
+    for f, _ in freed:
+        expected |= {e.getToNode().getID() for i, e in eb.items() if corrections.link_id(i) == f}
 
     rep = dict(split_edges=sorted(split_edges), edited_edges=sorted(edited), added_edges=sorted(set(en) - set(eb)),
                removed_edges=sorted(set(eb) - set(en)), changed_edges=[], movements=[], lane_links=[],
@@ -131,6 +148,14 @@ def structure(base, new):
     base_nodes = {n.getID() for n in base.getNodes()}
     for nid in sorted(set(mb) | set(mn)):
         lost, gained = mb[nid] - mn[nid], mn[nid] - mb[nid]
+        lost = {m for m in lost if m[0] not in gone and m[1] not in gone}   # 삭제한 도로로 가던 방향은 없어져야 맞다
+        # 새 도로로 가는 방향은 생겨야 맞고, 자른 도로 앞 조각(_a)은 원래 도로와 같은 방향이다
+        norm = {(cut_root(a), cut_root(b), d) for a, b, d in mn[nid]}
+        lost = {m for m in lost if m not in norm}
+        lost = {m for m in lost if m[0] not in moved}   # 차로 방향을 고쳐 일부러 없앤 회전
+        gained = {m for m in gained if m[0] not in new_roads and m[1] not in new_roads
+                  and (corrections.link_id(m[0]), corrections.link_id(m[1])) not in freed
+                  and (cut_root(m[0]), cut_root(m[1]), m[2]) not in mb[nid]}
         if nid not in base_nodes:   # 도로를 자른 곳에 새로 생긴 점 (원래 도로 → 포켓)
             continue
         if lost or gained:
@@ -167,6 +192,7 @@ def structure(base, new):
             if nid not in expected:
                 rep["unexpected"].append(f"교차로 {nid}: 모양이 {d:.1f} m 바뀜")
     rep["expected_nodes"] = sorted(expected)
+    rep["new_roads"] = sorted(new_roads)
     return rep
 
 
@@ -266,7 +292,9 @@ def report(rep):
     ok = not s["unexpected"] and not rep["new_warnings"] and not rep["connectivity"]["unreachable"]
     lines.append(f"# 도로망 수정 전후 비교 — {'✅ 이상 없음' if ok else '⚠ 확인 필요'}\n")
     lines.append(f"수정 목록: `yeouido/corrections.json` · 고친 도로 {len(s['edited_edges'])}곳 "
-                 f"({', '.join(s['edited_edges']) or '없음'}), 그중 포켓 {len(s['split_edges'])}곳\n")
+                 f"({', '.join(s['edited_edges']) or '없음'}), 그중 포켓 {len(s['split_edges'])}곳, "
+                 f"삭제한 도로 {len(s['removed_edges'])}개 ({', '.join(s['removed_edges']) or '없음'}), "
+                 f"새 도로 {len(s['new_roads'])}개 ({', '.join(s['new_roads']) or '없음'})\n")
     lines.append("## 1. 바뀐 범위\n")
     lines.append(f"- 새 도로 {len(s['added_edges'])}개 ({', '.join(s['added_edges'])}), "
                  f"없어진 도로 {len(s['removed_edges'])}개, 속성이 바뀐 도로 {len(s['changed_edges'])}개")

@@ -3,12 +3,13 @@
     python -m yeouido.build_net        (먼저 python -m yeouido.nodelink)
 
 신호 위치는 표준노드링크에 없으므로 OSM 신호 표시와 간선 교차로 기준으로 정한다.
-검수로 확인한 수정(차로 수, 회전 포켓, 차로별 방향)은 yeouido/corrections.json 에 적고 마지막에 덧붙인다.
+검수로 확인한 수정(도로 삭제·추가, 차로 수, 회전 포켓, 차로별 방향)은 yeouido/corrections.json 에 적고 마지막에 덧붙인다.
 
     python -m yeouido.build_net --no-corrections          # 수정 목록 없이 (원본 그대로)
     python -m yeouido.build_net --out 다른/경로/net.xml    # 다른 곳에 만들어 비교 (env 파일은 그대로)
 """
 import argparse
+import itertools
 import json
 import math
 import re
@@ -26,6 +27,10 @@ PLAIN = OUT / "plain"
 # 도시고속도로(올림픽대로·서부간선도로 등)와 고속국도는 뺀다. 측정값이 없어 교통량을
 # 정할 수 없고, 거기서 내려오는 램프는 범위 입구(차가 들어오고 나가는 곳)가 된다.
 EXCLUDED_RANKS = {"101", "102"}
+# 안양천 서쪽 목동의 목동동로·목동서로는 뺀다 (안양천로·목동교·양평교 등 안양천 쪽은 남긴다).
+# 노드링크 링크 ID 앞 4자리가 관리 구 코드(1140 = 양천구)이고, 이 범위에서는 안양천이 양천구와
+# 영등포구의 경계다. 이 두 길로만 이어지던 조각(골목 등)은 연결된 큰 도로망만 남기는 단계에서 같이 빠진다.
+EXCLUDED_WEST = ("1140", {"목동동로", "목동서로"})   # (구 코드, 도로명)
 # 1차로 골목길("○○로8길", "○○가길", 이름 없는 도로)은 뺀다. 전체 링크의 약 1/3이고,
 # 큰길에 붙은 골목 교차로가 교차로 모양을 복잡하게 만들어 교차로 안 충돌의 원인이 됐다.
 # 2차로 이상 골목길과 연결로(램프)는 남긴다.
@@ -44,6 +49,13 @@ JOIN_DIST = 30.0
 JOIN_SHORT = 20.0      # 이름과 상관없이 교차로 노드를 잇는 링크가 이보다 짧으면 합친다 (m)
 SIGNAL_SNAP = 35.0     # OSM 신호 표시를 교차로에 붙이는 최대 거리 (m)
 MIN_PIECE = 5.0        # 범위 경계에서 잘리고 남은 조각이 이보다 짧으면 버린다 (m)
+# 갈라지는 고가·지하차도와 옆 도로 벌리기 (separate_levels)
+LEVEL_GAP = 0.5        # 두 도로 차로 가장자리 사이에 둘 간격 (m)
+LEVEL_TAPER = 0.15     # 끝점(교차로)에서 1 m 멀어질 때마다 더 옮길 수 있는 양 (m)
+LEVEL_MAX_SHIFT = 3.0  # 한 도로를 옮기는 최대 거리 (m)
+LEVEL_STEP = 10.0      # 옮기는 양을 정하는 점 간격 (m)
+LEVEL_ITER = 6         # 양쪽에 도로가 붙은 곳은 한 번에 안 맞아서 몇 번 반복한다
+LEVEL_ZONE = 20.0      # 끝점에서 이 거리 안은 원래 붙어 있는 분기·합류 구간 — 여기서만 겹치면 옮기지 않는다 (m)
 # 표준노드링크 회전 제한 중 승용차가 그 방향으로 못 가는 것
 FORBIDDEN_TURNS = {"003", "002", "101", "102", "103"}   # 회전금지, 버스만, 좌·직·우 금지
 
@@ -85,7 +97,7 @@ def clip(links, nodes):
     """범위 밖으로 나가는 링크를 경계점에서 자른다. 잘린 끝에는 새 노드(경계 노드)를 만든다."""
     out, new_nodes = [], {}
     for l in links:
-        if l["rank"] in EXCLUDED_RANKS:
+        if l["rank"] in EXCLUDED_RANKS or (l["id"].startswith(EXCLUDED_WEST[0]) and l["name"] in EXCLUDED_WEST[1]):
             continue
         pts = l["shape"]
         flags = [_inside(*p) for p in pts]
@@ -257,8 +269,128 @@ def signal_nodes(links, nodes, clusters):
     return chosen
 
 
+def _level(link):
+    return link["type"] if link["type"] in ("001", "002") else "000"
+
+
+def _densify(shape, step):
+    """위경도 선에 step m 보다 긴 변이 없게 중간 점을 넣는다 (끝점·꺾인 점은 그대로)."""
+    out = [list(shape[0])]
+    for a, b in zip(shape, shape[1:]):
+        n = max(1, math.ceil(_dist(a, b) / step))
+        out += [[a[0] + (b[0] - a[0]) * k / n, a[1] + (b[1] - a[1]) * k / n] for k in range(1, n + 1)]
+    return out
+
+
+def _nearest(p, poly):
+    """점 p 에서 선 poly 까지 가장 가까운 점과 거리 (평면 m 좌표)."""
+    best = (math.inf, None)
+    for (ax, ay), (bx, by) in zip(poly, poly[1:]):
+        dx, dy = bx - ax, by - ay
+        L = dx * dx + dy * dy
+        t = 0.0 if L == 0 else max(0.0, min(1.0, ((p[0] - ax) * dx + (p[1] - ay) * dy) / L))
+        c = (ax + t * dx, ay + t * dy)
+        d = math.hypot(p[0] - c[0], p[1] - c[1])
+        if d < best[0]:
+            best = (d, c)
+    return best
+
+
+def separate_levels(links, clusters):
+    """같은 교차로에서 갈라지거나 합쳐지는 고가·지하차도와 옆 도로가 겹쳐 그려지지 않게 벌린다.
+
+    표준노드링크는 도로를 중심선 하나로 주는데, 지하차도와 바로 옆 지상 도로(또는 고가와 그 옆
+    도로)는 중심선 간격이 차로 폭보다 좁게 들어가 있어 SUMO에서 차로가 겹쳐 그려졌다. 서로 다른
+    도로라 차끼리 간섭은 없지만 화면에서는 한 덩어리처럼 보인다. 두 도로가 차로 폭 + LEVEL_GAP 만큼
+    떨어지게 각자 반씩 서로 반대쪽으로 옮긴다.
+      - 양 끝점(교차로)은 그대로 두고, 끝에서 멀어질수록 LEVEL_TAPER 기울기로 옮기는 양을 늘린다
+        → 갈라지는 곳의 연결 모양은 바뀌지 않는다.
+      - 한 도로를 LEVEL_MAX_SHIFT m 보다 많이 옮기지 않는다 (그보다 크게 겹치면 원본 배치 문제).
+      - 높이가 같은 도로끼리는 건드리지 않는다 (같은 높이에서 나란한 도로는 검수 대상).
+    돌려주는 값: (새 링크 목록, 옮긴 도로 수, 가장 많이 옮긴 거리 m)"""
+    group = {n: i for i, g in enumerate(clusters) for n in g}
+    key = lambda n: group.get(n, n)                                   # noqa: E731
+    ends = defaultdict(list)
+    for i, l in enumerate(links):
+        ends["from", key(l["from_node"])].append(i)
+        ends["to", key(l["to_node"])].append(i)
+    pairs = set()
+    for idx in ends.values():
+        for a, b in itertools.combinations(idx, 2):
+            A, B = links[a], links[b]
+            if _level(A) == _level(B):
+                continue
+            if key(A["from_node"]) == key(B["to_node"]) and key(A["to_node"]) == key(B["from_node"]):
+                continue                                              # 같은 도로의 반대 방향
+            pairs.add((min(a, b), max(a, b)))
+    if not pairs:
+        return links, 0, 0.0
+
+    kx, ky = 111320 * math.cos(math.radians((BBOX["south"] + BBOX["north"]) / 2)), 110540
+    to_m = lambda s: [(x * kx, y * ky) for x, y in s]                  # noqa: E731
+    involved = {i for p in pairs for i in p}
+    base = {i: _densify(links[i]["shape"], LEVEL_STEP) for i in involved}
+    width = {i: max(links[i]["lanes"], 1) * corrections.LANE_WIDTH for i in involved}
+    along, dist_along, along_len = {}, {}, {}
+    for i, s in base.items():
+        m = to_m(s)
+        acc = [0.0]
+        for a, b in zip(m, m[1:]):
+            acc.append(acc[-1] + math.hypot(b[0] - a[0], b[1] - a[1]))
+        dist_along[i], along_len[i] = acc, acc[-1]
+        along[i] = [min(LEVEL_MAX_SHIFT, LEVEL_TAPER * min(s_, acc[-1] - s_)) for s_ in acc]
+    # 분기·합류 구간 밖에서도 겹치는 쌍만 옮긴다. 갈라지는 곳 근처는 원래 붙어 있으므로, 거기까지
+    # 밀면 갈라지는 각도가 바뀌어 netconvert가 교차로를 더 크게 잡았다.
+    cur = {i: to_m(base[i]) for i in involved}
+
+    def overlaps(p, q):
+        need = (width[p] + width[q]) / 2 + LEVEL_GAP
+        L = along_len[p]
+        return any(_nearest(pt, cur[q])[0] < need for pt, s_ in zip(cur[p], dist_along[p])
+                   if LEVEL_ZONE <= s_ <= L - LEVEL_ZONE)
+    pairs = {(a, b) for a, b in pairs if overlaps(a, b) or overlaps(b, a)}
+    involved = {i for p in pairs for i in p}
+    total = {i: [0.0] * len(base[i]) for i in involved}
+    for _ in range(LEVEL_ITER):
+        cur = {i: to_m(corrections.offset_right(base[i], total[i])) for i in involved}
+        step = {i: [0.0] * len(base[i]) for i in involved}
+        for a, b in pairs:
+            need = (width[a] + width[b]) / 2 + LEVEL_GAP
+            for p, q in ((a, b), (b, a)):
+                pts = cur[p]
+                for k, pt in enumerate(pts):
+                    d, c = _nearest(pt, cur[q])
+                    if d >= need or d < 1e-6:
+                        continue
+                    t0, t1 = pts[max(k - 1, 0)], pts[min(k + 1, len(pts) - 1)]
+                    tx, ty = t1[0] - t0[0], t1[1] - t0[1]
+                    right = (c[0] - pt[0]) * ty - (c[1] - pt[1]) * tx > 0      # 상대 도로가 오른쪽
+                    step[p][k] += (need - d) / 2 * (-1 if right else 1)
+        moved = False
+        for i in involved:
+            for k, s_ in enumerate(step[i]):
+                if s_:
+                    lim = along[i][k]
+                    new = max(-lim, min(lim, total[i][k] + s_))
+                    moved |= abs(new - total[i][k]) > 0.01
+                    total[i][k] = new
+        if not moved:
+            break
+    if not pairs:
+        return links, 0, 0.0
+    out, n_moved, biggest = list(links), 0, 0.0
+    for i in involved:
+        far = max(map(abs, total[i]))
+        if far > 0.05:
+            out[i] = dict(links[i], shape=corrections.offset_right(base[i], total[i]))
+            n_moved += 1
+            biggest = max(biggest, far)
+    return out, n_moved, biggest
+
+
 def write_plain(links, nodes, clusters, tls_groups, turns, plain=PLAIN, splits=None, extra_con=()):
     """splits: {도로 ID: dict(pos, lanes, id_after)} — 도로 끝을 잘라 차로를 늘린다 (corrections).
+    포켓 구간은 바깥쪽으로만 넓힌다 (중앙선 쪽 가장자리 그대로).
     extra_con: 포켓·차로 방향 수정 도로의 차로별 연결 (corrections.connections).
     차로 수를 고친 도로(lanes0 있음)도 우선순위는 원래 차로 수로 정한다 (교차로 양보 관계 유지)."""
     splits = splits or {}
@@ -268,6 +400,12 @@ def write_plain(links, nodes, clusters, tls_groups, turns, plain=PLAIN, splits=N
     for nid, n in nodes.items():
         kind = "traffic_light" if nid in tls_nodes else "priority"
         nod.append(f'    <node id="{nid}" x="{n["lon"]:.7f}" y="{n["lat"]:.7f}" type="{kind}"/>')
+    by_id = {l["id"]: l for l in links}
+    for eid, sp in splits.items():   # 포켓이 시작하는 점 (자른 곳)
+        l = by_id[eid]
+        _, _, p = corrections._cut(l["shape"], max(corrections._length(l["shape"]) + sp["pos"], 1.0))
+        sp["node"] = f"{eid}{corrections.POCKET_SUFFIX}.start"
+        nod.append(f'    <node id="{sp["node"]}" x="{p[0]:.7f}" y="{p[1]:.7f}" type="priority"/>')
     for g in clusters:
         nod.append(f'    <join nodes="{" ".join(g)}"/>')
     nod.append("</nodes>")
@@ -275,23 +413,33 @@ def write_plain(links, nodes, clusters, tls_groups, turns, plain=PLAIN, splits=N
 
     prio = {"103": 12, "104": 10, "105": 9, "106": 9, "107": 7, "108": 6}
     edg = ["<edges>"]
-    for l in links:
-        shape = " ".join(f"{x:.7f},{y:.7f}" for x, y in l["shape"])
+
+    def edge_xml(l, eid, frm, to, lanes, shape):
+        pts = " ".join(f"{x:.7f},{y:.7f}" for x, y in shape)
         speed = max(l["max_speed"], 20) / 3.6
         name = l["name"].replace("&", "&amp;").replace('"', "&quot;")
-        head = (f'    <edge id="{l["id"]}" from="{l["from_node"]}" to="{l["to_node"]}" '
-                f'numLanes="{max(l["lanes"], 1)}" speed="{speed:.2f}" '
+        return (f'    <edge id="{eid}" from="{frm}" to="{to}" '
+                f'numLanes="{max(lanes, 1)}" speed="{speed:.2f}" '
                 f'priority="{prio.get(l["rank"], 6) + min(l.get("lanes0", l["lanes"]), 4)}" '
-                f'name="{name}" type="nl.{l["rank"]}.{l["type"]}" shape="{shape}" '
-                f'spreadType="center"')
+                + (f'name="{name}" ' if name else "") + f'type="nl.{l["rank"]}.{l["type"]}" shape="{pts}" '
+                f'spreadType="center"/>')
+
+    for l in links:
         s = splits.get(l["id"])
-        if s:
-            # 끝에서 -pos m 지점부터 차로를 늘린다 (어느 차로가 새 차로인지는 extra_con 의 연결로 정한다)
-            lanes = " ".join(str(i) for i in range(s["lanes"]))
-            edg.append(f'{head}>\n        <split pos="{s["pos"]:.1f}" lanes="{lanes}" '
-                       f'idBefore="{l["id"]}" idAfter="{s["id_after"]}"/>\n    </edge>')
-        else:
-            edg.append(head + "/>")
+        if not s:
+            edg.append(edge_xml(l, l["id"], l["from_node"], l["to_node"], l["lanes"], l["shape"]))
+            continue
+        # 포켓: 끝에서 -pos m 지점에서 도로를 둘로 나눠 뒤쪽(포켓 구간) 차로를 늘린다.
+        # 차로 수 수정과 같이 중앙선 쪽 가장자리는 그대로 두고 바깥쪽으로만 넓힌다
+        # (포켓 구간 도로선을 늘어난 폭의 절반만큼 오른쪽으로 → 반대 방향 도로를 파고들지 않음).
+        # 어느 차로가 새 차로인지는 extra_con 의 연결로 정한다.
+        length = corrections._length(l["shape"])
+        before, after, p = corrections._cut(l["shape"], max(length + s["pos"], 1.0))
+        mid = s["node"]
+        shift = (s["lanes"] - max(l["lanes"], 1)) * corrections.LANE_WIDTH / 2
+        after = corrections.offset_right(after, shift)
+        edg.append(edge_xml(l, l["id"], l["from_node"], mid, l["lanes"], before))
+        edg.append(edge_xml(l, s["id_after"], mid, l["to_node"], s["lanes"], after))
     edg.append("</edges>")
     (plain / "nl.edg.xml").write_text("\n".join(edg) + "\n")
 
@@ -412,38 +560,85 @@ def main(argv=None):
     links, nodes = clip(region["links"], region["nodes"])
     links, nodes = largest_component(links, nodes)
     clusters, links, nodes = join_clusters(nodes, links)
+    data = {} if args.no_corrections else corrections.load()
+    # 교차로 합치기: 노드링크가 나눠 놓은 교차로를 하나로 (사이 링크는 교차로 내부가 된다)
+    clusters, joined, skipped = corrections.join_junctions(clusters, nodes, data.get("join_junctions", []),
+                                                             _levels(links))
+    # 합친 교차로에서 원래 떨어져 있던 노드 사이 회전(connect): netconvert 는 교차로를 합칠 때 안쪽 링크로
+    # 이어져 있던 길만 회전으로 만들고 연결 파일의 연결도 지우므로, 두 노드 사이에 안쪽 링크를 넣어 준다
+    # (교차로 안이라 netconvert 가 합치면서 없애고, 진입로 → 진출로 회전만 남는다)
+    inner, more = corrections.join_connections(data.get("join_junctions", []), links, joined)
+    links += inner
+    skipped += more
+    # 도로 삭제: 교차로 묶음은 그대로 두고 빼며, 그 때문에 떨어져 나간 조각도 정리한다
+    links, removed, more = corrections.remove_links(links, data.get("remove_links", []), clusters,
+                                                       landmark_edges())
+    skipped += more
+    orphans = []
+    if removed:
+        group_of = {n: g[0] for g in clusters for n in g}
+        before = [l["id"] for l in links]
+        links, nodes = largest_component(links, nodes, group_of)
+        kept = {l["id"] for l in links}
+        orphans = [i for i in before if i not in kept]
+        clusters = [g for g in ([n for n in g if n in nodes] for g in clusters) if len(g) > 1]
     tls_groups = signal_nodes(links, nodes, clusters)
     import sumolib
 
-    data = {} if args.no_corrections else corrections.load()
-    links, skipped = corrections.lane_counts(links, data.get("lane_counts", []))
+    links, more = corrections.lane_counts(links, data.get("lane_counts", []))
+    skipped += more
+    # 새 도로: 차로 수 수정 뒤에 붙인다 (자른 도로 조각이 바뀐 차로 수·위치를 이어받게)
+    links, nodes, added, cut, more = corrections.add_links(links, nodes, data.get("add_links", []),
+                                                           landmark_edges())
+    skipped += more
+    # 회전 제한 지우기 (원래 링크 ID 기준이라 도로를 자르기 전 목록에서 뺀다)
+    turns, n_turns, more = corrections.remove_turns(region["turns"], data.get("remove_turns", []))
+    skipped += more
+    turns = [dict(t, to_link=cut.get(t["to_link"], t["to_link"])) for t in turns]
+    # 합친 교차로 안으로 들어간 링크의 회전 제한 → 진입로 → 진출로 회전 제한으로 옮김
+    carried = corrections.carry_turns(turns, links, joined)
+    turns += carried
+    # connect 로 넣은 안쪽 링크는 적은 회전만 쓰게 한다 (다른 진입로가 타고 가는 회전은 막음)
+    allowed = {(str(a), str(b)) for c in data.get("join_junctions", []) for a, b in c.get("connect", [])}
+    turns += corrections.inner_only_turns(links, joined, inner, allowed)
+    # 차로 수 수정으로 폭·위치가 바뀐 뒤에 벌린다 (포켓 계획은 옮긴 모양 기준)
+    links, n_sep, max_sep = separate_levels(links, clusters)
+    print(f"[net] 갈라지는 고가·지하차도와 옆 도로 벌리기: {n_sep}개 도로 (최대 {max_sep:.1f} m)")
     plans, more = corrections.turn_pockets(links, data.get("turn_pockets", []), landmark_edges())
     skipped += more
     moves = data.get("lane_moves", [])
     splits, extra_con = {}, []
-    if plans or moves:
+    # 고친 도로 (차로 수, 회전 제한 지우기, 새 도로): 차로 연결을 정리 규칙으로 다시 정한다 (corrections.connections)
+    edited = ({l["id"] for l in links if "lanes0" in l} | {c["from"] for c in data.get("remove_turns", [])}
+              | set(added) | set(cut.values()) | {c.get("to") for c in data.get("add_links", [])}) - {None}
+    if plans or moves or edited:
         # 차로별 연결을 정하려면 원래 차로마다 어디로 가는지 알아야 해서, 먼저 차로 수 수정만 넣고 만든다
-        write_plain(links, nodes, clusters, tls_groups, region["turns"], plain)
+        write_plain(links, nodes, clusters, tls_groups, turns, plain)
         net0 = plain / "no_corrections.net.xml"
         log0 = plain / "no_corrections.netconvert.log"
         log0.write_text("")
         _convert(plain, net0, log0)
-        extra_con, more = corrections.connections(sumolib.net.readNet(str(net0)), plans, moves)
+        extra_con, more = corrections.connections(sumolib.net.readNet(str(net0)), plans, moves, edited)
         skipped += more
         by_id = {l["id"]: l for l in links}
         splits = {eid: corrections.split_spec(by_id[eid], p) for eid, p in plans.items()}
-    n_del = write_plain(links, nodes, clusters, tls_groups, region["turns"], plain, splits, extra_con)
+    n_del = write_plain(links, nodes, clusters, tls_groups, turns, plain, splits, extra_con)
     print(f"[net] 표준노드링크 링크 {len(links)}개, 노드 {len(nodes)}개, "
           f"교차로 합치기 {len(clusters)}곳, 신호 교차로 {len(tls_groups)}곳, 회전 금지 {n_del}개")
     if not args.no_corrections:
         n_moves = len(moves) - sum(s["type"] == "lane_moves" for s in skipped)
-        print(f"[net] 수정 목록 (yeouido/corrections.json): 차로 수 "
+        print(f"[net] 수정 목록 (yeouido/corrections.json): 교차로 합침 {len(joined)}곳"
+              + (f" (안으로 들어간 링크의 회전 제한 {len(carried)}개 옮김)" if carried else "") + f", 회전 제한 지움 {n_turns}개, 도로 삭제 {len(removed)}개"
+              + (f" (끊겨서 같이 빠진 도로 {len(orphans)}개: {', '.join(orphans)})" if orphans else "")
+              + f", 새 도로 {len(added)}개" + (f" (자른 도로 {', '.join(cut)})" if cut else "")
+              + f", 차로 수 "
               f"{sum('lanes0' in l for l in links)}곳, 좌회전 포켓 "
               f"{sum(1 for p in plans.values() if p['left'])}곳, 우회전 포켓 "
               f"{sum(1 for p in plans.values() if p['right'])}곳, 차로 방향 {n_moves}곳 반영"
               + "".join(f"\n      건너뜀 {corrections.label(s)}: {s['why']}" for s in skipped))
     # 검수 도구가 읽는 건너뛴 항목 목록
     (plain / "skipped.json").write_text(json.dumps(skipped, ensure_ascii=False, indent=1) + "\n")
+    (plain / "removed.json").write_text(json.dumps(dict(removed=removed, orphans=orphans)) + "\n")
 
     log.write_text("")
     _convert(plain, net_out, log)
@@ -463,7 +658,7 @@ def main(argv=None):
                 break
             for eid, pos in fix.items():
                 splits[eid]["pos"] = pos
-            write_plain(links, nodes, clusters, tls_groups, region["turns"], plain, splits, extra_con)
+            write_plain(links, nodes, clusters, tls_groups, turns, plain, splits, extra_con)
             log.write_text("")
             _convert(plain, net_out, log)
     # 2차: 단순 합류 지점 → zipper 합류 (같은 도로망을 다시 읽어 ID 유지)
