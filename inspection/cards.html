@@ -1067,10 +1067,35 @@ function roadDetail(c) {
 }
 
 // ── 이동 ───────────────────────────────────────────────────
+// 모드(교차로 / 도로 구간)마다 마지막으로 본 카드를 기억한다 → 모드를 바꾸거나 새로고침해도 그 카드로 돌아간다
+const lastKey = m => `last-${m}`;
+function rememberCard(id) { try { localStorage.setItem(lastKey(mode), id); } catch (e) {} }
+function lastCard() {
+  let id = null;
+  try { id = localStorage.getItem(lastKey(mode)); } catch (e) {}
+  return findCard(id);
+}
+// 교차로를 합치거나 노드가 바뀌면 교차로 ID 가 달라진다 (예: …_#1more → …_#2more).
+// 같은 ID 가 없으면 노드 번호가 가장 많이 겹치는 교차로를 연다.
+function findCard(id) {
+  if (!id) return null;
+  const all = items();
+  const same = all.find(c => c.id === id);
+  if (same || mode === "road") return same || null;
+  const nums = new Set(id.match(/\d{6,}/g) || []);
+  let best = null, score = 0;
+  for (const c of all) {
+    const n = (c.id.match(/\d{6,}/g) || []).filter(x => nums.has(x)).length;
+    if (n > score) { best = c; score = n; }
+  }
+  return best;
+}
+
 function openCard(id) {
   cur = items().find(c => c.id === id);
   if (!cur) return;
   selArm = null;
+  rememberCard(id);
   history.replaceState(null, "", `#${mode === "road" ? "r" : "j"}:${encodeURIComponent(id)}`);
   document.getElementById("lane-info").style.display = "none";
   setShift(cur);
@@ -1181,7 +1206,9 @@ document.getElementById("export").onclick = exportCsv;
 document.querySelectorAll(".modes button[data-mode]").forEach(b => b.onclick = () => {
   if (b.dataset.mode === mode) return;
   setMode(b.dataset.mode);
-  if (view.length) openCard(view[0].id);
+  const last = lastCard();
+  if (last) openCard(last.id);
+  else if (view.length) openCard(view[0].id);
 });
 document.getElementById("ov-label").onchange = e => labels && (e.target.checked ? labels.addTo(photoMap) : photoMap.removeLayer(labels));
 ["opt-arrows", "opt-names"].forEach(id => document.getElementById(id).onchange = drawDetails);
@@ -1239,6 +1266,12 @@ Promise.all([fetch("out/cards.json", fresh).then(r => r.json()), fetch("out/net.
              fetch("out/net_new.geojson", { cache: "no-store" }).then(r => r.ok ? r.json() : null).catch(() => null),
              fetch("/api/corrections", fresh).then(r => r.json())])
   .then(([cardData, net, recJ, recR, netFixed, corrData]) => {
+    // 도로망에 포켓(<ID>_pocket)이 들어가 있으면 카드의 진입로 ID도 포켓 ID로 나온다. 화면은 경로선·정지선 차로·
+    // 수정 목록·기록을 모두 원래 도로 ID로 찾으므로 여기서 맞춘다 (안 맞추면 포켓 진입로의 경로가 안 보임)
+    for (const c of cardData.cards) {
+      for (const a of c.approaches) a.edge = rootEdge(a.edge);
+      for (const g of (c.geo && c.geo.lanes) || []) g.edge = rootEdge(g.edge);
+    }
     data = { junction: cardData.cards, road: cardData.roads || [] };
     records = { junction: recJ, road: recR };
     Object.assign(corr, corrData);
@@ -1253,7 +1286,8 @@ Promise.all([fetch("out/cards.json", fresh).then(r => r.json()), fetch("out/net.
     const hash = decodeURIComponent(location.hash.slice(1));
     const [kind, id] = hash.includes(":") && /^[jr]:/.test(hash) ? [hash[0], hash.slice(2)] : ["j", hash];
     setMode(kind === "r" ? "road" : "junction");
-    openCard(items().some(c => c.id === id) ? id : view[0].id);
+    const start = findCard(id) || lastCard();
+    openCard(start ? start.id : view[0].id);
     pollCorrections();
   })
   .catch(err => { document.getElementById("progress").textContent = "불러오기 실패: " + err; });

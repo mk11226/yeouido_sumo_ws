@@ -187,7 +187,7 @@ def _levels(links):
     return {n: ("000" if "000" in k else min(k)) for n, k in kinds.items()}
 
 
-def join_clusters(nodes, links):
+def join_clusters(nodes, links, keep=()):
     """같은 교차로에 속한 노드들을 하나로 묶는다 (union-find).
 
     표준노드링크는 한 교차로를 진입·진출 지점마다 노드로 나누고, 그 사이를 짧은 링크로
@@ -224,8 +224,10 @@ def join_clusters(nodes, links):
     # 1차로 골목길은 여기서 뺀다. 단, 교차로 내부를 잇는 링크는 이름이 "○○길"이어도 남긴다.
     # (영등포로터리는 고리 모양 노드 4개 중 한 변이 "영등포로53길"이라 먼저 지우면 교차로가
     #  둘로 쪼개져 서로 막는 교착이 생겼다)
+    # keep 에 적은 원본 링크(corrections keep_links)도 남긴다.
     links = [l for l in links
-             if not is_minor_alley(l) or group_of[l["from_node"]] == group_of[l["to_node"]]]
+             if not is_minor_alley(l) or group_of[l["from_node"]] == group_of[l["to_node"]]
+             or l["id"].split("_")[0] in keep]
     # 교차로 내부 링크는 그대로 두면 netconvert가 합치면서 지우고, 그 링크를 근거로 교차로를
     # 지나는 차로 연결을 만든다. (직접 지우면 연결 근거가 사라져 교차로 절반이 막혔다)
     # 합쳐질 교차로를 한 점으로 보고 연결된 큰 도로망만 남긴다.
@@ -559,8 +561,12 @@ def main(argv=None):
     region = json.loads(REGION.read_text())
     links, nodes = clip(region["links"], region["nodes"])
     links, nodes = largest_component(links, nodes)
-    clusters, links, nodes = join_clusters(nodes, links)
     data = {} if args.no_corrections else corrections.load()
+    keep = {str(c.get("edge")) for c in data.get("keep_links", [])}
+    clusters, links, nodes = join_clusters(nodes, links, keep)
+    kept = {l["id"].split("_")[0] for l in links}
+    missing = [dict(type="keep_links", edge=e, why="원본에 없거나 범위 밖, 또는 큰 도로망과 떨어져 있음")
+               for e in sorted(keep - kept)]
     # 교차로 합치기: 노드링크가 나눠 놓은 교차로를 하나로 (사이 링크는 교차로 내부가 된다)
     clusters, joined, skipped = corrections.join_junctions(clusters, nodes, data.get("join_junctions", []),
                                                              _levels(links))
@@ -569,7 +575,7 @@ def main(argv=None):
     # (교차로 안이라 netconvert 가 합치면서 없애고, 진입로 → 진출로 회전만 남는다)
     inner, more = corrections.join_connections(data.get("join_junctions", []), links, joined)
     links += inner
-    skipped += more
+    skipped += missing + more
     # 도로 삭제: 교차로 묶음은 그대로 두고 빼며, 그 때문에 떨어져 나간 조각도 정리한다
     links, removed, more = corrections.remove_links(links, data.get("remove_links", []), clusters,
                                                        landmark_edges())

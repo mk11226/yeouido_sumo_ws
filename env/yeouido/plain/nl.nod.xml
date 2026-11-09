@@ -718,6 +718,7 @@
     <node id="1180040202" x="126.9308583" y="37.5220462" type="traffic_light"/>
     <node id="1180007603" x="126.9376994" y="37.5229059" type="traffic_light"/>
     <node id="1160046901" x="126.8868085" y="37.5125400" type="traffic_light"/>
+    <node id="1160050001" x="126.8831674" y="37.5141421" type="priority"/>
     <node id="1180027102" x="126.9125231" y="37.5154657" type="priority"/>
     <node id="1180028203" x="126.8980293" y="37.5169055" type="traffic_light"/>
     <node id="1180141000" x="126.8965160" y="37.5248965" type="traffic_light"/>
@@ -1610,7 +1611,7 @@
     <node id="1160118802" x="126.8881558" y="37.5074187" type="priority"/>
     <node id="1180043906" x="126.9220329" y="37.5240460" type="traffic_light"/>
     <node id="1180035309" x="126.9102303" y="37.5203029" type="priority"/>
-    <node id="1180044401" x="126.9217097" y="37.5242163" type="priority"/>
+    <node id="1180044401" x="126.9217097" y="37.5242163" type="traffic_light"/>
     <node id="1180010602" x="126.9158652" y="37.5333825" type="priority"/>
     <node id="1190018401" x="126.9252642" y="37.5120084" type="priority"/>
     <node id="1180060002" x="126.8989877" y="37.5353004" type="traffic_light"/>
@@ -2013,17 +2014,38 @@
     <node id="1180028702_pocket.start" x="126.8913623" y="37.5248865" type="priority"/>
     <node id="1180040401_pocket.start" x="126.8971258" y="37.5362206" type="priority"/>
     <node id="1180022103_pocket.start" x="126.9180944" y="37.5209152" type="priority"/>
-    <node id="1180025002_pocket.start" x="126.9169252" y="37.5220957" type="priority"/>
+    <node id="1180025002_pocket.start" x="126.9169263" y="37.5220943" type="priority"/>
     <node id="1180033000_pocket.start" x="126.9186817" y="37.5271909" type="priority"/>
     <node id="1180017604_pocket.start" x="126.9293426" y="37.5170513" type="priority"/>
     <node id="1190007003_pocket.start" x="126.9283062" y="37.5164785" type="priority"/>
-    <node id="1180035200_pocket.start" x="126.9286479" y="37.5294244" type="priority"/>
+    <node id="1180035200_pocket.start" x="126.9286137" y="37.5294404" type="priority"/>
     <node id="1180060200_pocket.start" x="126.8990932" y="37.5112278" type="priority"/>
     <node id="1180018712_pocket.start" x="126.9406937" y="37.5207227" type="priority"/>
     <node id="1180021106_pocket.start" x="126.9398210" y="37.5206112" type="priority"/>
     <node id="1180024102_pocket.start" x="126.8855423" y="37.5224343" type="priority"/>
     <node id="1180025305_pocket.start" x="126.8862808" y="37.5229166" type="priority"/>
     <node id="1180028403_pocket.start" x="126.8856685" y="37.5235224" type="priority"/>
+    <node id="1160082600_pocket.start" x="126.8822319" y="37.5093925" type="priority"/>
+    <node id="1180068702_pocket.start" x="126.8991806" y="37.5163318" type="priority"/>
+    <node id="1180071800_pocket.start" x="126.8991912" y="37.5173701" type="priority"/>
+    <node id="1180012605_pocket.start" x="126.9109884" y="37.5063778" type="priority"/>
+    <node id="1180014019_pocket.start" x="126.9109790" y="37.5108845" type="priority"/>
+    <node id="1190004204_pocket.start" x="126.9319712" y="37.5126805" type="priority"/>
+    <node id="1190004609_pocket.start" x="126.9402590" y="37.5129812" type="priority"/>
+    <node id="1190006005_pocket.start" x="126.9395423" y="37.5134536" type="priority"/>
+    <node id="1190006300_pocket.start" x="126.9408624" y="37.5136429" type="priority"/>
+    <node id="1180001302_pocket.start" x="126.8822717" y="37.5166759" type="priority"/>
+    <node id="1180016500_pocket.start" x="126.8828809" y="37.5159825" type="priority"/>
+    <node id="1180030407_pocket.start" x="126.9288803" y="37.5246562" type="priority"/>
+    <node id="1180017705_pocket.start" x="126.9345253" y="37.5173357" type="priority"/>
+    <node id="1180049602_pocket.start" x="126.8942398" y="37.5070660" type="priority"/>
+    <node id="1180012302_pocket.start" x="126.8954505" y="37.5076687" type="priority"/>
+    <node id="1160082500_pocket.start" x="126.8822308" y="37.5092440" type="priority"/>
+    <node id="1160083402_pocket.start" x="126.8831984" y="37.5100761" type="priority"/>
+    <node id="1160274702_pocket.start" x="126.8831796" y="37.5092445" type="priority"/>
+    <node id="1160082900_pocket.start" x="126.8888941" y="37.5107249" type="priority"/>
+    <node id="1180087900_pocket.start" x="126.9242077" y="37.5231526" type="priority"/>
+    <node id="1180002300_pocket.start" x="126.9264320" y="37.5273381" type="priority"/>
     <join nodes="1160044402 1160044403"/>
     <join nodes="1180010801 1180060101 1180010803 1180010804 1180060102 1180010802"/>
     <join nodes="1190021003 1190021002 1190021004 1190021001"/>
@@ -2347,6 +2369,6 @@
     <join nodes="1180051004 1180051001"/>
     <join nodes="1180034708 1180034709"/>
     <join nodes="1180038706 1180038707 1180038708 1180038709 1180038801 1180038802 1180038803 1180038804"/>
-    <join nodes="1180043906 1180043907 1180043908 1180043909 1180044402"/>
+    <join nodes="1180043906 1180043907 1180043908 1180043909 1180044401 1180044402"/>
     <join nodes="1180047401 1180047402 1180047403 1180047404 1180047701 1180047702 1180047703 1180047704"/>
 </nodes>

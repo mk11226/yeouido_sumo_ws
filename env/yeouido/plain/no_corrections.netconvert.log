@@ -7,10 +7,6 @@ Warning: Shape for junction '1140109101' has distance 49.47 to its given positio
 Warning: Shape for junction '1180026200' has distance 32.64 to its given position.
 Warning: Shape for junction '1180051800' has distance 39.92 to its given position.
 Warning: Lane '1180073700_0' is not connected from any incoming edge at junction 'cluster_1180034601_1180034602_1180034603_1180034604'.
-Warning: Lane '1180088600_0' is not connected from any incoming edge at junction 'cluster_1180043906_1180043907_1180043908_1180043909_#1more'.
-Warning: Lane '1180088600_1' is not connected from any incoming edge at junction 'cluster_1180043906_1180043907_1180043908_1180043909_#1more'.
-Warning: Lane '1180088600_2' is not connected from any incoming edge at junction 'cluster_1180043906_1180043907_1180043908_1180043909_#1more'.
-Warning: Lane '1180088600_3' is not connected from any incoming edge at junction 'cluster_1180043906_1180043907_1180043908_1180043909_#1more'.
 Warning: Edge '1190040700' is not connected to outgoing edges at junction 'cluster_1190023001_1190023002'.
 Warning: The traffic light 'cluster_1140010901_1140010904' does not control any links; it will not be build.
 Warning: Could not build program '0' for traffic light 'cluster_1140010901_1140010904'
@@ -23,13 +19,13 @@ Warning: Could not build program '0' for traffic light 'cluster_1180033002_11800
 Warning: The traffic light 'cluster_1180040301_1180040302_1180040303_1180040304_#1more' does not control any links; it will not be build.
 Warning: Could not build program '0' for traffic light 'cluster_1180040301_1180040302_1180040303_1180040304_#1more'
 Warning: Speed of straight connection '1180088800_0->1180027702_0' reduced by 5.71 due to turning radius of 12.16 (length=4.70, angle=38.70).
-Warning: Speed of straight connection '1180036801_0->1180101600_0' reduced by 12.29 due to turning radius of 3.48 (length=1.07, angle=37.97).
+Warning: Speed of straight connection '1180036801_1->1180101600_0' reduced by 7.24 due to turning radius of 16.17 (length=6.16, angle=37.97).
 Warning: Speed of straight connection '1180105500_0->1180040102_0' reduced by 5.64 due to turning radius of 12.37 (length=5.31, angle=41.29).
 Warning: Intersecting left turns at junction 'cluster_1180036101_1180036102_1180036103_1180036104' from lane '1180024007_0' and lane '1180020904_0' (increase junction radius to avoid this).
 Warning: Intersecting left turns at junction 'cluster_1180036101_1180036102_1180036103_1180036104' from lane '1180080100_0' and lane '1180021702_0' (increase junction radius to avoid this).
 Warning: Intersecting left turns at junction 'cluster_1180044911_1180044912_1180044913_1180044914' from lane '1180091902_1' and lane '1180088406_0' (increase junction radius to avoid this).
 Warning: Intersecting left turns at junction 'cluster_1180044911_1180044912_1180044913_1180044914' from lane '1180028706_0' and lane '1180028605_0' (increase junction radius to avoid this).
-Warning: 8 total messages of type: Could not build program '%' for traffic light '%'
+Warning: 7 total messages of type: Could not build program '%' for traffic light '%'
 Warning: 7 total messages of type: Shape for junction '%' has distance % to its given position.
-Warning: 8 total messages of type: The traffic light '%' does not control any links; it will not be build.
+Warning: 7 total messages of type: The traffic light '%' does not control any links; it will not be build.
 Success.

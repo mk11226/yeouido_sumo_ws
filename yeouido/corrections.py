@@ -5,6 +5,8 @@
 수정 전과 같다 (python -m yeouido.build_net --no-corrections 와 같음).
 
 지금 지원하는 수정 (반영 순서대로)
+  keep_links  : 1차로 골목길 규칙(build_net.is_minor_alley)으로 빠지는 원본 링크 중 실제로 쓰이는 도로를 남긴다.
+                원본 노드링크 링크 ID 그대로 적는다 (예: 한쪽 방향만 2차로라 남고 반대 방향 1차로가 빠진 길).
   join_junctions: 노드링크가 둘 이상으로 나눈 교차로를 하나로 합친다. nodes 에 적은 노드가 속한
                 교차로 묶음(자동으로 합친 묶음)을 통째로 하나로 묶는다. 묶음 사이를 잇던 짧은 링크는
                 교차로 내부가 되어 도로로 남지 않고, netconvert 가 그 링크를 지나던 차로 연결을
@@ -49,7 +51,8 @@
                 to (선택): 그 차로가 갈 도로 ID 목록. 같은 방향(예: 좌회전)으로 갈 수 있는 도로가 둘 이상일 때
                 그중 일부로만 가게 한다. 목록에 없는 도로로 가던 연결은 뺀다.
 
-    {"join_junctions": [{"nodes": ["1180038801", "1180038706"], "connect": [["1180088700", "1180087100"]],
+    {"keep_links":     [{"edge": "1160017603", "why": "...", "checked": "..."}],
+     "join_junctions": [{"nodes": ["1180038801", "1180038706"], "connect": [["1180088700", "1180087100"]],
                          "why": "...", "checked": "..."}],
      "remove_turns": [{"from": "1180037605", "to": "1180035701", "why": "...", "checked": "..."}],
      "remove_links": [{"edge": "1140068200", "why": "...", "checked": "..."}],
@@ -76,7 +79,7 @@ import math
 from pathlib import Path
 
 CORRECTIONS = Path(__file__).resolve().parent / "corrections.json"
-KINDS = ("join_junctions", "remove_turns", "remove_links", "add_links", "lane_counts", "turn_pockets", "lane_moves")
+KINDS = ("keep_links", "join_junctions", "remove_turns", "remove_links", "add_links", "lane_counts", "turn_pockets", "lane_moves")
 POCKET_SUFFIX = "_pocket"
 MIN_REST = 10.0     # 포켓을 자르고 앞쪽에 남아야 하는 최소 길이 (m)
 MAX_LANES = 8
@@ -99,6 +102,8 @@ def label(s):
     """건너뛴 항목 → 사람이 읽는 이름."""
     if s["type"] == "join_junctions":
         return f"교차로 합치기 {s['edge']}"
+    if s["type"] == "keep_links":
+        return f"{s['edge']} 원본 도로 살리기"
     if s["type"] == "turn_pockets":
         return f"{s['edge']} {'좌회전' if s['side'] == 'left' else '우회전'} 포켓"
     if s["type"] == "lane_moves":
