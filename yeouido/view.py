@@ -4,7 +4,7 @@
     python -m yeouido.view --level night
     python -m yeouido.view --netedit       # 도로망을 netedit으로 열기
 
-게이트 A~F(AV 출발/도착 후보)는 빨간 글자, TOPIS 측정 도로는 파란 점으로 표시된다.
+랜드마크 1~7은 노란 핀, 게이트 A~F·ㄱ~ㄷ(AV 출발/도착 후보)는 빨간 글자, TOPIS 측정 도로는 파란 점으로 표시된다.
 창이 뜨면 ▶ 버튼을 눌러 재생. 상단 Delay(ms)로 재생 속도 조절.
 """
 import argparse
@@ -14,7 +14,7 @@ import subprocess
 from pathlib import Path
 
 from yeouido.build_context import LAND, PLACES, POLY
-from yeouido.config import LEVELS, NAME, NET, OUT, sumo_bin, sumo_home
+from yeouido.config import LANDMARK_NO, LEVELS, NAME, NET, OUT, sumo_bin, sumo_home
 from yeouido.landmarks import RESULT as LANDMARK_FILE
 from yeouido.map_counts import MAPPING
 
@@ -36,9 +36,9 @@ def write_markers():
     net = sumolib.net.readNet(str(NET))
     m = json.loads(MAPPING.read_text())
     lines = ["<additional>"]
-    for g, v in m["gates"].items():
+    for i, (g, v) in enumerate(m["gates"].items()):
         x, y = net.getEdge(v["in"]).getShape()[0]
-        lines.append(f'    <poi id="gate_{g}" type="{g} {v["name"]}" x="{x:.1f}" y="{y:.1f}" '
+        lines.append(f'    <poi id="gate_{i}" type="{g} {v["name"]}" x="{x:.1f}" y="{y:.1f}" '
                      f'color="1,0,0" layer="100" width="12" height="12"/>')
     for key, v in m["counts"].items():
         shape = net.getEdge(v["edge"]).getShape()
@@ -49,7 +49,8 @@ def write_markers():
     # 랜드마크: 정확한 위치에 큰 노란 핀 + 이름
     if LANDMARK_FILE.exists():
         for i, (name, lm) in enumerate(json.loads(LANDMARK_FILE.read_text()).items()):
-            lines.append(f'    <poi id="landmark_{i}" type="{name}" x="{lm["x"]}" y="{lm["y"]}" '
+            lines.append(f'    <poi id="landmark_{i}" type="{LANDMARK_NO.get(name, "")} {name}" '
+                         f'x="{lm["x"]}" y="{lm["y"]}" '
                          f'color="1,0.8,0" layer="110" width="25" height="25"/>')
     lines.append("</additional>")
     MARKERS.write_text("\n".join(lines) + "\n")

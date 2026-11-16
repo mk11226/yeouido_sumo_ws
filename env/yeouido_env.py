@@ -13,6 +13,7 @@ SumoHighwayEnv(env/sumo_env.py)를 상속한다. 행동(가감속 + 차선변경
             (env/mdp_config.py REWARD의 "여의도 전용")
 
     env.reset(options={"level": "rush", "origin": "영등포역", "destination": "IFC 서울"})
+    env.reset(options={"origin": "5", "destination": "A"})   # 번호로도 지정 (랜드마크 1~7, 게이트 A~F·ㄱ~ㄷ)
     env.change_destination("63빌딩")     # 주행 중 목적지 변경 → 경로 재탐색
 """
 import json
@@ -22,6 +23,7 @@ import numpy as np
 import gymnasium as gym
 
 from env.sumo_env import SumoHighwayEnv, traci, checkBinary
+from yeouido.config import LANDMARK_NO
 import sumolib
 
 import traci.constants as tc
@@ -48,6 +50,17 @@ def load_places(kind="landmarks"):
             # 게이트에서 출발하면 범위 안으로 들어오는 도로, 도착하면 나가는 도로를 쓴다.
             places[f"게이트 {g}"] = (v["in"], v["out"])
     return places
+
+
+def place_name(places, name):
+    """번호·글자로 쓴 출발·도착지를 places 의 이름으로. "5" → "영등포역", "A" → "게이트 A"."""
+    if not name or name in places:
+        return name
+    by_no = {no: n for n, no in LANDMARK_NO.items()}
+    for cand in (by_no.get(name), f"게이트 {name}"):
+        if cand in places:
+            return cand
+    raise KeyError(f"모르는 출발·도착지: {name!r} (가능: {', '.join(places)})")
 
 
 class YeouidoEnv(SumoHighwayEnv):
@@ -182,7 +195,7 @@ class YeouidoEnv(SumoHighwayEnv):
     def reset(self, seed=None, options=None):
         gym.Env.reset(self, seed=seed)
         options = dict(options or {})
-        fixed = {k: options.get(k) for k in ("origin", "destination")}
+        fixed = {k: place_name(self.places, options.get(k)) for k in ("origin", "destination")}
         # 평가 시험지: sumo_seed가 있으면 그 시드로 SUMO를 새로 켠다 (배경 차량의 무작위 움직임까지 재현).
         # SUMO 시드는 켤 때만 적용되므로, 켜 둔 SUMO를 재사용하는 학습과 달리 매번 다시 켠다.
         sumo_seed = options.get("sumo_seed")
@@ -321,6 +334,7 @@ class YeouidoEnv(SumoHighwayEnv):
         """주행 중 목적지를 바꾼다. SUMO가 현재 위치에서 새 목적지까지 경로를 다시 찾는다."""
         if self.ego_id not in traci.vehicle.getIDList():
             return False
+        name = place_name(self.places, name)
         d_edge, d_pos = self._place_edge(name, depart=False)
         try:
             traci.vehicle.changeTarget(self.ego_id, d_edge)

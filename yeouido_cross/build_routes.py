@@ -4,9 +4,9 @@
     python -m yeouido_cross.build_routes --gui    # 생성 후 sumo-gui로 경로 보기
 
 핀포인트 13곳
-  여의도 섬   랜드마크 4곳 (국회의사당, IFC 서울, 63빌딩, 여의도공원) + 북쪽 다리 게이트 A 서강·B 마포·C 원효대교
-  영등포 본토 랜드마크 3곳 (영등포역, 당산역, 노량진수산시장) + 경계 게이트 G 양화대교·H 오목교·I 거리공원
-  (샛강 다리 위 게이트 D·E·F는 섬도 본토도 아니라서 넣지 않는다)
+  여의도 섬   랜드마크 1~4 (국회의사당, IFC 서울, 63빌딩, 여의도공원) + 북쪽 다리 게이트 A 서강·B 마포·C 원효대교
+  영등포 본토 랜드마크 5~7 (영등포역, 당산역, 노량진수산시장) + 경계 게이트 D 양화대교·E 오목교·F 거리공원
+  (샛강 다리 위 게이트 ㄱ 여의교·ㄴ 서울교·ㄷ 여의2교는 섬도 본토도 아니라서 넣지 않는다)
 출발·도착 위치는 YeouidoEnv 와 같다: 랜드마크는 그 지점, 게이트는 출발 = 들어오는 도로 시작, 도착 = 나가는 도로 끝.
 
 여의도 섬과 영등포 본토는 샛강을 건너는 연결로 네 개로만 이어진다.
@@ -93,7 +93,7 @@ def places(net, lms, island):
                   e, min(max(lm["pos"], 0.0), max(e.getLength() - ORIGIN_MARGIN, 0.0)), e, lm["pos"])
     for g, v in json.loads(MAPPING.read_text())["gates"].items():
         if v["in"] in cut or v["out"] in cut:
-            continue                       # 샛강 다리 위 게이트 D·E·F
+            continue                       # 샛강 다리 위 게이트 ㄱ·ㄴ·ㄷ
         e_in, e_out = net.getEdge(v["in"]), net.getEdge(v["out"])
         out[f"게이트 {g}"] = (ISLAND if e_in in island else MAINLAND,
                              e_in, 0.0, e_out, e_out.getLength())

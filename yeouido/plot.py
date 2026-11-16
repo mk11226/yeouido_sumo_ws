@@ -1,4 +1,4 @@
-"""도로망·측정 도로·게이트(A~F)를 그림으로 저장 (env/yeouido/network.png).
+"""도로망·측정 도로·랜드마크(1~7)·게이트(A~F, 샛강 다리 ㄱ~ㄷ)를 그림으로 저장 (env/yeouido/network.png).
 
     python -m yeouido.plot
 
@@ -11,7 +11,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 
-from yeouido.config import NET, OUT, sumo_home  # noqa: E402
+from yeouido.config import LANDMARK_NO, NET, OUT, sumo_home  # noqa: E402
 from yeouido.build_context import POLY  # noqa: E402
 from yeouido.landmarks import RESULT as LANDMARK_FILE  # noqa: E402
 from yeouido.map_counts import MAPPING  # noqa: E402
@@ -92,7 +92,7 @@ def main():
         for name, v in json.loads(LANDMARK_FILE.read_text()).items():
             ax.plot(v["x"], v["y"], marker="*", ms=22, color="#f1c40f", mec="#7d3c98", mew=1.5,
                     zorder=7)
-            ax.annotate(name, (v["x"], v["y"]), xytext=(8, 8), textcoords="offset points",
+            ax.annotate(f"{LANDMARK_NO.get(name, '')} {name}", (v["x"], v["y"]), xytext=(8, 8), textcoords="offset points",
                         fontsize=12, weight="bold", color="#4a235a", zorder=8,
                         bbox=dict(boxstyle="round,pad=0.2", fc="white", ec="#7d3c98", alpha=0.85))
         ax.plot([], [], marker="*", ms=14, color="#f1c40f", mec="#7d3c98", ls="", label="랜드마크")

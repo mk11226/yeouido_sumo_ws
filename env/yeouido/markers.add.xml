@@ -1,13 +1,13 @@
 <additional>
-    <poi id="gate_A" type="A 서강대교" x="4133.5" y="3758.8" color="1,0,0" layer="100" width="12" height="12"/>
-    <poi id="gate_B" type="B 마포대교" x="5110.4" y="3241.1" color="1,0,0" layer="100" width="12" height="12"/>
-    <poi id="gate_C" type="C 원효대교" x="5549.3" y="2265.3" color="1,0,0" layer="100" width="12" height="12"/>
-    <poi id="gate_D" type="D 여의대방로(여의교)" x="4227.0" y="1200.0" color="1,0,0" layer="100" width="12" height="12"/>
-    <poi id="gate_E" type="E 경인로(서울교)" x="3127.9" y="1730.2" color="1,0,0" layer="100" width="12" height="12"/>
-    <poi id="gate_F" type="F 국회대로(여의2교)" x="2971.1" y="2467.5" color="1,0,0" layer="100" width="12" height="12"/>
-    <poi id="gate_G" type="G 양화대교" x="2158.5" y="4286.0" color="1,0,0" layer="100" width="12" height="12"/>
-    <poi id="gate_H" type="H 영등포로(오목교)" x="363.4" y="2143.4" color="1,0,0" layer="100" width="12" height="12"/>
-    <poi id="gate_I" type="I 경인로(거리공원)" x="347.6" y="229.3" color="1,0,0" layer="100" width="12" height="12"/>
+    <poi id="gate_0" type="A 서강대교" x="4133.5" y="3758.8" color="1,0,0" layer="100" width="12" height="12"/>
+    <poi id="gate_1" type="B 마포대교" x="5110.4" y="3241.1" color="1,0,0" layer="100" width="12" height="12"/>
+    <poi id="gate_2" type="C 원효대교" x="5549.3" y="2265.3" color="1,0,0" layer="100" width="12" height="12"/>
+    <poi id="gate_3" type="D 양화대교" x="2158.5" y="4286.0" color="1,0,0" layer="100" width="12" height="12"/>
+    <poi id="gate_4" type="E 영등포로(오목교)" x="363.4" y="2143.4" color="1,0,0" layer="100" width="12" height="12"/>
+    <poi id="gate_5" type="F 경인로(거리공원)" x="347.6" y="229.3" color="1,0,0" layer="100" width="12" height="12"/>
+    <poi id="gate_6" type="ㄱ 여의대방로(여의교)" x="4295.0" y="1311.5" color="1,0,0" layer="100" width="12" height="12"/>
+    <poi id="gate_7" type="ㄴ 경인로(서울교)" x="3128.3" y="1730.6" color="1,0,0" layer="100" width="12" height="12"/>
+    <poi id="gate_8" type="ㄷ 국회대로(여의2교)" x="2971.8" y="2466.1" color="1,0,0" layer="100" width="12" height="12"/>
     <poi id="count_C-05_유입" type="TOPIS C-05/유입" x="2114.3" y="4220.9" color="0,0.3,1" layer="99" width="6" height="6"/>
     <poi id="count_C-05_유출" type="TOPIS C-05/유출" x="2104.9" y="4228.3" color="0,0.3,1" layer="99" width="6" height="6"/>
     <poi id="count_C-06_유입" type="TOPIS C-06/유입" x="4144.0" y="3753.0" color="0,0.3,1" layer="99" width="6" height="6"/>
@@ -20,19 +20,19 @@
     <poi id="count_D-23_유출" type="TOPIS D-23/유출" x="362.9" y="258.6" color="0,0.3,1" layer="99" width="6" height="6"/>
     <poi id="count_D-25_유입" type="TOPIS D-25/유입" x="416.5" y="2132.4" color="0,0.3,1" layer="99" width="6" height="6"/>
     <poi id="count_D-25_유출" type="TOPIS D-25/유출" x="418.9" y="2144.2" color="0,0.3,1" layer="99" width="6" height="6"/>
-    <poi id="count_D-27_유입" type="TOPIS D-27/유입" x="3006.1" y="2486.6" color="0,0.3,1" layer="99" width="6" height="6"/>
-    <poi id="count_D-27_유출" type="TOPIS D-27/유출" x="2796.7" y="2377.3" color="0,0.3,1" layer="99" width="6" height="6"/>
-    <poi id="count_D-28_유입" type="TOPIS D-28/유입" x="3335.3" y="1885.1" color="0,0.3,1" layer="99" width="6" height="6"/>
-    <poi id="count_D-28_유출" type="TOPIS D-28/유출" x="3119.3" y="1741.8" color="0,0.3,1" layer="99" width="6" height="6"/>
-    <poi id="count_D-29_유입" type="TOPIS D-29/유입" x="4305.5" y="1332.4" color="0,0.3,1" layer="99" width="6" height="6"/>
+    <poi id="count_D-27_유입" type="TOPIS D-27/유입" x="3006.2" y="2486.5" color="0,0.3,1" layer="99" width="6" height="6"/>
+    <poi id="count_D-27_유출" type="TOPIS D-27/유출" x="2796.4" y="2378.0" color="0,0.3,1" layer="99" width="6" height="6"/>
+    <poi id="count_D-28_유입" type="TOPIS D-28/유입" x="3332.5" y="1883.0" color="0,0.3,1" layer="99" width="6" height="6"/>
+    <poi id="count_D-28_유출" type="TOPIS D-28/유출" x="3118.7" y="1743.4" color="0,0.3,1" layer="99" width="6" height="6"/>
+    <poi id="count_D-29_유입" type="TOPIS D-29/유입" x="4306.9" y="1331.6" color="0,0.3,1" layer="99" width="6" height="6"/>
     <poi id="count_D-29_유출" type="TOPIS D-29/유출" x="4170.9" y="1135.2" color="0,0.3,1" layer="99" width="6" height="6"/>
     <poi id="count_D-41_유입" type="TOPIS D-41/유입" x="2606.5" y="2985.3" color="0,0.3,1" layer="99" width="6" height="6"/>
     <poi id="count_D-41_유출" type="TOPIS D-41/유출" x="2645.9" y="2744.7" color="0,0.3,1" layer="99" width="6" height="6"/>
-    <poi id="landmark_0" type="국회의사당" x="3084.2" y="3042.6" color="1,0.8,0" layer="110" width="25" height="25"/>
-    <poi id="landmark_1" type="IFC 서울" x="4088.1" y="2290.4" color="1,0.8,0" layer="110" width="25" height="25"/>
-    <poi id="landmark_2" type="63빌딩" x="5337.6" y="1653.4" color="1,0.8,0" layer="110" width="25" height="25"/>
-    <poi id="landmark_3" type="영등포역" x="2461.8" y="1256.8" color="1,0.8,0" layer="110" width="25" height="25"/>
-    <poi id="landmark_4" type="당산역" x="2053.6" y="3369.9" color="1,0.8,0" layer="110" width="25" height="25"/>
-    <poi id="landmark_5" type="노량진수산시장" x="5127.0" y="1095.9" color="1,0.8,0" layer="110" width="25" height="25"/>
-    <poi id="landmark_6" type="여의도공원" x="3799.2" y="2384.9" color="1,0.8,0" layer="110" width="25" height="25"/>
+    <poi id="landmark_0" type="1 국회의사당" x="3084.2" y="3042.6" color="1,0.8,0" layer="110" width="25" height="25"/>
+    <poi id="landmark_1" type="2 IFC 서울" x="4088.1" y="2290.4" color="1,0.8,0" layer="110" width="25" height="25"/>
+    <poi id="landmark_2" type="3 63빌딩" x="5337.6" y="1653.4" color="1,0.8,0" layer="110" width="25" height="25"/>
+    <poi id="landmark_3" type="5 영등포역" x="2461.8" y="1256.8" color="1,0.8,0" layer="110" width="25" height="25"/>
+    <poi id="landmark_4" type="6 당산역" x="2053.6" y="3369.9" color="1,0.8,0" layer="110" width="25" height="25"/>
+    <poi id="landmark_5" type="7 노량진수산시장" x="5127.0" y="1095.9" color="1,0.8,0" layer="110" width="25" height="25"/>
+    <poi id="landmark_6" type="4 여의도공원" x="3799.2" y="2384.9" color="1,0.8,0" layer="110" width="25" height="25"/>
 </additional>
