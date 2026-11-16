@@ -1,10 +1,10 @@
 """핀포인트 두 곳을 골라 sumo-gui에서 그 경로를 주행한다. 주행 경로의 도로만 바탕색이 바뀐다.
 
-    python drive_route.py 1 B                    # 랜드마크 1(국회의사당) → 게이트 B(마포대교)
-    python drive_route.py 5 3 --level rush       # 출근 시간대 교통
-    python drive_route.py 영등포역 "게이트 A"     # 이름으로도 지정
-    python drive_route.py 1 B --overview         # ego를 따라가지 않고 도로망 전체를 보여 줌
-    python drive_route.py --list                 # 고를 수 있는 핀포인트 목록
+    python -m yeouido_cross.drive_route 1 B                    # 랜드마크 1(국회의사당) → 게이트 B(마포대교)
+    python -m yeouido_cross.drive_route 5 3 --level rush       # 출근 시간대 교통
+    python -m yeouido_cross.drive_route 영등포역 "게이트 A"     # 이름으로도 지정
+    python -m yeouido_cross.drive_route 1 B --overview         # ego를 따라가지 않고 도로망 전체를 보여 줌
+    python -m yeouido_cross.drive_route --list                 # 고를 수 있는 핀포인트 목록
 
 핀포인트 13곳 (sumo-gui에 항상 표시)
   랜드마크 1~7  1 국회의사당 · 2 IFC 서울 · 3 63빌딩 · 4 여의도공원 / 5 영등포역 · 6 당산역 · 7 노량진수산시장
@@ -31,9 +31,10 @@ from train import REWARD
 from yeouido.build_context import LAND
 from yeouido.config import LANDMARK_NO
 
-BASE = os.path.dirname(os.path.abspath(__file__))
-ROUTES = os.path.join(BASE, "yeouido_cross", "output", "routes.json")
-GUI_DIR = os.path.join(BASE, "yeouido_cross", "output")
+HERE = os.path.dirname(os.path.abspath(__file__))     # yeouido_cross/
+BASE = os.path.dirname(HERE)                          # 저장소 루트
+ROUTES = os.path.join(HERE, "output", "routes.json")
+GUI_DIR = os.path.join(HERE, "output")
 PINS = os.path.join(GUI_DIR, "pins.add.xml")
 VIEW = os.path.join(GUI_DIR, "route.view.xml")
 
@@ -223,7 +224,7 @@ def main():
         no = {**{n: t for n, t in LANDMARK_NO.items()}, **{n: n.split()[-1] for n in names if n.startswith("게이트")}}
         print("핀포인트:", "  ".join(f"{no[n]}={n}" for n in sorted(names, key=lambda n: (n.startswith("게이트"), no[n]))))
         if not args.list:
-            ap.error("출발지와 도착지를 주세요. 예: python drive_route.py 1 B")
+            ap.error("출발지와 도착지를 주세요. 예: python -m yeouido_cross.drive_route 1 B")
         return
 
     places = {n: None for n in names}             # 13곳만 허용 (ㄱ~ㄷ 제외)

@@ -17,7 +17,7 @@
 
 ```bash
 conda activate sumo-rl
-python drive_panel.py
+python -m yeouido_cross.drive_panel
 ```
 
 sumo-gui와 조절 창이 같이 뜬다.
@@ -35,11 +35,11 @@ sumo-gui와 조절 창이 같이 뜬다.
 자주 쓰는 옵션:
 
 ```bash
-python drive_panel.py --level rush     # 출근 교통으로 시작
-python drive_panel.py --start 1 B      # 켜자마자 1 → B 주행
+python -m yeouido_cross.drive_panel --level rush     # 출근 교통으로 시작
+python -m yeouido_cross.drive_panel --start 1 B      # 켜자마자 1 → B 주행
 ```
 
-조절 창 없이 경로 하나만 볼 때: `python drive_route.py 1 B` (`--level rush`, `--list` 등은 `--help` 참고).
+조절 창 없이 경로 하나만 볼 때: `python -m yeouido_cross.drive_route 1 B` (`--level rush`, `--list` 등은 `--help` 참고).
 
 ## 경로 (`routes.json`)
 
@@ -66,5 +66,5 @@ python -m yeouido_cross.build_routes --gui    # 만든 뒤 sumo-gui로 전체 �
   - 2 → 7: 서울교에서 노량진 쪽으로 바로 꺾는 길이 실제로도 없음 (정상).
   - A → 7: 여의2교 서쪽 끝 좌회전이 막혀 있음 (실제 가능 여부 확인 중).
 - 학습·평가 환경(`YeouidoEnv`)은 이 경로 파일이 아니라 SUMO가 찾은 가장 빠른 길로 달린다.
-  `drive_panel.py` / `drive_route.py`만 이 파일의 경로를 탄다.
+  `drive_panel` / `drive_route`만 이 파일의 경로를 탄다.
 - 실행할 때 생기는 `output/pins/`, `pins.add.xml`, `route.view.xml`, `panel.sumocfg`는 커밋하지 않는다.

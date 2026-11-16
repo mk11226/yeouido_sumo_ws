@@ -1,8 +1,8 @@
 """sumo-gui + 조절 창: 교통 시간대 전환 버튼과 경로 주행 입력.
 
-    python drive_panel.py                 # 주간 교통으로 시작
-    python drive_panel.py --level rush
-    python drive_panel.py --start 1 B     # 켜자마자 1 → B 주행
+    python -m yeouido_cross.drive_panel                 # 주간 교통으로 시작
+    python -m yeouido_cross.drive_panel --level rush
+    python -m yeouido_cross.drive_panel --start 1 B     # 켜자마자 1 → B 주행
 
 sumo-gui 옆에 조절 창이 뜬다.
   교통 시간대   [심야 03시] [주간 12시] [출근 08시]
@@ -22,7 +22,7 @@ import os
 import tkinter as tk
 from bisect import bisect_right
 
-import drive_route as dr
+from yeouido_cross import drive_route as dr
 from env.road_config import ROAD, EGO, TRAFFIC
 from env.mdp_config import SIMULATION, OBSERVATION, ACTION
 from env import road_builder

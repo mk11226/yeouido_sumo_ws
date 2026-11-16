@@ -94,10 +94,10 @@ python3 -m unittest discover -s tests -p 'test_skku*.py' -v
 | `env/skku_commute/` | 원본 지도, 현재 SUMO 환경, 보정 기록 |
 | `results/skku_commute/` | 주행 결과, 검증 자료, 단계별 환경·코드 스냅샷 |
 | `tests/test_skku_buildings.py` | 건물 형상 처리 검사 |
-| [yeouido_cross/](yeouido_cross/README.md) | 여의도·영등포 핀포인트 13곳 경로(156개) |
+| [yeouido_cross/](yeouido_cross/README.md) | 여의도·영등포 핀포인트 13곳 경로(156개)와 주행 도구 |
 | [eval_set/](eval_set/README.md) | 여의도 평가 시험지 150문제 |
-| `drive_panel.py` | 여의도 sumo-gui + 조절 창 (시간대 버튼, 출발·도착 입력해 경로 주행) — [사용법](yeouido_cross/README.md#경로-주행-보기) |
-| `drive_route.py` | 여의도 경로 하나를 sumo-gui에서 주행 (명령줄) |
+| `yeouido_cross/drive_panel.py` | 여의도 sumo-gui + 조절 창 (시간대 버튼, 출발·도착 입력해 경로 주행): `python -m yeouido_cross.drive_panel` |
+| `yeouido_cross/drive_route.py` | 여의도 경로 하나를 sumo-gui에서 주행 (명령줄): `python -m yeouido_cross.drive_route 1 B` |
 
 ## 여의도 평가 시험지
 
