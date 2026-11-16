@@ -21,6 +21,7 @@ from yeouido.build_context import POLY
 from yeouido.build_demand import VTYPES
 from yeouido.config import END, LEVELS, NET, OUT, sumo_home
 from yeouido.view import GUI_SETTINGS, MARKERS, gui_binary, write_gui_settings, write_markers
+from yeouido.visualization import VISUAL_NET
 
 STEP_LENGTH = 0.5        # env/mdp_config.py SIMULATION["step_length"] 와 동일
 STEPS_PER_TICK = 2       # 조절 창이 한 번 갱신될 때마다 진행할 스텝 수
@@ -57,7 +58,7 @@ class Live:
 
         write_markers()
         write_gui_settings()
-        traci.start([gui_binary("sumo-gui"), "-n", str(NET), "-r", str(VTYPES),
+        traci.start([gui_binary("sumo-gui"), "-n", str(VISUAL_NET), "-r", str(VTYPES),
                      "--additional-files", f"{POLY},{MARKERS}",
                      "--gui-settings-file", str(GUI_SETTINGS),
                      "--step-length", str(STEP_LENGTH), "--start",

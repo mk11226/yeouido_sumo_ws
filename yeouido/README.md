@@ -38,6 +38,18 @@ python -m yeouido.view --level rush        # sumo-gui, 한 시간대 고정 (nig
 일정표를 따르고, 이미 달리는 차는 그대로 빠져나간다 (출근 → 심야로 바꾸면 정체가 서서히 풀린다).
 재생 속도는 sumo-gui 상단 Delay(ms) 로 조절한다.
 
+### 지하차도 색상 표시
+
+`yeouido.view`와 `yeouido.live`는 지하차도(표준노드링크 도로 유형 `002`)를 밝은 회색,
+일반 도로를 짙은 회색으로 표시한다. SUMO 1.27.1에서 확인했다.
+실행할 때 `yeouido.visualization`이 원본에서 색상용 파라미터만 추가한
+`env/yeouido/yeouido.underpass.net.xml`과 `underpass_visualization.json`을 재생성한다.
+원본 도로망의 차로 연결·신호·형상과 교통 수요는 이 표시 기능으로 변경되지 않는다.
+큰 교차로 도형이 지하차도를 가리면 `Ctrl+J`로 도형을 숨겨 내부 차로를 확인할 수 있다.
+
+현재 `final`의 `DEMAND_SCALE = 1.0`과 세 시간대 차량 파일을 그대로 사용한다.
+추가로 `--scale 4`를 주면 실측 100%를 넘어 중복 증폭되므로 사용하지 않는다.
+
 | 단계 | 모듈 | 결과 (`env/yeouido/`) |
 |---|---|---|
 | 다운로드 | `download` | TOPIS 엑셀, OSM 신호 위치, OSM 주변 환경 |

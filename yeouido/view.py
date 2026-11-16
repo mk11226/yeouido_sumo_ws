@@ -13,10 +13,11 @@ import os
 import subprocess
 from pathlib import Path
 
-from yeouido.build_context import LAND, PLACES, POLY
+from yeouido.build_context import PLACES, POLY
 from yeouido.config import LEVELS, NAME, NET, OUT, sumo_bin, sumo_home
 from yeouido.landmarks import RESULT as LANDMARK_FILE
 from yeouido.map_counts import MAPPING
+from yeouido.visualization import VISUAL_NET, prepare_underpass_view
 
 MARKERS = OUT / "markers.add.xml"
 GUI_SETTINGS = OUT / "gui.view.xml"
@@ -57,11 +58,7 @@ def write_markers():
 
 def write_gui_settings():
     """배경을 땅색으로, 핀(POI) 이름을 크게 보이게 하는 sumo-gui 설정."""
-    GUI_SETTINGS.write_text(
-        '<viewsettings>\n'
-        f'    <background backgroundColor="{LAND}"/>\n'
-        '    <pois poiType_show="1" poiType_size="60" poiType_color="255,0,0"/>\n'
-        '</viewsettings>\n')
+    prepare_underpass_view(GUI_SETTINGS)
 
 
 def main(argv=None):
@@ -76,6 +73,7 @@ def main(argv=None):
     write_markers()
     write_gui_settings()
     subprocess.run([gui_binary("sumo-gui"), "-c", str(OUT / f"{NAME}_{args.level}.sumocfg"),
+                    "--net-file", str(VISUAL_NET),
                     "--additional-files", f"{POLY},{MARKERS}", "--step-length", "0.5",
                     "--gui-settings-file", str(GUI_SETTINGS)])
 

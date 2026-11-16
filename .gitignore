@@ -12,3 +12,7 @@ env/yeouido/source/nodelink/*.zip
 
 # 검수 도구: 도로망에서 다시 만드는 결과물 (python -m inspection.serve 가 자동 생성)
 inspection/out/
+
+# Generated underpass display copy (rebuilt by yeouido.view / yeouido.live)
+env/yeouido/yeouido.underpass.net.xml
+env/yeouido/underpass_visualization.json
