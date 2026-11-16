@@ -16,9 +16,13 @@
 ## 주행해 보기
 
 ```bash
+cd bmil_ws                          # 저장소 맨 위 폴더에서 실행
 conda activate sumo-rl
 python -m yeouido_cross.drive_panel
 ```
+
+> `yeouido_cross/` 안에 들어가서 `python drive_panel.py` 로 실행하면 다른 폴더의 코드를 못 찾아 오류가 난다.
+> 항상 저장소 맨 위 폴더에서 `python -m yeouido_cross.…` 로 실행한다.
 
 sumo-gui와 조절 창이 같이 뜬다.
 
