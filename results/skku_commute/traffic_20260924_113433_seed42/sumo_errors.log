@@ -1,6 +1,0 @@
-Warning: Unused states in tlLogic 'cluster_11356881998_11521951182_11521951191_4683581782', program '0' in phase 0 after tl-index -1
-Warning: Vehicle 'flow_feeder_24.0' performs emergency braking on lane '507449310#0_0' with decel=9.00, wished=4.50, severity=1.00, time=85.00.
-Warning: Vehicle 'flow_corridor_00.0' performs emergency braking on lane '1069861704_0' with decel=9.00, wished=4.50, severity=1.00, time=128.00.
-Warning: Vehicle 'flow_feeder_14.9' performs emergency braking on lane ':13372915938_5_1' with decel=9.00, wished=4.50, severity=1.00, time=355.00.
-Warning: Vehicle 'flow_corridor_01.12' performs emergency braking on lane '-477565914#1_1' with decel=9.00, wished=4.50, severity=1.00, time=489.00.
-Warning: Vehicle 'flow_corridor_00.17' performs emergency braking on lane '1458158607_1' with decel=9.00, wished=4.50, severity=1.00, time=726.50.

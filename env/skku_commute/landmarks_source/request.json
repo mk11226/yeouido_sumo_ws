@@ -1,5 +1,0 @@
-{
-  "query": "[out:json][timeout:60];(node[railway=station](37.28,126.94,37.60,127.04);way[water=river](37.50,126.96,37.54,127.02););out geom;",
-  "url": "https://overpass-api.de/api/interpreter",
-  "retrieved_utc": "2026-09-24T11:09:28.251519+00:00"
-}

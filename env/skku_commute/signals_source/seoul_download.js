@@ -1,1 +1,0 @@
-Highcharts.SVGRenderer.prototype.symbols.download=function(o,r,L,e){return["M",o+.5*L,r,"L",o+.5*L,r+.7*e,"M",o+.3*L,r+.5*e,"L",o+.5*L,r+.7*e,"L",o+.7*L,r+.5*e,"M",o,r+.9*e,"L",o,r+e,"L",o+L,r+e,"L",o+L,r+.9*e]};

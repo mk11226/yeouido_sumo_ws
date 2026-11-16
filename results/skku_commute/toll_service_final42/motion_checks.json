@@ -1,7 +1,0 @@
-{
-  "samples": 5723,
-  "vehicles": 7,
-  "maximum_step_distance_m": 11.039166886253087,
-  "discontinuities": [],
-  "criterion": "Consecutive XY displacement <= max(previous_speed,current_speed)*delta_time + 2m; measured trace vehicles only"
-}

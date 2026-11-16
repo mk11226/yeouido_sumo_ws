@@ -1,6 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<additional>
-  <variableSpeedSign id="uiwang_toll_capacity" lanes="489526373-AddedOffRampEdge_0 489526373-AddedOffRampEdge_1 489526373-AddedOffRampEdge_2 489526373-AddedOffRampEdge_3 489526373-AddedOnRampEdge_0 489526373-AddedOnRampEdge_1 489526373-AddedOnRampEdge_2 489526373-AddedOnRampEdge_3 489526373_0 489526373_1 489526373_2 489526373_3 507449308_0 507449308_1 507449308_2 507449308_3 507449308_4 507449308_5 :489526373-AddedOffRampNode_0_0 :489526373-AddedOffRampNode_0_1 :489526373-AddedOffRampNode_0_2 :489526373-AddedOffRampNode_0_3 :489526373-AddedOnRampNode_0_0 :489526373-AddedOnRampNode_0_1 :489526373-AddedOnRampNode_0_2 :489526373-AddedOnRampNode_0_3 :4920566679_2_0 :4920566679_2_1 :4920566679_2_2 :4920566679_2_3 :4920566679_2_4 :4920566679_2_5 :729262282_1_0 :729262282_1_1 :729262282_1_2 :729262282_1_3 :729262282_1_4 :729262282_1_5">
-    <step time="0" speed="8.333333333333334" />
-  </variableSpeedSign>
-</additional>

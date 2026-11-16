@@ -1,8 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<viewsettings>
-  <scheme name="SKKU campus commute">
-    <vehicles vehicleMode="0" vehicleQuality="2" vehicle_minSize="0" vehicle_exaggeration="1" vehicle_constantSize="false" showBlinker="true" />
-    <polys polyName_show="false" polyType_show="false" polyUseCustomLayer="false" poly_minSize="0" />
-    <pois poiName_show="false" poiType_show="false" poi_minSize="0" poi_exaggeration="1" />
-  </scheme>
-</viewsettings>
