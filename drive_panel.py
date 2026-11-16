@@ -26,7 +26,8 @@ import drive_route as dr
 from env.road_config import ROAD, EGO, TRAFFIC
 from env.mdp_config import SIMULATION, OBSERVATION, ACTION
 from env import road_builder
-from env.yeouido_env import DATA, make_env, place_name, traci
+from env.yeouido_env import CONTEXT_RADIUS, DATA, make_env, place_name, traci
+import traci.constants as tc
 from train import REWARD
 from yeouido.config import END, LEVELS
 from yeouido.live import load_schedule
@@ -85,6 +86,8 @@ class Panel:
 
         env.level = level
         env._start_sumo()
+        # sumo-gui가 응답하지 않으면(창이 멈추거나 닫힘) 조절 창이 같이 멈추지 않도록 30초에서 끊는다
+        traci.getConnection()._socket.settimeout(30)
         self._load_level(level)
         dr.highlight([])                          # 화면 설정(경로 색칠 방식) 적용
         dr.fit_pins()
@@ -233,6 +236,13 @@ class Panel:
             self.drive_text = f"{result}: {self.route_text}  ({self.steps * env.step_length:.0f}초)"
             self.driving = False
             print(f"[panel] {self.drive_text}", flush=True)
+            # 목적지에 닿으면 env가 ego를 지우는데, ego에 걸어 둔 주변 차량 구독이 남아 다음 스텝에
+            # SUMO가 "Vehicle 'ego' is not known" 오류로 시뮬레이션을 끝낸다("Simulation ended" 창).
+            # 주행이 끝나도 교통은 계속 돌리므로 여기서 구독을 지운다.
+            try:
+                traci.vehicle.unsubscribeContext(env.ego_id, tc.CMD_GET_VEHICLE_VARIABLE, CONTEXT_RADIUS)
+            except traci.TraCIException:
+                pass
 
     # ── 진행 ───────────────────────────────────────────────
     def tick(self):
