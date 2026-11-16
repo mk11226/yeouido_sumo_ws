@@ -94,9 +94,29 @@ python3 -m unittest discover -s tests -p 'test_skku*.py' -v
 | `env/skku_commute/` | 원본 지도, 현재 SUMO 환경, 보정 기록 |
 | `results/skku_commute/` | 주행 결과, 검증 자료, 단계별 환경·코드 스냅샷 |
 | `tests/test_skku_buildings.py` | 건물 형상 처리 검사 |
-| [yeouido_cross/](yeouido_cross/README.md) | 여의도·영등포 핀포인트 13곳 경로(156개), 평가 시험지(150문제) |
+| [yeouido_cross/](yeouido_cross/README.md) | 여의도·영등포 핀포인트 13곳 경로(156개) |
 | `drive_panel.py` | 여의도 sumo-gui + 조절 창 (시간대 버튼, 출발·도착 입력해 경로 주행) — [사용법](yeouido_cross/README.md#경로-주행-보기) |
 | `drive_route.py` | 여의도 경로 하나를 sumo-gui에서 주행 (명령줄) |
+
+## 여의도 평가 시험지
+
+모든 모델(선생님 정책·BC·DAgger·PPO)을 **같은 150문제**로 비교하기 위한 고정 목록이다 (50쌍 × 시간대 3개).
+문제마다 교통 시드가 정해져 있어서 몇 번을 돌려도 배경 차량까지 똑같이 움직인다.
+파일은 `yeouido_cross/output/eval_set.json`, 만드는 코드는 `yeouido_cross/build_eval_set.py`.
+
+```bash
+# 모델 평가
+python test.py results/<run>/model.pt --eval-set yeouido_cross/output/eval_set.json --nogui --workers 4
+# 선생님 정책(기준선) 평가
+python test.py --expert --eval-set yeouido_cross/output/eval_set.json --nogui --workers 4
+# 결과 여러 개 비교
+python -m utils.eval_report results/sumo_expert/eval_set_results.json results/<run>/eval_set_results.json
+# 도로망을 고친 뒤 시험지 다시 만들기
+python -m yeouido_cross.build_eval_set --check
+```
+
+선생님 정책(`algorithms/sumo_expert.py`) 기준선: 충돌 2.0% · 완주 98.0% · 평균 35.7 km/h (2026-11-16,
+교차로 양보 수정 후. 수정 전 충돌 3.3%).
 
 ## 구축 기록
 

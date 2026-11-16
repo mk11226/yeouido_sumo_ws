@@ -1,7 +1,7 @@
 # 여의도·영등포 경로와 주행 보기
 
 여의도·영등포 지도에 **출발·도착 후보 13곳(핀포인트)**을 정해 두고,
-그 사이 모든 경로와 평가용 고정 문제를 만든다. 원하는 경로를 sumo-gui에서 바로 주행해 볼 수 있다.
+그 사이 모든 경로를 만든다. 원하는 경로를 sumo-gui에서 바로 주행해 볼 수 있다.
 
 ## 핀포인트 13곳
 
@@ -59,27 +59,9 @@ python -m yeouido_cross.build_routes --gui    # 만든 뒤 sumo-gui로 전체 �
 | `detour` | 도로 길이 ÷ 직선거리. 크면 가까운데 돌아가는 경로 |
 | `edges` | 지나는 도로 목록 |
 
-## 평가 시험지 (`eval_set.json`)
-
-모든 모델을 **같은 150문제**로 비교하기 위한 고정 목록 (50쌍 × 시간대 3개).
-문제마다 교통 시드가 정해져 있어서, 몇 번을 돌려도 배경 차량까지 똑같이 움직인다.
-
-```bash
-# 모델 평가
-python test.py results/<run>/model.pt --eval-set yeouido_cross/output/eval_set.json --nogui --workers 4
-# 선생님 정책(기준선) 평가
-python test.py --expert --eval-set yeouido_cross/output/eval_set.json --nogui --workers 4
-# 결과 여러 개 비교
-python -m utils.eval_report results/sumo_expert/eval_set_results.json results/<run>/eval_set_results.json
-```
-
-선생님 정책 기준선: 충돌 2.0% · 완주 98.0% · 평균 35.7 km/h (2026-11-16).
-
-시험지를 다시 만들 때: `python -m yeouido_cross.build_eval_set --check`
-
 ## 알아 둘 점
 
-- **도로망을 고치면** `build_routes` → `build_eval_set --check` 순서로 다시 만든다.
+- **도로망을 고치면** `python -m yeouido_cross.build_routes` 로 경로를 다시 만든다.
 - **블록을 한 바퀴 도는 경로가 있다.** 도로망의 회전 제한 때문이다.
   - 2 → 7: 서울교에서 노량진 쪽으로 바로 꺾는 길이 실제로도 없음 (정상).
   - A → 7: 여의2교 서쪽 끝 좌회전이 막혀 있음 (실제 가능 여부 확인 중).
