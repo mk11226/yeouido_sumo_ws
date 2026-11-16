@@ -155,11 +155,13 @@ class YeouidoEnv(SumoHighwayEnv):
             # 끼어들면 충돌로 끝나도록 한다.
             cmd += ["--collision.check-junctions", "true"]
         if self.gui:
-            extra = [os.path.join(DATA, f) for f in ("yeouido.poly.xml", "markers.add.xml")]
+            # road 설정의 gui_files / gui_settings 로 바꿀 수 있다 (drive_route.py 가 사용). 상대 경로는 env/yeouido/ 기준.
+            files = self.road.get("gui_files", ("yeouido.poly.xml", "markers.add.xml"))
+            extra = [os.path.join(DATA, f) for f in files]
             extra = [f for f in extra if os.path.exists(f)]
             if extra:
                 cmd += ["--additional-files", ",".join(extra)]
-            settings = os.path.join(DATA, "gui.view.xml")
+            settings = os.path.join(DATA, self.road.get("gui_settings", "gui.view.xml"))
             if os.path.exists(settings):
                 cmd += ["--gui-settings-file", settings]
             cmd += ["--delay", str(self.gui_delay)]

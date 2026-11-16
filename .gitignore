@@ -12,3 +12,9 @@ env/yeouido/source/nodelink/*.zip
 
 # 검수 도구: 도로망에서 다시 만드는 결과물 (python -m inspection.serve 가 자동 생성)
 inspection/out/
+
+# drive_route.py / drive_panel.py 가 실행할 때마다 만드는 파일 (내 컴퓨터 경로가 들어 있음)
+yeouido_cross/output/pins/
+yeouido_cross/output/pins.add.xml
+yeouido_cross/output/route.view.xml
+yeouido_cross/output/panel.sumocfg
