@@ -16,3 +16,9 @@ inspection/out/
 # Generated underpass display copy (rebuilt by yeouido.view / yeouido.live)
 env/yeouido/yeouido.underpass.net.xml
 env/yeouido/underpass_visualization.json
+
+# Generated route driving UI assets and machine-specific paths
+yeouido_cross/output/pins/
+yeouido_cross/output/pins.add.xml
+yeouido_cross/output/route.view.xml
+yeouido_cross/output/panel.sumocfg

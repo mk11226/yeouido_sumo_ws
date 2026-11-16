@@ -17,6 +17,7 @@ from yeouido.build_context import PLACES, POLY
 from yeouido.config import LEVELS, NAME, NET, OUT, sumo_bin, sumo_home
 from yeouido.landmarks import RESULT as LANDMARK_FILE
 from yeouido.map_counts import MAPPING
+from yeouido.tdata_signals import additional_files
 from yeouido.visualization import VISUAL_NET, prepare_underpass_view
 
 MARKERS = OUT / "markers.add.xml"
@@ -74,7 +75,7 @@ def main(argv=None):
     write_gui_settings()
     subprocess.run([gui_binary("sumo-gui"), "-c", str(OUT / f"{NAME}_{args.level}.sumocfg"),
                     "--net-file", str(VISUAL_NET),
-                    "--additional-files", f"{POLY},{MARKERS}", "--step-length", "0.5",
+                    "--additional-files", additional_files(POLY, MARKERS, level=args.level), "--step-length", "0.5",
                     "--gui-settings-file", str(GUI_SETTINGS)])
 
 

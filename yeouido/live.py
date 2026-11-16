@@ -22,6 +22,7 @@ from yeouido.build_demand import VTYPES
 from yeouido.config import END, LEVELS, NET, OUT, sumo_home
 from yeouido.view import GUI_SETTINGS, MARKERS, gui_binary, write_gui_settings, write_markers
 from yeouido.visualization import VISUAL_NET
+from yeouido.tdata_signals import activate_program, additional_files, controlled_ids
 
 STEP_LENGTH = 0.5        # env/mdp_config.py SIMULATION["step_length"] 와 동일
 STEPS_PER_TICK = 2       # 조절 창이 한 번 갱신될 때마다 진행할 스텝 수
@@ -55,15 +56,19 @@ class Live:
         self.count = 0
         self.last_phase = 0.0
         self.paused = False
+        self.pending_signals = set()
+        self.measured_signals = {lv: set(controlled_ids(lv)) for lv in LEVELS}
 
         write_markers()
         write_gui_settings()
         traci.start([gui_binary("sumo-gui"), "-n", str(VISUAL_NET), "-r", str(VTYPES),
-                     "--additional-files", f"{POLY},{MARKERS}",
+                     "--additional-files", additional_files(POLY, MARKERS),
                      "--gui-settings-file", str(GUI_SETTINGS),
                      "--step-length", str(STEP_LENGTH), "--start",
                      "--time-to-teleport", "300", "--ignore-route-errors",
                      "--collision.action", "remove", "--no-warnings", "--no-step-log"])
+        for tid in set().union(*self.measured_signals.values()):
+            activate_program(traci, tid, level, 0)
         self._build_window()
 
     # ── 조절 창 ────────────────────────────────────────────
@@ -95,8 +100,19 @@ class Live:
                      font=("AppleGothic", 12, "bold" if active else "normal"))
 
     def set_level(self, level):
+        if level != self.level:
+            self.pending_signals = set().union(*self.measured_signals.values())
         self.level = level
         self._refresh_buttons()
+
+    def _switch_signals(self, t):
+        """Change programs after the current all-red clearance has finished."""
+        tls = self.traci.trafficlight
+        for tid in tuple(self.pending_signals):
+            state = tls.getRedYellowGreenState(tid)
+            if set(state) == {'r'} and tls.getNextSwitch(tid) - t <= STEP_LENGTH:
+                activate_program(self.traci, tid, self.level, t)
+                self.pending_signals.remove(tid)
 
     def toggle_pause(self):
         self.paused = not self.paused
@@ -136,6 +152,7 @@ class Live:
                 for _ in range(STEPS_PER_TICK):
                     traci.simulationStep()
                     t = traci.simulation.getTime()
+                    self._switch_signals(t)
                     self._inject(t)
                     if int(t / STEP_LENGTH) % STATS_EVERY == 0:
                         self._update_status(t)

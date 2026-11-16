@@ -1,0 +1,61 @@
+{
+  "date": "2026-11-16",
+  "end_s": 1800,
+  "step_length_s": 0.5,
+  "sumo_version": "1.27.1",
+  "seed": 42,
+  "demand_scale": 1.0,
+  "strict_collisions": true,
+  "collision_action": "warn",
+  "comparison": "Baseline uses original generated actuated programs; tdata uses the per-level additional file.",
+  "limitation": "30-minute diagnostic only; full-network congestion and collision resolution is not established.",
+  "sha256": {
+    "yeouido.net.xml": "7f8a34052d9bcc5f4772279e6e3bec2ebaab182108fa195fe86bf4515580366d",
+    "day.rou.xml": "e3c819ee4227f4034d0551da4728b1a387a9c34b06bd5bb8a2e757580ef5066b",
+    "rush.rou.xml": "389816f6a6c2854836da54170cf77d0de869a1b37a44b76a288bc115ecffe8ee",
+    "signals_day.add.xml": "c0c0ece5ca06585992a5fbe5a7382db6c7284ab69499e808d0396026b994187f",
+    "signals_rush.add.xml": "387c96928b80bf36ab622f922996bc3b2f1597f32083466ef13e5430c8e29a96"
+  },
+  "results": [
+    {
+      "level": "day",
+      "mode": "baseline",
+      "inserted": 11442,
+      "waiting": 571,
+      "collisions": 16,
+      "teleports": 58,
+      "mean_speed_kmh": 29.8,
+      "mean_wait_s": 132.85
+    },
+    {
+      "level": "day",
+      "mode": "tdata",
+      "inserted": 11322,
+      "waiting": 691,
+      "collisions": 11,
+      "teleports": 44,
+      "mean_speed_kmh": 28.9,
+      "mean_wait_s": 149.84
+    },
+    {
+      "level": "rush",
+      "mode": "baseline",
+      "inserted": 14446,
+      "waiting": 1175,
+      "collisions": 24,
+      "teleports": 84,
+      "mean_speed_kmh": 26.7,
+      "mean_wait_s": 183.54
+    },
+    {
+      "level": "rush",
+      "mode": "tdata",
+      "inserted": 14283,
+      "waiting": 1338,
+      "collisions": 41,
+      "teleports": 99,
+      "mean_speed_kmh": 26.7,
+      "mean_wait_s": 179.6
+    }
+  ]
+}

@@ -44,6 +44,78 @@ class DrivingMetrics:
                 f"보상={self.ep_return:.1f}")
 
 
+def run_episode(policy, env, deterministic: bool = True, options=None) -> dict:
+    """정책으로 에피소드 1회를 주행하고 결과를 dict로 반환 (aggregate()가 합친다).
+
+    options는 env.reset(options=...)에 그대로 넘긴다 (평가 시험지의 한 문제).
+    """
+    obs, _ = env.reset(options=options) if options is not None else env.reset()
+    done, ep_ret, ep_len, ep_lc = False, 0.0, 0, 0
+    ended_by = None
+    speed_sum = speed_n = gap_sum = gap_n = 0
+    min_gap = None
+    info = {}
+
+    while not done:
+        action = policy.predict(obs, deterministic=deterministic)
+        obs, reward, terminated, truncated, info = env.step(action)
+        ep_ret += reward
+        ep_len += 1
+        done = terminated or truncated
+
+        # 실행된 차선변경 집계 (유지 명령의 changeLane 핀 동작은 제외)
+        if info.get("lane_change", 0) != 0 and info.get("lane_change_applied"):
+            ep_lc += 1
+
+        if info.get("collided"):
+            ended_by = "collision"
+        elif info.get("arrived"):
+            ended_by = "arrival"
+
+        # 속도/차간거리는 env가 info로 넘겨주는 원시값(m/s, m)을 쓴다.
+        # 관측(obs) 레이아웃이 바뀌어도 평가 코드는 영향받지 않는다.
+        # 종료 스텝은 None (ego가 이미 제거됨) → 통계에서 제외.
+        if info.get("speed") is not None:
+            speed_sum += float(info["speed"])
+            speed_n += 1
+        if info.get("gap") is not None:
+            g = float(info["gap"])
+            gap_sum += g
+            gap_n += 1
+            min_gap = g if min_gap is None else min(min_gap, g)
+
+    return {
+        "ended_by": ended_by or "timeout",
+        "return": float(ep_ret),
+        "length": ep_len,
+        "lane_changes": ep_lc,
+        "speed_sum": speed_sum, "speed_n": speed_n,
+        "gap_sum": gap_sum, "gap_n": gap_n, "min_gap": min_gap,
+        # 여의도 환경만 주는 값 (직선 도로에서는 None)
+        "red_lights": info.get("red_lights"),
+        "route_length": info.get("route_length"),
+    }
+
+
+def aggregate(records, visibility: float) -> DrivingMetrics:
+    """run_episode() 결과 여러 개를 주행 지표 평균으로 합친다."""
+    n = len(records)
+    speed_n = sum(r["speed_n"] for r in records)
+    gap_n = sum(r["gap_n"] for r in records)
+    gaps = [r["min_gap"] for r in records if r["min_gap"] is not None]
+    return DrivingMetrics(
+        collision_rate=sum(r["ended_by"] == "collision" for r in records) / n,
+        success_rate=sum(r["ended_by"] == "arrival" for r in records) / n,
+        timeout_rate=sum(r["ended_by"] == "timeout" for r in records) / n,
+        mean_speed=sum(r["speed_sum"] for r in records) / speed_n if speed_n else 0.0,
+        mean_gap=sum(r["gap_sum"] for r in records) / gap_n if gap_n else float(visibility),
+        min_gap=min(gaps) if gaps else float(visibility),
+        ep_return=float(np.mean([r["return"] for r in records])),
+        ep_length=float(np.mean([r["length"] for r in records])),
+        lane_changes=float(np.mean([r["lane_changes"] for r in records])),
+    )
+
+
 def evaluate_policy(policy, env, n_episodes: int = 5,
                     deterministic: bool = True) -> DrivingMetrics:
     """정책을 n_episodes 주행시키고 주행 지표 평균을 반환.
@@ -59,58 +131,26 @@ def evaluate_policy(policy, env, n_episodes: int = 5,
         모든 지표는 env.step()의 info(collided/arrived/speed/gap)에서 읽는다.
         관측(obs) 벡터의 구성과 무관하므로, 관측을 바꿔도 이 코드는 안 깨진다.
     """
-    n_collide, n_arrive, n_timeout = 0, 0, 0
-    speeds, gaps, returns, lengths, lane_changes = [], [], [], [], []
+    records = [run_episode(policy, env, deterministic) for _ in range(n_episodes)]
+    return aggregate(records, env.visibility)
 
-    for _ in range(n_episodes):
-        obs, _ = env.reset()
-        done, ep_ret, ep_len = False, 0.0, 0
-        ep_lc = 0
-        ended_by = None
 
-        while not done:
-            action = policy.predict(obs, deterministic=deterministic)
-            obs, reward, terminated, truncated, info = env.step(action)
-            ep_ret += reward
-            ep_len += 1
-            done = terminated or truncated
+# 시험지 한 문제 중 env.reset(options=...)에 넘기는 칸. 나머지(category 등)는 결과 분류용.
+PROBLEM_KEYS = ("level", "origin", "destination", "snapshot_time", "sumo_seed")
 
-            # 실행된 차선변경 집계 (유지 명령의 changeLane 핀 동작은 제외)
-            if info.get("lane_change", 0) != 0 and info.get("lane_change_applied"):
-                ep_lc += 1
 
-            if info.get("collided"):
-                ended_by = "collision"
-            elif info.get("arrived"):
-                ended_by = "arrival"
+def evaluate_problems(policy, env, problems, deterministic: bool = True, on_result=None) -> list:
+    """고정 시험지(eval_set/eval_set.json)의 문제를 차례로 주행한다.
 
-            # 속도/차간거리는 env가 info로 넘겨주는 원시값(m/s, m)을 쓴다.
-            # 관측(obs) 레이아웃이 바뀌어도 평가 코드는 영향받지 않는다.
-            # 종료 스텝은 None (ego가 이미 제거됨) → 통계에서 제외.
-            if info.get("speed") is not None:
-                speeds.append(float(info["speed"]))
-            if info.get("gap") is not None:
-                gaps.append(float(info["gap"]))
-
-        if ended_by == "collision":
-            n_collide += 1
-        elif ended_by == "arrival":
-            n_arrive += 1
-        else:
-            n_timeout += 1
-
-        returns.append(ep_ret)
-        lengths.append(ep_len)
-        lane_changes.append(ep_lc)
-
-    return DrivingMetrics(
-        collision_rate=n_collide / n_episodes,
-        success_rate=n_arrive / n_episodes,
-        timeout_rate=n_timeout / n_episodes,
-        mean_speed=float(np.mean(speeds)) if speeds else 0.0,
-        mean_gap=float(np.mean(gaps)) if gaps else float(env.visibility),
-        min_gap=float(np.min(gaps)) if gaps else float(env.visibility),
-        ep_return=float(np.mean(returns)),
-        ep_length=float(np.mean(lengths)),
-        lane_changes=float(np.mean(lane_changes)),
-    )
+    문제마다 같은 조건(시간대·출발·도착·워밍업 시점·SUMO 시드)으로 리셋하므로
+    어떤 정책이든 같은 문제를 풀고, 같은 정책을 다시 평가하면 결과가 같다.
+    반환: 문제 칸 + run_episode() 결과를 합친 dict 목록. on_result(record)는 문제마다 호출.
+    """
+    records = []
+    for p in problems:
+        rec = {**p, **run_episode(policy, env, deterministic,
+                                  options={k: p[k] for k in PROBLEM_KEYS if k in p})}
+        records.append(rec)
+        if on_result:
+            on_result(rec)
+    return records

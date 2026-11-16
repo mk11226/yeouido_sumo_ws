@@ -893,4 +893,10 @@
     <connection from="new_여의대로_측도" to="1180090801" fromLane="0" toLane="0"/>
     <connection from="new_여의대로_측도" to="1180090801" fromLane="1" toLane="1"/>
     <connection from="new_여의대로_측도" to="1180090801" fromLane="2" toLane="2"/>
+    <connection from="1180030100" to="1180025803" fromLane="0" toLane="0"/>
+    <connection from="1180030100" to="1180031502" fromLane="0" toLane="0"/>
+    <connection from="1180030100" to="1180031502" fromLane="1" toLane="1"/>
+    <connection from="1180030100" to="1180031502" fromLane="2" toLane="2"/>
+    <connection from="1180030100" to="1180092600" fromLane="3" toLane="0"/>
+    <connection from="1180030100" to="1180092600" fromLane="4" toLane="1"/>
 </connections>

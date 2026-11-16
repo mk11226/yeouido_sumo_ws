@@ -13,6 +13,7 @@ SumoHighwayEnv(env/sumo_env.py)를 상속한다. 행동(가감속 + 차선변경
             (env/mdp_config.py REWARD의 "여의도 전용")
 
     env.reset(options={"level": "rush", "origin": "영등포역", "destination": "IFC 서울"})
+    env.reset(options={"origin": "5", "destination": "A"})   # 번호로도 지정 (랜드마크 1~7, 게이트 A~F·ㄱ~ㄷ)
     env.change_destination("63빌딩")     # 주행 중 목적지 변경 → 경로 재탐색
 """
 import json
@@ -22,6 +23,7 @@ import numpy as np
 import gymnasium as gym
 
 from env.sumo_env import SumoHighwayEnv, traci, checkBinary
+from yeouido.config import LANDMARK_NO
 import sumolib
 
 import traci.constants as tc
@@ -48,6 +50,17 @@ def load_places(kind="landmarks"):
             # 게이트에서 출발하면 범위 안으로 들어오는 도로, 도착하면 나가는 도로를 쓴다.
             places[f"게이트 {g}"] = (v["in"], v["out"])
     return places
+
+
+def place_name(places, name):
+    """번호·글자로 쓴 출발·도착지를 places 의 이름으로. "5" → "영등포역", "A" → "게이트 A"."""
+    if not name or name in places:
+        return name
+    by_no = {no: n for n, no in LANDMARK_NO.items()}
+    for cand in (by_no.get(name), f"게이트 {name}"):
+        if cand in places:
+            return cand
+    raise KeyError(f"모르는 출발·도착지: {name!r} (가능: {', '.join(places)})")
 
 
 class YeouidoEnv(SumoHighwayEnv):
@@ -110,6 +123,9 @@ class YeouidoEnv(SumoHighwayEnv):
         net_time = os.path.getmtime(os.path.join(DATA, "yeouido.net.xml"))
         for level in self.levels:
             source_time = max(net_time, os.path.getmtime(os.path.join(DATA, f"{level}.rou.xml")))
+            signals = os.path.join(DATA, f"signals_{level}.add.xml")
+            if os.path.exists(signals):
+                source_time = max(source_time, os.path.getmtime(signals))
             files = [self._snapshot(level, t) for t in self.snapshot_times]
             if all(os.path.exists(f) and os.path.getmtime(f) > source_time for f in files):
                 continue
@@ -128,28 +144,39 @@ class YeouidoEnv(SumoHighwayEnv):
     # ==================================================================
     # SUMO 시작 / 리셋
     # ==================================================================
-    def _start_sumo(self):
+    def _start_sumo(self, sumo_seed=None):
         binary = checkBinary("sumo-gui" if self.gui else "sumo")
+        if sumo_seed is None:
+            sumo_seed = np.random.randint(0, 100000)
         cmd = [binary, "-c", self._cfg(self.level),
                "--step-length", str(self.step_length),
                "--collision.action", "remove",
                "--no-warnings", "true", "--no-step-log", "true",
-               "--seed", str(np.random.randint(0, 100000))]
+               "--seed", str(int(sumo_seed))]
+        # GUI options override sumocfg additional-files. Include measured signal
+        # programs explicitly; panel.sumocfg also needs all programs to load
+        # snapshots from different traffic levels in a single SUMO process.
+        from yeouido.tdata_signals import additional_files
+        extra = []
         if self.check_junctions:
             # 교차로 안 충돌도 검사 (기본은 차로 위만). 신호 없는 교차로에서 양보하지 않고
             # 끼어들면 충돌로 끝나도록 한다.
             cmd += ["--collision.check-junctions", "true"]
         if self.gui:
-            extra = [os.path.join(DATA, f) for f in ("yeouido.poly.xml", "markers.add.xml")]
-            extra = [f for f in extra if os.path.exists(f)]
-            if extra:
-                cmd += ["--additional-files", ",".join(extra)]
-            settings = os.path.join(DATA, "gui.view.xml")
+            # road 설정의 gui_files / gui_settings 로 바꿀 수 있다 (yeouido_cross/drive_route.py 가 사용). 상대 경로는 env/yeouido/ 기준.
+            files = self.road.get("gui_files", ("yeouido.poly.xml", "markers.add.xml"))
+            extra = [os.path.join(DATA, f) for f in files]
+            settings = os.path.join(DATA, self.road.get("gui_settings", "gui.view.xml"))
             if os.path.exists(settings):
                 cmd += ["--gui-settings-file", settings]
-            cmd += ["--delay", str(self.gui_delay)]
+            # TraCI close should also close the GUI without an end-of-simulation
+            # dialog, so drive_route --auto-close can actually exit on Linux.
+            cmd += ["--delay", str(self.gui_delay), "--quit-on-end"]
             if self.gui_autostart:
                 cmd += ["--start"]
+        additions = additional_files(*extra)
+        if additions:
+            cmd += ["--additional-files", additions]
         traci.start(cmd)
         self._started = True
         self.loaded_level = self.level
@@ -163,7 +190,8 @@ class YeouidoEnv(SumoHighwayEnv):
         if self.level not in ("night", "day", "rush"):
             raise ValueError(f"알 수 없는 시간대: {self.level}")
         names = list(self.places)
-        origin = options.get("origin") or str(rng.choice(names))
+        origin = options.get("origin") or str(
+            rng.choice([n for n in names if n != options.get("destination")]))
         destination = options.get("destination") or str(
             rng.choice([n for n in names if n != origin]))
         snapshot_time = options.get("snapshot_time") or float(rng.choice(self.snapshot_times))
@@ -179,7 +207,13 @@ class YeouidoEnv(SumoHighwayEnv):
     def reset(self, seed=None, options=None):
         gym.Env.reset(self, seed=seed)
         options = dict(options or {})
-        fixed = {k: options.get(k) for k in ("origin", "destination")}
+        fixed = {k: place_name(self.places, options.get(k)) for k in ("origin", "destination")}
+        # 평가 시험지: sumo_seed가 있으면 그 시드로 SUMO를 새로 켠다 (배경 차량의 무작위 움직임까지 재현).
+        # SUMO 시드는 켤 때만 적용되므로, 켜 둔 SUMO를 재사용하는 학습과 달리 매번 다시 켠다.
+        sumo_seed = options.get("sumo_seed")
+        if sumo_seed is not None and self._started:
+            traci.close()
+            self._started = False
 
         for _attempt in range(20):
             origin, destination, snapshot_time = self._pick({**options, **fixed})
@@ -187,7 +221,7 @@ class YeouidoEnv(SumoHighwayEnv):
                 traci.close()
                 self._started = False
             if not self._started:
-                self._start_sumo()
+                self._start_sumo(sumo_seed)
             traci.simulation.loadState(self._snapshot(self.level, snapshot_time))
             if self._insert_ego(origin, destination):
                 break
@@ -312,6 +346,7 @@ class YeouidoEnv(SumoHighwayEnv):
         """주행 중 목적지를 바꾼다. SUMO가 현재 위치에서 새 목적지까지 경로를 다시 찾는다."""
         if self.ego_id not in traci.vehicle.getIDList():
             return False
+        name = place_name(self.places, name)
         d_edge, d_pos = self._place_edge(name, depart=False)
         try:
             traci.vehicle.changeTarget(self.ego_id, d_edge)

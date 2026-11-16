@@ -34,6 +34,7 @@ def prepare_underpass_view(settings_path):
     settings_path.write_text('''<viewsettings>
     <scheme name="underpass_gray">
         <background backgroundColor="242,239,233"/>
+        <vehicles vehicleQuality="2" vehicle_minSize="1.00" vehicle_exaggeration="1.00" vehicle_constantSize="0"/>
         <edges laneEdgeMode="31" edgeParam="visual_underpass">
             <colorScheme name="by param (numerical, streetwise)" interpolated="false">
                 <entry color="45,45,45" threshold="0"/>

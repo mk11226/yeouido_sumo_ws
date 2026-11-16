@@ -9,6 +9,7 @@ import argparse
 
 from yeouido import (build_context, build_demand, build_net, download, landmarks,
                      map_counts, nodelink, plot, prepare_counts, validate)
+from yeouido import tdata_signals
 
 
 def main():
@@ -24,6 +25,9 @@ def main():
     else:
         print("   노드링크 원본 없음 → 이미 추출한 region.json 사용")
     build_net.main([])
+    if tdata_signals.RECORDS.exists() and tdata_signals.BEARINGS.exists():
+        print("── T DATA 관측 신호를 새 도로망에 다시 매칭")
+        tdata_signals.build()
     print("── 3. TOPIS 교통량 정리")
     prepare_counts.main()
     print("── 4. 측정 지점 → 도로 연결, 게이트 A~F")

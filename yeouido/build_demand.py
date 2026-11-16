@@ -19,6 +19,7 @@ import sys
 from yeouido.config import DEMAND_SCALE, END, LEVELS, NAME, NET, OUT, sumo_home
 from yeouido.map_counts import MAPPING
 from yeouido.prepare_counts import COUNTS
+from yeouido.tdata_signals import signal_file
 
 VTYPES = OUT / f"{NAME}.vtypes.xml"
 CANDIDATES = OUT / "candidates.rou.xml"
@@ -81,10 +82,13 @@ def write_edgedata(level, hours):
 
 def write_sumocfg(level):
     cfg = OUT / f"{NAME}_{level}.sumocfg"
+    signals = (f'        <additional-files value="{signal_file(level).name}"/>\n'
+               if signal_file(level).exists() else '')
     cfg.write_text(f"""<configuration>
     <input>
         <net-file value="{NET.name}"/>
         <route-files value="{VTYPES.name},{level}.rou.xml"/>
+{signals.rstrip()}
     </input>
     <time>
         <begin value="0"/>

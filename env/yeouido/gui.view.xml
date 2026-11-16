@@ -1,4 +1,13 @@
 <viewsettings>
-    <background backgroundColor="242,239,233"/>
-    <pois poiType_show="1" poiType_size="60" poiType_color="255,0,0"/>
+    <scheme name="underpass_gray">
+        <background backgroundColor="242,239,233"/>
+        <vehicles vehicleQuality="2" vehicle_minSize="1.00" vehicle_exaggeration="1.00" vehicle_constantSize="0"/>
+        <edges laneEdgeMode="31" edgeParam="visual_underpass">
+            <colorScheme name="by param (numerical, streetwise)" interpolated="false">
+                <entry color="45,45,45" threshold="0"/>
+                <entry color="170,170,170" threshold="1"/>
+            </colorScheme>
+        </edges>
+        <pois poiType_show="1" poiType_size="60" poiType_color="255,0,0"/>
+    </scheme>
 </viewsettings>

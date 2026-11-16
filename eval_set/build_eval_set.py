@@ -1,11 +1,11 @@
 """모든 모델을 같은 조건으로 평가하기 위한 고정 시험지(150문제)를 만든다.
 
-    python -m yeouido_cross.build_eval_set             # → yeouido_cross/output/eval_set.json
-    python -m yeouido_cross.build_eval_set --check     # 만든 뒤 150문제 모두 env.reset 이 되는지 확인
+    python -m eval_set.build_eval_set             # → eval_set/eval_set.json
+    python -m eval_set.build_eval_set --check     # 만든 뒤 150문제 모두 env.reset 이 되는지 확인
 
 한 문제 = env.reset(options=...) 에 그대로 넣는 조건:
   level          심야/주간/출근 (night/day/rush)
-  origin         출발지 (랜드마크 이름 또는 "게이트 A"~"게이트 I")
+  origin         출발지 (랜드마크 이름 또는 "게이트 A"~"게이트 F", "게이트 ㄱ"~"게이트 ㄷ")
   destination    도착지
   snapshot_time  워밍업 시점 (배경 교통이 몇 초 흐른 상태에서 출발할지: 600/1200/1800/2400)
   sumo_seed      SUMO 난수 시드 (배경 차량의 무작위 움직임까지 같게)
@@ -24,7 +24,11 @@ import random
 from yeouido.config import NET, sumo_home
 from yeouido.landmarks import RESULT as LANDMARK_FILE
 from yeouido.map_counts import MAPPING
-from yeouido_cross.build_routes import BRIDGES, ISLAND, MAINLAND, OUT, island_edges
+from pathlib import Path
+
+from yeouido_cross.build_routes import BRIDGES, ISLAND, MAINLAND, island_edges
+
+OUT = Path(__file__).resolve().parent     # eval_set/
 
 LEVELS = ["night", "day", "rush"]
 SNAPSHOTS = [600, 1200, 1800, 2400]

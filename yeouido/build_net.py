@@ -676,6 +676,9 @@ def main(argv=None):
           *TLS_OPTIONS], log)
 
     changed = set_clearance_times(net_out)
+    from yeouido.signal_corrections import protect_yeoui2_left
+    if protect_yeoui2_left(net_out):
+        print('[net] 여의2교 남단: 양방향 직진 → 맞은편 황색·비움 → 직진+보호 좌회전')
     print(f"[net] 넓은 교차로 전체 적색 시간 조정: {len(changed)}개 단계 "
           f"(최대 {max(changed, default=ALLRED_MIN)}초)")
     net = sumolib.net.readNet(str(net_out))

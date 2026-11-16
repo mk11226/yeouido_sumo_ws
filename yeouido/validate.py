@@ -21,6 +21,7 @@ from yeouido.config import (DEMAND_SCALE, END, LEVELS, MEASURE, NAME, OUT, WARMU
                             sumo_bin)
 from yeouido.map_counts import MAPPING
 from yeouido.prepare_counts import COUNTS
+from yeouido.tdata_signals import additional_files, controlled_ids
 
 REPORT = OUT / "validation.json"
 STEP_LENGTH = 0.5   # env/mdp_config.py SIMULATION["step_length"] 와 동일
@@ -38,7 +39,7 @@ def run_level(level, hours, strict=False):
         f'<additional>\n    <edgeData id="m" file="{edgedata_out.name}" '
         f'begin="{WARMUP}" end="{END}" excludeEmpty="true"/>\n</additional>\n')
     cmd = [sumo_bin("sumo"), "-c", str(OUT / f"{NAME}_{level}.sumocfg"),
-           "--additional-files", str(edgedata_add),
+           "--additional-files", additional_files(edgedata_add, level=level),
            "--step-length", str(STEP_LENGTH),
            "--statistic-output", str(stats_out),
            # 충돌 판정은 수업 환경(env/sumo_env.py)과 같은 SUMO 기본값: 차로 위 충돌만 본다.
@@ -67,6 +68,7 @@ def run_level(level, hours, strict=False):
     ok = sum(p["geh"] < 5 for p in points)
     return dict(
         level=level, demand_scale=DEMAND_SCALE, strict_collisions=strict,
+        tdata_controllers=len(controlled_ids(level)),
         geh_under5=f"{ok}/{len(points)}",
         geh_under5_ratio=round(ok / len(points), 3),
         inserted=int(veh.get("inserted")), waiting_to_insert=int(veh.get("waiting")),
