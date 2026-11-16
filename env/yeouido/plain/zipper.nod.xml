@@ -1,11 +1,7 @@
 <nodes>
-    <node id="1140010300" type="zipper"/>
     <node id="1140033100" type="zipper"/>
     <node id="1180034500" type="zipper"/>
     <node id="1180043800" type="zipper"/>
-    <node id="1180051900" type="zipper"/>
-    <node id="1180060800" type="zipper"/>
-    <node id="1180004400" type="zipper"/>
     <node id="1180047601" type="zipper"/>
     <node id="cluster_1180059501_1180059502" type="zipper"/>
     <node id="1190025800" type="zipper"/>

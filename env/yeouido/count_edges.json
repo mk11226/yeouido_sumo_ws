@@ -85,10 +85,10 @@
    "name_match": true
   },
   "D-27/유입": {
-   "edge": "1180031502",
+   "edge": "1180031502_pocket",
    "street": "국회대로",
-   "dist_m": 12.6,
-   "lanes": 4,
+   "dist_m": 9.7,
+   "lanes": 6,
    "name_match": true
   },
   "D-27/유출": {
@@ -101,22 +101,22 @@
   "D-28/유입": {
    "edge": "1180001601",
    "street": "경인로",
-   "dist_m": 18.2,
-   "lanes": 4,
+   "dist_m": 19.2,
+   "lanes": 5,
    "name_match": true
   },
   "D-28/유출": {
    "edge": "1180001501",
    "street": "경인로",
-   "dist_m": 6.0,
-   "lanes": 4,
+   "dist_m": 4.4,
+   "lanes": 5,
    "name_match": true
   },
   "D-29/유입": {
-   "edge": "1190007003",
+   "edge": "1190007003_pocket",
    "street": "여의대방로",
-   "dist_m": 13.7,
-   "lanes": 4,
+   "dist_m": 15.3,
+   "lanes": 5,
    "name_match": true
   },
   "D-29/유출": {
@@ -163,7 +163,7 @@
   "D": {
    "point": "D-29",
    "name": "여의대방로(여의교)",
-   "in": "1190007003",
+   "in": "1190007003_pocket",
    "out": "1190006902"
   },
   "E": {
@@ -175,7 +175,7 @@
   "F": {
    "point": "D-27",
    "name": "국회대로(여의2교)",
-   "in": "1180031502",
+   "in": "1180031502_pocket",
    "out": "1180031402"
   },
   "G": {

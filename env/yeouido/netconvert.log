@@ -1,15 +1,19 @@
 Warning: Found sharp turn with radius 5.95 at the start of edge '1160078500'.
 Warning: Found sharp turn with radius 8.40 at the end of edge '1180074400'.
-Warning: Found sharp turn with radius 3.86 at the start of edge '1180095500'.
 Warning: Found sharp turn with radius 7.55 at the end of edge '1190004120'.
 Warning: Shape for junction '1140032300' has distance 33.95 to its given position.
 Warning: Shape for junction '1140033900' has distance 21.30 to its given position.
 Warning: Shape for junction '1140109101' has distance 49.47 to its given position.
 Warning: Shape for junction '1180026200' has distance 32.64 to its given position.
 Warning: Shape for junction '1180051800' has distance 39.92 to its given position.
+Warning: Lane '1160274600_1' is not connected from any incoming edge at junction 'cluster_1160045801_1160045802_1160045803_1160045804'.
+Warning: Lane '1180017801_1' is not connected from any incoming edge at junction 'cluster_1180028501_1180028502_1180028503_1180028504'.
+Warning: Lane '1180017802_1' is not connected from any incoming edge at junction 'cluster_1180005901_1180005902_1180005903_1180005904'.
+Warning: Lane '1180028000_2' is not connected from any incoming edge at junction 'cluster_1180045801_1180045802_1180045803_1180045804'.
+Warning: Lane '1180031902_4' is not connected from any incoming edge at junction 'cluster_1180046906_1180046907_1180046908_1180046909'.
 Warning: Edge '1190040700' is not connected to outgoing edges at junction 'cluster_1190023001_1190023002'.
-Warning: Unreachable edge '1140279401' within tlLogic 'joinedS_1140042101_cluster_1140036101_1140036102_cluster_1140109202_1140109203_1140109204_1140109205'
-Warning: Minor green from edge '1180068000' to edge '1180017101' exceeds 19.44m/s. Maybe a left-turn lane is missing.
+Warning: The traffic light 'cluster_1140010901_1140010904' does not control any links; it will not be build.
+Warning: Could not build program '0' for traffic light 'cluster_1140010901_1140010904'
 Warning: The traffic light 'cluster_1180020601_1180020602_1180020603_1180020604' does not control any links; it will not be build.
 Warning: Could not build program '0' for traffic light 'cluster_1180020601_1180020602_1180020603_1180020604'
 Warning: The traffic light 'cluster_1180026701_1180026702_1180026703_1180026704' does not control any links; it will not be build.
@@ -18,39 +22,39 @@ Warning: The traffic light 'cluster_1180033002_1180033003_1180033004_1180033005'
 Warning: Could not build program '0' for traffic light 'cluster_1180033002_1180033003_1180033004_1180033005'
 Warning: The traffic light 'cluster_1180040301_1180040302_1180040303_1180040304_#1more' does not control any links; it will not be build.
 Warning: Could not build program '0' for traffic light 'cluster_1180040301_1180040302_1180040303_1180040304_#1more'
-Warning: The traffic light 'cluster_1180042801_1180042802_1180042803_1180042804' does not control any links; it will not be build.
-Warning: Could not build program '0' for traffic light 'cluster_1180042801_1180042802_1180042803_1180042804'
-Warning: Unreachable edge '1140279401' within tlLogic 'joinedS_1140042101_cluster_1140036101_1140036102_cluster_1140109202_1140109203_1140109204_1140109205'
-Warning: Speed of straight connection '1180088800_0->1180027702_0' reduced by 6.37 due to turning radius of 10.29 (length=3.92, angle=38.70).
-Warning: Speed of straight connection '1180095500_0->1180096400_0' reduced by 5.10 due to turning radius of 14.05 (length=5.53, angle=38.91).
+Warning: Speed of straight connection '1180088800_0->1180027702_0' reduced by 5.71 due to turning radius of 12.16 (length=4.70, angle=38.70).
+Warning: Speed of straight connection '1180036801_1->1180101600_0' reduced by 7.24 due to turning radius of 16.17 (length=6.16, angle=37.97).
 Warning: Speed of straight connection '1180105500_0->1180040102_0' reduced by 5.64 due to turning radius of 12.37 (length=5.31, angle=41.29).
 Warning: Intersecting left turns at junction 'cluster_1180036101_1180036102_1180036103_1180036104' from lane '1180024007_0' and lane '1180020904_0' (increase junction radius to avoid this).
 Warning: Intersecting left turns at junction 'cluster_1180036101_1180036102_1180036103_1180036104' from lane '1180080100_0' and lane '1180021702_0' (increase junction radius to avoid this).
 Warning: Intersecting left turns at junction 'cluster_1180044911_1180044912_1180044913_1180044914' from lane '1180091902_1' and lane '1180088406_0' (increase junction radius to avoid this).
 Warning: Intersecting left turns at junction 'cluster_1180044911_1180044912_1180044913_1180044914' from lane '1180028706_0' and lane '1180028605_0' (increase junction radius to avoid this).
-Warning: Minor green from edge '1180068000' to edge '1180017101' exceeds 19.44m/s. Maybe a left-turn lane is missing.
-Warning: Unreachable edge '1140279401' within tlLogic 'joinedS_1140042101_cluster_1140036101_1140036102_cluster_1140109202_1140109203_1140109204_1140109205'
 Warning: 7 total messages of type: Could not build program '%' for traffic light '%'
+Warning: 10 total messages of type: Lane '%' is not connected from any incoming edge at junction '%'.
 Warning: 7 total messages of type: Shape for junction '%' has distance % to its given position.
 Warning: 7 total messages of type: The traffic light '%' does not control any links; it will not be build.
 Success.
 Warning: Found sharp turn with radius 5.95 at the start of edge '1160078500'.
 Warning: Found sharp turn with radius 8.40 at the end of edge '1180074400'.
-Warning: Found sharp turn with radius 3.86 at the start of edge '1180095500'.
 Warning: Found sharp turn with radius 7.55 at the end of edge '1190004120'.
 Warning: Shape for junction '1140032300' has distance 33.95 to its given position.
 Warning: Shape for junction '1140033900' has distance 21.30 to its given position.
 Warning: Shape for junction '1140109101' has distance 49.47 to its given position.
 Warning: Shape for junction '1180026200' has distance 32.64 to its given position.
 Warning: Shape for junction '1180051800' has distance 39.92 to its given position.
+Warning: Lane '1160274600_1' is not connected from any incoming edge at junction 'cluster_1160045801_1160045802_1160045803_1160045804'.
+Warning: Lane '1180017801_1' is not connected from any incoming edge at junction 'cluster_1180028501_1180028502_1180028503_1180028504'.
+Warning: Lane '1180017802_1' is not connected from any incoming edge at junction 'cluster_1180005901_1180005902_1180005903_1180005904'.
+Warning: Lane '1180028000_2' is not connected from any incoming edge at junction 'cluster_1180045801_1180045802_1180045803_1180045804'.
+Warning: Lane '1180031902_4' is not connected from any incoming edge at junction 'cluster_1180046906_1180046907_1180046908_1180046909'.
 Warning: Edge '1190040700' is not connected to outgoing edges at junction 'cluster_1190023001_1190023002'.
-Warning: Minor green from edge '1180068000' to edge '1180017101' exceeds 19.44m/s. Maybe a left-turn lane is missing.
-Warning: Speed of straight connection '1180088800_0->1180027702_0' reduced by 6.37 due to turning radius of 10.29 (length=3.92, angle=38.70).
-Warning: Speed of straight connection '1180095500_0->1180096400_0' reduced by 5.10 due to turning radius of 14.05 (length=5.53, angle=38.91).
+Warning: Speed of straight connection '1180088800_0->1180027702_0' reduced by 5.71 due to turning radius of 12.16 (length=4.70, angle=38.70).
+Warning: Speed of straight connection '1180036801_1->1180101600_0' reduced by 7.24 due to turning radius of 16.17 (length=6.16, angle=37.97).
 Warning: Speed of straight connection '1180105500_0->1180040102_0' reduced by 5.64 due to turning radius of 12.37 (length=5.31, angle=41.29).
 Warning: Intersecting left turns at junction 'cluster_1180036101_1180036102_1180036103_1180036104' from lane '1180024007_0' and lane '1180020904_0' (increase junction radius to avoid this).
 Warning: Intersecting left turns at junction 'cluster_1180036101_1180036102_1180036103_1180036104' from lane '1180080100_0' and lane '1180021702_0' (increase junction radius to avoid this).
 Warning: Intersecting left turns at junction 'cluster_1180044911_1180044912_1180044913_1180044914' from lane '1180091902_1' and lane '1180088406_0' (increase junction radius to avoid this).
 Warning: Intersecting left turns at junction 'cluster_1180044911_1180044912_1180044913_1180044914' from lane '1180028706_0' and lane '1180028605_0' (increase junction radius to avoid this).
+Warning: 10 total messages of type: Lane '%' is not connected from any incoming edge at junction '%'.
 Warning: 7 total messages of type: Shape for junction '%' has distance % to its given position.
 Success.

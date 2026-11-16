@@ -19,8 +19,11 @@ def main():
     print("── 1. 원본 다운로드 (TOPIS 교통량 엑셀, OSM 신호 위치·주변 환경)")
     download.main([])
     print("── 2. 국가표준노드링크에서 범위 추출 → SUMO 도로망 생성")
-    nodelink.main()
-    build_net.main()
+    if (nodelink.RAW / "MOCT_LINK.shp").exists() or not nodelink.REGION.exists():
+        nodelink.main()          # 원본이 있으면 다시 추출
+    else:
+        print("   노드링크 원본 없음 → 이미 추출한 region.json 사용")
+    build_net.main([])
     print("── 3. TOPIS 교통량 정리")
     prepare_counts.main()
     print("── 4. 측정 지점 → 도로 연결, 게이트 A~F")
