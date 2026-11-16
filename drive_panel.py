@@ -232,13 +232,21 @@ class Panel:
             result = "도착" if info.get("arrived") else "충돌" if info.get("collided") else "시간 초과/중단"
             self.drive_text = f"{result}: {self.route_text}  ({self.steps * env.step_length:.0f}초)"
             self.driving = False
+            print(f"[panel] {self.drive_text}", flush=True)
 
     # ── 진행 ───────────────────────────────────────────────
     def tick(self):
+        """한 번 부를 때마다 시뮬레이션을 한 스텝 진행한다. sumo-gui 창이 닫히면 이 창도 닫는다."""
         try:
-            if not self.paused:
+            if self.paused:
+                traci.simulation.getTime()            # 멈춰 있어도 sumo-gui가 살아 있는지 확인
+            else:
                 if self.driving:
-                    self._drive_step()
+                    try:
+                        self._drive_step()
+                    except traci.TraCIException as err:   # 주행 한 스텝 실패: 주행만 끝내고 교통은 계속
+                        self.driving = False
+                        self.drive_text = f"주행 중단: {err}"
                 else:
                     traci.simulationStep()
                 self._inject()
@@ -247,8 +255,8 @@ class Panel:
                     dr.fit_pins()
                 if step % STATS_EVERY == 0:
                     self._update_status()
-        except traci.FatalTraCIError:                           # sumo-gui 창을 닫은 경우
-            self.root.destroy()
+        except (traci.FatalTraCIError, ConnectionError, OSError):   # sumo-gui 창이 닫힘
+            self.close()
             return
         self.ticks += 1
         if self.auto and self.ticks == 10:
@@ -276,11 +284,16 @@ class Panel:
         self.root.mainloop()
 
     def close(self):
+        """조절 창을 닫거나 sumo-gui 창이 닫히면 둘 다 정리한다."""
         try:
-            traci.close()
+            traci.close(wait=False)
         except Exception:
             pass
-        self.root.destroy()
+        self.env._started = False
+        try:
+            self.root.destroy()
+        except tk.TclError:
+            pass
 
 
 def main():
