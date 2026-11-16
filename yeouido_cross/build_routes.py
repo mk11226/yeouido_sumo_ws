@@ -6,16 +6,17 @@
 여의도 섬과 영등포 본토는 샛강을 건너는 연결로 네 개로만 이어진다.
   여의2교 (국회대로) · 서울교 (경인로) · 여의교 (여의대방로) — 양방향
   여의하류 램프 (노들로 당산 쪽 → 여의서로, 도로명 "올림픽대로") — 본토 → 섬 일방통행
-섬 랜드마크 × 본토 랜드마크 × 방향 × 연결로마다 "그 연결로를 건너는 가장 빠른 경로"를 하나씩 만든다 (id x000~).
-같은 출발·도착이라도 어느 다리로 건너느냐에 따라 경로가 달라지므로, 다리 선택(내비게이션 비교)에 쓸 수 있다.
-한쪽 안에서만 다니는 경로도 만든다. 샛강을 건너지 않는 가장 빠른 경로 하나씩이고, 쓸 만한 것만 남긴다
+출발·도착 쌍마다 최단거리 경로 하나만 만든다.
+  섬↔본토 (id x000~)  섬 랜드마크 × 본토 랜드마크 × 방향. 연결로마다 "그 연결로를 건너는 최단 경로"를 구한 뒤
+                      그중 가장 짧은 것 하나만 남긴다 (bridge = 그 경로가 건너는 연결로).
+한쪽 안에서만 다니는 경로도 만든다. 샛강을 건너지 않는 최단 경로 하나씩이고, 쓸 만한 것만 남긴다
 (1 km 이상 = 학습 환경 min_trip, 경로가 직선거리의 MAX_DETOUR배 이내).
   섬 안 (id i000~)    섬 랜드마크 4곳 + 섬에 닿는 북쪽 다리 게이트 A 서강·B 마포·C 원효대교
   영등포 안 (id m000~) 본토 랜드마크 3곳 + 본토 경계 게이트 G 양화대교·H 오목교·I 거리공원
   (샛강 다리 위 게이트 D·E·F는 어느 한쪽 안이 아니라서 넣지 않는다)
 
 결과 (yeouido_cross/output/):
-  routes.json     경로 목록 {id, origin, destination, direction, bridge, fastest, length_m, free_time_s, detour, edges}
+  routes.json     경로 목록 {id, origin, destination, direction, bridge, length_m, free_time_s, edges}
                   (한쪽 안 경로는 direction "여의도 안"/"영등포 안", bridge null)
   routes.rou.xml  SUMO <route> 정의 (id = routes.json 의 id)
   routes.poly.xml sumo-gui 겹쳐 보기용 선 (다리별 색)
@@ -95,10 +96,11 @@ def free_time(edges):
     return sum(e.getLength() / e.getSpeed() for e in edges)
 
 
-def fastest(net, a, b):
+def shortest(net, a, b):
+    """a → b 최단거리 경로 (도로 길이 기준, 승용차 통행·회전 제한 반영)."""
     if a == b:
         return [a]
-    path, _ = net.getFastestPath(a, b, vClass="passenger")
+    path, _ = net.getShortestPath(a, b, vClass="passenger")
     return path
 
 
@@ -133,7 +135,7 @@ def build():
                 if direction not in by_dir:
                     continue                   # 일방통행 연결로
                 chain = by_dir[direction]
-                head, tail = fastest(net, o_edge, chain[0]), fastest(net, chain[-1], d_edge)
+                head, tail = shortest(net, o_edge, chain[0]), shortest(net, chain[-1], d_edge)
                 if not head or not tail:
                     print(f"   ! {o} → {d} via {bridge}: 경로 없음")
                     continue
@@ -149,12 +151,12 @@ def build():
                 pair.append(dict(origin=o, destination=d, direction=direction, bridge=bridge,
                                  length_m=round(length, 1), free_time_s=round(t, 1),
                                  edges=[e.getID() for e in edges]))
-            best = min(p["free_time_s"] for p in pair)
-            for p in sorted(pair, key=lambda p: p["free_time_s"]):
-                p["fastest"] = p["free_time_s"] == best
-                p["detour"] = round(p["free_time_s"] / best, 2)
-                p["id"] = f"x{len(routes):03d}"
-                routes.append(p)
+            if not pair:
+                print(f"   ! {o} → {d}: 경로 없음")
+                continue
+            best = min(pair, key=lambda p: p["length_m"])   # 쌍마다 최단거리 하나만
+            best["id"] = f"x{len(routes):03d}"
+            routes.append(best)
     for which, prefix in ((ISLAND, "i"), (MAINLAND, "m")):
         routes += inside_routes(net, lms, island, side, which, prefix)
     return net, routes
@@ -194,9 +196,9 @@ def inside_routes(net, lms, island, side, which, prefix):
         for d, (_, _, de, dp) in places.items():
             if o == d:
                 continue
-            edges = fastest(net, oe, de)
+            edges = shortest(net, oe, de)
             if not edges or crossed(edges):
-                continue                   # 길이 없거나, 가장 빠른 길이 건너편을 거쳐 감
+                continue                   # 길이 없거나, 최단 경로가 건너편을 거쳐 감
             length = sum(e.getLength() for e in edges) - op - (de.getLength() - dp)
             straight = math.dist(_point(oe, op), _point(de, dp))
             if length < MIN_TRIP or length > MAX_DETOUR * straight:
@@ -204,7 +206,7 @@ def inside_routes(net, lms, island, side, which, prefix):
                 continue
             t = free_time(edges) - op / oe.getSpeed() - (de.getLength() - dp) / de.getSpeed()
             routes.append(dict(id=f"{prefix}{len(routes):03d}", origin=o, destination=d,
-                               direction=f"{which} 안", bridge=None, fastest=True, detour=1.0,
+                               direction=f"{which} 안", bridge=None,
                                length_m=round(length, 1), free_time_s=round(t, 1),
                                edges=[e.getID() for e in edges]))
     return routes
@@ -212,8 +214,8 @@ def inside_routes(net, lms, island, side, which, prefix):
 
 def write(net, routes):
     OUT.mkdir(exist_ok=True)
-    keys = ["id", "origin", "destination", "direction", "bridge", "fastest",
-            "length_m", "free_time_s", "detour", "edges"]
+    keys = ["id", "origin", "destination", "direction", "bridge",
+            "length_m", "free_time_s", "edges"]
     (OUT / "routes.json").write_text(json.dumps([{k: r[k] for k in keys} for r in routes],
                                                 ensure_ascii=False, indent=1))
 
@@ -225,7 +227,7 @@ def write(net, routes):
     lines.append("</routes>")
     (OUT / "routes.rou.xml").write_text("\n".join(lines) + "\n")
 
-    # 겹쳐 보기: 가장 빠른 경로는 굵게(위), 나머지는 가늘게
+    # 겹쳐 보기: 연결로별 색 (한쪽 안 경로는 주황/청록)
     lines = ["<additional>"]
     for r in routes:
         shape = []
@@ -235,27 +237,18 @@ def write(net, routes):
                     shape.append((x, y))
         pts = " ".join(f"{x:.1f},{y:.1f}" for x, y in shape)
         lines.append(f'    <poly id="{r["id"]}" type="{r["origin"]}→{r["destination"]} ({r["bridge"] or r["direction"]})" '
-                     f'color="{BRIDGE_COLOR.get(r["bridge"]) or INNER_COLOR[r["direction"]]}" fill="0" lineWidth="{6 if r["fastest"] else 2}" '
-                     f'layer="{20 if r["fastest"] else 10}" shape="{pts}"/>')
+                     f'color="{BRIDGE_COLOR.get(r["bridge"]) or INNER_COLOR[r["direction"]]}" fill="0" lineWidth="4" '
+                     f'layer="20" shape="{pts}"/>')
     lines.append("</additional>")
     (OUT / "routes.poly.xml").write_text("\n".join(lines) + "\n")
 
 
 def summary(routes):
-    print(f"\n{'출발':>8s} → {'도착':<8s} " + "  ".join(f"{b:>13s}" for b in BRIDGES))
-    pairs = {}
-    for r in routes:
-        if r["bridge"] is None:
-            continue
-        pairs.setdefault((r["origin"], r["destination"]), {})[r["bridge"]] = r
-    for (o, d), by_b in pairs.items():
-        cells = []
-        for b in BRIDGES:
-            r = by_b.get(b)
-            cells.append(f"{'-':>13s}" if r is None else
-                         f"{('*' if r['fastest'] else ' '):>2s}{r['length_m'] / 1000:4.1f}km {r['free_time_s'] / 60:4.1f}분")
-        print(f"{o:>8s} → {d:<8s} " + "  ".join(cells))
-    print("(* = 가장 빠른 연결로, 시간은 신호·정체 없이 제한속도로 달릴 때)")
+    cross = [r for r in routes if r["bridge"]]
+    print(f"\n[섬↔본토] {len(cross)}개")
+    for r in cross:
+        print(f"  {r['id']} {r['origin']:>8s} → {r['destination']:<8s} via {r['bridge']:<6s} "
+              f"{r['length_m'] / 1000:4.1f}km {r['free_time_s'] / 60:4.1f}분")
     for which in (ISLAND, MAINLAND):
         inner = [r for r in routes if r["direction"] == f"{which} 안"]
         print(f"\n[{which} 안] {len(inner)}개")
