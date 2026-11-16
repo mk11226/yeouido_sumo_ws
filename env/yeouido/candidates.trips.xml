@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2026-11-07 21:58:56.358775 by Eclipse SUMO randomTrips.py v1.27.1
+<!-- generated on 2026-11-16 15:31:27.470770 by Eclipse SUMO randomTrips.py v1.27.1
 <configuration>
-    <net-file value="/home/jo/bmil_ws/env/yeouido/yeouido.net.xml"/>
-    <output-trip-file value="/home/jo/bmil_ws/env/yeouido/candidates.trips.xml"/>
-    <route-file value="/home/jo/bmil_ws/env/yeouido/candidates.rou.xml"/>
+    <net-file value="/home/mk/bmil_ws/env/yeouido/yeouido.net.xml"/>
+    <output-trip-file value="/home/mk/bmil_ws/env/yeouido/candidates.trips.xml"/>
+    <route-file value="/home/mk/bmil_ws/env/yeouido/candidates.rou.xml"/>
     <fringe-factor value="max"/>
     <edge-permission value="passenger"/>
     <min-distance value="400.0"/>
