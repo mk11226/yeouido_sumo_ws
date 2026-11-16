@@ -238,9 +238,12 @@ class Panel:
     def tick(self):
         """한 번 부를 때마다 시뮬레이션을 한 스텝 진행한다. sumo-gui 창이 닫히면 이 창도 닫는다."""
         try:
-            if self.paused:
-                traci.simulation.getTime()            # 멈춰 있어도 sumo-gui가 살아 있는지 확인
-            else:
+            # sumo-gui 창을 닫으면 macOS에서는 창(view)만 사라지고 프로세스는 TraCI 연결을 붙든 채 남는다.
+            # 그래서 연결 오류만 기다리지 않고 view가 남아 있는지 직접 확인한다 (멈춰 있을 때도).
+            if self.ticks % 10 == 0 and (not traci.gui.getIDList() or self._sumo_exited()):
+                self.close()
+                return
+            if not self.paused:
                 if self.driving:
                     try:
                         self._drive_step()
@@ -283,12 +286,30 @@ class Panel:
         self.root.after(1, self.tick)
         self.root.mainloop()
 
+    @staticmethod
+    def _process():
+        try:
+            return traci.getConnection()._process     # traci.start 가 띄운 sumo-gui
+        except Exception:
+            return None
+
+    def _sumo_exited(self):
+        proc = self._process()
+        return proc is not None and proc.poll() is not None
+
     def close(self):
-        """조절 창을 닫거나 sumo-gui 창이 닫히면 둘 다 정리한다."""
+        """조절 창을 닫거나 sumo-gui 창이 닫히면 둘 다 정리한다 (창 없이 남은 sumo-gui 프로세스도 끝낸다)."""
+        proc = self._process()
         try:
             traci.close(wait=False)
         except Exception:
             pass
+        if proc is not None and proc.poll() is None:
+            proc.terminate()
+            try:
+                proc.wait(timeout=3)
+            except Exception:
+                proc.kill()
         self.env._started = False
         try:
             self.root.destroy()
