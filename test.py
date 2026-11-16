@@ -7,9 +7,9 @@
     python test.py results/bc_example/model.pt --algorithm bc --nogui
 
 고정 시험지 평가 (모든 모델을 같은 150문제로, 결과는 문제별로 저장):
-    python test.py results/bc_…/model.pt --eval-set yeouido_cross/output/eval_set.json --workers 4
-    python test.py --expert --eval-set yeouido_cross/output/eval_set.json --workers 4   ← 선생님 기준선
-    python test.py results/bc_…/model.pt --eval-set yeouido_cross/output/eval_set.json --limit 6  ← 빠른 점검
+    python test.py results/bc_…/model.pt --eval-set eval_set/eval_set.json --workers 4
+    python test.py --expert --eval-set eval_set/eval_set.json --workers 4   ← 선생님 기준선
+    python test.py results/bc_…/model.pt --eval-set eval_set/eval_set.json --limit 6  ← 빠른 점검
   결과: 모델 폴더(선생님은 results/sumo_expert/)의 eval_set_results.json + 종류별 표 출력.
   여러 결과 비교: python -m utils.eval_report <결과1.json> <결과2.json> ...
 
@@ -192,7 +192,7 @@ if __name__ == "__main__":
     parser.add_argument("--expert", action="store_true",
                         help="모델 대신 선생님 정책(sumo-expert)을 평가 (기준선)")
     parser.add_argument("--eval-set", default=None,
-                        help="고정 시험지 JSON (yeouido_cross/output/eval_set.json). "
+                        help="고정 시험지 JSON (eval_set/eval_set.json). "
                              "주면 --episodes 대신 시험지의 문제를 모두 푼다")
     parser.add_argument("--workers", type=int, default=1,
                         help="--eval-set에서 SUMO를 몇 개 병렬로 돌릴지 (--nogui일 때만)")

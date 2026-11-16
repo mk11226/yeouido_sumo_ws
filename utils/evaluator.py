@@ -140,7 +140,7 @@ PROBLEM_KEYS = ("level", "origin", "destination", "snapshot_time", "sumo_seed")
 
 
 def evaluate_problems(policy, env, problems, deterministic: bool = True, on_result=None) -> list:
-    """고정 시험지(yeouido_cross/output/eval_set.json)의 문제를 차례로 주행한다.
+    """고정 시험지(eval_set/eval_set.json)의 문제를 차례로 주행한다.
 
     문제마다 같은 조건(시간대·출발·도착·워밍업 시점·SUMO 시드)으로 리셋하므로
     어떤 정책이든 같은 문제를 풀고, 같은 정책을 다시 평가하면 결과가 같다.
