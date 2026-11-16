@@ -95,6 +95,7 @@ class Panel:
         self.root = tk.Tk()
         self.root.title("여의도 교통 · 경로 주행")
         self.root.geometry("+20+60")
+        self.root.attributes("-topmost", True)    # sumo-gui 창에 가려지지 않게 항상 위
         self.root.protocol("WM_DELETE_WINDOW", self.close)
 
         tk.Label(self.root, text="교통 시간대 (TOPIS 평일 실측 기반)",
