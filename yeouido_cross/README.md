@@ -49,6 +49,11 @@ python -m yeouido_cross.drive_panel --start 1 B      # 켜자마자 1 → B 주�
 
 13곳 사이 모든 쌍(13 × 12 = **156개**)에 **최단거리 경로 하나씩**.
 
+랜드마크는 **건물 쪽 도로와 반대 방향 도로 둘 다** 출발·도착 지점 후보이고, 그중 짧은 쪽을 쓴다
+(`landmark_sides.py`). 예전에는 건물 쪽 한 방향에만 붙어 있어서 반대 방향에서 오면 블록을 크게 돌았다.
+- 노량진수산시장 앞 노들로 반대 방향은 지도 밖에서만 들어오는 도로라 **출발만** 가능 (도착은 건물 쪽만).
+- 지도에서 확인: `python -m yeouido_cross.landmark_sides` (랜드마크마다 고른 도로 출력)
+
 ```bash
 python -m yeouido_cross.build_routes          # 다시 만들기 → output/
 python -m yeouido_cross.build_routes --gui    # 만든 뒤 sumo-gui로 전체 경로 겹쳐 보기
@@ -61,6 +66,7 @@ python -m yeouido_cross.build_routes --gui    # 만든 뒤 sumo-gui로 전체 �
 | `bridge` | 건너는 샛강 다리 (안 건너면 `null`) |
 | `length_m` | 도로 길이 (m) |
 | `detour` | 도로 길이 ÷ 직선거리. 크면 가까운데 돌아가는 경로 |
+| `origin_side`, `dest_side` | 실제 출발·도착 지점: `건물 쪽` / `반대쪽` / `게이트` (`origin_pos`, `dest_pos` = 그 도로 위 위치 m) |
 | `edges` | 지나는 도로 목록 |
 
 ## 알아 둘 점
