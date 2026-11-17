@@ -5,174 +5,174 @@
   "strict_collisions": false,
   "geh_under5": "20/20",
   "geh_under5_ratio": 1.0,
-  "inserted": 1208,
+  "inserted": 1188,
   "waiting_to_insert": 0,
   "teleports": 0,
   "jam_teleports": 0,
   "collisions": 0,
-  "mean_speed_kmh": 38.3,
-  "mean_trip_s": 462.3,
-  "mean_wait_s": 43.2,
+  "mean_speed_kmh": 37.5,
+  "mean_trip_s": 472.7,
+  "mean_wait_s": 55.9,
   "points": [
    {
     "key": "C-05/유입",
     "name": "양화대교",
     "observed": 621,
     "target": 155,
-    "simulated": 153,
-    "geh": 0.18
+    "simulated": 157,
+    "geh": 0.15
    },
    {
     "key": "C-05/유출",
     "name": "양화대교",
     "observed": 759,
     "target": 190,
-    "simulated": 193,
-    "geh": 0.24
+    "simulated": 182,
+    "geh": 0.56
    },
    {
     "key": "C-06/유입",
     "name": "서강대교",
     "observed": 94,
     "target": 24,
-    "simulated": 21,
-    "geh": 0.53
+    "simulated": 25,
+    "geh": 0.3
    },
    {
     "key": "C-06/유출",
     "name": "서강대교",
     "observed": 134,
     "target": 34,
-    "simulated": 38,
-    "geh": 0.74
+    "simulated": 35,
+    "geh": 0.24
    },
    {
     "key": "C-07/유입",
     "name": "마포대교",
     "observed": 308,
     "target": 77,
-    "simulated": 70,
-    "geh": 0.82
+    "simulated": 75,
+    "geh": 0.23
    },
    {
     "key": "C-07/유출",
     "name": "마포대교",
     "observed": 238,
     "target": 60,
-    "simulated": 61,
-    "geh": 0.19
+    "simulated": 56,
+    "geh": 0.47
    },
    {
     "key": "C-08/유입",
     "name": "원효대교",
     "observed": 213,
     "target": 53,
-    "simulated": 56,
-    "geh": 0.38
+    "simulated": 53,
+    "geh": 0.03
    },
    {
     "key": "C-08/유출",
     "name": "원효대교",
     "observed": 176,
     "target": 44,
-    "simulated": 49,
-    "geh": 0.73
+    "simulated": 48,
+    "geh": 0.58
    },
    {
     "key": "D-23/유입",
     "name": "경인로(거리공원)",
     "observed": 240,
     "target": 60,
-    "simulated": 57,
-    "geh": 0.41
+    "simulated": 65,
+    "geh": 0.62
    },
    {
     "key": "D-23/유출",
     "name": "경인로(거리공원)",
     "observed": 222,
     "target": 55,
-    "simulated": 58,
-    "geh": 0.34
+    "simulated": 57,
+    "geh": 0.21
    },
    {
     "key": "D-25/유입",
     "name": "영등포로(오목교)",
     "observed": 203,
     "target": 51,
-    "simulated": 49,
-    "geh": 0.25
+    "simulated": 48,
+    "geh": 0.39
    },
    {
     "key": "D-25/유출",
     "name": "영등포로(오목교)",
     "observed": 238,
     "target": 59,
-    "simulated": 61,
-    "geh": 0.21
+    "simulated": 58,
+    "geh": 0.18
    },
    {
     "key": "D-27/유입",
     "name": "국회대로(여의2교)",
     "observed": 203,
     "target": 51,
-    "simulated": 47,
-    "geh": 0.53
+    "simulated": 54,
+    "geh": 0.46
    },
    {
     "key": "D-27/유출",
     "name": "국회대로(여의2교)",
     "observed": 149,
     "target": 37,
-    "simulated": 38,
-    "geh": 0.11
+    "simulated": 39,
+    "geh": 0.27
    },
    {
     "key": "D-28/유입",
     "name": "경인로(서울교)",
     "observed": 271,
     "target": 68,
-    "simulated": 66,
-    "geh": 0.21
+    "simulated": 67,
+    "geh": 0.09
    },
    {
     "key": "D-28/유출",
     "name": "경인로(서울교)",
     "observed": 290,
     "target": 73,
-    "simulated": 80,
-    "geh": 0.85
+    "simulated": 76,
+    "geh": 0.4
    },
    {
     "key": "D-29/유입",
     "name": "여의대방로(여의교)",
     "observed": 392,
     "target": 98,
-    "simulated": 98,
-    "geh": 0.01
+    "simulated": 103,
+    "geh": 0.49
    },
    {
     "key": "D-29/유출",
     "name": "여의대방로(여의교)",
     "observed": 428,
     "target": 107,
-    "simulated": 109,
-    "geh": 0.19
+    "simulated": 108,
+    "geh": 0.1
    },
    {
     "key": "D-41/유입",
     "name": "노들로",
     "observed": 225,
     "target": 56,
-    "simulated": 50,
-    "geh": 0.86
+    "simulated": 60,
+    "geh": 0.49
    },
    {
     "key": "D-41/유출",
     "name": "노들로",
     "observed": 298,
     "target": 74,
-    "simulated": 70,
-    "geh": 0.52
+    "simulated": 75,
+    "geh": 0.07
    }
   ]
  },
@@ -182,37 +182,37 @@
   "strict_collisions": false,
   "geh_under5": "20/20",
   "geh_under5_ratio": 1.0,
-  "inserted": 7144,
+  "inserted": 7047,
   "waiting_to_insert": 0,
   "teleports": 0,
   "jam_teleports": 0,
   "collisions": 0,
-  "mean_speed_kmh": 36.7,
-  "mean_trip_s": 463.0,
-  "mean_wait_s": 48.8,
+  "mean_speed_kmh": 36.0,
+  "mean_trip_s": 468.6,
+  "mean_wait_s": 59.1,
   "points": [
    {
     "key": "C-05/유입",
     "name": "양화대교",
     "observed": 2739,
     "target": 685,
-    "simulated": 679,
-    "geh": 0.22
+    "simulated": 687,
+    "geh": 0.09
    },
    {
     "key": "C-05/유출",
     "name": "양화대교",
     "observed": 2380,
     "target": 595,
-    "simulated": 613,
-    "geh": 0.74
+    "simulated": 611,
+    "geh": 0.65
    },
    {
     "key": "C-06/유입",
     "name": "서강대교",
     "observed": 858,
     "target": 214,
-    "simulated": 217,
+    "simulated": 212,
     "geh": 0.17
    },
    {
@@ -220,40 +220,40 @@
     "name": "서강대교",
     "observed": 1108,
     "target": 277,
-    "simulated": 280,
-    "geh": 0.18
+    "simulated": 279,
+    "geh": 0.12
    },
    {
     "key": "C-07/유입",
     "name": "마포대교",
     "observed": 2970,
     "target": 742,
-    "simulated": 739,
-    "geh": 0.13
+    "simulated": 743,
+    "geh": 0.02
    },
    {
     "key": "C-07/유출",
     "name": "마포대교",
     "observed": 2395,
     "target": 599,
-    "simulated": 604,
-    "geh": 0.22
+    "simulated": 597,
+    "geh": 0.07
    },
    {
     "key": "C-08/유입",
     "name": "원효대교",
     "observed": 1583,
     "target": 396,
-    "simulated": 398,
-    "geh": 0.12
+    "simulated": 400,
+    "geh": 0.22
    },
    {
     "key": "C-08/유출",
     "name": "원효대교",
     "observed": 1114,
     "target": 278,
-    "simulated": 282,
-    "geh": 0.21
+    "simulated": 274,
+    "geh": 0.27
    },
    {
     "key": "D-23/유입",
@@ -268,88 +268,88 @@
     "name": "경인로(거리공원)",
     "observed": 1394,
     "target": 349,
-    "simulated": 347,
-    "geh": 0.08
+    "simulated": 333,
+    "geh": 0.84
    },
    {
     "key": "D-25/유입",
     "name": "영등포로(오목교)",
     "observed": 1526,
     "target": 381,
-    "simulated": 384,
-    "geh": 0.13
+    "simulated": 386,
+    "geh": 0.23
    },
    {
     "key": "D-25/유출",
     "name": "영등포로(오목교)",
     "observed": 1688,
     "target": 422,
-    "simulated": 425,
-    "geh": 0.14
+    "simulated": 408,
+    "geh": 0.69
    },
    {
     "key": "D-27/유입",
     "name": "국회대로(여의2교)",
     "observed": 1494,
     "target": 373,
-    "simulated": 371,
-    "geh": 0.12
+    "simulated": 389,
+    "geh": 0.8
    },
    {
     "key": "D-27/유출",
     "name": "국회대로(여의2교)",
     "observed": 1141,
     "target": 285,
-    "simulated": 292,
-    "geh": 0.4
+    "simulated": 289,
+    "geh": 0.23
    },
    {
     "key": "D-28/유입",
     "name": "경인로(서울교)",
     "observed": 1829,
     "target": 457,
-    "simulated": 472,
-    "geh": 0.69
+    "simulated": 450,
+    "geh": 0.34
    },
    {
     "key": "D-28/유출",
     "name": "경인로(서울교)",
     "observed": 1982,
     "target": 496,
-    "simulated": 486,
-    "geh": 0.43
+    "simulated": 476,
+    "geh": 0.89
    },
    {
     "key": "D-29/유입",
     "name": "여의대방로(여의교)",
     "observed": 2132,
     "target": 533,
-    "simulated": 530,
-    "geh": 0.13
+    "simulated": 546,
+    "geh": 0.56
    },
    {
     "key": "D-29/유출",
     "name": "여의대방로(여의교)",
     "observed": 2286,
     "target": 572,
-    "simulated": 568,
-    "geh": 0.15
+    "simulated": 562,
+    "geh": 0.4
    },
    {
     "key": "D-41/유입",
     "name": "노들로",
     "observed": 1074,
     "target": 268,
-    "simulated": 274,
-    "geh": 0.34
+    "simulated": 263,
+    "geh": 0.33
    },
    {
     "key": "D-41/유출",
     "name": "노들로",
     "observed": 1456,
     "target": 364,
-    "simulated": 361,
-    "geh": 0.16
+    "simulated": 376,
+    "geh": 0.62
    }
   ]
  },
@@ -359,54 +359,54 @@
   "strict_collisions": false,
   "geh_under5": "20/20",
   "geh_under5_ratio": 1.0,
-  "inserted": 9247,
-  "waiting_to_insert": 14,
-  "teleports": 2,
+  "inserted": 9219,
+  "waiting_to_insert": 0,
+  "teleports": 0,
   "jam_teleports": 0,
   "collisions": 0,
-  "mean_speed_kmh": 35.0,
-  "mean_trip_s": 489.8,
-  "mean_wait_s": 71.3,
+  "mean_speed_kmh": 35.6,
+  "mean_trip_s": 469.8,
+  "mean_wait_s": 61.3,
   "points": [
    {
     "key": "C-05/유입",
     "name": "양화대교",
     "observed": 3537,
     "target": 884,
-    "simulated": 882,
-    "geh": 0.08
+    "simulated": 898,
+    "geh": 0.46
    },
    {
     "key": "C-05/유출",
     "name": "양화대교",
     "observed": 3159,
     "target": 790,
-    "simulated": 784,
-    "geh": 0.2
+    "simulated": 788,
+    "geh": 0.06
    },
    {
     "key": "C-06/유입",
     "name": "서강대교",
     "observed": 959,
     "target": 240,
-    "simulated": 235,
-    "geh": 0.31
+    "simulated": 239,
+    "geh": 0.05
    },
    {
     "key": "C-06/유출",
     "name": "서강대교",
     "observed": 2076,
     "target": 519,
-    "simulated": 505,
-    "geh": 0.62
+    "simulated": 513,
+    "geh": 0.27
    },
    {
     "key": "C-07/유입",
     "name": "마포대교",
     "observed": 3814,
     "target": 954,
-    "simulated": 909,
-    "geh": 1.46
+    "simulated": 971,
+    "geh": 0.56
    },
    {
     "key": "C-07/유출",
@@ -421,112 +421,112 @@
     "name": "원효대교",
     "observed": 2252,
     "target": 563,
-    "simulated": 544,
-    "geh": 0.81
+    "simulated": 546,
+    "geh": 0.72
    },
    {
     "key": "C-08/유출",
     "name": "원효대교",
     "observed": 1571,
     "target": 393,
-    "simulated": 392,
-    "geh": 0.04
+    "simulated": 398,
+    "geh": 0.26
    },
    {
     "key": "D-23/유입",
     "name": "경인로(거리공원)",
     "observed": 1463,
     "target": 366,
-    "simulated": 369,
-    "geh": 0.17
+    "simulated": 379,
+    "geh": 0.69
    },
    {
     "key": "D-23/유출",
     "name": "경인로(거리공원)",
     "observed": 1497,
     "target": 374,
-    "simulated": 369,
-    "geh": 0.27
+    "simulated": 376,
+    "geh": 0.09
    },
    {
     "key": "D-25/유입",
     "name": "영등포로(오목교)",
     "observed": 2286,
     "target": 571,
-    "simulated": 575,
-    "geh": 0.15
+    "simulated": 568,
+    "geh": 0.14
    },
    {
     "key": "D-25/유출",
     "name": "영등포로(오목교)",
     "observed": 1582,
     "target": 395,
-    "simulated": 384,
-    "geh": 0.58
+    "simulated": 409,
+    "geh": 0.67
    },
    {
     "key": "D-27/유입",
     "name": "국회대로(여의2교)",
     "observed": 2487,
     "target": 622,
-    "simulated": 621,
-    "geh": 0.03
+    "simulated": 624,
+    "geh": 0.09
    },
    {
     "key": "D-27/유출",
     "name": "국회대로(여의2교)",
     "observed": 1074,
     "target": 269,
-    "simulated": 272,
-    "geh": 0.21
+    "simulated": 270,
+    "geh": 0.09
    },
    {
     "key": "D-28/유입",
     "name": "경인로(서울교)",
     "observed": 2830,
     "target": 708,
-    "simulated": 708,
-    "geh": 0.02
+    "simulated": 713,
+    "geh": 0.21
    },
    {
     "key": "D-28/유출",
     "name": "경인로(서울교)",
     "observed": 2331,
     "target": 583,
-    "simulated": 511,
-    "geh": 3.07
+    "simulated": 592,
+    "geh": 0.38
    },
    {
     "key": "D-29/유입",
     "name": "여의대방로(여의교)",
     "observed": 3079,
     "target": 770,
-    "simulated": 750,
-    "geh": 0.72
+    "simulated": 771,
+    "geh": 0.05
    },
    {
     "key": "D-29/유출",
     "name": "여의대방로(여의교)",
     "observed": 2260,
     "target": 565,
-    "simulated": 561,
-    "geh": 0.17
+    "simulated": 552,
+    "geh": 0.55
    },
    {
     "key": "D-41/유입",
     "name": "노들로",
     "observed": 1749,
     "target": 437,
-    "simulated": 433,
-    "geh": 0.2
+    "simulated": 435,
+    "geh": 0.11
    },
    {
     "key": "D-41/유출",
     "name": "노들로",
     "observed": 1565,
     "target": 391,
-    "simulated": 378,
-    "geh": 0.67
+    "simulated": 382,
+    "geh": 0.47
    }
   ]
  }
