@@ -290,9 +290,9 @@ def main():
             # 끝 화면 유지: 시뮬레이션은 멈춘 채 창은 그대로 (확대·이동 가능). 창을 닫으면 끝난다.
             print("[drive] 끝 화면을 유지합니다. sumo-gui 창을 닫으면 종료됩니다.", flush=True)
             try:
-                while True:
-                    traci.simulation.getTime()
-                    time.sleep(0.5)
+                while traci.gui.getIDList():          # 창을 닫으면 view가 없어진다
+                    fit_pins()                    # 끝 화면에서 확대·축소해도 핀 크기를 맞춘다
+                    time.sleep(0.3)
             except (traci.TraCIException, traci.FatalTraCIError, OSError):
                 env._started = False          # 창이 닫혀 연결이 끊김
     finally:
