@@ -1,0 +1,67 @@
+{
+  "date": "2026-11-18",
+  "source": "user-confirmed Daebang underpass southbound exit layout",
+  "junction_id": "cluster_1190018001_1190018002_1190018003_1190018004",
+  "junction_type": "priority",
+  "signal_removed": true,
+  "remaining_base_tls": 228,
+  "observed_signal_programs_unchanged": true,
+  "network_sha256": "0af7e8eb45e55d13b31daec016556f41df9a1667d2429fd42b0e638bc5f5b4c4",
+  "through_connections": {
+    "1180012812": {
+      "0": "0",
+      "1": "1"
+    },
+    "1180062700": {
+      "0": "2",
+      "1": "3"
+    }
+  },
+  "outgoing_edge": "1180012808",
+  "routes_validated": {
+    "candidates": 14400,
+    "night": 4779,
+    "day": 28259,
+    "rush": 36752
+  },
+  "cross_routes_validated": 156,
+  "route_repairs": {
+    "candidates": {
+      "repaired_routes": 993,
+      "vehicles_preserved": 14400,
+      "departures_types_origins_destinations_preserved": true
+    },
+    "night": {
+      "repaired_routes": 698,
+      "vehicles_preserved": 4779,
+      "departures_types_origins_destinations_preserved": true
+    },
+    "day": {
+      "repaired_routes": 3652,
+      "vehicles_preserved": 28259,
+      "departures_types_origins_destinations_preserved": true
+    },
+    "rush": {
+      "repaired_routes": 4341,
+      "vehicles_preserved": 36752,
+      "departures_types_origins_destinations_preserved": true
+    }
+  },
+  "four_lane_simulation": {
+    "four_lanes_passed": true,
+    "collision_count": 0,
+    "min_speed_m_s": {
+      "1180012812_0": 10.0,
+      "1180012812_1": 10.0,
+      "1180062700_0": 10.0,
+      "1180062700_1": 10.0
+    },
+    "elapsed_s": 6.3
+  },
+  "background_120s_load_checks": [
+    "night",
+    "day",
+    "rush"
+  ],
+  "backup": "/tmp/bmil-daebang-20261118-002628"
+}

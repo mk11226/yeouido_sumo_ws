@@ -1,0 +1,87 @@
+{
+  "date": "2026-11-19",
+  "three_lane_edges": [
+    "1180017901",
+    "1180017902",
+    "1180020100",
+    "1180022101",
+    "1180022103"
+  ],
+  "approach": "1180019202",
+  "final_left_turn_pocket": {
+    "edge": "1180022103_pocket",
+    "lanes": 4,
+    "length_m": 40
+  },
+  "route": [
+    "1180019202",
+    "1180017901",
+    "1180017902",
+    "1180020100",
+    "1180022101",
+    "1180022103",
+    "1180022103_pocket",
+    "1180001501"
+  ],
+  "validated_background_routes": {
+    "night": 4779,
+    "day": 28259,
+    "rush": 36752,
+    "candidates": 14400
+  },
+  "phase_times_and_order_preserved": true,
+  "signal_mapping": {
+    "adapted_base_programs": [
+      "cluster_1180005901_1180005902_1180005903_1180005904",
+      "cluster_1180006401_1180006402_1180006403_1180006404",
+      "cluster_1180028006_1180028007_1180028008_1180028009_#1more",
+      "cluster_1180035806_1180035807",
+      "cluster_1180038706_1180038707_1180038708_1180038709_#4more"
+    ],
+    "adapted_recorded_programs": [
+      [
+        "day",
+        "cluster_1180038706_1180038707_1180038708_1180038709_#4more"
+      ]
+    ],
+    "phase_times_and_order_preserved": true,
+    "new_lanes_inherit_nearest_existing_movement_permission": true
+  },
+  "simulations": [
+    {
+      "level": "night",
+      "arrival_on_seoul_bridge_s": {
+        "car2": 108.0,
+        "car0": 109.5,
+        "car1": 109.5
+      },
+      "collisions": 0,
+      "teleports": 0,
+      "lane_changes_on_corridor": 0
+    },
+    {
+      "level": "day",
+      "arrival_on_seoul_bridge_s": {
+        "car2": 107.0,
+        "car0": 107.5,
+        "car1": 108.0
+      },
+      "collisions": 0,
+      "teleports": 0,
+      "lane_changes_on_corridor": 0
+    },
+    {
+      "level": "rush",
+      "arrival_on_seoul_bridge_s": {
+        "car2": 108.0,
+        "car0": 109.5,
+        "car1": 109.5
+      },
+      "collisions": 0,
+      "teleports": 0,
+      "lane_changes_on_corridor": 0
+    }
+  ],
+  "network_sha256": "89a43fce7ebfa7c357d43b17b1ab2abfb81c995a5cf37964dff95a81fb12aad3",
+  "backup": "/tmp/bmil-seoul-corridor-20261119-162942"
+}

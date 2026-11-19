@@ -1,0 +1,76 @@
+{
+  "lane_destinations": {
+    "0": [
+      "1180017901",
+      "1180019102"
+    ],
+    "1": [
+      "1180017901"
+    ],
+    "2": [
+      "1190006903"
+    ],
+    "3": [
+      "1190006903"
+    ]
+  },
+  "background_routes_validated": {
+    "candidates": 14400,
+    "night": 4779,
+    "day": 28259,
+    "rush": 36752
+  },
+  "cross_routes_validated": 156,
+  "vehicle_cases": {
+    "case0": {
+      "target": "1180017901",
+      "lane": 0,
+      "time_s": 10.5
+    },
+    "case1": {
+      "target": "1180017901",
+      "lane": 1,
+      "time_s": 10.5
+    },
+    "case2": {
+      "target": "1190006903",
+      "lane": 1,
+      "time_s": 10.5
+    },
+    "case3": {
+      "target": "1190006903",
+      "lane": 2,
+      "time_s": 10.5
+    },
+    "case4": {
+      "target": "1180019102",
+      "lane": 0,
+      "time_s": 10.5
+    }
+  },
+  "collisions": 0,
+  "teleports": 0,
+  "signal_mapping": {
+    "adapted_signal_state_indices": [
+      "cluster_1180028006_1180028007_1180028008_1180028009_#1more",
+      "cluster_1180031506_1180031507_1180031508_1180031509_#1more"
+    ],
+    "all_existing_movements_keep_signal_timing": true,
+    "recorded_programs_adapted": [
+      [
+        "day",
+        "cluster_1180031506_1180031507_1180031508_1180031509_#1more"
+      ],
+      [
+        "rush",
+        "cluster_1180031506_1180031507_1180031508_1180031509_#1more"
+      ]
+    ],
+    "recorded_timings_and_movement_permissions_preserved": true
+  },
+  "date": "2026-11-19",
+  "approach_edge": "1180019202",
+  "added_lane_side": "left",
+  "network_sha256": "ba118294c84ad83f142d1957d9a4eabed1cbfa1e4e2067a43a785ab562c4bd2a",
+  "backup": "/tmp/bmil-yeouigyo-20261119-151627"
+}

@@ -1,0 +1,161 @@
+{
+  "date": "2026-11-19",
+  "approach_edge": "1180000404",
+  "junction_id": "cluster_1180000301_1180000302_1180000303_1180000304",
+  "lane_destinations": {
+    "0": [
+      "1180058000",
+      "1180063700"
+    ],
+    "1": [
+      "1180063700"
+    ],
+    "2": [
+      "1180015302"
+    ],
+    "3": [
+      "1180015302"
+    ]
+  },
+  "other_base_programs_unchanged": 227,
+  "phase_times_and_order_preserved": true,
+  "signal_mapping": {
+    "adapted_base_programs": [
+      "cluster_1180000301_1180000302_1180000303_1180000304"
+    ],
+    "adapted_recorded_programs": [
+      [
+        "day",
+        "cluster_1180000301_1180000302_1180000303_1180000304"
+      ],
+      [
+        "rush",
+        "cluster_1180000301_1180000302_1180000303_1180000304"
+      ]
+    ],
+    "phase_times_and_order_preserved": true,
+    "new_lanes_inherit_nearest_existing_movement_permission": true
+  },
+  "validated_background_routes": {
+    "candidates": 14400,
+    "night": 4779,
+    "day": 28259,
+    "rush": 36752
+  },
+  "cross_routes_validated": 156,
+  "simulations": [
+    {
+      "level": "night",
+      "cases": {
+        "case2": {
+          "source_lane_from_left": 3,
+          "destination": "1180063700",
+          "destination_lane": 1,
+          "time_s": 10.0
+        },
+        "case3": {
+          "source_lane_from_left": 4,
+          "destination": "1180063700",
+          "destination_lane": 0,
+          "time_s": 10.0
+        },
+        "case4": {
+          "source_lane_from_left": 4,
+          "destination": "1180058000",
+          "destination_lane": 0,
+          "time_s": 11.0
+        },
+        "case0": {
+          "source_lane_from_left": 2,
+          "destination": "1180015302",
+          "destination_lane": 0,
+          "time_s": 11.5
+        },
+        "case1": {
+          "source_lane_from_left": 1,
+          "destination": "1180015302",
+          "destination_lane": 1,
+          "time_s": 11.5
+        }
+      },
+      "collisions": 0,
+      "teleports": 0
+    },
+    {
+      "level": "day",
+      "cases": {
+        "case0": {
+          "source_lane_from_left": 2,
+          "destination": "1180015302",
+          "destination_lane": 0,
+          "time_s": 11.0
+        },
+        "case1": {
+          "source_lane_from_left": 1,
+          "destination": "1180015302",
+          "destination_lane": 1,
+          "time_s": 11.0
+        },
+        "case4": {
+          "source_lane_from_left": 4,
+          "destination": "1180058000",
+          "destination_lane": 0,
+          "time_s": 92.0
+        },
+        "case2": {
+          "source_lane_from_left": 3,
+          "destination": "1180063700",
+          "destination_lane": 1,
+          "time_s": 92.5
+        },
+        "case3": {
+          "source_lane_from_left": 4,
+          "destination": "1180063700",
+          "destination_lane": 0,
+          "time_s": 92.5
+        }
+      },
+      "collisions": 0,
+      "teleports": 0
+    },
+    {
+      "level": "rush",
+      "cases": {
+        "case2": {
+          "source_lane_from_left": 3,
+          "destination": "1180063700",
+          "destination_lane": 1,
+          "time_s": 10.0
+        },
+        "case3": {
+          "source_lane_from_left": 4,
+          "destination": "1180063700",
+          "destination_lane": 0,
+          "time_s": 10.0
+        },
+        "case4": {
+          "source_lane_from_left": 4,
+          "destination": "1180058000",
+          "destination_lane": 0,
+          "time_s": 12.0
+        },
+        "case0": {
+          "source_lane_from_left": 2,
+          "destination": "1180015302",
+          "destination_lane": 0,
+          "time_s": 27.5
+        },
+        "case1": {
+          "source_lane_from_left": 1,
+          "destination": "1180015302",
+          "destination_lane": 1,
+          "time_s": 27.5
+        }
+      },
+      "collisions": 0,
+      "teleports": 0
+    }
+  ],
+  "network_sha256": "30476574a95c7df574142d83e7ae07151418ad62a2c85ab5f744f436931302b1",
+  "backup": "/tmp/bmil-mullae-20261119-164842"
+}

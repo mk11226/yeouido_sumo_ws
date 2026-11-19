@@ -1,0 +1,91 @@
+{
+  "integration_date": "2026-11-18",
+  "sources": {
+    "seonu": "0a60203369710bc6f2d53b764a5df6136b7ccae7",
+    "final": "9f6663170a249539ad54357dd48c8d1d6bbddec4"
+  },
+  "local_backup": "/tmp/bmil-import-20261118-000324",
+  "signal_preservation": {
+    "protected_local_files": [
+      "env/yeouido/signal_audit/current_service.json",
+      "env/yeouido/signal_audit/data_request.md",
+      "env/yeouido/signal_audit/history_20261116.json",
+      "env/yeouido/signal_audit/history_20261116_validation.json",
+      "env/yeouido/signal_audit/inventory.csv",
+      "env/yeouido/signal_audit/inventory.json",
+      "env/yeouido/source/signals/crossroads.json",
+      "env/yeouido/source/signals/observed_cycles_20261116.json",
+      "tests/test_live_signals.py",
+      "tests/test_signal_history_csv.py",
+      "tests/test_tdata_current.py",
+      "yeouido/audit_signals.py",
+      "yeouido/tdata_current.py",
+      "env/yeouido/signals_day.add.xml",
+      "env/yeouido/signals_night.add.xml",
+      "env/yeouido/signals_rush.add.xml",
+      "env/yeouido/signals_tdata_report.json",
+      "tests/test_tdata_signals.py",
+      "yeouido/live.py",
+      "yeouido/tdata_signals.py"
+    ],
+    "unchanged_base_signals": 229,
+    "observed_controllers_movements_unchanged": 51,
+    "valid_routes": 156
+  },
+  "network_sha256": "f49560b20a5544a37788892c510a3c5c98f034b18fe3997406cf3ae729791c48",
+  "previous_network_sha256": "1c2ddd65d44cbe8c297aa2aa1a55444bef9b7609c6e35090caabc7464deecead",
+  "preserved_signal_files_sha256": {
+    "env/yeouido/signals_day.add.xml": "1d2993d8d938058594db5fdc8c2fd1fcd29ec378075c1a502a0187acebba74ba",
+    "env/yeouido/signals_night.add.xml": "36b724624af1c2f9eec757c8d6f125aaf7adbdb1b7d79afe49c0825f397912b6",
+    "env/yeouido/signals_rush.add.xml": "b140d44e91f2320b99fb65bc407c2f1eb7fee063c343ac0ab533fa182e9c2429",
+    "env/yeouido/signals_tdata_report.json": "59cea9b8892b5e1c4d9657692fb1fb8519ea9196f4446bb0122d16f0d28834e5",
+    "env/yeouido/signals_tdata_validation.json": "98947e914d1f28c2917730d8d27b9663d27541704425cbbb0f7697e263726e57"
+  },
+  "road_change": {
+    "from": "1180075500",
+    "lane": 0,
+    "to": "1180073700",
+    "movement": "right only",
+    "base_signal_programs_preserved": 229
+  },
+  "routes": {
+    "count": 156,
+    "shorter_than_previous_local": 78,
+    "longer_than_previous_local": 0,
+    "previous_total_km": 595.0264,
+    "current_total_km": 520.9014
+  },
+  "runtime_checks": [
+    {
+      "route": "x035",
+      "origin_side": "반대쪽",
+      "dest_side": "반대쪽",
+      "origin_edge": "1190006704",
+      "destination_edge": "1180032200"
+    },
+    {
+      "route": "x000",
+      "origin_side": "반대쪽",
+      "dest_side": "반대쪽",
+      "origin_edge": "1180038004",
+      "destination_edge": "1180000906"
+    },
+    {
+      "default_landmark_reset": "unchanged"
+    },
+    {
+      "right_turn_passed": true,
+      "time_s": 5.5
+    }
+  ],
+  "sumo_configs_loaded": [
+    "night",
+    "day",
+    "rush"
+  ],
+  "signal_tests_passed": 28,
+  "notes": [
+    "Existing signal audit and traffic validation results describe their recorded network revisions; they were preserved.",
+    "Imported route sources retain local vehicle rendering, fonts, signal-file loading and GUI closing fixes."
+  ]
+}

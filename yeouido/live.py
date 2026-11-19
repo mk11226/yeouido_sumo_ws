@@ -57,6 +57,7 @@ class Live:
         self.last_phase = 0.0
         self.paused = False
         self.pending_signals = set()
+        self.signal_transitions = {}
         self.measured_signals = {lv: set(controlled_ids(lv)) for lv in LEVELS}
 
         write_markers()
@@ -106,13 +107,35 @@ class Live:
         self._refresh_buttons()
 
     def _switch_signals(self, t):
-        """Change programs after the current all-red clearance has finished."""
+        """Finish clearance before changing even an overlapping green program."""
         tls = self.traci.trafficlight
         for tid in tuple(self.pending_signals):
+            transition = self.signal_transitions.get(tid)
+            if transition is not None:
+                stage, deadline = transition
+                if t < deadline:
+                    continue
+                if stage == 'yellow':
+                    tls.setRedYellowGreenState(tid, 'r' * len(tls.getRedYellowGreenState(tid)))
+                    # Conservative clearance for a synthetic program change;
+                    # this does not alter the observed steady-state cycle.
+                    self.signal_transitions[tid] = ('red', t + 8)
+                else:
+                    activate_program(self.traci, tid, self.level, t)
+                    self.pending_signals.remove(tid)
+                    del self.signal_transitions[tid]
+                continue
             state = tls.getRedYellowGreenState(tid)
             if set(state) == {'r'} and tls.getNextSwitch(tid) - t <= STEP_LENGTH:
                 activate_program(self.traci, tid, self.level, t)
                 self.pending_signals.remove(tid)
+                continue
+            logic = next(p for p in tls.getAllProgramLogics(tid)
+                         if p.programID == tls.getProgram(tid))
+            if not any(set(p.state) == {'r'} for p in logic.phases):
+                yellow = max([3.0] + [p.duration for p in logic.phases if 'y' in p.state])
+                tls.setRedYellowGreenState(tid, ''.join('y' if c in 'Ggy' else 'r' for c in state))
+                self.signal_transitions[tid] = ('yellow', t + yellow)
 
     def toggle_pause(self):
         self.paused = not self.paused

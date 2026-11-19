@@ -22,3 +22,6 @@ yeouido_cross/output/pins/
 yeouido_cross/output/pins.add.xml
 yeouido_cross/output/route.view.xml
 yeouido_cross/output/panel.sumocfg
+
+# Timestamped raw CURRENT API recordings (summary reports can be committed)
+env/yeouido/source/signals/live/

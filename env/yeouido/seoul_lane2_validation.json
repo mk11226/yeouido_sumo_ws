@@ -1,0 +1,58 @@
+{
+  "date": "2026-11-19",
+  "route": [
+    "1180019202",
+    "1180017901",
+    "1180017902"
+  ],
+  "best_lanes": {
+    "lane0": [
+      {
+        "lane": "1180019202_0",
+        "usable_length": 388.64,
+        "lane_change_offset": 1
+      },
+      {
+        "lane": "1180019202_1",
+        "usable_length": 558.77,
+        "lane_change_offset": 0
+      }
+    ],
+    "lane1": [
+      {
+        "lane": "1180019202_0",
+        "usable_length": 388.64,
+        "lane_change_offset": 1
+      },
+      {
+        "lane": "1180019202_1",
+        "usable_length": 558.77,
+        "lane_change_offset": 0
+      }
+    ],
+    "lane2": [
+      {
+        "lane": "1180019202_0",
+        "usable_length": 388.64,
+        "lane_change_offset": 1
+      },
+      {
+        "lane": "1180019202_1",
+        "usable_length": 558.77,
+        "lane_change_offset": 0
+      }
+    ]
+  },
+  "required_lane_change_before_seoul": false,
+  "collisions": 0,
+  "teleports": 0,
+  "existing_signal_timings_preserved": true,
+  "all_tdata_program_files_unchanged": true,
+  "network_sha256": "e4812fbf6c5bc4ba70e128e07b034d764cec374710b5a52213f703884423abdf",
+  "backup": "/tmp/bmil-seoul-lane2-20261119-154811",
+  "through_from_lanes_2_3_4": {
+    "lane2": 33.0,
+    "lane1": 33.0,
+    "lane0": 33.0
+  }
+}

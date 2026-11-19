@@ -35,6 +35,7 @@
                 중앙선 쪽(왼쪽) 가장자리는 그대로 두고 바깥쪽(오른쪽)으로만 넓히거나 좁힌다
                 (도로선을 바뀐 폭의 절반만큼 오른쪽으로 옮김 → 반대 방향 도로를 파고들지 않음).
                 도로 우선순위(교차로 양보 관계)는 원래 차로 수 기준 그대로 둔다.
+                side="left"이면 오른쪽 가장자리를 유지하고 왼쪽으로 확장한다 (기본 right).
   turn_pockets: 교차로 직전에 회전 전용 차로(포켓)가 생기는 진입로.
                 노드링크는 링크마다 차로 수가 하나뿐이라, 정지선 앞에서 늘어나는 차로가 빠지고
                 맨 왼쪽(오른쪽) 차로가 직진·좌회전(우회전) 공용이 된다.
@@ -408,8 +409,9 @@ def offset_right(shape, d):
 
 def lane_counts(links, entries):
     """도로 차로 수 바꾸기 → (새 링크 목록, 건너뛴 항목). 원래 값은 lanes0 에 남긴다.
-    중앙선 쪽 가장자리가 그대로 있게 도로선을 (늘어난 폭 / 2) 만큼 오른쪽으로 옮긴다."""
+    기본은 왼쪽 경계를 유지해 오른쪽으로 확장한다. side=left는 오른쪽 경계를 유지한다."""
     want, skipped = {}, []
+    sides = {}
     ids = {l["id"] for l in links}
     for c in entries:
         eid, n = c["edge"], c.get("lanes")
@@ -420,14 +422,19 @@ def lane_counts(links, entries):
             why = f"차로 수는 1~{MAX_LANES}"
         elif eid in want:
             why = "목록에 두 번 있음"
+        elif c.get('side', 'right') not in ('left', 'right'):
+            why = "차로 확장 방향은 left 또는 right"
         if why:
             skipped.append(dict(type="lane_counts", edge=eid, why=why))
         else:
             want[eid] = n
+            sides[eid] = c.get('side', 'right')
     out = []
     for l in links:
         if l["id"] in want:
             shift = (want[l["id"]] - max(l["lanes"], 1)) * LANE_WIDTH / 2
+            if sides[l['id']] == 'left':
+                shift = -shift
             l = dict(l, lanes=want[l["id"]], lanes0=l["lanes"], shape=offset_right(l["shape"], shift))
         out.append(l)
     return out, skipped

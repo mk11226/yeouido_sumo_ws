@@ -1,2 +1,26 @@
 <?xml version='1.0' encoding='utf-8'?>
-<additional />
+<additional>
+  <tlLogic id="cluster_1180023701_1180023702_1180023703_1180023704" type="static" programID="tdata_night" offset="48.542">
+    <phase duration="44.992" state="rrrrrr" />
+    <phase duration="72.000" state="GGGGGG" />
+    <phase duration="3.010" state="yyyyyy" />
+  </tlLogic>
+  <tlLogic id="1180228500" type="static" programID="tdata_night" offset="68.418">
+    <phase duration="95.010" state="GGG" />
+    <phase duration="3.000" state="yyy" />
+    <phase duration="41.990" state="rrr" />
+  </tlLogic>
+  <tlLogic id="cluster_1180054101_1180054102_1180054103_1180054104" type="static" programID="tdata_night" offset="16.953">
+    <phase duration="12.997" state="rrrgGrrr" />
+    <phase duration="3.992" state="rrryyrrr" />
+    <phase duration="43.035" state="GGrrrgGG" />
+    <phase duration="2.993" state="GGrrryyy" />
+    <phase duration="33.994" state="GGGgrrrr" />
+    <phase duration="3.000" state="yyygrrrr" />
+  </tlLogic>
+  <tlLogic id="cluster_1180048601_1180048602_1180048603_1180048604" type="static" programID="tdata_night" offset="64.981">
+    <phase duration="42.980" state="G" />
+    <phase duration="3.000" state="y" />
+    <phase duration="24.013" state="r" />
+  </tlLogic>
+</additional>
