@@ -28,7 +28,7 @@ from env.mdp_config import SIMULATION, OBSERVATION, ACTION
 from env import road_builder
 from env.yeouido_env import CONTEXT_RADIUS, DATA, make_env, place_name, traci
 import traci.constants as tc
-from train import REWARD
+from training.train import REWARD
 from yeouido.config import END, LEVELS
 from yeouido.live import load_schedule
 
@@ -81,7 +81,7 @@ class Panel:
         env = self.env
         env._cfg = lambda _level: PANEL_CFG       # 시간대와 상관없이 같은 SUMO 하나를 쓴다
         env.gui_delay, env.gui_track_ego = delay, True
-        from algorithms.sumo_expert import SumoExpert
+        from training.algorithms.sumo_expert import SumoExpert
         self.expert = SumoExpert(env)
 
         env.level = level

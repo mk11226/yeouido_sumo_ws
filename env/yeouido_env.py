@@ -281,6 +281,8 @@ class YeouidoEnv(SumoHighwayEnv):
         self.reroutes = 0
         self._rr_changes = 0
         self._rr_slow = self._rr_cool = 0.0
+        self._rr_lock = None          # 마지막으로 경로를 바꾼 도로 (벗어나기 전에는 다시 안 바꿈)
+        self._rr_abandoned = []       # 재탐색으로 버린 경로들 (다시 그 길로 되돌리지 않음)
         self._prev_speed = self._prev_acc = None
         self.step_count = 0
         self._remaining = self._prev_remaining = None
@@ -525,7 +527,7 @@ class YeouidoEnv(SumoHighwayEnv):
         self._shield_hit = False
         if alive and (self.safety_shield or float(self.rw.get("idle_penalty", 0.0)) > 0):
             if self._reference is None:
-                from algorithms.sumo_expert import SumoExpert
+                from training.algorithms.sumo_expert import SumoExpert
                 self._reference = SumoExpert(self)
             self._v_ref = self._reference.target_speed(accel_limited=False)
         reach = (traci.vehicle.getSpeed(self.ego_id) * self.step_length + 1.0) if alive else 0.0
@@ -612,12 +614,17 @@ class YeouidoEnv(SumoHighwayEnv):
           168,812 s 인데 1,291 s 짜리 길로 안 바꿈, 370회 시도 중 변경 0). 그래서 모든 도로에 현재 통행 시간을 직접 넣고
           (adaptTraveltime) findRoute 로 찾은 뒤 넣은 값은 지운다 (다른 차 경로 계산에 영향 없게).
         - 오가기·큰 우회 방지: 새 길이 gain 비율·min_gain_s 초 이상 빠르고, 길이가 max_detour × 남은 거리 + 500 m 이하이고,
-          이번 판에 바꾼 횟수가 max_changes 미만일 때만 바꾼다."""
+          이번 판에 바꾼 횟수가 max_changes 미만일 때만 바꾼다.
+        - 바꾼 길 지키기 (2026-11-21): 같은 정체 속에서 90초 뒤 다시 계산하면 새 길도 막혀 원래 길로 되돌리는 일이 있었다
+          (#52 주간: 606초에 바꾸고 696초에 같은 도로에서 원래 길로 복귀 → 화면의 주황 경로로 가지 않음).
+          그래서 경로를 바꾼 도로를 벗어나기 전에는 다시 바꾸지 않고, 한 번 버린 경로로는 되돌리지 않는다."""
         if self._rr_changes >= self.reroute_max_changes:
             return False
         road = traci.vehicle.getRoadID(veh)
         if road.startswith(":"):
             return False                                  # 교차로 안: 다음 도로에서 다시
+        if road == self._rr_lock:
+            return False                                  # 방금 바꾼 도로에 아직 있음: 바꾼 길을 지킨다
         rest = traci.vehicle.getRoute(veh)[traci.vehicle.getRouteIndex(veh):]
         if not rest or rest[0] != road:
             return False
@@ -636,8 +643,15 @@ class YeouidoEnv(SumoHighwayEnv):
                 traci.edge.adaptTraveltime(x, -1)          # 음수 = 넣은 값 삭제
         if not alt.edges or tuple(alt.edges) == tuple(rest):
             return False
-        cur_tt = sum(tt.get(x, 0.0) for x in rest)
-        if alt.travelTime > cur_tt * (1.0 - self.reroute_gain) or cur_tt - alt.travelTime < self.reroute_min_gain_s:
+        new = tuple(alt.edges)
+        if any(road in ab and ab[ab.index(road):] == new for ab in self._rr_abandoned):
+            return False                                  # 전에 버린 길로 되돌아가는 것
+        # 회전 대기 줄 (2026-11-21): 도로 통과 시간은 차로를 평균한 값이라, 다른 차로는 흐르는데 꺾어야 하는 차로만
+        # 막힌 경우(#52 주간: 바꾼 길의 우회전 차로 대기 줄에 82초·60초씩 섬)를 못 본다. 그래서 두 경로 모두
+        # 앞쪽 교차로들에서 "그 길로 꺾을 수 있는 차로"에 서 있는 차 수 × 차당 통과 시간을 더해 비교한다.
+        cur_tt = sum(tt.get(x, 0.0) for x in rest) + self._turn_queue_s(rest)
+        alt_tt = alt.travelTime + self._turn_queue_s(alt.edges)
+        if alt_tt > cur_tt * (1.0 - self.reroute_gain) or cur_tt - alt_tt < self.reroute_min_gain_s:
             return False
         rem = self.remaining_distance()
         if rem is not None and alt.length > self.reroute_max_detour * rem + 500.0:
@@ -647,7 +661,30 @@ class YeouidoEnv(SumoHighwayEnv):
         except traci.TraCIException:
             return False
         self._rr_changes += 1
+        self._rr_lock = road
+        self._rr_abandoned.append(tuple(rest))
         return True
+
+    TURN_QUEUE_S = 2.5      # 대기 줄 차 한 대가 교차로를 빠져나가는 데 걸리는 시간 (s, 차로당 포화 교통류 약 1,440대/시)
+    TURN_QUEUE_JUNCTIONS = 6
+
+    def _turn_queue_s(self, edges):
+        """경로 앞쪽 교차로들에서, 다음 도로로 꺾을 수 있는 차로에 서 있는 차 수 × TURN_QUEUE_S (초).
+        꺾을 수 있는 차로가 여럿이면 가장 짧은 줄을 고른다고 본다."""
+        total = 0.0
+        for a, b in list(zip(edges, edges[1:]))[:self.TURN_QUEUE_JUNCTIONS]:
+            try:
+                n = traci.edge.getLaneNumber(a)
+                halts = []
+                for i in range(n):
+                    lane = f"{a}_{i}"
+                    if any(traci.lane.getEdgeID(link[0]) == b for link in traci.lane.getLinks(lane)):
+                        halts.append(traci.lane.getLastStepHaltingNumber(lane))
+            except traci.TraCIException:
+                continue
+            if halts:
+                total += min(halts) * self.TURN_QUEUE_S
+        return total
 
     def _maybe_reroute(self, speed):
         """막혀 있으면 같은 목적지로 경로를 다시 찾는다. 경로가 실제로 바뀌면 True."""

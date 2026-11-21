@@ -7,7 +7,7 @@ import unittest
 import numpy as np
 import torch
 
-from algorithms.ppo import PPO
+from training.algorithms.ppo import PPO
 from utils.buffer import RolloutBuffer
 
 

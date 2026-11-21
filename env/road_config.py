@@ -31,7 +31,7 @@ ROAD_TYPE = "yeouido"
 # 1-2) 실제 도로: 영등포구 북부(여의도) — env/yeouido_env.py
 #
 #    도로망·교통량은 yeouido/ 파이프라인이 만든 env/yeouido/ 파일을 쓴다
-#    (국가표준노드링크 + TOPIS 실측, 자세한 내용은 yeouido/README.md).
+#    (국가표준노드링크 + TOPIS 실측, 자세한 내용은 README.md 2-1절).
 #    road_builder는 이 도로를 만들지 않는다.
 #
 #    에피소드마다:
@@ -85,7 +85,7 @@ YEOUIDO_ROAD = {
     #   (현재 통행 시간)으로 같은 목적지까지 가장 빠른 길을 다시 찾는다 (traci.vehicle.rerouteTraveltime).
     #   재탐색 뒤 cooldown 초는 다시 안 함. 운전 정책이 아니라 환경이 해 주며, 목적지는 그대로.
     #   2026-11-20 출근 시간대 실패(정체에 갇혀 시간 초과·순간이동) 대책. info["reroutes"] = 경로가 실제로 바뀐 횟수.
-    #   (eval_set/reroute_check.py 로 효과 확인 후 켬. 끈 상태의 결과는 예전과 같다)
+    #   (inference/eval_set/reroute_check.py 로 효과 확인 후 켬. 끈 상태의 결과는 예전과 같다)
     #   켜기: 환경변수 YEOUIDO_REROUTE=1 (하위 프로세스까지 전달되어 test.py --workers 에도 적용).
     #   바꾸는 조건 (2026-11-21 재검증에서 두 길 사이를 오가거나 목적지 코앞에서 크게 돌아 순간이동이 늘어서 추가):
     #     새 길이 지금 길보다 gain(30 %) 이상 그리고 min_gain_s(60 s) 이상 빨라야 바꿈 (오가기 방지),

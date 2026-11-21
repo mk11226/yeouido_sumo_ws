@@ -31,7 +31,7 @@ from env.road_config import ROAD, EGO, TRAFFIC
 from env.mdp_config import SIMULATION, OBSERVATION, ACTION
 from env import road_builder
 from env.yeouido_env import DATA, make_env, place_name, traci
-from train import REWARD
+from training.train import REWARD
 from yeouido.build_context import LAND
 from yeouido.config import LANDMARK_NO
 
@@ -257,7 +257,7 @@ class RouteWatch:
 
     def __init__(self, veh):
         self.veh = veh
-        self.route = tuple(traci.vehicle.getRoute(veh))
+        self.route = self.first = tuple(traci.vehicle.getRoute(veh))
         self.changes = 0
         clear_overlay()
 
@@ -272,7 +272,11 @@ class RouteWatch:
             return False
         self.route = route
         self.changes += 1
-        overlay(route_lanes(list(route[max(idx, 0):])))
+        rest = route[max(idx, 0):]
+        if rest[0] in self.first and self.first[self.first.index(rest[0]):] == rest:
+            clear_overlay()                   # 처음 경로(파랑)로 돌아옴: 주황을 지운다
+        else:
+            overlay(route_lanes(list(rest)))
         return True
 
 
@@ -315,7 +319,7 @@ def main():
     env = make_env(cfg_path=cfg, road=road, ego=EGO, mdp_sim=SIMULATION, mdp_obs=OBSERVATION,
                    action=ACTION, reward=REWARD, traffic=TRAFFIC, gui=True, gui_autostart=True)
     env.gui_delay, env.gui_track_ego = args.delay, not args.overview
-    from algorithms.sumo_expert import SumoExpert
+    from training.algorithms.sumo_expert import SumoExpert
     expert = SumoExpert(env)
     try:
         obs, _ = env.reset(seed=args.seed, options={"level": args.level, "origin": origin,

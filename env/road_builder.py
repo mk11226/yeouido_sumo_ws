@@ -146,7 +146,7 @@ def build(road: dict, ego: dict, traffic: dict, out_dir: str) -> str:
     # ──────────────────────────────────────────────────────
     # 4) GUI 기본 시각화 설정
     #    GUI 관련 값의 source of truth는 env/mdp_config.py의 SIMULATION 하나뿐이다.
-    #    view_road.py / train.py / test.py / 데이터 수집 모두 build()를 거치므로
+    #    env/view_road.py / train.py / test.py / 데이터 수집 모두 build()를 거치므로
     #    gui_zoom/gui_delay를 바꾸면 생성되는 highway.gui.xml에도 즉시 반영된다.
     # ──────────────────────────────────────────────────────
     # GUI 시작 화면: "도로 시작 구간"이 차선까지 보이게 자동 확대해둔다.
