@@ -12,7 +12,7 @@ SUMO 선생님 정책·BC·PPO로 차량의 주행 의사결정을 실험한다.
 - **신호**: 228개 제어기 중 51곳에 2026-11-16 T DATA 관측 주기 적용 (심야 4·주간 51·출근 44곳). 적용 범위와 한계는 [도로 환경 문서](yeouido/README.md#t-data-실측-신호) 참고.
 - **여의2교 남단**: 국회의사당 방향 좌회전 2차로와 맞은편 직진 종료 후 보호 좌회전 순서 반영.
 - **평가**: 모든 정책에 같은 조건을 주는 고정 시험지(150문제, 최종 성적표 60문제 `random_60_s1`)와 결과 비교 도구.
-- **학습 결과**: 최종 모델 DAgger(도착 78 %, 충돌 0)와 추론 주행 영상. 아래 [진행 결과](#진행-결과-2026-11-학습--최종-평가--추론-주행) 참고.
+- **학습 결과**: 최종 모델 PPO(도착 73 %, 충돌 0)와 추론 주행 영상. 아래 [진행 결과](#진행-결과-2026-11-학습--최종-평가--추론-주행) 참고.
 
 ## 설치
 
@@ -73,12 +73,12 @@ $env:SUMO_HOME = python -c "import sumo; print(sumo.SUMO_HOME)"                 
 ### 5. 설치 확인
 
 ```bash
-# 최종 모델로 3문제 평가 (화면 없음, 3개 병렬로 수 분). 원래 결과와 같으면 정상: #1 도착, #0·#2 는 정체로 시간초과
-LIBSUMO_AS_TRACI=quiet python test.py results/dagger_v1/iter1/model.pt \
+# 최종 모델로 3문제 평가 (화면 없음, 3개 병렬로 수 분). 결과가 이렇게 나오면 정상: #41 도착, #0 시간초과, #19 순간이동 (출근 정체)
+LIBSUMO_AS_TRACI=quiet python test.py results/ppo_v1/best/model.pt \
     --eval-set eval_set/random_60_s1.json --nogui --limit 3 --workers 3
 
 # sumo-gui 창에서 최종 모델 주행 (대표 영상과 같은 주행)
-python -m yeouido_cross.drive_model --problem 30 --level day --reroute
+python -m yeouido_cross.drive_model --problem 52 --level day --reroute
 ```
 
 Windows PowerShell 에서는 `LIBSUMO_AS_TRACI=quiet` 대신 먼저 `$env:LIBSUMO_AS_TRACI="quiet"`를 실행한다 (GUI 실행 전에는 `Remove-Item Env:LIBSUMO_AS_TRACI`).
@@ -204,32 +204,33 @@ T DATA API 키는 선택 사항이며, 사용할 때는 Git에서 제외되는 `
 ## 진행 결과 (2026-11): 학습 → 최종 평가 → 추론 주행
 
 학습(BC → DAgger → PPO), 최종 평가, 추론 주행 영상까지 모두 끝났다.
-**최종 모델은 DAgger 1회차** (`results/dagger_v1/iter1/model.pt`)이고 경로 재탐색은 끈다.
+**최종 모델은 PPO** (`results/ppo_v1/best/model.pt`, DAgger 1회차에서 강화학습으로 미세조정)이고, 평가에서는 경로 재탐색을 끈다.
 
-### 최종 결과 (새 교통 "uniform", 고정 시험지 60문제 `eval_set/random_60_s1.json`)
+> **도로망 기준 (2026-11-21):** 아래 수치는 팀원 커밋 c582706 "신호/도로 수정"(실측 신호 적용 주간 27 → 51곳, 출근 12 → 44곳)을 합친 **새 도로망**에서 다시 평가한 결과다.
+> 합치기 전(옛 도로망)에는 DAgger 47 · PPO 46으로 DAgger가 최종이었고, 그 표는 `results/final/old_net/`에 있다.
+
+### 최종 결과 (새 도로망 · 새 교통 "uniform", 고정 시험지 60문제 `eval_set/random_60_s1.json`)
 
 | 과제 기준 | 결과 |
 |---|---|
 | 충돌률 < 5 % | **0 %** (0/60) |
-| 목적지 도착 | **47/60 (78 %)**: 심야 20/20 · 주간 12/17 · 출근 15/23 (선생님 정책과 같음) |
+| 목적지 도착 | **44/60 (73 %)**: 심야 20/20 · 주간 13/17 · 출근 11/23 |
 | 빨간불 통과 | 0회 |
-| 주변 일반 차량(HV) | 주행 중 도로망 평균 4,007대 (심야 465 · 주간 4,547 · 출근 6,688), ego 100 m 안 평균 34대 |
-| 순간이동(300초 정체) | 1/60 (실패로 계산) |
+| 주변 일반 차량(HV) | 주행 중 도로망 평균 4,230대 (심야 474 · 주간 4,699 · 출근 7,150), ego 100 m 안 평균 32대 |
+| 순간이동(300초 정체) | 2/60 (실패로 계산) |
 
-실패 13문제는 모두 시간초과 12개와 순간이동 1개다. 원인은 운전 실수가 아니라 주간·출근 교통 정체다.
+실패 16문제는 시간초과 14개와 순간이동 2개다. 원인은 운전 실수가 아니라 주간·출근 교통 정체다.
 전체 표는 `results/final/final_eval.md`(`.csv`)에 있다.
 
-| 모델 (새 교통) | 도착 | 충돌 | 순간이동 | 쉴드 개입/문제 |
+| 모델 | 새 도로망 도착 | 옛 도로망 도착 | 충돌 | 쉴드 개입/문제 (새) |
 |---|---|---|---|---|
-| **DAgger (최종)** | **47** | 0 | 1 | 712 |
-| PPO | 46 | 0 | 2 | 83 |
-| 선생님 (SumoExpert) | 47 | 0 | 1 | 0 |
-| DAgger + 재탐색 | 44 | 0 | 3 | 658 |
-| PPO + 재탐색 | 44 | 0 | 3 | 84 |
-| 선생님 + 재탐색 | 47 | 0 | 3 | 0 |
+| **PPO (최종)** | **44** (출근 11) | 46 (출근 15) | 0 | 48 |
+| DAgger | 43 (출근 11) | 47 (출근 15) | 0 | 655 |
+| 선생님 (SumoExpert) | 45 (출근 12) | 47 (출근 15) | 0 | 0 |
 
-- **PPO:** 도착은 1문제 적지만 안전 쉴드 개입이 DAgger의 약 1/9이다. 모델 스스로 더 안전하게 운전한다.
-- **경로 재탐색:** 새 교통에서 도착을 늘리지 못해 평가에서는 끈다. 추론 영상에서만 켠다.
+- **최종 모델을 PPO로 바꾼 이유:** 미리 정한 규칙(충돌 0 중 도착 최다)대로다. 안전 쉴드 개입도 DAgger의 약 1/14이라, 모델 스스로 안전 속도를 지킨다.
+- **새 도로망에서 도착이 준 이유:** 실측 신호가 늘면서 출근 교통이 더 막힌다(600~1,200초 도로망 차량 5,549 → 5,866대, 빠져나간 차 −4 %). 모든 정책에서 출근 도착이 줄었다. DAgger가 잃은 5문제 중 3개는 선생님도 같이 실패했고, 막힌 곳은 바뀐 도로·교차로와 겹치지 않는다.
+- **경로 재탐색:** 옛 도로망 평가에서 도착을 늘리지 못해(DAgger 47 → 44, PPO 46 → 44) 평가에서는 끈다. 추론 영상에서만 켠다.
 
 ### 단계별 흐름
 
@@ -240,8 +241,8 @@ T DATA API 키는 선택 사항이며, 사용할 때는 Git에서 제외되는 `
 | 2. BC | 선생님 데이터(DART 노이즈 200판)로 PPO와 같은 신경망 학습 | 도착 42, 충돌 0 | `train_bc_hybrid.py`, `results/bc_hybrid_v2/` |
 | 3. DAgger | 모델이 운전, 선생님이 정답 라벨 (3회 반복, 1회차 최고) | 도착 44, 충돌 0 | `dagger.py`, `results/dagger_v1/` |
 | 4. PPO | DAgger 모델에서 미세조정 (critic 워밍업, 8환경 병렬, 약 100만 스텝) | 도착 45, 충돌 0 | `train.py`, `results/ppo_v1/best/` |
-| 5. 최종 평가 | 새 교통에서 6개 조합 재평가, 최종 모델 확정 | 위 표 | `eval_set/final_report.py`, `results/uniform/`, `results/final/` |
-| 6. 추론 주행 | sumo-gui에서 최종 모델 주행, 영상·주행 기록 | 시나리오 6개 × 3시간대 중 17개 도착 | `yeouido_cross/drive_model.py`, `results/video/` |
+| 5. 최종 평가 | 새 교통에서 6개 조합 평가 → 팀원 도로망 수정 후 새 도로망에서 재평가, 최종 모델 PPO | 위 표 | `eval_set/final_report.py`, `results/uniform_newnet/`, `results/final/` |
+| 6. 추론 주행 | sumo-gui에서 최종 모델 주행, 영상·주행 기록 | 대표 영상 PPO 도착(재탐색 2회), 시나리오 6개 × 3시간대 중 17개 도착(옛 도로망 · DAgger) | `yeouido_cross/drive_model.py`, `results/video/` |
 
 ### 이번에 바뀐 환경
 
@@ -265,20 +266,22 @@ T DATA API 키는 선택 사항이며, 사용할 때는 Git에서 제외되는 `
 
 ```bash
 # 최종 모델 평가 (60문제, 8개 병렬)
-LIBSUMO_AS_TRACI=quiet python test.py results/dagger_v1/iter1/model.pt \
-    --eval-set eval_set/random_60_s1.json --workers 8 --nogui --out results/uniform/dagger.json
+LIBSUMO_AS_TRACI=quiet python test.py results/ppo_v1/best/model.pt \
+    --eval-set eval_set/random_60_s1.json --workers 8 --nogui --out results/uniform_newnet/ppo.json
 YEOUIDO_REROUTE=1 ...        # 같은 명령에 붙이면 경로 재탐색 켬
 python test.py --expert ...  # 선생님 정책
 
 # 최종 평가표 (md + csv)
-python -m eval_set.final_report --final "DAgger=results/uniform/dagger.json" \
-    --compare "PPO=results/uniform/ppo.json" "선생님=results/uniform/expert.json"
+python -m eval_set.final_report --final "PPO=results/uniform_newnet/ppo.json" \
+    --compare "DAgger=results/uniform_newnet/dagger.json" "선생님=results/uniform_newnet/expert.json"
 
-# 추론 주행 (sumo-gui). 파란색 = 처음 경로, 주황색 = 재탐색으로 바뀐 경로
-python -m yeouido_cross.drive_model --problem 30 --level day --reroute          # 시험지 문제를 다른 시간대로
+# 추론 주행 (sumo-gui, 기본 모델 = 최종 PPO). 파란색 = 처음 경로, 주황색 = 재탐색으로 바뀐 경로
+python -m yeouido_cross.drive_model --problem 52 --level day --reroute          # 대표 영상과 같은 주행
+python -m yeouido_cross.drive_model --problem 30 --level rush --reroute         # 시험지 문제를 다른 시간대로
+python -m yeouido_cross.drive_model --model results/dagger_v1/iter1/model.pt ... # 다른 모델로
 python -m yeouido_cross.drive_model --origin 4 --destination 6 --level rush --reroute
-python -m yeouido_cross.drive_model --problem 21 --check results/uniform/dagger.json   # 추론 = 평가 결과인지 확인
-python -m yeouido_cross.drive_model --problem 30 --level day --reroute \
+python -m yeouido_cross.drive_model --problem 21 --check results/uniform_newnet/ppo.json   # 추론 = 평가 결과인지 확인
+python -m yeouido_cross.drive_model --problem 52 --level day --reroute \
     --record results/video/demo.mp4                                               # 영상(10 fps = 5배속) + 주행 기록 CSV
 
 # 다시 학습할 때
@@ -300,15 +303,17 @@ python -m yeouido.build_demand_uniform
 
 | 경로 | 내용 |
 |---|---|
-| `results/dagger_v1/iter1/model.pt` | **최종 모델** (DAgger 1회차) |
-| `results/ppo_v1/best/model.pt` | PPO 최고 모델 (검증 시험지 기준 step 602,112) |
+| `results/ppo_v1/best/model.pt` | **최종 모델** PPO (검증 시험지 기준 step 602,112) |
+| `results/dagger_v1/iter1/model.pt` | DAgger 1회차 (PPO 출발점, 옛 도로망 최종) |
 | `results/bc_hybrid_v2/model.pt` | BC 모델 (DAgger 출발점) |
-| `data/expert_dart200_v2.npz`, `data/dagger_v1_iter1.npz` | 최종 모델 학습 데이터 (관측 42차원 + 선생님 행동). 다른 `data/*.npz`는 DAgger 2·3회차 등 실험 데이터 |
+| `data/expert_dart200_v2.npz`, `data/dagger_v1_iter1.npz` | DAgger 1회차(= PPO 출발점) 학습 데이터 (관측 42차원 + 선생님 행동). 다른 `data/*.npz`는 DAgger 2·3회차 등 실험 데이터 |
 | `data/*.jsonl.gz` | NPZ 를 만든 원본 주행 기록 (스텝마다 전체 상태). 100 MB 넘는 3개는 `.part_*` 조각 → 아래 "큰 파일 합치기" |
-| `results/final/final_eval.md`, `.csv` | 최종 평가표 (`measured_demand/` = 기존 교통) |
-| `results/uniform/*.json` | 새 교통 6개 조합 평가 결과 (문제별 기록) |
-| `results/video/final_demo.mp4` (+ `.csv`) | 대표 영상: 주간 여의도공원 → 당산역, 재탐색 2회 후 도착 (189초) |
-| `results/video/reroute/` | 시나리오 6개 × 심야·주간·출근 추론 영상(mp4)과 주행 기록(CSV) |
+| `results/final/final_eval.md`, `.csv` | 최종 평가표 (새 도로망). `old_net/` = 옛 도로망 표, `old_net/measured_demand/` = 기존 교통 |
+| `results/uniform_newnet/*.json` | 새 도로망 평가 결과 (PPO · DAgger · 선생님, 문제별 기록) |
+| `results/uniform/*.json` | 옛 도로망 6개 조합 평가 결과 (재탐색 포함) |
+| `results/video/final_demo.mp4` (+ `.csv`) | 대표 영상 (새 도로망, PPO): 주간 국회의사당 → 당산역, 막혀서 재탐색 2회 후 도착 (192초) |
+| `results/video/reroute/` | 시나리오 6개 × 심야·주간·출근 추론 영상(mp4)과 주행 기록(CSV). 옛 도로망 · DAgger |
+| `results/video/old_net/` | 옛 도로망 대표 영상 (DAgger, 여의도공원 → 당산역) |
 | `results/demand_check/` | 교통 배율별 정체·순간이동 측정 |
 | `eval_set/random_60_s1.json`, `random_30_s2.json` | 최종 시험지 60문제, PPO 검증용 30문제 |
 | `env/yeouido/<시간대>_uniform.rou.xml`, `states/<시간대>_uniform_600.xml.gz` | 새 교통 일정표와 워밍업 상태 |
@@ -323,9 +328,9 @@ python -m yeouido.build_demand_uniform
 (이 저장소만 복사한 빈 폴더에서 최종 모델 12문제를 다시 평가해 원래 결과와 12/12 같음을 확인했다.)
 
 ```bash
-python -m yeouido_cross.drive_model --problem 30 --level day --reroute      # 대표 영상과 같은 주행 (sumo-gui)
-LIBSUMO_AS_TRACI=quiet python test.py results/dagger_v1/iter1/model.pt \
-    --eval-set eval_set/random_60_s1.json --workers 8 --nogui --limit 12      # results/uniform/dagger.json 과 같은 결과
+python -m yeouido_cross.drive_model --problem 52 --level day --reroute      # 대표 영상과 같은 주행 (sumo-gui)
+LIBSUMO_AS_TRACI=quiet python test.py results/ppo_v1/best/model.pt \
+    --eval-set eval_set/random_60_s1.json --workers 8 --nogui --limit 12      # results/uniform_newnet/ppo.json 과 같은 결과
 ```
 
 ### 큰 파일 합치기

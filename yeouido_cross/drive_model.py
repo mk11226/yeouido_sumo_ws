@@ -35,7 +35,7 @@ from train import REWARD
 from yeouido.config import COUNT_POINTS
 
 BASE = dr.BASE
-DEFAULT_MODEL = "results/dagger_v1/iter1/model.pt"   # 최종 모델 (2026-11-21 새 교통 평가: 도착 47/60, 충돌 0)
+DEFAULT_MODEL = "results/ppo_v1/best/model.pt"   # 최종 모델 PPO (2026-11-21 새 도로망 재평가: 도착 44/60, 충돌 0)
 LEVEL_KO = {"night": "심야", "day": "주간", "rush": "출근"}
 # 화면·영상에는 게이트 글자 대신 실제 이름 ("게이트 B" → "마포대교"). "영등포로(오목교)" 처럼 괄호가 있으면 괄호 안 이름
 GATE_NAMES = {f"게이트 {v['gate']}": (v["name"].split("(")[1].rstrip(")") if "(" in v["name"] else v["name"])
