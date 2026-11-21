@@ -1,0 +1,1098 @@
+{
+ "summary": {
+  "seconds": 1013,
+  "checks": {
+   "충돌 0": true,
+   "빨간불 0": true,
+   "순간이동 기준선 이하": false,
+   "도착 기준선 이상": true,
+   "관측 NaN 없음": true,
+   "재탐색 직후 보상 정상": true
+  },
+  "passed": false,
+  "arrival": 49,
+  "arrival_base": 45,
+  "by_level": {
+   "night": "20/20",
+   "day": "14/17",
+   "rush": "15/23"
+  },
+  "by_level_base": {
+   "night": "20/20",
+   "day": "14/17",
+   "rush": "11/23"
+  },
+  "collision": 0,
+  "teleport": 2,
+  "teleport_base": 1,
+  "timeout": 8,
+  "fixed": [
+   21,
+   39,
+   50,
+   58
+  ],
+  "broke": [],
+  "reroute_events": 29,
+  "long_detours": 0,
+  "max_abs_after_reroute": 0.0012849919264651525,
+  "reward_cap": 0.10492269383339735,
+  "junction_overlaps": 47,
+  "junction_overlaps_base": 44
+ },
+ "records": [
+  {
+   "id": 0,
+   "level": "rush",
+   "origin": "63빌딩",
+   "destination": "노량진수산시장",
+   "ended_by": "arrival",
+   "length": 2182,
+   "red_lights": 0,
+   "junction_overlaps": 4,
+   "reroutes": 1,
+   "nan_obs": 0,
+   "max_abs_reward": 0.09861770620071868,
+   "max_abs_after_reroute": 0.0004994924398460855,
+   "events": [
+    {
+     "step": 825,
+     "rem_before": 4708.957345995394,
+     "rem_after": 6933.436950036499
+    }
+   ]
+  },
+  {
+   "id": 1,
+   "level": "night",
+   "origin": "당산역",
+   "destination": "여의도공원",
+   "ended_by": "arrival",
+   "length": 463,
+   "red_lights": 0,
+   "junction_overlaps": 0,
+   "reroutes": 0,
+   "nan_obs": 0,
+   "max_abs_reward": 0.09380153831844455,
+   "max_abs_after_reroute": null,
+   "events": []
+  },
+  {
+   "id": 2,
+   "level": "day",
+   "origin": "게이트 F",
+   "destination": "게이트 ㄷ",
+   "ended_by": "timeout",
+   "length": 3600,
+   "red_lights": 0,
+   "junction_overlaps": 0,
+   "reroutes": 3,
+   "nan_obs": 0,
+   "max_abs_reward": 0.10364654352468712,
+   "max_abs_after_reroute": 0.0005,
+   "events": [
+    {
+     "step": 245,
+     "rem_before": 4969.339364509666,
+     "rem_after": 6308.639364509665
+    },
+    {
+     "step": 965,
+     "rem_before": 6298.877787761417,
+     "rem_after": 5615.737787761415
+    },
+    {
+     "step": 1205,
+     "rem_before": 5608.306376386431,
+     "rem_after": 5849.506376386432
+    }
+   ]
+  },
+  {
+   "id": 3,
+   "level": "day",
+   "origin": "게이트 E",
+   "destination": "IFC 서울",
+   "ended_by": "arrival",
+   "length": 1052,
+   "red_lights": 0,
+   "junction_overlaps": 3,
+   "reroutes": 0,
+   "nan_obs": 0,
+   "max_abs_reward": 0.09685550826824,
+   "max_abs_after_reroute": null,
+   "events": []
+  },
+  {
+   "id": 4,
+   "level": "day",
+   "origin": "IFC 서울",
+   "destination": "게이트 D",
+   "ended_by": "arrival",
+   "length": 1114,
+   "red_lights": 0,
+   "junction_overlaps": 0,
+   "reroutes": 0,
+   "nan_obs": 0,
+   "max_abs_reward": 0.10031013001146924,
+   "max_abs_after_reroute": null,
+   "events": []
+  },
+  {
+   "id": 5,
+   "level": "day",
+   "origin": "게이트 ㄷ",
+   "destination": "게이트 A",
+   "ended_by": "arrival",
+   "length": 524,
+   "red_lights": 0,
+   "junction_overlaps": 0,
+   "reroutes": 0,
+   "nan_obs": 0,
+   "max_abs_reward": 0.09227754335209194,
+   "max_abs_after_reroute": null,
+   "events": []
+  },
+  {
+   "id": 6,
+   "level": "night",
+   "origin": "게이트 D",
+   "destination": "노량진수산시장",
+   "ended_by": "arrival",
+   "length": 965,
+   "red_lights": 0,
+   "junction_overlaps": 0,
+   "reroutes": 0,
+   "nan_obs": 0,
+   "max_abs_reward": 0.09551830264048945,
+   "max_abs_after_reroute": null,
+   "events": []
+  },
+  {
+   "id": 7,
+   "level": "rush",
+   "origin": "당산역",
+   "destination": "게이트 C",
+   "ended_by": "arrival",
+   "length": 2161,
+   "red_lights": 0,
+   "junction_overlaps": 0,
+   "reroutes": 1,
+   "nan_obs": 0,
+   "max_abs_reward": 0.09767187098754435,
+   "max_abs_after_reroute": 0.00025178469422896594,
+   "events": [
+    {
+     "step": 1258,
+     "rem_before": 3975.6116761537164,
+     "rem_after": 4009.343016218368
+    }
+   ]
+  },
+  {
+   "id": 8,
+   "level": "night",
+   "origin": "게이트 D",
+   "destination": "IFC 서울",
+   "ended_by": "arrival",
+   "length": 989,
+   "red_lights": 0,
+   "junction_overlaps": 0,
+   "reroutes": 0,
+   "nan_obs": 0,
+   "max_abs_reward": 0.017899352194666786,
+   "max_abs_after_reroute": null,
+   "events": []
+  },
+  {
+   "id": 9,
+   "level": "night",
+   "origin": "국회의사당",
+   "destination": "게이트 B",
+   "ended_by": "arrival",
+   "length": 493,
+   "red_lights": 0,
+   "junction_overlaps": 0,
+   "reroutes": 0,
+   "nan_obs": 0,
+   "max_abs_reward": 0.08540785567894701,
+   "max_abs_after_reroute": null,
+   "events": []
+  },
+  {
+   "id": 10,
+   "level": "rush",
+   "origin": "게이트 E",
+   "destination": "IFC 서울",
+   "ended_by": "arrival",
+   "length": 1535,
+   "red_lights": 0,
+   "junction_overlaps": 6,
+   "reroutes": 0,
+   "nan_obs": 0,
+   "max_abs_reward": 0.09898342484057643,
+   "max_abs_after_reroute": null,
+   "events": []
+  },
+  {
+   "id": 11,
+   "level": "day",
+   "origin": "게이트 ㄷ",
+   "destination": "영등포역",
+   "ended_by": "arrival",
+   "length": 745,
+   "red_lights": 0,
+   "junction_overlaps": 4,
+   "reroutes": 0,
+   "nan_obs": 0,
+   "max_abs_reward": 0.09691519864522354,
+   "max_abs_after_reroute": null,
+   "events": []
+  },
+  {
+   "id": 12,
+   "level": "rush",
+   "origin": "게이트 A",
+   "destination": "영등포역",
+   "ended_by": "arrival",
+   "length": 1171,
+   "red_lights": 0,
+   "junction_overlaps": 0,
+   "reroutes": 0,
+   "nan_obs": 0,
+   "max_abs_reward": 0.09786116724274115,
+   "max_abs_after_reroute": null,
+   "events": []
+  },
+  {
+   "id": 13,
+   "level": "night",
+   "origin": "게이트 C",
+   "destination": "국회의사당",
+   "ended_by": "arrival",
+   "length": 859,
+   "red_lights": 0,
+   "junction_overlaps": 0,
+   "reroutes": 0,
+   "nan_obs": 0,
+   "max_abs_reward": 0.09684928573257685,
+   "max_abs_after_reroute": null,
+   "events": []
+  },
+  {
+   "id": 14,
+   "level": "rush",
+   "origin": "게이트 B",
+   "destination": "여의도공원",
+   "ended_by": "teleport",
+   "length": 2695,
+   "red_lights": 0,
+   "junction_overlaps": 0,
+   "reroutes": 1,
+   "nan_obs": 0,
+   "max_abs_reward": 0.09392640781501965,
+   "max_abs_after_reroute": 0.00048001929158226244,
+   "events": [
+    {
+     "step": 1906,
+     "rem_before": 1835.9687628198037,
+     "rem_after": 2804.9731697705124
+    }
+   ]
+  },
+  {
+   "id": 15,
+   "level": "night",
+   "origin": "노량진수산시장",
+   "destination": "게이트 ㄴ",
+   "ended_by": "arrival",
+   "length": 1055,
+   "red_lights": 0,
+   "junction_overlaps": 0,
+   "reroutes": 0,
+   "nan_obs": 0,
+   "max_abs_reward": 0.09908706960043494,
+   "max_abs_after_reroute": null,
+   "events": []
+  },
+  {
+   "id": 16,
+   "level": "day",
+   "origin": "게이트 F",
+   "destination": "게이트 ㄷ",
+   "ended_by": "timeout",
+   "length": 3600,
+   "red_lights": 0,
+   "junction_overlaps": 3,
+   "reroutes": 3,
+   "nan_obs": 0,
+   "max_abs_reward": 0.09849152845607748,
+   "max_abs_after_reroute": 0.0005,
+   "events": [
+    {
+     "step": 281,
+     "rem_before": 4915.960297907277,
+     "rem_after": 6479.490297907278
+    },
+    {
+     "step": 2520,
+     "rem_before": 5185.7720333894495,
+     "rem_after": 5241.262033389448
+    },
+    {
+     "step": 3438,
+     "rem_before": 5166.256697252518,
+     "rem_after": 5110.7666972525185
+    }
+   ]
+  },
+  {
+   "id": 17,
+   "level": "day",
+   "origin": "국회의사당",
+   "destination": "여의도공원",
+   "ended_by": "arrival",
+   "length": 644,
+   "red_lights": 0,
+   "junction_overlaps": 0,
+   "reroutes": 0,
+   "nan_obs": 0,
+   "max_abs_reward": 0.0912467112097263,
+   "max_abs_after_reroute": null,
+   "events": []
+  },
+  {
+   "id": 18,
+   "level": "rush",
+   "origin": "영등포역",
+   "destination": "63빌딩",
+   "ended_by": "timeout",
+   "length": 3600,
+   "red_lights": 0,
+   "junction_overlaps": 0,
+   "reroutes": 3,
+   "nan_obs": 0,
+   "max_abs_reward": 0.09769587109253555,
+   "max_abs_after_reroute": 0.000500000010729993,
+   "events": [
+    {
+     "step": 713,
+     "rem_before": 3099.5963352641866,
+     "rem_after": 4027.486335264187
+    },
+    {
+     "step": 1166,
+     "rem_before": 3828.431530066953,
+     "rem_after": 5494.131772994879
+    },
+    {
+     "step": 1679,
+     "rem_before": 4502.692515398798,
+     "rem_after": 5126.722515390144
+    }
+   ]
+  },
+  {
+   "id": 19,
+   "level": "rush",
+   "origin": "63빌딩",
+   "destination": "국회의사당",
+   "ended_by": "teleport",
+   "length": 2346,
+   "red_lights": 0,
+   "junction_overlaps": 0,
+   "reroutes": 1,
+   "nan_obs": 0,
+   "max_abs_reward": 0.10220344641473078,
+   "max_abs_after_reroute": 0.0005,
+   "events": [
+    {
+     "step": 1013,
+     "rem_before": 1725.9399999999998,
+     "rem_after": 2257.44
+    }
+   ]
+  },
+  {
+   "id": 20,
+   "level": "rush",
+   "origin": "게이트 ㄷ",
+   "destination": "게이트 B",
+   "ended_by": "arrival",
+   "length": 1287,
+   "red_lights": 0,
+   "junction_overlaps": 0,
+   "reroutes": 2,
+   "nan_obs": 0,
+   "max_abs_reward": 0.10042623879273764,
+   "max_abs_after_reroute": 0.0005000000000006205,
+   "events": [
+    {
+     "step": 640,
+     "rem_before": 1346.464964246477,
+     "rem_after": 1833.1949642464767
+    },
+    {
+     "step": 760,
+     "rem_before": 1832.6327431010716,
+     "rem_after": 1345.9027431010713
+    }
+   ]
+  },
+  {
+   "id": 21,
+   "level": "rush",
+   "origin": "게이트 B",
+   "destination": "게이트 D",
+   "ended_by": "arrival",
+   "length": 1108,
+   "red_lights": 0,
+   "junction_overlaps": 0,
+   "reroutes": 1,
+   "nan_obs": 0,
+   "max_abs_reward": 0.0975106664874602,
+   "max_abs_after_reroute": 0.00047774273584878167,
+   "events": [
+    {
+     "step": 208,
+     "rem_before": 4371.803102005222,
+     "rem_after": 4847.441519868304
+    }
+   ]
+  },
+  {
+   "id": 22,
+   "level": "day",
+   "origin": "노량진수산시장",
+   "destination": "63빌딩",
+   "ended_by": "timeout",
+   "length": 3600,
+   "red_lights": 0,
+   "junction_overlaps": 0,
+   "reroutes": 0,
+   "nan_obs": 0,
+   "max_abs_reward": 0.10339065535654896,
+   "max_abs_after_reroute": null,
+   "events": []
+  },
+  {
+   "id": 23,
+   "level": "rush",
+   "origin": "게이트 ㄴ",
+   "destination": "게이트 B",
+   "ended_by": "arrival",
+   "length": 538,
+   "red_lights": 0,
+   "junction_overlaps": 0,
+   "reroutes": 0,
+   "nan_obs": 0,
+   "max_abs_reward": 0.09332081220169766,
+   "max_abs_after_reroute": null,
+   "events": []
+  },
+  {
+   "id": 24,
+   "level": "night",
+   "origin": "게이트 D",
+   "destination": "국회의사당",
+   "ended_by": "arrival",
+   "length": 865,
+   "red_lights": 0,
+   "junction_overlaps": 0,
+   "reroutes": 0,
+   "nan_obs": 0,
+   "max_abs_reward": 0.0902508005776236,
+   "max_abs_after_reroute": null,
+   "events": []
+  },
+  {
+   "id": 25,
+   "level": "rush",
+   "origin": "당산역",
+   "destination": "63빌딩",
+   "ended_by": "timeout",
+   "length": 3600,
+   "red_lights": 0,
+   "junction_overlaps": 4,
+   "reroutes": 3,
+   "nan_obs": 0,
+   "max_abs_reward": 0.1029781348162176,
+   "max_abs_after_reroute": 0.0005,
+   "events": [
+    {
+     "step": 271,
+     "rem_before": 4099.638145742865,
+     "rem_after": 4578.113755604247
+    },
+    {
+     "step": 508,
+     "rem_before": 4398.233769680687,
+     "rem_after": 4871.0673039983185
+    },
+    {
+     "step": 785,
+     "rem_before": 4694.765894623343,
+     "rem_after": 6976.225894623343
+    }
+   ]
+  },
+  {
+   "id": 26,
+   "level": "rush",
+   "origin": "게이트 A",
+   "destination": "IFC 서울",
+   "ended_by": "timeout",
+   "length": 3600,
+   "red_lights": 0,
+   "junction_overlaps": 0,
+   "reroutes": 1,
+   "nan_obs": 0,
+   "max_abs_reward": 0.09951815786466514,
+   "max_abs_after_reroute": 0.0004812481022649984,
+   "events": [
+    {
+     "step": 2822,
+     "rem_before": 1628.229728728427,
+     "rem_after": 2195.97394725913
+    }
+   ]
+  },
+  {
+   "id": 27,
+   "level": "rush",
+   "origin": "여의도공원",
+   "destination": "영등포역",
+   "ended_by": "arrival",
+   "length": 1382,
+   "red_lights": 0,
+   "junction_overlaps": 1,
+   "reroutes": 0,
+   "nan_obs": 0,
+   "max_abs_reward": 0.09794828047931288,
+   "max_abs_after_reroute": null,
+   "events": []
+  },
+  {
+   "id": 28,
+   "level": "day",
+   "origin": "IFC 서울",
+   "destination": "게이트 B",
+   "ended_by": "arrival",
+   "length": 922,
+   "red_lights": 0,
+   "junction_overlaps": 0,
+   "reroutes": 0,
+   "nan_obs": 0,
+   "max_abs_reward": 0.09357962845294084,
+   "max_abs_after_reroute": null,
+   "events": []
+  },
+  {
+   "id": 29,
+   "level": "night",
+   "origin": "게이트 ㄱ",
+   "destination": "노량진수산시장",
+   "ended_by": "arrival",
+   "length": 1297,
+   "red_lights": 0,
+   "junction_overlaps": 3,
+   "reroutes": 0,
+   "nan_obs": 0,
+   "max_abs_reward": 0.015546493296400185,
+   "max_abs_after_reroute": null,
+   "events": []
+  },
+  {
+   "id": 30,
+   "level": "day",
+   "origin": "여의도공원",
+   "destination": "당산역",
+   "ended_by": "arrival",
+   "length": 767,
+   "red_lights": 0,
+   "junction_overlaps": 0,
+   "reroutes": 0,
+   "nan_obs": 0,
+   "max_abs_reward": 0.09632754100796735,
+   "max_abs_after_reroute": null,
+   "events": []
+  },
+  {
+   "id": 31,
+   "level": "night",
+   "origin": "게이트 B",
+   "destination": "국회의사당",
+   "ended_by": "arrival",
+   "length": 654,
+   "red_lights": 0,
+   "junction_overlaps": 0,
+   "reroutes": 0,
+   "nan_obs": 0,
+   "max_abs_reward": 0.022803349080603864,
+   "max_abs_after_reroute": null,
+   "events": []
+  },
+  {
+   "id": 32,
+   "level": "rush",
+   "ended_by": "start_failed",
+   "error": "게이트 F → 국회의사당: ego를 넣지 못했습니다 (경로 없음 또는 출발 지점이 계속 막힘)"
+  },
+  {
+   "id": 33,
+   "level": "night",
+   "origin": "게이트 E",
+   "destination": "국회의사당",
+   "ended_by": "arrival",
+   "length": 914,
+   "red_lights": 0,
+   "junction_overlaps": 0,
+   "reroutes": 0,
+   "nan_obs": 0,
+   "max_abs_reward": 0.01915977745300519,
+   "max_abs_after_reroute": null,
+   "events": []
+  },
+  {
+   "id": 34,
+   "level": "night",
+   "origin": "게이트 B",
+   "destination": "게이트 C",
+   "ended_by": "arrival",
+   "length": 525,
+   "red_lights": 0,
+   "junction_overlaps": 0,
+   "reroutes": 0,
+   "nan_obs": 0,
+   "max_abs_reward": 0.02572954413380041,
+   "max_abs_after_reroute": null,
+   "events": []
+  },
+  {
+   "id": 35,
+   "level": "night",
+   "origin": "게이트 ㄱ",
+   "destination": "영등포역",
+   "ended_by": "arrival",
+   "length": 809,
+   "red_lights": 0,
+   "junction_overlaps": 6,
+   "reroutes": 0,
+   "nan_obs": 0,
+   "max_abs_reward": 0.09401599944507039,
+   "max_abs_after_reroute": null,
+   "events": []
+  },
+  {
+   "id": 36,
+   "level": "rush",
+   "origin": "여의도공원",
+   "destination": "게이트 ㄴ",
+   "ended_by": "arrival",
+   "length": 752,
+   "red_lights": 0,
+   "junction_overlaps": 0,
+   "reroutes": 0,
+   "nan_obs": 0,
+   "max_abs_reward": 0.0932798635045762,
+   "max_abs_after_reroute": null,
+   "events": []
+  },
+  {
+   "id": 37,
+   "level": "rush",
+   "origin": "게이트 ㄴ",
+   "destination": "게이트 B",
+   "ended_by": "arrival",
+   "length": 536,
+   "red_lights": 0,
+   "junction_overlaps": 0,
+   "reroutes": 0,
+   "nan_obs": 0,
+   "max_abs_reward": 0.09237131782000356,
+   "max_abs_after_reroute": null,
+   "events": []
+  },
+  {
+   "id": 38,
+   "level": "day",
+   "origin": "게이트 A",
+   "destination": "게이트 ㄱ",
+   "ended_by": "arrival",
+   "length": 833,
+   "red_lights": 0,
+   "junction_overlaps": 0,
+   "reroutes": 0,
+   "nan_obs": 0,
+   "max_abs_reward": 0.10243134587894784,
+   "max_abs_after_reroute": null,
+   "events": []
+  },
+  {
+   "id": 39,
+   "level": "rush",
+   "origin": "여의도공원",
+   "destination": "게이트 C",
+   "ended_by": "arrival",
+   "length": 993,
+   "red_lights": 0,
+   "junction_overlaps": 3,
+   "reroutes": 1,
+   "nan_obs": 0,
+   "max_abs_reward": 0.023469285299791743,
+   "max_abs_after_reroute": 0.0005010882292367452,
+   "events": [
+    {
+     "step": 257,
+     "rem_before": 2632.5956572555638,
+     "rem_after": 3696.215657255564
+    }
+   ]
+  },
+  {
+   "id": 40,
+   "level": "rush",
+   "origin": "게이트 B",
+   "destination": "게이트 ㄱ",
+   "ended_by": "timeout",
+   "length": 3600,
+   "red_lights": 0,
+   "junction_overlaps": 0,
+   "reroutes": 0,
+   "nan_obs": 0,
+   "max_abs_reward": 0.10146151293572955,
+   "max_abs_after_reroute": null,
+   "events": []
+  },
+  {
+   "id": 41,
+   "level": "night",
+   "origin": "게이트 A",
+   "destination": "당산역",
+   "ended_by": "arrival",
+   "length": 790,
+   "red_lights": 0,
+   "junction_overlaps": 0,
+   "reroutes": 0,
+   "nan_obs": 0,
+   "max_abs_reward": 0.022334048699846825,
+   "max_abs_after_reroute": null,
+   "events": []
+  },
+  {
+   "id": 42,
+   "level": "day",
+   "origin": "게이트 ㄴ",
+   "destination": "게이트 ㄷ",
+   "ended_by": "arrival",
+   "length": 799,
+   "red_lights": 0,
+   "junction_overlaps": 0,
+   "reroutes": 0,
+   "nan_obs": 0,
+   "max_abs_reward": 0.09082709283738523,
+   "max_abs_after_reroute": null,
+   "events": []
+  },
+  {
+   "id": 43,
+   "level": "day",
+   "origin": "게이트 B",
+   "destination": "게이트 D",
+   "ended_by": "arrival",
+   "length": 1690,
+   "red_lights": 0,
+   "junction_overlaps": 0,
+   "reroutes": 1,
+   "nan_obs": 0,
+   "max_abs_reward": 0.09750852977600302,
+   "max_abs_after_reroute": 0.0012849919264651525,
+   "events": [
+    {
+     "step": 485,
+     "rem_before": 3757.2799332467876,
+     "rem_after": 5922.762675468022
+    }
+   ]
+  },
+  {
+   "id": 44,
+   "level": "day",
+   "origin": "게이트 ㄱ",
+   "destination": "게이트 ㄷ",
+   "ended_by": "arrival",
+   "length": 655,
+   "red_lights": 0,
+   "junction_overlaps": 0,
+   "reroutes": 0,
+   "nan_obs": 0,
+   "max_abs_reward": 0.0990950138729569,
+   "max_abs_after_reroute": null,
+   "events": []
+  },
+  {
+   "id": 45,
+   "level": "night",
+   "origin": "노량진수산시장",
+   "destination": "게이트 ㄴ",
+   "ended_by": "arrival",
+   "length": 1081,
+   "red_lights": 0,
+   "junction_overlaps": 0,
+   "reroutes": 0,
+   "nan_obs": 0,
+   "max_abs_reward": 0.09764455929172884,
+   "max_abs_after_reroute": null,
+   "events": []
+  },
+  {
+   "id": 46,
+   "level": "rush",
+   "origin": "게이트 A",
+   "destination": "게이트 ㄱ",
+   "ended_by": "arrival",
+   "length": 902,
+   "red_lights": 0,
+   "junction_overlaps": 0,
+   "reroutes": 0,
+   "nan_obs": 0,
+   "max_abs_reward": 0.0963364135830229,
+   "max_abs_after_reroute": null,
+   "events": []
+  },
+  {
+   "id": 47,
+   "level": "night",
+   "origin": "게이트 ㄱ",
+   "destination": "게이트 E",
+   "ended_by": "arrival",
+   "length": 1027,
+   "red_lights": 0,
+   "junction_overlaps": 5,
+   "reroutes": 0,
+   "nan_obs": 0,
+   "max_abs_reward": 0.09919453123358817,
+   "max_abs_after_reroute": null,
+   "events": []
+  },
+  {
+   "id": 48,
+   "level": "rush",
+   "origin": "게이트 C",
+   "destination": "노량진수산시장",
+   "ended_by": "timeout",
+   "length": 3600,
+   "red_lights": 0,
+   "junction_overlaps": 0,
+   "reroutes": 3,
+   "nan_obs": 0,
+   "max_abs_reward": 0.09855114221175451,
+   "max_abs_after_reroute": 0.0004997049486953468,
+   "events": [
+    {
+     "step": 190,
+     "rem_before": 7134.97591157334,
+     "rem_after": 9633.905469079566
+    },
+    {
+     "step": 310,
+     "rem_before": 9630.533028078436,
+     "rem_after": 8961.305714000438
+    },
+    {
+     "step": 790,
+     "rem_before": 8942.201184725154,
+     "rem_after": 10012.23616687578
+    }
+   ]
+  },
+  {
+   "id": 49,
+   "level": "night",
+   "origin": "게이트 ㄴ",
+   "destination": "게이트 F",
+   "ended_by": "arrival",
+   "length": 881,
+   "red_lights": 0,
+   "junction_overlaps": 0,
+   "reroutes": 0,
+   "nan_obs": 0,
+   "max_abs_reward": 0.09708878676264558,
+   "max_abs_after_reroute": null,
+   "events": []
+  },
+  {
+   "id": 50,
+   "level": "rush",
+   "origin": "국회의사당",
+   "destination": "게이트 C",
+   "ended_by": "arrival",
+   "length": 1194,
+   "red_lights": 0,
+   "junction_overlaps": 0,
+   "reroutes": 1,
+   "nan_obs": 0,
+   "max_abs_reward": 0.09847918218717705,
+   "max_abs_after_reroute": 0.0005,
+   "events": [
+    {
+     "step": 261,
+     "rem_before": 3147.3900000000003,
+     "rem_after": 3684.1899999999996
+    }
+   ]
+  },
+  {
+   "id": 51,
+   "level": "night",
+   "origin": "IFC 서울",
+   "destination": "게이트 A",
+   "ended_by": "arrival",
+   "length": 560,
+   "red_lights": 0,
+   "junction_overlaps": 0,
+   "reroutes": 0,
+   "nan_obs": 0,
+   "max_abs_reward": 0.09497718170143052,
+   "max_abs_after_reroute": null,
+   "events": []
+  },
+  {
+   "id": 52,
+   "level": "day",
+   "origin": "국회의사당",
+   "destination": "당산역",
+   "ended_by": "arrival",
+   "length": 988,
+   "red_lights": 0,
+   "junction_overlaps": 1,
+   "reroutes": 0,
+   "nan_obs": 0,
+   "max_abs_reward": 0.09595816269193669,
+   "max_abs_after_reroute": null,
+   "events": []
+  },
+  {
+   "id": 53,
+   "level": "night",
+   "origin": "당산역",
+   "destination": "게이트 C",
+   "ended_by": "arrival",
+   "length": 1229,
+   "red_lights": 0,
+   "junction_overlaps": 0,
+   "reroutes": 0,
+   "nan_obs": 0,
+   "max_abs_reward": 0.09694725685271016,
+   "max_abs_after_reroute": null,
+   "events": []
+  },
+  {
+   "id": 54,
+   "level": "day",
+   "origin": "노량진수산시장",
+   "destination": "게이트 ㄴ",
+   "ended_by": "arrival",
+   "length": 1374,
+   "red_lights": 0,
+   "junction_overlaps": 3,
+   "reroutes": 0,
+   "nan_obs": 0,
+   "max_abs_reward": 0.10492269383339735,
+   "max_abs_after_reroute": null,
+   "events": []
+  },
+  {
+   "id": 55,
+   "level": "night",
+   "origin": "63빌딩",
+   "destination": "게이트 ㄱ",
+   "ended_by": "arrival",
+   "length": 319,
+   "red_lights": 0,
+   "junction_overlaps": 0,
+   "reroutes": 0,
+   "nan_obs": 0,
+   "max_abs_reward": 0.04314681136823421,
+   "max_abs_after_reroute": null,
+   "events": []
+  },
+  {
+   "id": 56,
+   "level": "night",
+   "origin": "게이트 C",
+   "destination": "국회의사당",
+   "ended_by": "arrival",
+   "length": 816,
+   "red_lights": 0,
+   "junction_overlaps": 0,
+   "reroutes": 0,
+   "nan_obs": 0,
+   "max_abs_reward": 0.019669275316229293,
+   "max_abs_after_reroute": null,
+   "events": []
+  },
+  {
+   "id": 57,
+   "level": "rush",
+   "origin": "게이트 E",
+   "destination": "국회의사당",
+   "ended_by": "arrival",
+   "length": 1614,
+   "red_lights": 0,
+   "junction_overlaps": 1,
+   "reroutes": 1,
+   "nan_obs": 0,
+   "max_abs_reward": 0.09853083634450581,
+   "max_abs_after_reroute": 0.0005,
+   "events": [
+    {
+     "step": 565,
+     "rem_before": 3664.018663556281,
+     "rem_after": 3770.8386635562806
+    }
+   ]
+  },
+  {
+   "id": 58,
+   "level": "rush",
+   "origin": "게이트 A",
+   "destination": "게이트 F",
+   "ended_by": "arrival",
+   "length": 2625,
+   "red_lights": 0,
+   "junction_overlaps": 0,
+   "reroutes": 2,
+   "nan_obs": 0,
+   "max_abs_reward": 0.10441699734761502,
+   "max_abs_after_reroute": 0.0005256746671482921,
+   "events": [
+    {
+     "step": 497,
+     "rem_before": 5266.665233620168,
+     "rem_after": 6717.691082861425
+    },
+    {
+     "step": 737,
+     "rem_before": 6660.207630542103,
+     "rem_after": 6009.643618221986
+    }
+   ]
+  },
+  {
+   "id": 59,
+   "level": "day",
+   "origin": "게이트 B",
+   "destination": "게이트 A",
+   "ended_by": "arrival",
+   "length": 386,
+   "red_lights": 0,
+   "junction_overlaps": 0,
+   "reroutes": 0,
+   "nan_obs": 0,
+   "max_abs_reward": 0.09356767062537534,
+   "max_abs_after_reroute": null,
+   "events": []
+  }
+ ]
+}

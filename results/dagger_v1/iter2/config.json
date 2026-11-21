@@ -1,0 +1,38 @@
+{
+  "data": [
+    "/Users/junochun/Documents/auto_driving/bmil_ws/data/expert_dart200_v2.npz",
+    "/Users/junochun/Documents/auto_driving/bmil_ws/data/dagger_v1_iter1.npz",
+    "/Users/junochun/Documents/auto_driving/bmil_ws/data/dagger_v1_iter2.npz"
+  ],
+  "epochs": 30,
+  "batch_size": 512,
+  "lr": 0.0005,
+  "lane_weight": 5.0,
+  "patience": 8,
+  "select": "accel",
+  "val_fraction": 0.1,
+  "save_log_std": -1.6,
+  "init": "/Users/junochun/Documents/auto_driving/bmil_ws/results/dagger_v1/iter1/model.pt",
+  "seed": 0,
+  "device": "mps",
+  "out_dir": "/Users/junochun/Documents/auto_driving/bmil_ws/results/dagger_v1/iter2",
+  "samples": 550409,
+  "train": 487417,
+  "val": 62992,
+  "episodes": 400,
+  "lane_counts": [
+    1110.0,
+    485716.0,
+    591.0
+  ],
+  "lane_class_weight": [
+    9.695480241722132,
+    0.9695480241722132,
+    9.695480241722132
+  ],
+  "hidden_sizes": [
+    256,
+    256
+  ],
+  "activation": "relu"
+}

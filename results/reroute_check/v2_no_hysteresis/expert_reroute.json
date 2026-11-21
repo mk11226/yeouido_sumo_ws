@@ -1,0 +1,1146 @@
+{
+ "cfg": {
+  "slow": 2.0,
+  "stuck": 60.0,
+  "cooldown": 60.0
+ },
+ "seconds": 638,
+ "records": [
+  {
+   "id": 0,
+   "level": "rush",
+   "origin": "63빌딩",
+   "destination": "노량진수산시장",
+   "snapshot_time": 600,
+   "sumo_seed": 11000,
+   "category": "섬↔본토",
+   "bridges": [
+    "서울교"
+   ],
+   "route_m": 6946,
+   "ended_by": "arrival",
+   "return": 19.70102465215188,
+   "length": 2143,
+   "lane_changes": 2,
+   "speed_sum": 19644.99834075976,
+   "speed_n": 2143,
+   "gap_sum": 5666.907649499743,
+   "gap_n": 744,
+   "min_gap": 0.0010000000006833432,
+   "red_lights": 0,
+   "route_length": 7594.960000000003,
+   "remaining": 4.041527058170061,
+   "shield_steps": 0,
+   "jerk_sum": 338.178,
+   "junction_overlaps": 8,
+   "reroutes": 0,
+   "reroute_tries": 2,
+   "reroute_changed": 1,
+   "reroute_log": [
+    {
+     "t": 825,
+     "rem_before": 4708.956950036497,
+     "rem_after": 6933.436950036499
+    }
+   ]
+  },
+  {
+   "id": 1,
+   "level": "night",
+   "origin": "당산역",
+   "destination": "여의도공원",
+   "snapshot_time": 2400,
+   "sumo_seed": 11001,
+   "category": "섬↔본토",
+   "bridges": [
+    "여의2교"
+   ],
+   "route_m": 2483,
+   "ended_by": "arrival",
+   "return": 18.791922440354398,
+   "length": 463,
+   "lane_changes": 1,
+   "speed_sum": 5581.104090692619,
+   "speed_n": 463,
+   "gap_sum": 2010.6402283706352,
+   "gap_n": 87,
+   "min_gap": 1.6352891991527088,
+   "red_lights": 0,
+   "route_length": 2783.290000000001,
+   "remaining": 3.9215997317791675,
+   "shield_steps": 2,
+   "jerk_sum": 154.901,
+   "junction_overlaps": 0,
+   "reroutes": 0,
+   "reroute_tries": 0,
+   "reroute_changed": 0,
+   "reroute_log": []
+  },
+  {
+   "id": 2,
+   "level": "day",
+   "origin": "게이트 F",
+   "destination": "게이트 ㄷ",
+   "snapshot_time": 2400,
+   "sumo_seed": 11002,
+   "category": "게이트",
+   "bridges": [
+    "여의2교",
+    "서울교"
+   ],
+   "route_m": 4253,
+   "ended_by": "timeout",
+   "return": -1.9911339507675767,
+   "length": 3600,
+   "lane_changes": 0,
+   "speed_sum": 151.86443954887682,
+   "speed_n": 3600,
+   "gap_sum": 159.28445304651163,
+   "gap_n": 3600,
+   "min_gap": 0.0010000000000012221,
+   "red_lights": 0,
+   "route_length": 4979.830000000002,
+   "remaining": 6242.542412718603,
+   "shield_steps": 0,
+   "jerk_sum": 32.71,
+   "junction_overlaps": 0,
+   "reroutes": 0,
+   "reroute_tries": 29,
+   "reroute_changed": 16,
+   "reroute_log": [
+    {
+     "t": 125,
+     "rem_before": 4969.3393646106015,
+     "rem_after": 6308.639364610601
+    },
+    {
+     "t": 965,
+     "rem_before": 6291.4468034559695,
+     "rem_after": 5608.306803455968
+    },
+    {
+     "t": 1085,
+     "rem_before": 5608.306803455968,
+     "rem_after": 6291.4468034559695
+    },
+    {
+     "t": 1205,
+     "rem_before": 6267.217477976971,
+     "rem_after": 8896.597477976968
+    },
+    {
+     "t": 1325,
+     "rem_before": 8896.171718536805,
+     "rem_after": 6266.79171853681
+    },
+    {
+     "t": 1445,
+     "rem_before": 6266.79171853681,
+     "rem_after": 5583.651718536809
+    },
+    {
+     "t": 1565,
+     "rem_before": 5583.651718536809,
+     "rem_after": 6491.021718536811
+    },
+    {
+     "t": 1685,
+     "rem_before": 6491.021718536811,
+     "rem_after": 6266.79171853681
+    },
+    {
+     "t": 1805,
+     "rem_before": 6263.742668229161,
+     "rem_after": 6371.602668229161
+    },
+    {
+     "t": 1925,
+     "rem_before": 6366.979851761825,
+     "rem_after": 6538.839851761826
+    },
+    {
+     "t": 2045,
+     "rem_before": 6538.839851761826,
+     "rem_after": 6366.979851761825
+    },
+    {
+     "t": 2285,
+     "rem_before": 6366.448997638645,
+     "rem_after": 6258.588997638643
+    },
+    {
+     "t": 3005,
+     "rem_before": 6250.055786745691,
+     "rem_after": 6357.915786745692
+    },
+    {
+     "t": 3125,
+     "rem_before": 6357.915786745692,
+     "rem_after": 6250.055786745691
+    },
+    {
+     "t": 3365,
+     "rem_before": 6242.542412718603,
+     "rem_after": 6350.402412718605
+    },
+    {
+     "t": 3485,
+     "rem_before": 6350.402412718605,
+     "rem_after": 6242.542412718603
+    }
+   ]
+  },
+  {
+   "id": 3,
+   "level": "day",
+   "origin": "게이트 E",
+   "destination": "IFC 서울",
+   "snapshot_time": 1200,
+   "sumo_seed": 11003,
+   "category": "게이트",
+   "bridges": [
+    "서울교"
+   ],
+   "route_m": 3522,
+   "ended_by": "arrival",
+   "return": 14.030668092696622,
+   "length": 1052,
+   "lane_changes": 5,
+   "speed_sum": 8040.911910029943,
+   "speed_n": 1052,
+   "gap_sum": 9874.966978386361,
+   "gap_n": 924,
+   "min_gap": 0.0010000000000047748,
+   "red_lights": 0,
+   "route_length": 4018.7399999999993,
+   "remaining": 0.9313367968609327,
+   "shield_steps": 0,
+   "jerk_sum": 367.08,
+   "junction_overlaps": 3,
+   "reroutes": 0,
+   "reroute_tries": 0,
+   "reroute_changed": 0,
+   "reroute_log": []
+  },
+  {
+   "id": 4,
+   "level": "day",
+   "origin": "IFC 서울",
+   "destination": "게이트 D",
+   "snapshot_time": 600,
+   "sumo_seed": 11004,
+   "category": "게이트",
+   "bridges": [
+    "여의2교"
+   ],
+   "route_m": 4186,
+   "ended_by": "arrival",
+   "return": 17.675823149915498,
+   "length": 1114,
+   "lane_changes": 3,
+   "speed_sum": 9376.642813125662,
+   "speed_n": 1113,
+   "gap_sum": 5541.985242358349,
+   "gap_n": 620,
+   "min_gap": 0.0010000000000047748,
+   "red_lights": 0,
+   "route_length": 4686.617880064465,
+   "remaining": 5.074344180288506,
+   "shield_steps": 0,
+   "jerk_sum": 406.524,
+   "junction_overlaps": 0,
+   "reroutes": 0,
+   "reroute_tries": 0,
+   "reroute_changed": 0,
+   "reroute_log": []
+  },
+  {
+   "id": 6,
+   "level": "night",
+   "origin": "게이트 D",
+   "destination": "노량진수산시장",
+   "snapshot_time": 2400,
+   "sumo_seed": 11006,
+   "category": "게이트",
+   "bridges": [],
+   "route_m": 5307,
+   "ended_by": "arrival",
+   "return": 19.072801193916174,
+   "length": 965,
+   "lane_changes": 1,
+   "speed_sum": 11002.096190073651,
+   "speed_n": 965,
+   "gap_sum": 1748.4621948116508,
+   "gap_n": 73,
+   "min_gap": 0.7838774186039767,
+   "red_lights": 0,
+   "route_length": 5506.61,
+   "remaining": 4.9935337113444405,
+   "shield_steps": 0,
+   "jerk_sum": 83.752,
+   "junction_overlaps": 0,
+   "reroutes": 0,
+   "reroute_tries": 0,
+   "reroute_changed": 0,
+   "reroute_log": []
+  },
+  {
+   "id": 7,
+   "level": "rush",
+   "origin": "당산역",
+   "destination": "게이트 C",
+   "snapshot_time": 1200,
+   "sumo_seed": 11007,
+   "category": "게이트",
+   "bridges": [
+    "여의2교"
+   ],
+   "route_m": 4604,
+   "ended_by": "arrival",
+   "return": 17.243504846350937,
+   "length": 2375,
+   "lane_changes": 5,
+   "speed_sum": 15990.858558440823,
+   "speed_n": 2374,
+   "gap_sum": 11187.264972853227,
+   "gap_n": 1396,
+   "min_gap": 0.0010000000000021103,
+   "red_lights": 0,
+   "route_length": 5339.840000000002,
+   "remaining": 6.715544950145727,
+   "shield_steps": 1,
+   "jerk_sum": 505.565,
+   "junction_overlaps": 1,
+   "reroutes": 0,
+   "reroute_tries": 2,
+   "reroute_changed": 2,
+   "reroute_log": [
+    {
+     "t": 487,
+     "rem_before": 4397.318009177914,
+     "rem_after": 4356.028009177914
+    },
+    {
+     "t": 730,
+     "rem_before": 4191.773720062638,
+     "rem_after": 6882.38372006264
+    }
+   ]
+  },
+  {
+   "id": 14,
+   "level": "rush",
+   "origin": "게이트 B",
+   "destination": "여의도공원",
+   "snapshot_time": 1200,
+   "sumo_seed": 11014,
+   "category": "게이트",
+   "bridges": [],
+   "route_m": 2483,
+   "ended_by": "arrival",
+   "return": 29.1072190691226,
+   "length": 1351,
+   "lane_changes": 1,
+   "speed_sum": 11730.232179943683,
+   "speed_n": 1351,
+   "gap_sum": 7906.130787219087,
+   "gap_n": 534,
+   "min_gap": 0.0010000000000047748,
+   "red_lights": 0,
+   "route_length": 2746.13,
+   "remaining": 3.162324835661707,
+   "shield_steps": 1,
+   "jerk_sum": 182.479,
+   "junction_overlaps": 1,
+   "reroutes": 0,
+   "reroute_tries": 1,
+   "reroute_changed": 1,
+   "reroute_log": [
+    {
+     "t": 229,
+     "rem_before": 2047.4189250450836,
+     "rem_after": 5168.298925045083
+    }
+   ]
+  },
+  {
+   "id": 16,
+   "level": "day",
+   "origin": "게이트 F",
+   "destination": "게이트 ㄷ",
+   "snapshot_time": 1800,
+   "sumo_seed": 11016,
+   "category": "게이트",
+   "bridges": [
+    "여의2교",
+    "서울교"
+   ],
+   "route_m": 4253,
+   "ended_by": "timeout",
+   "return": -1.6881918702491898,
+   "length": 3600,
+   "lane_changes": 0,
+   "speed_sum": 134.11857681755495,
+   "speed_n": 3600,
+   "gap_sum": 135.32613273584226,
+   "gap_n": 3600,
+   "min_gap": 0.001000000000000334,
+   "red_lights": 0,
+   "route_length": 4979.830000000002,
+   "remaining": 6359.2953779523095,
+   "shield_steps": 0,
+   "jerk_sum": 17.14,
+   "junction_overlaps": 0,
+   "reroutes": 0,
+   "reroute_tries": 29,
+   "reroute_changed": 18,
+   "reroute_log": [
+    {
+     "t": 121,
+     "rem_before": 4975.538733633329,
+     "rem_after": 8489.608733633328
+    },
+    {
+     "t": 241,
+     "rem_before": 8474.785596479029,
+     "rem_after": 6524.2455964790315
+    },
+    {
+     "t": 361,
+     "rem_before": 6522.996271637759,
+     "rem_after": 6298.766271637757
+    },
+    {
+     "t": 841,
+     "rem_before": 6291.475029059608,
+     "rem_after": 8466.245029059606
+    },
+    {
+     "t": 961,
+     "rem_before": 8466.245029059606,
+     "rem_after": 6525.855029059607
+    },
+    {
+     "t": 1081,
+     "rem_before": 6525.855029059607,
+     "rem_after": 6128.355029059606
+    },
+    {
+     "t": 1201,
+     "rem_before": 6128.355029059606,
+     "rem_after": 6291.475029059608
+    },
+    {
+     "t": 1561,
+     "rem_before": 6281.968230395466,
+     "rem_after": 6389.828230395467
+    },
+    {
+     "t": 1681,
+     "rem_before": 6389.828230395467,
+     "rem_after": 6506.198230395467
+    },
+    {
+     "t": 1801,
+     "rem_before": 6506.198230395467,
+     "rem_after": 6281.968230395466
+    },
+    {
+     "t": 2041,
+     "rem_before": 6274.160574150017,
+     "rem_after": 8448.930574150016
+    },
+    {
+     "t": 2161,
+     "rem_before": 8448.930574150012,
+     "rem_after": 6274.1605741500125
+    },
+    {
+     "t": 2761,
+     "rem_before": 6259.03347232154,
+     "rem_after": 6402.613472321541
+    },
+    {
+     "t": 2881,
+     "rem_before": 6402.613472321541,
+     "rem_after": 6259.03347232154
+    },
+    {
+     "t": 3121,
+     "rem_before": 6251.656077350706,
+     "rem_after": 6475.886077350708
+    },
+    {
+     "t": 3241,
+     "rem_before": 6475.676311412139,
+     "rem_after": 6359.306311412139
+    },
+    {
+     "t": 3361,
+     "rem_before": 6359.295377952334,
+     "rem_after": 6251.4353779523335
+    },
+    {
+     "t": 3481,
+     "rem_before": 6251.435377952309,
+     "rem_after": 6359.2953779523095
+    }
+   ]
+  },
+  {
+   "id": 18,
+   "level": "rush",
+   "origin": "영등포역",
+   "destination": "63빌딩",
+   "snapshot_time": 1800,
+   "sumo_seed": 11018,
+   "category": "섬↔본토",
+   "bridges": [
+    "서울교"
+   ],
+   "route_m": 3080,
+   "ended_by": "arrival",
+   "return": 20.770128393486992,
+   "length": 2024,
+   "lane_changes": 0,
+   "speed_sum": 8858.006988577186,
+   "speed_n": 2024,
+   "gap_sum": 3454.742886159416,
+   "gap_n": 1218,
+   "min_gap": 0.0010000000000012221,
+   "red_lights": 0,
+   "route_length": 3504.79,
+   "remaining": 2.6170836226253584,
+   "shield_steps": 0,
+   "jerk_sum": 375.849,
+   "junction_overlaps": 3,
+   "reroutes": 0,
+   "reroute_tries": 6,
+   "reroute_changed": 3,
+   "reroute_log": [
+    {
+     "t": 223,
+     "rem_before": 3256.565541088845,
+     "rem_after": 3552.385541088844
+    },
+    {
+     "t": 593,
+     "rem_before": 3395.4163212002695,
+     "rem_after": 5693.196321200271
+    },
+    {
+     "t": 713,
+     "rem_before": 5693.196321200271,
+     "rem_after": 4027.4863212002706
+    }
+   ]
+  },
+  {
+   "id": 19,
+   "level": "rush",
+   "origin": "63빌딩",
+   "destination": "국회의사당",
+   "snapshot_time": 1800,
+   "sumo_seed": 11019,
+   "category": "여의도 안",
+   "bridges": [],
+   "route_m": 3616,
+   "ended_by": "teleport",
+   "return": 0.7695603305614949,
+   "length": 1636,
+   "lane_changes": 0,
+   "speed_sum": 6040.444313690823,
+   "speed_n": 1636,
+   "gap_sum": 1730.0254047538874,
+   "gap_n": 58,
+   "min_gap": 2.280537907378516,
+   "red_lights": 0,
+   "route_length": 4024.810000000001,
+   "remaining": 956.6000000000001,
+   "shield_steps": 0,
+   "jerk_sum": 174.562,
+   "junction_overlaps": 0,
+   "reroutes": 0,
+   "reroute_tries": 8,
+   "reroute_changed": 2,
+   "reroute_log": [
+    {
+     "t": 346,
+     "rem_before": 2829.8210000000013,
+     "rem_after": 3647.6610000000005
+    },
+    {
+     "t": 466,
+     "rem_before": 3647.6610000000005,
+     "rem_after": 2829.8210000000013
+    }
+   ]
+  },
+  {
+   "id": 21,
+   "level": "rush",
+   "origin": "게이트 B",
+   "destination": "게이트 D",
+   "snapshot_time": 1200,
+   "sumo_seed": 11021,
+   "category": "게이트",
+   "bridges": [
+    "여의2교"
+   ],
+   "route_m": 4648,
+   "ended_by": "arrival",
+   "return": 18.165272657329982,
+   "length": 1063,
+   "lane_changes": 4,
+   "speed_sum": 11078.094811219615,
+   "speed_n": 1062,
+   "gap_sum": 4747.469715711891,
+   "gap_n": 471,
+   "min_gap": 0.0010000000000047748,
+   "red_lights": 0,
+   "route_length": 5070.32,
+   "remaining": 6.235843481224492,
+   "shield_steps": 0,
+   "jerk_sum": 200.754,
+   "junction_overlaps": 0,
+   "reroutes": 0,
+   "reroute_tries": 1,
+   "reroute_changed": 1,
+   "reroute_log": [
+    {
+     "t": 208,
+     "rem_before": 4371.791519868303,
+     "rem_after": 4847.441519868304
+    }
+   ]
+  },
+  {
+   "id": 22,
+   "level": "day",
+   "origin": "노량진수산시장",
+   "destination": "63빌딩",
+   "snapshot_time": 2400,
+   "sumo_seed": 11022,
+   "category": "섬↔본토",
+   "bridges": [
+    "여의교"
+   ],
+   "route_m": 4630,
+   "ended_by": "timeout",
+   "return": 1.302564150963314,
+   "length": 3600,
+   "lane_changes": 0,
+   "speed_sum": 4233.600552842612,
+   "speed_n": 3600,
+   "gap_sum": 5648.654147083601,
+   "gap_n": 3416,
+   "min_gap": 0.0010000000000012221,
+   "red_lights": 0,
+   "route_length": 5010.420000000002,
+   "remaining": 2892.88767430771,
+   "shield_steps": 0,
+   "jerk_sum": 163.44,
+   "junction_overlaps": 0,
+   "reroutes": 0,
+   "reroute_tries": 21,
+   "reroute_changed": 2,
+   "reroute_log": [
+    {
+     "t": 620,
+     "rem_before": 3460.444198514788,
+     "rem_after": 7216.124198514788
+    },
+    {
+     "t": 740,
+     "rem_before": 7208.211355507262,
+     "rem_after": 3452.5313555072626
+    }
+   ]
+  },
+  {
+   "id": 25,
+   "level": "rush",
+   "origin": "당산역",
+   "destination": "63빌딩",
+   "snapshot_time": 2400,
+   "sumo_seed": 11025,
+   "category": "섬↔본토",
+   "bridges": [
+    "여의2교"
+   ],
+   "route_m": 4306,
+   "ended_by": "timeout",
+   "return": 5.947600639489462,
+   "length": 3600,
+   "lane_changes": 4,
+   "speed_sum": 13169.633128119209,
+   "speed_n": 3600,
+   "gap_sum": 5998.371327927452,
+   "gap_n": 2528,
+   "min_gap": 0.0010000000000012221,
+   "red_lights": 0,
+   "route_length": 4886.599999999999,
+   "remaining": 7518.785016735319,
+   "shield_steps": 0,
+   "jerk_sum": 413.885,
+   "junction_overlaps": 4,
+   "reroutes": 0,
+   "reroute_tries": 12,
+   "reroute_changed": 12,
+   "reroute_log": [
+    {
+     "t": 271,
+     "rem_before": 4099.6037556042465,
+     "rem_after": 4578.113755604247
+    },
+    {
+     "t": 508,
+     "rem_before": 4398.227305007654,
+     "rem_after": 4871.067305007655
+    },
+    {
+     "t": 784,
+     "rem_before": 4702.652289142452,
+     "rem_after": 8174.872289142452
+    },
+    {
+     "t": 1122,
+     "rem_before": 6866.674458008416,
+     "rem_after": 7449.354458008414
+    },
+    {
+     "t": 1628,
+     "rem_before": 6169.192031817749,
+     "rem_after": 5586.5120318177505
+    },
+    {
+     "t": 1748,
+     "rem_before": 5586.5120318177505,
+     "rem_after": 7159.222031817748
+    },
+    {
+     "t": 2446,
+     "rem_before": 5625.241000000001,
+     "rem_after": 8322.130999999998
+    },
+    {
+     "t": 3010,
+     "rem_before": 7022.405506565394,
+     "rem_after": 4516.555506565393
+    },
+    {
+     "t": 3130,
+     "rem_before": 4516.555506565393,
+     "rem_after": 7880.815506565391
+    },
+    {
+     "t": 3250,
+     "rem_before": 7876.009518945807,
+     "rem_after": 4583.409518945809
+    },
+    {
+     "t": 3370,
+     "rem_before": 4582.479256308163,
+     "rem_after": 9137.319256308157
+    },
+    {
+     "t": 3490,
+     "rem_before": 9134.607639156045,
+     "rem_after": 7527.877639156048
+    }
+   ]
+  },
+  {
+   "id": 26,
+   "level": "rush",
+   "origin": "게이트 A",
+   "destination": "IFC 서울",
+   "snapshot_time": 1200,
+   "sumo_seed": 11026,
+   "category": "게이트",
+   "bridges": [],
+   "route_m": 2349,
+   "ended_by": "teleport",
+   "return": 9.830264483879429,
+   "length": 2167,
+   "lane_changes": 1,
+   "speed_sum": 9005.303689669932,
+   "speed_n": 2167,
+   "gap_sum": 6690.218618441991,
+   "gap_n": 865,
+   "min_gap": 0.0010000000000331966,
+   "red_lights": 0,
+   "route_length": 2616.879999999999,
+   "remaining": 86.2,
+   "shield_steps": 0,
+   "jerk_sum": 273.298,
+   "junction_overlaps": 0,
+   "reroutes": 0,
+   "reroute_tries": 8,
+   "reroute_changed": 2,
+   "reroute_log": [
+    {
+     "t": 165,
+     "rem_before": 2341.964486780596,
+     "rem_after": 4302.374486780598
+    },
+    {
+     "t": 971,
+     "rem_before": 2129.709999999999,
+     "rem_after": 2152.939999999999
+    }
+   ]
+  },
+  {
+   "id": 39,
+   "level": "rush",
+   "origin": "여의도공원",
+   "destination": "게이트 C",
+   "snapshot_time": 1200,
+   "sumo_seed": 11039,
+   "category": "게이트",
+   "bridges": [],
+   "route_m": 2835,
+   "ended_by": "arrival",
+   "return": 22.43926711432728,
+   "length": 978,
+   "lane_changes": 0,
+   "speed_sum": 8494.987855812353,
+   "speed_n": 978,
+   "gap_sum": 1571.8200146009542,
+   "gap_n": 293,
+   "min_gap": 0.0010000000000047748,
+   "red_lights": 0,
+   "route_length": 3188.05,
+   "remaining": 3.5076556066094895,
+   "shield_steps": 0,
+   "jerk_sum": 255.327,
+   "junction_overlaps": 3,
+   "reroutes": 0,
+   "reroute_tries": 1,
+   "reroute_changed": 1,
+   "reroute_log": [
+    {
+     "t": 257,
+     "rem_before": 2632.5956572555638,
+     "rem_after": 3696.215657255564
+    }
+   ]
+  },
+  {
+   "id": 40,
+   "level": "rush",
+   "origin": "게이트 B",
+   "destination": "게이트 ㄱ",
+   "snapshot_time": 1200,
+   "sumo_seed": 11040,
+   "category": "게이트",
+   "bridges": [
+    "여의교"
+   ],
+   "route_m": 2657,
+   "ended_by": "timeout",
+   "return": 11.800293034899475,
+   "length": 3600,
+   "lane_changes": 1,
+   "speed_sum": 10433.837963818942,
+   "speed_n": 3600,
+   "gap_sum": 1770.900625842677,
+   "gap_n": 2748,
+   "min_gap": 0.0009999999999998899,
+   "red_lights": 0,
+   "route_length": 3010.71,
+   "remaining": 421.4715685878231,
+   "shield_steps": 1,
+   "jerk_sum": 331.313,
+   "junction_overlaps": 0,
+   "reroutes": 0,
+   "reroute_tries": 19,
+   "reroute_changed": 1,
+   "reroute_log": [
+    {
+     "t": 421,
+     "rem_before": 1934.6965541833883,
+     "rem_after": 4565.386554183388
+    }
+   ]
+  },
+  {
+   "id": 48,
+   "level": "rush",
+   "origin": "게이트 C",
+   "destination": "노량진수산시장",
+   "snapshot_time": 1200,
+   "sumo_seed": 11048,
+   "category": "게이트",
+   "bridges": [
+    "여의교"
+   ],
+   "route_m": 7039,
+   "ended_by": "timeout",
+   "return": -1.8007409867974924,
+   "length": 3600,
+   "lane_changes": 0,
+   "speed_sum": 1105.3114846272895,
+   "speed_n": 3600,
+   "gap_sum": 376.5954044691696,
+   "gap_n": 3541,
+   "min_gap": 0.0010000000000047748,
+   "red_lights": 0,
+   "route_length": 7598.900000000003,
+   "remaining": 9424.850081700073,
+   "shield_steps": 0,
+   "jerk_sum": 21.019,
+   "junction_overlaps": 0,
+   "reroutes": 0,
+   "reroute_tries": 29,
+   "reroute_changed": 29,
+   "reroute_log": [
+    {
+     "t": 190,
+     "rem_before": 7134.975469079562,
+     "rem_after": 9633.905469079566
+    },
+    {
+     "t": 310,
+     "rem_before": 9630.295714000438,
+     "rem_after": 8961.305714000438
+    },
+    {
+     "t": 430,
+     "rem_before": 8956.758241695949,
+     "rem_after": 10476.028241695945
+    },
+    {
+     "t": 550,
+     "rem_before": 10476.028241695945,
+     "rem_after": 9604.678241695947
+    },
+    {
+     "t": 670,
+     "rem_before": 9604.678241695947,
+     "rem_after": 8662.358241695947
+    },
+    {
+     "t": 790,
+     "rem_before": 8637.768017450859,
+     "rem_after": 10296.658017450858
+    },
+    {
+     "t": 910,
+     "rem_before": 10296.652534319333,
+     "rem_after": 8978.372534319333
+    },
+    {
+     "t": 1030,
+     "rem_before": 8978.372534319333,
+     "rem_after": 9580.082534319334
+    },
+    {
+     "t": 1150,
+     "rem_before": 9580.082534319334,
+     "rem_after": 10316.892534319331
+    },
+    {
+     "t": 1270,
+     "rem_before": 10316.04639277862,
+     "rem_after": 7786.636392778619
+    },
+    {
+     "t": 1390,
+     "rem_before": 7774.148565165551,
+     "rem_after": 10438.098565165552
+    },
+    {
+     "t": 1510,
+     "rem_before": 10437.927994786232,
+     "rem_after": 9566.577994786234
+    },
+    {
+     "t": 1630,
+     "rem_before": 9566.577994764339,
+     "rem_after": 7773.977994764337
+    },
+    {
+     "t": 1750,
+     "rem_before": 7773.977994764337,
+     "rem_after": 9566.577994764339
+    },
+    {
+     "t": 1870,
+     "rem_before": 9559.966527965718,
+     "rem_after": 10832.416527965719
+    },
+    {
+     "t": 1990,
+     "rem_before": 10831.041919163377,
+     "rem_after": 8875.851919163377
+    },
+    {
+     "t": 2110,
+     "rem_before": 8873.41757970569,
+     "rem_after": 7987.7875797056895
+    },
+    {
+     "t": 2230,
+     "rem_before": 7983.30844564145,
+     "rem_after": 8153.198445641451
+    },
+    {
+     "t": 2350,
+     "rem_before": 8152.717388573486,
+     "rem_after": 8033.137388573483
+    },
+    {
+     "t": 2470,
+     "rem_before": 8031.74255119635,
+     "rem_after": 7757.202551196351
+    },
+    {
+     "t": 2590,
+     "rem_before": 7753.413735704207,
+     "rem_after": 9546.01373570421
+    },
+    {
+     "t": 2710,
+     "rem_before": 9538.629527888474,
+     "rem_after": 10356.469527888474
+    },
+    {
+     "t": 2830,
+     "rem_before": 10351.67033539289,
+     "rem_after": 8114.280335392888
+    },
+    {
+     "t": 2950,
+     "rem_before": 8114.237389549541,
+     "rem_after": 8932.077389549542
+    },
+    {
+     "t": 3070,
+     "rem_before": 8930.575343705503,
+     "rem_after": 10019.515343705507
+    },
+    {
+     "t": 3190,
+     "rem_before": 10013.716970570555,
+     "rem_after": 7896.126970570547
+    },
+    {
+     "t": 3310,
+     "rem_before": 7896.0581024498715,
+     "rem_after": 9427.908102449876
+    },
+    {
+     "t": 3430,
+     "rem_before": 9427.908102449876,
+     "rem_after": 9315.608102449874
+    },
+    {
+     "t": 3550,
+     "rem_before": 9312.550081700072,
+     "rem_after": 9424.850081700073
+    }
+   ]
+  },
+  {
+   "id": 50,
+   "level": "rush",
+   "origin": "국회의사당",
+   "destination": "게이트 C",
+   "snapshot_time": 600,
+   "sumo_seed": 11050,
+   "category": "게이트",
+   "bridges": [],
+   "route_m": 3377,
+   "ended_by": "arrival",
+   "return": 19.488961930569815,
+   "length": 1005,
+   "lane_changes": 2,
+   "speed_sum": 8676.293685069124,
+   "speed_n": 1005,
+   "gap_sum": 3142.214128902364,
+   "gap_n": 215,
+   "min_gap": 0.0010045998482723917,
+   "red_lights": 0,
+   "route_length": 3797.19,
+   "remaining": 0.2103205645506705,
+   "shield_steps": 0,
+   "jerk_sum": 227.693,
+   "junction_overlaps": 0,
+   "reroutes": 0,
+   "reroute_tries": 1,
+   "reroute_changed": 1,
+   "reroute_log": [
+    {
+     "t": 261,
+     "rem_before": 3147.3900000000003,
+     "rem_after": 3684.1899999999996
+    }
+   ]
+  },
+  {
+   "id": 58,
+   "level": "rush",
+   "origin": "게이트 A",
+   "destination": "게이트 F",
+   "snapshot_time": 1800,
+   "sumo_seed": 11058,
+   "category": "게이트",
+   "bridges": [
+    "서울교"
+   ],
+   "route_m": 5219,
+   "ended_by": "teleport",
+   "return": 3.9881964072207916,
+   "length": 3399,
+   "lane_changes": 0,
+   "speed_sum": 15151.83069877241,
+   "speed_n": 3399,
+   "gap_sum": 7973.7533004893385,
+   "gap_n": 1265,
+   "min_gap": 0.0010000000000012221,
+   "red_lights": 0,
+   "route_length": 5866.480000000006,
+   "remaining": 990.0799999999999,
+   "shield_steps": 1,
+   "jerk_sum": 437.861,
+   "junction_overlaps": 3,
+   "reroutes": 0,
+   "reroute_tries": 11,
+   "reroute_changed": 6,
+   "reroute_log": [
+    {
+     "t": 271,
+     "rem_before": 5339.272154106263,
+     "rem_after": 6257.612154106262
+    },
+    {
+     "t": 497,
+     "rem_before": 6184.956064910821,
+     "rem_after": 6717.65606491082
+    },
+    {
+     "t": 617,
+     "rem_before": 6692.054825825644,
+     "rem_after": 6596.074825825644
+    },
+    {
+     "t": 765,
+     "rem_before": 6549.548080195973,
+     "rem_after": 7287.698080195973
+    },
+    {
+     "t": 2614,
+     "rem_before": 533.7731151970339,
+     "rem_after": 2242.4331151970337
+    },
+    {
+     "t": 3037,
+     "rem_before": 2097.741,
+     "rem_after": 1022.4409999999999
+    }
+   ]
+  }
+ ]
+}

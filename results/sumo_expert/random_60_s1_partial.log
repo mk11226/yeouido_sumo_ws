@@ -1,0 +1,66 @@
+시험지: eval_set/random_60_s1.json (60문제, workers=8)
+  #1   (전체 60문제) 도착   night 당산역 → 여의도공원
+  #6   (전체 60문제) 도착   night 게이트 D → 노량진수산시장
+  #9   (전체 60문제) 도착   night 국회의사당 → 게이트 B
+  #17  (전체 60문제) 도착   day   국회의사당 → 여의도공원
+  #5   (전체 60문제) 도착   day   게이트 ㄷ → 게이트 A
+  #13  (전체 60문제) 도착   night 게이트 C → 국회의사당
+  #3   (전체 60문제) 도착   day   게이트 E → IFC 서울
+  #11  (전체 60문제) 도착   day   게이트 ㄷ → 영등포역
+  #0   (전체 60문제) 도착   rush  63빌딩 → 노량진수산시장
+  #8   (전체 60문제) 도착   night 게이트 D → IFC 서울
+  #7   (전체 60문제) 도착   rush  당산역 → 게이트 C
+  #15  (전체 60문제) 도착   night 노량진수산시장 → 게이트 ㄴ
+  #23  (전체 60문제) 도착   rush  게이트 ㄴ → 게이트 B
+  #31  (전체 60문제) 도착   night 게이트 B → 국회의사당
+  #19  (전체 60문제) 도착   rush  63빌딩 → 국회의사당
+  #2   (전체 60문제) 시간초과 day   게이트 F → 게이트 ㄷ
+  #10  (전체 60문제) 도착   rush  게이트 E → IFC 서울
+  #16  (전체 60문제) 시간초과 day   게이트 F → 게이트 ㄷ
+  #27  (전체 60문제) 도착   rush  여의도공원 → 영등포역
+  #24  (전체 60문제) 도착   night 게이트 D → 국회의사당
+  #35  (전체 60문제) 도착   night 게이트 ㄱ → 영등포역
+  #25  (전체 60문제) 시간초과 rush  당산역 → 63빌딩
+  #33  (전체 60문제) 도착   night 게이트 E → 국회의사당
+  #41  (전체 60문제) 도착   night 게이트 A → 당산역
+  #49  (전체 60문제) 도착   night 게이트 ㄴ → 게이트 F
+  #39  (전체 60문제) 도착   rush  여의도공원 → 게이트 C
+  #47  (전체 60문제) 도착   night 게이트 ㄱ → 게이트 E
+  #43  (전체 60문제) 도착   day   게이트 B → 게이트 D
+  #55  (전체 60문제) 도착   night 63빌딩 → 게이트 ㄱ
+  #51  (전체 60문제) 도착   night IFC 서울 → 게이트 A
+  #59  (전체 60문제) 도착   day   게이트 B → 게이트 A
+  #57  (전체 60문제) 도착   rush  게이트 E → 국회의사당
+  #18  (전체 60문제) 시간초과 rush  영등포역 → 63빌딩
+  #26  (전체 60문제) 시간초과 rush  게이트 A → IFC 서울
+  #34  (전체 60문제) 도착   night 게이트 B → 게이트 C
+multiprocessing.pool.RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/opt/anaconda3/envs/sumo_rl/lib/python3.10/multiprocessing/pool.py", line 125, in worker
+    result = (True, func(*args, **kwds))
+  File "/opt/anaconda3/envs/sumo_rl/lib/python3.10/multiprocessing/pool.py", line 48, in mapstar
+    return list(map(*args))
+  File "/Users/junochun/Documents/auto_driving/bmil_ws/test.py", line 127, in _eval_worker
+    return evaluate_problems(agent, env, problems, deterministic=True,
+  File "/Users/junochun/Documents/auto_driving/bmil_ws/utils/evaluator.py", line 152, in evaluate_problems
+    rec = {**p, **run_episode(policy, env, deterministic,
+  File "/Users/junochun/Documents/auto_driving/bmil_ws/utils/evaluator.py", line 52, in run_episode
+    obs, _ = env.reset(options=options) if options is not None else env.reset()
+  File "/Users/junochun/Documents/auto_driving/bmil_ws/env/yeouido_env.py", line 239, in reset
+    raise RuntimeError(f"{origin} → {destination}: ego를 넣지 못했습니다 "
+RuntimeError: IFC 서울 → 게이트 D: ego를 넣지 못했습니다 (경로 없음 또는 출발 지점이 계속 막힘)
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/junochun/Documents/auto_driving/bmil_ws/test.py", line 224, in <module>
+    records, out = run_eval_set(args, model_path)
+  File "/Users/junochun/Documents/auto_driving/bmil_ws/test.py", line 170, in run_eval_set
+    parts = pool.map(_eval_worker, [(model_path, args.algorithm, c, len(problems))
+  File "/opt/anaconda3/envs/sumo_rl/lib/python3.10/multiprocessing/pool.py", line 367, in map
+    return self._map_async(func, iterable, mapstar, chunksize).get()
+  File "/opt/anaconda3/envs/sumo_rl/lib/python3.10/multiprocessing/pool.py", line 774, in get
+    raise self._value
+RuntimeError: IFC 서울 → 게이트 D: ego를 넣지 못했습니다 (경로 없음 또는 출발 지점이 계속 막힘)

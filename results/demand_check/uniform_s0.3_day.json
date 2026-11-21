@@ -1,0 +1,275 @@
+[
+ {
+  "t": 600,
+  "n": 849,
+  "halting": 0.177,
+  "edges_with_cars": 392,
+  "edges": 1641,
+  "top10_cells": 0.349,
+  "pending": 0,
+  "teleports": 0,
+  "collisions": 0,
+  "types": {
+   "hv_krauss": 0.36,
+   "hv_eidm": 0.2,
+   "hv_acc": 0.165,
+   "hv_idm": 0.274
+  },
+  "busiest": [
+   [
+    "영등포로",
+    12
+   ],
+   [
+    "국회대로",
+    9
+   ],
+   [
+    "경인로",
+    9
+   ],
+   [
+    "국회대로",
+    9
+   ],
+   [
+    "여의동로",
+    8
+   ]
+  ]
+ },
+ {
+  "t": 1200,
+  "n": 973,
+  "halting": 0.24,
+  "edges_with_cars": 393,
+  "edges": 1641,
+  "top10_cells": 0.37,
+  "pending": 0,
+  "teleports": 0,
+  "collisions": 0,
+  "types": {
+   "hv_krauss": 0.362,
+   "hv_acc": 0.162,
+   "hv_eidm": 0.193,
+   "hv_idm": 0.283
+  },
+  "busiest": [
+   [
+    "영등포로",
+    29
+   ],
+   [
+    "국회대로",
+    22
+   ],
+   [
+    "경인로",
+    15
+   ],
+   [
+    "영신로",
+    12
+   ],
+   [
+    "영등포로",
+    12
+   ]
+  ]
+ },
+ {
+  "t": 1800,
+  "n": 1062,
+  "halting": 0.248,
+  "edges_with_cars": 402,
+  "edges": 1641,
+  "top10_cells": 0.411,
+  "pending": 1,
+  "teleports": 2,
+  "collisions": 0,
+  "types": {
+   "hv_idm": 0.315,
+   "hv_acc": 0.156,
+   "hv_krauss": 0.327,
+   "hv_eidm": 0.202
+  },
+  "busiest": [
+   [
+    "영등포로",
+    38
+   ],
+   [
+    "국회대로",
+    37
+   ],
+   [
+    "영신로",
+    33
+   ],
+   [
+    "영신로",
+    19
+   ],
+   [
+    "영중로",
+    16
+   ]
+  ]
+ },
+ {
+  "t": 2400,
+  "n": 1092,
+  "halting": 0.259,
+  "edges_with_cars": 410,
+  "edges": 1641,
+  "top10_cells": 0.425,
+  "pending": 1,
+  "teleports": 3,
+  "collisions": 0,
+  "types": {
+   "hv_acc": 0.167,
+   "hv_idm": 0.323,
+   "hv_krauss": 0.314,
+   "hv_eidm": 0.196
+  },
+  "busiest": [
+   [
+    "영신로",
+    56
+   ],
+   [
+    "영등포로",
+    38
+   ],
+   [
+    "영등포로",
+    26
+   ],
+   [
+    "영신로",
+    17
+   ],
+   [
+    "경인로",
+    12
+   ]
+  ]
+ },
+ {
+  "t": 3000,
+  "n": 1191,
+  "halting": 0.306,
+  "edges_with_cars": 414,
+  "edges": 1641,
+  "top10_cells": 0.46,
+  "pending": 3,
+  "teleports": 10,
+  "collisions": 0,
+  "types": {
+   "hv_idm": 0.287,
+   "hv_acc": 0.16,
+   "hv_krauss": 0.366,
+   "hv_eidm": 0.187
+  },
+  "busiest": [
+   [
+    "영등포로",
+    51
+   ],
+   [
+    "영신로",
+    47
+   ],
+   [
+    "영등포로",
+    37
+   ],
+   [
+    "국회대로",
+    18
+   ],
+   [
+    "영등포로",
+    16
+   ]
+  ]
+ },
+ {
+  "t": 3600,
+  "n": 1272,
+  "halting": 0.383,
+  "edges_with_cars": 398,
+  "edges": 1641,
+  "top10_cells": 0.481,
+  "pending": 9,
+  "teleports": 19,
+  "collisions": 0,
+  "types": {
+   "hv_acc": 0.162,
+   "hv_krauss": 0.332,
+   "hv_eidm": 0.208,
+   "hv_idm": 0.299
+  },
+  "busiest": [
+   [
+    "영신로",
+    53
+   ],
+   [
+    "영등포로",
+    50
+   ],
+   [
+    "영등포로",
+    39
+   ],
+   [
+    "여의대방로",
+    25
+   ],
+   [
+    "영등포로",
+    21
+   ]
+  ]
+ },
+ {
+  "t": 4200,
+  "n": 1349,
+  "halting": 0.376,
+  "edges_with_cars": 406,
+  "edges": 1641,
+  "top10_cells": 0.489,
+  "pending": 5,
+  "teleports": 32,
+  "collisions": 0,
+  "types": {
+   "hv_acc": 0.173,
+   "hv_krauss": 0.328,
+   "hv_idm": 0.305,
+   "hv_eidm": 0.195
+  },
+  "busiest": [
+   [
+    "여의대방로",
+    55
+   ],
+   [
+    "영등포로",
+    48
+   ],
+   [
+    "영신로",
+    45
+   ],
+   [
+    "영등포로",
+    42
+   ],
+   [
+    "영등포로",
+    38
+   ]
+  ]
+ }
+]

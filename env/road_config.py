@@ -8,6 +8,7 @@ road_builder.py가 SUMO 도로 파일(.net.xml 등)을 자동으로 다시 만�
     - 거리: m (미터)
     - 속도: m/s  (참고: 33.33 m/s ≈ 120 km/h,  27 m/s ≈ 97 km/h)
 """
+import os
 
 # ──────────────────────────────────────────────────────────────
 # 1) 도로 형상
@@ -46,7 +47,10 @@ YEOUIDO_ROAD = {
     "min_trip": 1000,          # 출발~도착 경로가 이 길이(m)보다 짧은 쌍은 뽑지 않음
     # 배경 교통 워밍업 상태를 저장해 둘 시각(s). 에피소드마다 하나를 골라 불러온다.
     # 처음 한 번 env/yeouido/states/ 에 만들어지고(시간대당 수 초), 이후 리셋은 0.1초.
-    "snapshot_times": [600, 1200, 1800, 2400],
+    # "uniform" 교통은 600초만: 도로망 처리 능력보다 수요가 많아 시간이 지날수록 막히므로(70분 출근 22,419대·
+    #   순간이동 5,566), 차가 많고 아직 고르게 흐르는 10분 시점에서만 출발한다 (출근 4,183대·정지 34 %·순간이동 0).
+    #   시험지의 다른 시점(1200~2400초)은 600초로 바뀐다 (env._pick).
+    "snapshot_times": [600] if os.environ.get("YEOUIDO_DEMAND", "uniform") == "uniform" else [600, 1200, 1800, 2400],
     "speed_limit": 22.22,      # 속도 정규화 기준 vmax (도로망 최고 80 km/h)
     "num_lanes": 3,            # (직선 도로용 값. 이 도로에서는 쓰지 않음)
     "length": 0,               # 경로 길이는 에피소드마다 다름 (info["route_length"])
@@ -62,11 +66,37 @@ YEOUIDO_ROAD = {
     # lane_change_mode: SUMO 차로 변경 모드. 1 = 경로상 꼭 필요한 차로 변경(좌회전
     #   차로로 들어가기 등)만 SUMO가 하고, 정책의 차로 변경 명령이 우선한다.
     #   0 = 정책만 차로를 바꿈 (경로에 맞는 차로를 놓치면 교차로에서 멈춰 버림).
-    "lane_change_mode": 1,
-    # 교차로 안 충돌도 검사 (SUMO 기본은 차로 위만). 신호 없는 교차로에서 양보 없이
-    # 끼어드는 것을 충돌로 잡는다. (배경 차량끼리 교차로 안에서 겹치는 일이 출근 시간에
-    #  시간당 약 10건 있는데, 그 차들은 지워질 뿐 ego 에피소드에는 영향 없음)
-    "check_junction_collisions": True,
+    #   257 = 1 + 256: 정책(TraCI)의 차로 변경도 실행 순간 즉시 충돌이면 SUMO 가 하지 않는다.
+    #   2026-11-21: 1 이었을 때 정체 속 정지 상태에서 왼쪽 변경을 내린 같은 스텝에 옆 차로 일반 차량도 그 빈자리로
+    #   들어와 옆면 충돌 (새 교통 PPO+재탐색 #54). 우리 안전 검사는 스텝 전에 해서 동시에 끼어드는 차를 못 본다.
+    "lane_change_mode": 257,
+    # 교차로 안 충돌 검사. False = SUMO 기본 (차로 위 충돌만), 일반 차량 검증(yeouido/validate.py)과 같은 기준.
+    #   2026-11-20: 켜면 여러 교차점을 묶은 대형 교차로의 모양 오차(교차로 모델로는 안 겹치는 경로가
+    #   실제 모양으로는 겹침) 때문에 SUMO 일반 차량끼리도 주간 40분에 37건 "충돌"이 났다.
+    #   ego 도 멈춰 서 있다가 다가온 일반 차와 겹쳐 충돌로 끝나는 등 도로망 오차가 충돌률에 섞여 끈다.
+    #   실제 위험(충돌 지점을 차지한 차·먼저 지나가는 차에 끼어들기)은 선생님·쉴드가 교차로 모델로 피하고
+    #   (algorithms/sumo_expert.py _blocked_conflicts), 교차로 안 겹침은 info["junction_overlaps"]로 따로 센다.
+    "check_junction_collisions": False,
+    # 안전 쉴드: 정책이 낸 목표 속도를 "지금 낼 수 있는 안전한 속도"(앞차 추종·신호 정지·교차로 양보,
+    #   algorithms/sumo_expert.py 와 같은 계산) 이하로 자른다. 더 느리게는 정책 마음대로.
+    #   추돌을 구조적으로 막고, 학습은 빠르고 부드러운 도착에 집중한다. info["shield_steps"]에 개입 횟수.
+    "safety_shield": True,
+    # 경로 재탐색 (내비게이션): ego 가 거의 못 가는(slow m/s 미만) 시간이 stuck 초 쌓이면, 지금 도로 상황
+    #   (현재 통행 시간)으로 같은 목적지까지 가장 빠른 길을 다시 찾는다 (traci.vehicle.rerouteTraveltime).
+    #   재탐색 뒤 cooldown 초는 다시 안 함. 운전 정책이 아니라 환경이 해 주며, 목적지는 그대로.
+    #   2026-11-20 출근 시간대 실패(정체에 갇혀 시간 초과·순간이동) 대책. info["reroutes"] = 경로가 실제로 바뀐 횟수.
+    #   (eval_set/reroute_check.py 로 효과 확인 후 켬. 끈 상태의 결과는 예전과 같다)
+    #   켜기: 환경변수 YEOUIDO_REROUTE=1 (하위 프로세스까지 전달되어 test.py --workers 에도 적용).
+    #   바꾸는 조건 (2026-11-21 재검증에서 두 길 사이를 오가거나 목적지 코앞에서 크게 돌아 순간이동이 늘어서 추가):
+    #     새 길이 지금 길보다 gain(30 %) 이상 그리고 min_gain_s(60 s) 이상 빨라야 바꿈 (오가기 방지),
+    #     새 길 길이 ≤ max_detour × 남은 거리 + 500 m (큰 우회 방지), 한 판에 최대 max_changes 번.
+    #     max_detour 2.5 → 1.5 (2026-11-21 v4): 1.6~1.8배 우회한 뒤 그 길이 막혀 순간이동(#7, #18)해서 줄임.
+    # 일반 차량 수요: "measured" = 실측 지점 20곳 대수에 맞추고 범위 경계에서만 출발·도착 (경계 간선도로에 몰림),
+    #   "uniform" = 같은 시간대별 대수를 도로망 전체에 차로-km 비례로 고르게 (yeouido/build_demand_uniform.py).
+    #   환경변수 YEOUIDO_DEMAND 로 바꿀 수 있다. 워밍업 상태는 버전별로 따로 (env/yeouido/states/<level>_uniform_<t>).
+    "demand": os.environ.get("YEOUIDO_DEMAND", "uniform"),   # 2026-11-21 기본을 고른 분포로 (기존: YEOUIDO_DEMAND=measured)
+    "reroute": {"enabled": os.environ.get("YEOUIDO_REROUTE") == "1", "slow": 2.0, "stuck": 60.0, "cooldown": 60.0,
+                "gain": 0.3, "min_gain_s": 60.0, "max_detour": 1.5, "max_changes": 3},
 
     "gui_zoom": 2500.0,        # ego 추적 확대 배율 (약 6 km 도로망 기준 시야 ~250 m)
     "gui_track_ego": True,
@@ -95,8 +125,10 @@ SCENERY = {
 }
 
 EGO = {
-    "accel": 5.4,          # 최대 가속도 (m/s^2)  → 행동 a=+1 일 때
-    "decel": 5.4,          # 최대 감속도 (m/s^2)  → 행동 a=-1 일 때
+    "accel": 3.0,          # 최대 가속도 (m/s^2)  → 행동 a=+1 일 때 (도심 승차감, 예전 5.4)
+    "decel": 4.5,          # 최대 감속도 (m/s^2)  → 행동 a=-1 일 때 (예전 5.4)
+                           # 여의도 ego_type(yeouido/build_demand.py EGO)과 같은 값.
+                           # 쉴드·선생님의 안전 속도 계산(SUMO getFollowSpeed/getStopSpeed)도 4.5 기준
     "max_speed": 33.33,    # 차량 자체의 최고속도
     "depart_lane": "center", # 시작 차선. "center"면 중앙 차선(차선수//2)에서
                            # 자동 시작 — 차선 수를 바꿔도 항상 가운데.

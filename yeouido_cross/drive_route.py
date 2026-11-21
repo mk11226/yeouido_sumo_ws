@@ -16,6 +16,10 @@
 경로 표시: 경로가 지나는 차로(교차로 안 연결 차로 포함)를 sumo-gui에서 "선택"하고, 차로 색칠 방식을
 "by selection"으로 둔다. 선택된 차로는 아스팔트 색만 바뀌고 차선·중앙선은 그 위에 그대로 그려진다.
 나머지 도로는 평소 색(검정 아스팔트)이다.
+
+경로가 주행 중에 바뀌면 (경로 재탐색 --reroute, 목적지 변경) 처음 파란 경로는 그대로 두고, 바뀐 경로를
+주황색 선으로 겹쳐 그린다 (SUMO 도형 polygon, 차로 가운데에 차로보다 좁게 → 겹치는 구간은 파랑 위에 주황 줄).
+다시 바뀌면 주황색만 새 경로로 다시 그린다. RouteWatch 가 매 스텝 ego 경로를 보고 바뀌었을 때만 그린다.
 """
 import argparse
 import json
@@ -40,6 +44,9 @@ VIEW = os.path.join(GUI_DIR, "route.view.xml")
 
 ROUTE_COLOR = "70,120,185"      # 경로 차로 바탕색 (검정 아스팔트 대신). 차선이 잘 보이도록 어둡지 않은 중간 톤
 ROAD_COLOR = "black"            # 나머지 도로 (sumo-gui 기본 아스팔트 색)
+REROUTE_COLOR = (255, 140, 0, 235)   # 주행 중 바뀐 경로 (주황)
+REROUTE_WIDTH = 1.4             # 주황 선 폭 (m). 차로(약 3.2 m)보다 좁아 겹치는 구간에서도 양옆 파랑이 보인다
+REROUTE_LAYER = 5.0             # 도로 위, 핀(110~)·차량 아래
 LANDMARK_FILL = "#f2b632"       # 노란 동그라미
 GATE_FILL = "#c9403a"           # 빨간 둥근 네모
 PIN_DIR = os.path.join(GUI_DIR, "pins")
@@ -209,6 +216,59 @@ def highlight(lanes):
             pass
 
 
+_overlay_ids = []
+
+
+def clear_overlay():
+    """주황 경로 선을 지운다."""
+    for pid in _overlay_ids:
+        try:
+            traci.polygon.remove(pid)
+        except traci.TraCIException:
+            pass
+    _overlay_ids.clear()
+
+
+def overlay(lanes):
+    """lanes(차로 id 목록)를 주황 선으로 겹쳐 그린다. 이전 주황 선은 지운다 (파란 경로는 그대로)."""
+    clear_overlay()
+    for k, lane in enumerate(lanes):
+        try:
+            shape = traci.lane.getShape(lane)
+            if len(shape) < 2:
+                continue
+            pid = f"reroute_{k}"
+            traci.polygon.add(pid, shape, REROUTE_COLOR, fill=False, polygonType="reroute",
+                              layer=REROUTE_LAYER, lineWidth=REROUTE_WIDTH)
+            _overlay_ids.append(pid)
+        except traci.TraCIException:
+            pass
+
+
+class RouteWatch:
+    """처음 경로(파랑)를 기억해 두고, ego 경로가 바뀌면 남은 경로를 주황으로 겹쳐 그린다."""
+
+    def __init__(self, veh):
+        self.veh = veh
+        self.route = tuple(traci.vehicle.getRoute(veh))
+        self.changes = 0
+        clear_overlay()
+
+    def update(self):
+        """매 스텝 부른다. 경로가 바뀌어 새로 그렸으면 True."""
+        try:
+            route = tuple(traci.vehicle.getRoute(self.veh))
+            idx = traci.vehicle.getRouteIndex(self.veh)
+        except traci.TraCIException:
+            return False                      # ego 가 없음 (도착·충돌로 제거됨)
+        if route == self.route:
+            return False
+        self.route = route
+        self.changes += 1
+        overlay(route_lanes(list(route[max(idx, 0):])))
+        return True
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("origin", nargs="?", help="출발지 (1~7, A~F, 또는 이름)")
@@ -221,6 +281,8 @@ def main():
                     help="주행이 끝나면 바로 창을 닫음 (기본: 사용자가 창을 닫을 때까지 끝 화면 유지)")
     ap.add_argument("--list", action="store_true", help="핀포인트 목록 출력")
     ap.add_argument("--screenshot", metavar="PNG", help="출발 직후 sumo-gui 화면을 이 파일로 저장")
+    ap.add_argument("--reroute", action="store_true",
+                    help="경로 재탐색 켜기 (막히면 더 빠른 길로, 바뀐 경로는 주황색으로 겹쳐 표시)")
     args = ap.parse_args()
 
     routes = {(r["origin"], r["destination"]): r for r in json.load(open(ROUTES))}
@@ -240,6 +302,8 @@ def main():
 
     write_gui_files()
     road = {**ROAD, "gui_files": ["yeouido.poly.xml", PINS], "gui_settings": VIEW}
+    if args.reroute:
+        road["reroute"] = {**ROAD.get("reroute", {}), "enabled": True}
     cfg = road_builder.build(road, EGO, TRAFFIC, os.path.join(BASE, "env", "sumo"))
     env = make_env(cfg_path=cfg, road=road, ego=EGO, mdp_sim=SIMULATION, mdp_obs=OBSERVATION,
                    action=ACTION, reward=REWARD, traffic=TRAFFIC, gui=True, gui_autostart=True)
@@ -259,6 +323,7 @@ def main():
         else:
             print(f"[drive] 출발 도로({here})가 경로 파일과 달라 SUMO 기본 경로로 주행합니다.")
         highlight(route_lanes(list(traci.vehicle.getRoute(env.ego_id))))
+        watch = RouteWatch(env.ego_id)
         fit_pins()
         via = f" via {r['bridge']}" if r["bridge"] else ""
         print(f"[drive] {args.level}: {origin} → {destination}{via}  "
@@ -269,6 +334,9 @@ def main():
         while not done:
             obs, _, term, trunc, info = env.step(expert.predict(obs))
             done, t = term or trunc, t + 1
+            if not done and watch.update():
+                print(f"[drive] {t} 스텝: 경로 바뀜 ({watch.changes}번째) → 주황색으로 표시, "
+                      f"남은 거리 {env._remaining or 0:.0f} m", flush=True)
             if env.ego_id in traci.vehicle.getIDList():
                 last = (traci.vehicle.getRoadID(env.ego_id), traci.vehicle.getPosition(env.ego_id), env._remaining)
             crashes = [c for c in traci.simulation.getCollisions() if env.ego_id in (c.collider, c.victim)]

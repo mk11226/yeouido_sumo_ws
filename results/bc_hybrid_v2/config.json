@@ -1,0 +1,36 @@
+{
+  "data": [
+    "data/expert_dart200_v2.npz"
+  ],
+  "epochs": 50,
+  "batch_size": 512,
+  "lr": 0.001,
+  "lane_weight": 5.0,
+  "patience": 8,
+  "select": "accel",
+  "val_fraction": 0.1,
+  "save_log_std": -1.6,
+  "init": null,
+  "seed": 0,
+  "device": "mps",
+  "out_dir": "results/bc_hybrid_v2",
+  "samples": 270218,
+  "train": 245794,
+  "val": 24424,
+  "episodes": 200,
+  "lane_counts": [
+    378.0,
+    245126.0,
+    290.0
+  ],
+  "lane_class_weight": [
+    9.76124476779743,
+    0.9761244767797431,
+    9.76124476779743
+  ],
+  "hidden_sizes": [
+    256,
+    256
+  ],
+  "activation": "relu"
+}

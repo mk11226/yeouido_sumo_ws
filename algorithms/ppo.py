@@ -81,6 +81,8 @@ class PPO:
                                          # (가감속 σ에는 영향 없음)
         max_grad_norm: float = 0.5,   # gradient clipping
         normalize_advantage: bool = True,
+        target_kl: float = None,      # 한 업데이트에서 정책 변화(KL)가 1.5×이 값을 넘으면 남은 epoch 중단.
+                                      # 잘 배운 모델(BC/DAgger)을 이어 학습할 때 한 번에 망가지는 것을 막는다.
         # ---- 네트워크 ----
         policy_type: str = "hybrid",  # "hybrid"(가감속 연속 + 차선 이산, 권장)
                                       # | "gaussian"(모든 축 연속 — dead zone 있음)
@@ -136,6 +138,7 @@ class PPO:
         self.lane_entropy_coef = lane_entropy_coef
         self.max_grad_norm = max_grad_norm
         self.normalize_advantage = normalize_advantage
+        self.target_kl = target_kl
 
         # 버퍼 주입(dependency injection):
         # train.py(메인)가 utils.buffer.RolloutBuffer를 만들어 넘겨준다.
@@ -250,22 +253,32 @@ class PPO:
     # ==================================================================
     # 3단계) 정책 업데이트 (clipped surrogate)
     # ==================================================================
-    def update(self, advantages, returns) -> dict:
+    def update(self, advantages, returns, value_only: bool = False) -> dict:
+        """value_only=True: 정책(trunk·mu·lane·log_std)은 그대로 두고 v_head 만 학습 (critic 워밍업)."""
         obs_t, act_t, old_log_prob_t = self.buffer.to_tensors(self.device)
-        adv_t = torch.as_tensor(advantages, device=self.device)
-        ret_t = torch.as_tensor(returns, device=self.device)
+        # 병렬 환경이면 (T, N, ·) → (T·N, ·) 로 펼친다 (단일 환경이면 그대로)
+        obs_t = obs_t.reshape(-1, obs_t.shape[-1])
+        act_t = act_t.reshape(-1, act_t.shape[-1])
+        old_log_prob_t = old_log_prob_t.reshape(-1)
+        adv_t = torch.as_tensor(np.asarray(advantages).reshape(-1), device=self.device)
+        ret_t = torch.as_tensor(np.asarray(returns).reshape(-1), device=self.device)
+        if value_only:
+            return self._update_value_only(obs_t, ret_t)
 
         # advantage 정규화: 스케일을 평균0/표준편차1로 → 학습률 민감도 감소
         if self.normalize_advantage:
             adv_t = (adv_t - adv_t.mean()) / (adv_t.std() + 1e-8)
 
-        T = len(self.buffer)
+        T = len(adv_t)
         indices = np.arange(T)
         stats = {"policy_loss": 0.0, "value_loss": 0.0,
                  "entropy": 0.0, "approx_kl": 0.0, "clip_frac": 0.0}
         n_batches = 0
+        stopped_early = False
 
         for _ in range(self.n_epochs):
+            if stopped_early:
+                break
             np.random.shuffle(indices)
             for start in range(0, T, self.minibatch_size):
                 mb = indices[start:start + self.minibatch_size]
@@ -308,7 +321,8 @@ class PPO:
                 with torch.no_grad():
                     # approx_kl: 정책이 얼마나 변했는지. 0.02를 크게 넘으면
                     #   업데이트가 과격하다는 신호 (lr을 낮출 것)
-                    approx_kl = (old_log_prob_t[mb] - log_prob).mean()
+                    log_ratio = log_prob - old_log_prob_t[mb]
+                    approx_kl = ((torch.exp(log_ratio) - 1) - log_ratio).mean()   # 항상 ≥0 인 추정 (Schulman)
                     # clip_frac: 클리핑에 걸린 샘플 비율. 0.1~0.3이 보통
                     clip_frac = ((ratio - 1).abs() > self.clip_eps).float().mean()
 
@@ -318,8 +332,13 @@ class PPO:
                 stats["approx_kl"] += approx_kl.item()
                 stats["clip_frac"] += clip_frac.item()
                 n_batches += 1
+                if self.target_kl is not None and approx_kl.item() > 1.5 * self.target_kl:
+                    stopped_early = True
+                    break
 
         out = {k: v / max(n_batches, 1) for k, v in stats.items()}
+        out["n_minibatches"] = n_batches
+        out["kl_stop"] = float(stopped_early)
         # hybrid 진단: 업데이트 "후" 정책의 평균 차선변경(좌+우) 확률.
         #   0으로 붕괴 → 차선유지 지역최적 경고 / 적당히 유지되며
         #   eval의 차선변경 횟수가 오르면 제대로 배우는 중.
@@ -382,6 +401,123 @@ class PPO:
                 # (끊긴 경험은 이미 버퍼에 반영됐고 GAE가 부트스트랩하므로 무해)
                 obs, _ = env.reset()
                 ep_stats[0], ep_stats[1] = 0.0, 0
+
+    # ==================================================================
+    # critic 워밍업 — BC/DAgger 모델은 v_head 를 학습하지 않았다 (무작위 그대로).
+    # 그 상태로 PPO 를 돌리면 엉터리 advantage 로 잘 배운 정책을 망가뜨리므로,
+    # 처음 몇 번은 정책을 고정하고 V(s) 만 실제 return 에 맞춘다.
+    # trunk 는 정책과 공유하므로 건드리지 않고(특징만 꺼내 씀) v_head 만 따로 학습한다.
+    # ==================================================================
+    def _update_value_only(self, obs_t, ret_t, lr: float = 1e-3, epochs: int = 10) -> dict:
+        if not hasattr(self, "_v_opt"):
+            self._v_opt = torch.optim.Adam(self.policy.v_head.parameters(), lr=lr)
+        with torch.no_grad():
+            feats = self.policy.trunk(obs_t)
+        T = len(ret_t)
+        indices = np.arange(T)
+        loss_sum, n = 0.0, 0
+        for _ in range(epochs):
+            np.random.shuffle(indices)
+            for start in range(0, T, self.minibatch_size):
+                mb = indices[start:start + self.minibatch_size]
+                value = self.policy.v_head(feats[mb]).squeeze(-1)
+                loss = ((value - ret_t[mb]) ** 2).mean()
+                self._v_opt.zero_grad()
+                loss.backward()
+                self._v_opt.step()
+                loss_sum += loss.item()
+                n += 1
+        with torch.no_grad():
+            v = self.policy.v_head(feats).squeeze(-1)
+            ev = 1 - torch.var(ret_t - v) / (torch.var(ret_t) + 1e-8)
+        return {"value_loss": loss_sum / max(n, 1), "explained_var": float(ev.item()),
+                "policy_loss": 0.0, "approx_kl": 0.0, "clip_frac": 0.0}
+
+    # ==================================================================
+    # 병렬 환경 (utils/vec_env.SubprocVecEnv) 수집 / 학습 루프
+    # ==================================================================
+    def collect_rollout_vec(self, venv, obs, episodes_out: list):
+        """N개 환경에서 각각 n_steps 씩 (총 N·n_steps) 모은다. 끝난 에피소드 요약은 episodes_out 에 추가."""
+        self.buffer.clear()
+        for _ in range(self.n_steps):
+            obs_t = torch.as_tensor(obs, dtype=torch.float32, device=self.device)
+            with torch.no_grad():
+                action, log_prob, value = self.policy.sample(obs_t) if hasattr(self.policy, "sample") \
+                    else self._gaussian_sample(obs_t)
+            action = action.cpu().numpy().astype(np.float32)
+            next_obs, reward, term, trunc, final_obs, episodes = venv.step(action)
+            self.num_timesteps += venv.n_envs
+            stored = reward.copy()
+            # 시간 초과(잘린 것)는 이어졌다면 받았을 가치를 V(마지막 관측)로 더한다 (단일 환경 경로와 같음)
+            for i in range(venv.n_envs):
+                if trunc[i] and not term[i]:
+                    stored[i] += self.gamma * self.get_value(final_obs[i])
+                if episodes[i] is not None:
+                    episodes_out.append(episodes[i])
+            self.buffer.add(obs, action, log_prob.cpu().numpy(), stored, value.cpu().numpy(),
+                            np.logical_or(term, trunc))
+            obs = next_obs
+        with torch.no_grad():
+            last_value = self.policy(torch.as_tensor(obs, dtype=torch.float32, device=self.device))[-1]
+        return obs, last_value.cpu().numpy()
+
+    def _gaussian_sample(self, obs_t):
+        mu, std, value = self.policy(obs_t)
+        dist = torch.distributions.Normal(mu, std)
+        a = dist.sample()
+        return a, dist.log_prob(a).sum(-1), value
+
+    def learn_vec(self, venv, total_timesteps: int, logger=None, critic_warmup: int = 0,
+                  callback=None, n_updates: int = 0):
+        """병렬 학습. 처음 critic_warmup 번은 v_head 만 학습. callback(n_updates, metrics) 가 False 면 멈춘다."""
+        obs = venv.reset()
+        recent = deque(maxlen=50)
+        while self.num_timesteps < total_timesteps:
+            episodes = []
+            obs, last_value = self.collect_rollout_vec(venv, obs, episodes)
+            recent.extend(episodes)
+            if logger is not None:
+                for e in episodes:
+                    logger.log_episode(self.num_timesteps, e["ret"], int(e["len"]))
+            advantages, returns = self.buffer.compute_gae(last_value, self.gamma, self.gae_lambda)
+            warm = n_updates < critic_warmup
+            stats = self.update(advantages, returns, value_only=warm)
+            n_updates += 1
+            ended = [e["ended_by"] for e in recent]
+            metrics = {
+                "update": n_updates,
+                "phase": "critic" if warm else "ppo",
+                "ep_rew_mean": float(np.mean([e["ret"] for e in recent])) if recent else float("nan"),
+                "arrive": ended.count("arrival") / len(ended) if ended else float("nan"),
+                "collide": ended.count("collision") / len(ended) if ended else float("nan"),
+                "teleport": ended.count("teleport") / len(ended) if ended else float("nan"),
+                "n_ep": len(ended),
+                "std": self.policy.current_std,
+                **stats,
+            }
+            if logger is not None:
+                logger.log_train(self.num_timesteps, {k: v for k, v in metrics.items() if k != "phase"},
+                                 verbose=False)
+            if callback is not None and callback(n_updates, metrics) is False:
+                break
+        return n_updates
+
+    def save_checkpoint(self, path: str, **extra):
+        """이어 학습용: 가중치 + optimizer + 진행 상황."""
+        state = {"policy": self.policy.state_dict(), "optimizer": self.optimizer.state_dict(),
+                 "num_timesteps": self.num_timesteps, **extra}
+        if hasattr(self, "_v_opt"):
+            state["v_optimizer"] = self._v_opt.state_dict()
+        torch.save(state, path + ".tmp")
+        import os
+        os.replace(path + ".tmp", path)
+
+    def load_checkpoint(self, path: str) -> dict:
+        state = torch.load(path, map_location=self.device, weights_only=False)
+        self.policy.load_state_dict(state["policy"])
+        self.optimizer.load_state_dict(state["optimizer"])
+        self.num_timesteps = int(state["num_timesteps"])
+        return state
 
     # ==================================================================
     def save(self, path: str):

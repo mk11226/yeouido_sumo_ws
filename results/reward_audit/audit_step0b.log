@@ -1,0 +1,115 @@
+보상 점검: 12문제 × 정책 4개 = 48회 주행 (workers 8)
+ Retrying in 1 seconds
+  expert   #1   night arrival   보상   18.79
+ Retrying in 1 seconds
+  throttle #1   night arrival   보상   17.68
+ Retrying in 1 seconds
+  expert   #6   night arrival   보상   19.07
+ Retrying in 1 seconds
+  throttle #6   night arrival   보상   17.44
+ Retrying in 1 seconds
+  expert   #8   night arrival   보상   18.60
+ Retrying in 1 seconds
+  throttle #8   night arrival   보상   17.99
+ Retrying in 1 seconds
+  expert   #9   night arrival   보상   19.56
+ Retrying in 1 seconds
+  random   #1   night arrival   보상    1.71
+ Retrying in 1 seconds
+  throttle #9   night arrival   보상   18.98
+ Retrying in 1 seconds
+  stand    #1   night timeout   보상   -8.62
+ Retrying in 1 seconds
+  random   #6   night timeout   보상  -14.21
+ Retrying in 1 seconds
+  stand    #6   night timeout   보상   -5.01
+ Retrying in 1 seconds
+  random   #8   night timeout   보상  -14.94
+ Retrying in 1 seconds
+  random   #9   night arrival   보상    0.67
+ Retrying in 1 seconds
+  stand    #8   night timeout   보상   -9.75
+ Retrying in 1 seconds
+  stand    #9   night timeout   보상  -13.87
+ Retrying in 1 seconds
+  expert   #3   day   arrival   보상   15.36
+ Retrying in 1 seconds
+  expert   #4   day   arrival   보상   17.19
+ Retrying in 1 seconds
+  throttle #3   day   arrival   보상    9.32
+ Retrying in 1 seconds
+  stand    #3   day   timeout   보상   -3.18
+ Retrying in 1 seconds
+  throttle #4   day   arrival   보상   14.97
+ Retrying in 1 seconds
+  random   #3   day   timeout   보상  -14.60
+ Retrying in 1 seconds
+  expert   #5   day   arrival   보상   18.09
+ Retrying in 1 seconds
+  stand    #2   day   timeout   보상   -2.36
+ Retrying in 1 seconds
+  throttle #2   day   timeout   보상  -19.97
+ Retrying in 1 seconds
+  random   #2   day   timeout   보상  -11.76
+ Retrying in 1 seconds
+  throttle #5   day   arrival   보상   18.48
+ Retrying in 1 seconds
+  expert   #2   day   timeout   보상   -1.98
+ Retrying in 1 seconds
+  random   #4   day   timeout   보상  -14.10
+ Retrying in 1 seconds
+  random   #5   day   arrival   보상   10.35
+ Retrying in 1 seconds
+  stand    #4   day   timeout   보상   -2.21
+ Retrying in 1 seconds
+  stand    #7   rush  timeout   보상   -3.08
+ Retrying in 1 seconds
+  expert   #0   rush  arrival   보상   15.33
+ Retrying in 1 seconds
+  stand    #5   day   timeout   보상   -8.75
+ Retrying in 1 seconds
+  throttle #0   rush  timeout   보상  -11.98
+ Retrying in 1 seconds
+  stand    #0   rush  timeout   보상  -15.16
+ Retrying in 1 seconds
+  expert   #7   rush  arrival   보상   14.87
+ Retrying in 1 seconds
+  random   #0   rush  timeout   보상  -10.06
+ Retrying in 1 seconds
+  expert   #10  rush  arrival   보상   16.29
+ Retrying in 1 seconds
+  expert   #12  rush  arrival   보상   16.85
+ Retrying in 1 seconds
+  stand    #10  rush  timeout   보상   -0.80
+ Retrying in 1 seconds
+  random   #7   rush  timeout   보상  -13.02
+ Retrying in 1 seconds
+  throttle #10  rush  arrival   보상    6.45
+ Retrying in 1 seconds
+  throttle #7   rush  arrival   보상    3.73
+ Retrying in 1 seconds
+  throttle #12  rush  arrival   보상   13.91
+ Retrying in 1 seconds
+  random   #10  rush  timeout   보상  -11.12
+ Retrying in 1 seconds
+  random   #12  rush  timeout   보상  -13.36
+ Retrying in 1 seconds
+  stand    #12  rush  timeout   보상   -2.24
+
+정책별 평균 총 보상 (끝난 방식: 도착/충돌/시간초과)
+정책                           night                     day                    rush          전체
+expert               19.01 (4/0/0)           12.17 (3/0/1)           15.83 (4/0/0)       15.67
+random               -6.69 (2/0/2)           -7.52 (1/0/3)          -11.89 (0/0/4)       -8.70
+stand                -9.31 (0/0/4)           -4.12 (0/0/4)           -5.32 (0/0/4)       -6.25
+throttle             18.02 (4/0/0)            5.70 (3/0/1)            3.03 (3/0/1)        8.92
+
+선생님이 가장 높은 문제: 11 / 12
+서 있기 > 무작위 인 문제: 8 / 12
+
+정책별 평균: 쉴드 개입 스텝 / 저크 합
+  expert     쉴드       0   저크   229.8
+  random     쉴드     175   저크  5474.3
+  stand      쉴드       0   저크   162.4
+  throttle   쉴드    1086   저크   282.8
+
+2924초, 결과: /Users/junochun/Documents/auto_driving/bmil_ws/results/reward_audit/random_60_s1.json

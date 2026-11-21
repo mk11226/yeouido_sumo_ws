@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2026-11-16T15:28:37.761039+09:00 by Eclipse SUMO sumo 1.27.1
+<!-- generated on 2026-11-18T23:50:29.207492+09:00 by Eclipse SUMO sumo 1.27.1
 <sumoConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
 
     <input>
-        <net-file value="/home/jo/bmil_ws/env/yeouido/yeouido.net.xml"/>
-        <route-files value="/home/jo/bmil_ws/env/yeouido/yeouido.vtypes.xml,/home/jo/bmil_ws/env/yeouido/night.rou.xml"/>
-        <additional-files value="/home/jo/bmil_ws/env/yeouido/measure_night.add.xml"/>
+        <net-file value="/Users/junochun/Documents/auto_driving/bmil_ws/env/yeouido/yeouido.net.xml"/>
+        <route-files value="/Users/junochun/Documents/auto_driving/bmil_ws/env/yeouido/yeouido.vtypes.xml,/Users/junochun/Documents/auto_driving/bmil_ws/env/yeouido/night.rou.xml"/>
+        <additional-files value="/Users/junochun/Documents/auto_driving/bmil_ws/env/yeouido/measure_night.add.xml,/Users/junochun/Documents/auto_driving/bmil_ws/env/yeouido/signals_night.add.xml"/>
     </input>
 
     <output>
-        <statistic-output value="/home/jo/bmil_ws/env/yeouido/stats_night.xml"/>
+        <statistic-output value="/Users/junochun/Documents/auto_driving/bmil_ws/env/yeouido/stats_night.xml"/>
     </output>
 
     <time>
@@ -40,13 +40,13 @@
 -->
 
 <statistics xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/statistic_file.xsd">
-    <performance clockBegin="1794810517.78" clockEnd="1794810521.37" clockDuration="3.59" traciDuration="0.00" realTimeFactor="1168.94" vehicleUpdatesPerSecond="298064.57" personUpdatesPerSecond="0.00" begin="0.00" end="4200.00" duration="4200.00"/>
-    <vehicles loaded="1188" inserted="1188" running="136" waiting="0"/>
+    <performance clockBegin="1795013429.23" clockEnd="1795013448.54" clockDuration="19.31" traciDuration="10.15" realTimeFactor="217.46" vehicleUpdatesPerSecond="230116.65" personUpdatesPerSecond="0.00" begin="0.00" end="4200.00" duration="4200.00"/>
+    <vehicles loaded="4779" inserted="4778" running="571" waiting="0"/>
     <teleports total="0" jam="0" yield="0" wrongLane="0"/>
-    <safety collisions="0" emergencyStops="0" emergencyBraking="0"/>
+    <safety collisions="0" emergencyStops="3" emergencyBraking="99"/>
     <persons loaded="0" running="0" jammed="0"/>
     <personTeleports total="0" abortWait="0" wrongDest="0"/>
-    <vehicleTripStatistics count="1052" routeLength="4840.99" speed="10.42" duration="472.72" waitingTime="55.90" timeLoss="111.96" departDelay="0.25" departDelayWaiting="-1.00" totalTravelTime="497301.50" totalDepartDelay="262.71"/>
+    <vehicleTripStatistics count="4207" routeLength="4804.96" speed="10.04" duration="488.99" waitingTime="58.34" timeLoss="130.52" departDelay="0.26" departDelayWaiting="-1.00" totalTravelTime="2057183.00" totalDepartDelay="1083.41"/>
     <pedestrianStatistics number="0" routeLength="0.00" duration="0.00" timeLoss="0.00"/>
     <rideStatistics number="0"/>
     <transportStatistics number="0"/>

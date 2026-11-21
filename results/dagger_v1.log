@@ -1,0 +1,25 @@
+[DAgger] 출발 모델 도착 70% 충돌 0.0%
+
+[DAgger] 반복 1/3: β=0.5, 운전 모델 results/bc_hybrid_v2/model.pt
+$ /opt/anaconda3/envs/sumo_rl/bin/python collect_pomdp_data.py --policy sumo-expert --dagger-model /Users/junochun/Documents/auto_driving/bmil_ws/results/bc_hybrid_v2/model.pt --beta 0.5 --episodes 100 --workers 8 --seed 4000 --name dagger_v1_iter1  (기록: results/dagger_v1/collect_iter1.log)
+[DAgger] 데이터 {'samples': 151383, 'episodes': 100, 'expert_executed_share': 0.502}
+$ /opt/anaconda3/envs/sumo_rl/bin/python train_bc_hybrid.py --data /Users/junochun/Documents/auto_driving/bmil_ws/data/expert_dart200_v2.npz /Users/junochun/Documents/auto_driving/bmil_ws/data/dagger_v1_iter1.npz --init /Users/junochun/Documents/auto_driving/bmil_ws/results/bc_hybrid_v2/model.pt --epochs 30 --lr 0.0005 --out-dir /Users/junochun/Documents/auto_driving/bmil_ws/results/dagger_v1/iter1  (기록: results/dagger_v1/train_iter1.log)
+$ /opt/anaconda3/envs/sumo_rl/bin/python test.py /Users/junochun/Documents/auto_driving/bmil_ws/results/dagger_v1/iter1/model.pt --eval-set eval_set/random_60_s1.json --workers 8 --nogui  (기록: results/dagger_v1/eval_iter1.log)
+[DAgger] 반복 1: 도착 73% (심야 100% / 주간 82% / 출근 43%) 충돌 0.0% ← 최고 (55.8분)
+
+[DAgger] 반복 2/3: β=0.25, 운전 모델 results/dagger_v1/iter1/model.pt
+$ /opt/anaconda3/envs/sumo_rl/bin/python collect_pomdp_data.py --policy sumo-expert --dagger-model /Users/junochun/Documents/auto_driving/bmil_ws/results/dagger_v1/iter1/model.pt --beta 0.25 --episodes 100 --workers 8 --seed 5000 --name dagger_v1_iter2  (기록: results/dagger_v1/collect_iter2.log)
+[DAgger] 데이터 {'samples': 128808, 'episodes': 100, 'expert_executed_share': 0.252}
+$ /opt/anaconda3/envs/sumo_rl/bin/python train_bc_hybrid.py --data /Users/junochun/Documents/auto_driving/bmil_ws/data/expert_dart200_v2.npz /Users/junochun/Documents/auto_driving/bmil_ws/data/dagger_v1_iter1.npz /Users/junochun/Documents/auto_driving/bmil_ws/data/dagger_v1_iter2.npz --init /Users/junochun/Documents/auto_driving/bmil_ws/results/dagger_v1/iter1/model.pt --epochs 30 --lr 0.0005 --out-dir /Users/junochun/Documents/auto_driving/bmil_ws/results/dagger_v1/iter2  (기록: results/dagger_v1/train_iter2.log)
+$ /opt/anaconda3/envs/sumo_rl/bin/python test.py /Users/junochun/Documents/auto_driving/bmil_ws/results/dagger_v1/iter2/model.pt --eval-set eval_set/random_60_s1.json --workers 8 --nogui  (기록: results/dagger_v1/eval_iter2.log)
+[DAgger] 반복 2: 도착 73% (심야 100% / 주간 88% / 출근 39%) 충돌 0.0%  (48.8분)
+
+[DAgger] 반복 3/3: β=0.0, 운전 모델 results/dagger_v1/iter2/model.pt
+$ /opt/anaconda3/envs/sumo_rl/bin/python collect_pomdp_data.py --policy sumo-expert --dagger-model /Users/junochun/Documents/auto_driving/bmil_ws/results/dagger_v1/iter2/model.pt --beta 0.0 --episodes 100 --workers 8 --seed 6000 --name dagger_v1_iter3  (기록: results/dagger_v1/collect_iter3.log)
+[DAgger] 데이터 {'samples': 152075, 'episodes': 100, 'expert_executed_share': 0.0}
+$ /opt/anaconda3/envs/sumo_rl/bin/python train_bc_hybrid.py --data /Users/junochun/Documents/auto_driving/bmil_ws/data/expert_dart200_v2.npz /Users/junochun/Documents/auto_driving/bmil_ws/data/dagger_v1_iter1.npz /Users/junochun/Documents/auto_driving/bmil_ws/data/dagger_v1_iter2.npz /Users/junochun/Documents/auto_driving/bmil_ws/data/dagger_v1_iter3.npz --init /Users/junochun/Documents/auto_driving/bmil_ws/results/dagger_v1/iter2/model.pt --epochs 30 --lr 0.0005 --out-dir /Users/junochun/Documents/auto_driving/bmil_ws/results/dagger_v1/iter3  (기록: results/dagger_v1/train_iter3.log)
+$ /opt/anaconda3/envs/sumo_rl/bin/python test.py /Users/junochun/Documents/auto_driving/bmil_ws/results/dagger_v1/iter3/model.pt --eval-set eval_set/random_60_s1.json --workers 8 --nogui  (기록: results/dagger_v1/eval_iter3.log)
+[DAgger] 반복 3: 도착 72% (심야 100% / 주간 76% / 출근 43%) 충돌 0.0%  (119.8분)
+[DAgger] 2번 연속 나아지지 않아 멈춤
+
+[DAgger] 끝. 최고 모델 results/dagger_v1/iter1/model.pt: 도착 73% 충돌 0.0% → /Users/junochun/Documents/auto_driving/bmil_ws/results/dagger_v1/summary.json

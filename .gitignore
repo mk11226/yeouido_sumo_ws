@@ -22,3 +22,38 @@ yeouido_cross/output/pins/
 yeouido_cross/output/pins.add.xml
 yeouido_cross/output/route.view.xml
 yeouido_cross/output/panel.sumocfg
+
+# macOS
+.DS_Store
+
+# ── 100 MB 넘는 원본 주행 기록 3개: GitHub 파일 한도 때문에 90 MB 조각(<이름>.part_aa, _ab)으로 나눠 올린다 ──
+# 받은 뒤 합치기:  cat data/<이름>.part_* > data/<이름>   (README "큰 파일 합치기" 참고)
+data/dagger_v1_iter3.jsonl.gz
+data/expert_dart200_v2.jsonl.gz
+data/expert_dart207.jsonl.gz
+
+# 예전 "주행 중 목적지 변경" 영상 (요구와 달라 다시 녹화함, 345 MB)
+results/video/old_dest_change/
+results/video/**/*_frames/
+
+# ── 필요 없는 실험 부산물 (재현·주행에 쓰이지 않음) ──
+# 수집을 중간에 멈춘 워커별 부분 기록 (salvage_parts.py 로 expert_dart207 로 복원 완료) · 수집 로그
+data/.*.jsonl.gz
+data/*.log
+# PPO 코드 점검용 짧은 시험 · 차로 변경 수정 전 평가 · 문제 재현용 디버그 출력
+results/ppo_smoke/
+results/ppo_smoke.log
+results/uniform/pre_lcfix/
+results/repro_*.txt
+results/stall_*.txt
+results/expert_stall_*.txt
+results/bc_repro_*.txt
+results/coll_expert_diag*
+# 교통 배율 시험용 파일과 randomTrips 중간 파일 (python -m yeouido.build_demand_uniform 으로 다시 만든다)
+env/yeouido/*.trips.xml
+env/yeouido/*_uniform_s0.*
+env/yeouido/*_ub_s*
+env/yeouido/yeouido_*_uniform_s0.*.sumocfg
+env/yeouido/yeouido_rush_ub_s*.sumocfg
+env/yeouido/uniform_weights.*.xml
+env/yeouido/states/*.source

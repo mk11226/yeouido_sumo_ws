@@ -29,7 +29,7 @@ def stats(records):
     arr = [r for r in records if r["ended_by"] == "arrival"]
     speed_n = sum(r["speed_n"] for r in records)
     return dict(n=n, collision=col / n, success=len(arr) / n,
-                timeout=sum(r["ended_by"] == "timeout" for r in records) / n,
+                timeout=sum(r["ended_by"] in ("timeout", "teleport") for r in records) / n,   # 순간이동 = 못 가서 실패
                 speed=sum(r["speed_sum"] for r in records) / speed_n * 3.6 if speed_n else 0.0,
                 red=sum(r.get("red_lights") or 0 for r in records),
                 minutes=(sum(r["length"] for r in arr) / len(arr) * 0.5 / 60) if arr else None,

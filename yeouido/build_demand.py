@@ -25,12 +25,17 @@ VTYPES = OUT / f"{NAME}.vtypes.xml"
 CANDIDATES = OUT / "candidates.rou.xml"
 SEED = 42
 
-# 일반 차량 구성. 도심이라 차종 최고속도 대신 speedFactor(제한속도 대비 배율)로 속도를 준다.
+# 일반 차량 구성: 수업 환경(env/road_config.py TRAFFIC["controllers"])과 같은 차량추종모델 4종·비율·색.
+# 도심이라 차종 최고속도 대신 speedFactor(제한속도 대비 배율)로 속도를 준다.
 HV_TYPES = {
-    "krauss": dict(probability=0.7, carFollowModel="Krauss", accel=2.6, decel=4.5,
+    "krauss": dict(probability=0.35, carFollowModel="Krauss", accel=2.6, decel=4.5,   # 산만한 운전자 (노랑)
                    sigma=0.5, tau=1.0, color="1,1,0"),
-    "idm": dict(probability=0.3, carFollowModel="IDM", accel=2.0, decel=4.0,
+    "idm": dict(probability=0.30, carFollowModel="IDM", accel=2.0, decel=4.0,         # 부드러운 운전자 (하늘)
                 tau=1.2, color="0,0.8,1"),
+    "eidm": dict(probability=0.20, carFollowModel="EIDM", accel=2.0, decel=4.0,       # 반응 지연 있는 운전자 (주황)
+                 tau=1.1, color="1,0.6,0"),
+    "acc": dict(probability=0.15, carFollowModel="ACC", accel=2.0, decel=4.0,         # 크루즈 컨트롤 차량 (자주)
+                tau=1.5, color="1,0,1"),
 }
 # 끼어들기 관련 파라미터. SUMO 기본 운전자는 매우 양보적이라 차로가 줄어드는 곳이나
 # 회전 차로로 옮겨야 하는 곳에서 빈틈을 오래 기다린다. 끼어들기를 조금 더 적극적으로

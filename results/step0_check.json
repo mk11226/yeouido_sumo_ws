@@ -1,0 +1,337 @@
+{
+ "seconds": 447,
+ "records": [
+  {
+   "policy": "expert",
+   "shield": false,
+   "id": 7,
+   "level": "rush",
+   "origin": "당산역",
+   "destination": "게이트 C",
+   "ended_by": "arrival",
+   "steps": 2402,
+   "minutes": 20.0,
+   "ret": 15.89,
+   "remaining": 7.649946602859927,
+   "route_length": 5339.840000000002,
+   "shield_steps": 0,
+   "jerk_sum": 449.592,
+   "jerk_mean": 0.1872518060769759,
+   "jerk_p95": 0.9806469138711691,
+   "mean_speed": 4.449866620214696,
+   "trace": [
+    {
+     "step": 600,
+     "remaining": 4244.341845254869,
+     "speed": 7.7055476767205136
+    },
+    {
+     "step": 1200,
+     "remaining": 3585.865334845668,
+     "speed": 2.2286697193923004
+    },
+    {
+     "step": 1800,
+     "remaining": 2293.887028994105,
+     "speed": 12.20588626814434
+    },
+    {
+     "step": 2400,
+     "remaining": 15.877425102859945,
+     "speed": 16.454957
+    }
+   ],
+   "seconds": 313
+  },
+  {
+   "policy": "expert",
+   "shield": true,
+   "id": 7,
+   "level": "rush",
+   "origin": "당산역",
+   "destination": "게이트 C",
+   "ended_by": "arrival",
+   "steps": 3325,
+   "minutes": 27.7,
+   "ret": 14.32,
+   "remaining": 5.622171158760352,
+   "route_length": 5339.840000000002,
+   "shield_steps": 998,
+   "jerk_sum": 449.896,
+   "jerk_mean": 0.13534788983163684,
+   "jerk_p95": 0.8187939494848245,
+   "mean_speed": 3.215843954880772,
+   "trace": [
+    {
+     "step": 600,
+     "remaining": 4244.341845259451,
+     "speed": 7.705547678098156
+    },
+    {
+     "step": 1200,
+     "remaining": 3585.8653348667253,
+     "speed": 2.2286697334496672
+    },
+    {
+     "step": 1800,
+     "remaining": 3133.7724198639253,
+     "speed": 13.710819
+    },
+    {
+     "step": 2400,
+     "remaining": 1281.4020000003404,
+     "speed": 6.809320893599868e-10
+    },
+    {
+     "step": 3000,
+     "remaining": 1075.4021044282567,
+     "speed": 2.0855651407247766e-11
+    }
+   ],
+   "seconds": 432
+  },
+  {
+   "policy": "throttle",
+   "shield": true,
+   "id": 7,
+   "level": "rush",
+   "origin": "당산역",
+   "destination": "게이트 C",
+   "ended_by": "arrival",
+   "steps": 3006,
+   "minutes": 25.1,
+   "ret": 15.33,
+   "remaining": 0.7209576840812133,
+   "route_length": 5339.840000000002,
+   "shield_steps": 2171,
+   "jerk_sum": 553.356,
+   "jerk_mean": 0.18408380560009943,
+   "jerk_p95": 1.0514259234921008,
+   "mean_speed": 3.559303969718245,
+   "trace": [
+    {
+     "step": 600,
+     "remaining": 4261.829124959151,
+     "speed": 7.389814424041274
+    },
+    {
+     "step": 1200,
+     "remaining": 3380.6091097407816,
+     "speed": 0.02410888128318811
+    },
+    {
+     "step": 1800,
+     "remaining": 1688.8065201784123,
+     "speed": 9.38022822780506
+    },
+    {
+     "step": 2400,
+     "remaining": 1202.5176647781134,
+     "speed": 4.7748263676261615e-15
+    },
+    {
+     "step": 3000,
+     "remaining": 50.08582868408132,
+     "speed": 16.454957
+    }
+   ],
+   "seconds": 371
+  },
+  {
+   "policy": "expert",
+   "shield": true,
+   "id": 1,
+   "level": "night",
+   "origin": "당산역",
+   "destination": "여의도공원",
+   "ended_by": "arrival",
+   "steps": 463,
+   "minutes": 3.9,
+   "ret": 19.01,
+   "remaining": 3.9215997317791675,
+   "route_length": 2783.290000000001,
+   "shield_steps": 17,
+   "jerk_sum": 154.901,
+   "jerk_mean": 0.3345596594542015,
+   "jerk_p95": 2.4889601916074753,
+   "mean_speed": 12.054220498256168,
+   "trace": [],
+   "seconds": 9
+  },
+  {
+   "policy": "expert",
+   "shield": true,
+   "id": 6,
+   "level": "night",
+   "origin": "게이트 D",
+   "destination": "노량진수산시장",
+   "ended_by": "arrival",
+   "steps": 965,
+   "minutes": 8.0,
+   "ret": 19.18,
+   "remaining": 4.9935337113444405,
+   "route_length": 5506.61,
+   "shield_steps": 1,
+   "jerk_sum": 83.752,
+   "jerk_mean": 0.08678951481337042,
+   "jerk_p95": 0.0,
+   "mean_speed": 11.40113594826281,
+   "trace": [
+    {
+     "step": 600,
+     "remaining": 2197.5891029478503,
+     "speed": 12.124581000000001
+    }
+   ],
+   "seconds": 17
+  },
+  {
+   "policy": "expert",
+   "shield": true,
+   "id": 2,
+   "level": "day",
+   "origin": "게이트 F",
+   "destination": "게이트 ㄷ",
+   "ended_by": "timeout",
+   "steps": 3600,
+   "minutes": 30.0,
+   "ret": -1.93,
+   "remaining": 4895.23529057588,
+   "route_length": 4979.830000000002,
+   "shield_steps": 570,
+   "jerk_sum": 38.871,
+   "jerk_mean": 0.01079743252015988,
+   "jerk_p95": 0.02996502509744223,
+   "mean_speed": 0.04663296773175947,
+   "trace": [
+    {
+     "step": 600,
+     "remaining": 4952.118158327634,
+     "speed": 0.000379971131246549
+    },
+    {
+     "step": 1200,
+     "remaining": 4937.008099604211,
+     "speed": 4.7748263676261615e-15
+    },
+    {
+     "step": 1800,
+     "remaining": 4925.786577338576,
+     "speed": 0.6095812635644767
+    },
+    {
+     "step": 2400,
+     "remaining": 4912.246912438085,
+     "speed": 4.7748263676261615e-15
+    },
+    {
+     "step": 3000,
+     "remaining": 4902.735310632588,
+     "speed": 4.7748263676261615e-15
+    },
+    {
+     "step": 3600,
+     "remaining": 4895.23529057588,
+     "speed": 4.7748263676261615e-15
+    }
+   ],
+   "seconds": 446
+  },
+  {
+   "policy": "expert",
+   "shield": true,
+   "id": 3,
+   "level": "day",
+   "origin": "게이트 E",
+   "destination": "IFC 서울",
+   "ended_by": "arrival",
+   "steps": 1054,
+   "minutes": 8.8,
+   "ret": 15.63,
+   "remaining": 3.2438417525684855,
+   "route_length": 4018.7399999999993,
+   "shield_steps": 356,
+   "jerk_sum": 201.284,
+   "jerk_mean": 0.1909717311967526,
+   "jerk_p95": 0.8806740194674006,
+   "mean_speed": 7.632226660453996,
+   "trace": [
+    {
+     "step": 600,
+     "remaining": 1509.1350950301305,
+     "speed": 6.973683840513924
+    }
+   ],
+   "seconds": 103
+  },
+  {
+   "policy": "expert",
+   "shield": true,
+   "id": 0,
+   "level": "rush",
+   "origin": "63빌딩",
+   "destination": "노량진수산시장",
+   "ended_by": "arrival",
+   "steps": 2146,
+   "minutes": 17.9,
+   "ret": 15.94,
+   "remaining": 0.20745567217460348,
+   "route_length": 7594.960000000003,
+   "shield_steps": 491,
+   "jerk_sum": 458.785,
+   "jerk_mean": 0.2137863255947828,
+   "jerk_p95": 1.154705742813741,
+   "mean_speed": 7.076497203444733,
+   "trace": [
+    {
+     "step": 600,
+     "remaining": 4712.77822718717,
+     "speed": 0.1897736555766295
+    },
+    {
+     "step": 1200,
+     "remaining": 3447.2671681776633,
+     "speed": 0.03661823209382786
+    },
+    {
+     "step": 1800,
+     "remaining": 2162.7794916721746,
+     "speed": 13.273284
+    }
+   ],
+   "seconds": 230
+  },
+  {
+   "policy": "expert",
+   "shield": true,
+   "id": 10,
+   "level": "rush",
+   "origin": "게이트 E",
+   "destination": "IFC 서울",
+   "ended_by": "arrival",
+   "steps": 1581,
+   "minutes": 13.2,
+   "ret": 15.44,
+   "remaining": null,
+   "route_length": 4018.7399999999993,
+   "shield_steps": 463,
+   "jerk_sum": 295.924,
+   "jerk_mean": 0.18717510271287796,
+   "jerk_p95": 0.8584734499454498,
+   "mean_speed": 5.089525278830713,
+   "trace": [
+    {
+     "step": 600,
+     "remaining": 2975.640676642303,
+     "speed": 4.7748263676261615e-15
+    },
+    {
+     "step": 1200,
+     "remaining": 1145.0930307637864,
+     "speed": 9.120373354826633
+    }
+   ],
+   "seconds": 174
+  }
+ ]
+}

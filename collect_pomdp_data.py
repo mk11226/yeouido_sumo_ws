@@ -26,6 +26,9 @@
     python collect_pomdp_data.py --episodes 10 --gui
     python collect_pomdp_data.py --policy keep-lane --episodes 20
     python collect_pomdp_data.py --policy sumo-expert --episodes 500 --workers 4   # BC용 선생님 데이터
+    python collect_pomdp_data.py --policy sumo-expert --episodes 600 --workers 8 --dart-sigma 0.15  # DART
+    python collect_pomdp_data.py --policy sumo-expert --dagger-model results/bc_…/model.pt --beta 0.5 \
+        --episodes 100 --workers 8                                   # DAgger: BC가 운전, 선생님이 라벨
     python collect_pomdp_data.py --model results/run_xxx/model.pt --episodes 100   # 학습한 PPO로 수집
     python collect_pomdp_data.py --model results/run_xxx/model.pt --stochastic    # 샘플링 행동
     python collect_pomdp_data.py --episodes 200 --workers 8   # SUMO 8개 병렬 수집
@@ -193,13 +196,25 @@ def collect(args, sumocfg, episodes, worker_id, jsonl_path, npz_path, tag=""):
         gui_autostart=True,
     )
     act = make_policy(args, env, worker_seed)
+    # DART: 선생님 행동(정답 라벨)은 그대로 저장하고, 실제로는 가감속에 노이즈를 섞어 실행한다.
+    # 정책이 선생님 궤적에서 조금 벗어난 상태(조금 빠르거나 느림)도 데이터에 들어가서,
+    # BC 정책이 실수한 뒤 되돌아오는 법을 배운다. action_raw = 라벨, action.accel_raw = 실행값.
+    noise_rng = np.random.default_rng(worker_seed + 7)
+    # DAgger: 학습한 정책(--dagger-model)이 운전하고, 저장 라벨은 같은 순간의 선생님 행동(act).
+    # 스텝마다 확률 β 로 선생님 행동을 대신 실행한다 (반복 초반에 너무 엉뚱한 곳으로 빠지지 않게).
+    driver = None
+    if args.dagger_model:
+        from test import load_agent
+        driver = load_agent(args.dagger_model, env.observation_space.shape[0], env.action_space.shape[0])
+        if hasattr(driver, "policy"):
+            driver.policy.eval()
     # sumo_env가 SUMO --seed를 np.random(전역)에서 뽑는다. PPO 생성자가 전역 시드를
     # HPARAMS["seed"]로 되돌려 놓으므로 정책을 만든 "뒤에" 워커별로 다시 시드해야
     # 워커들이 같은 교통 패턴을 반복하지 않는다.
     np.random.seed(worker_seed)
 
     # NPZ는 학습에서 바로 쓰기 좋은 고정 크기 값만 모은다.
-    obs_buf, next_obs_buf, action_raw_buf = [], [], []
+    obs_buf, next_obs_buf, action_raw_buf, executed_buf = [], [], [], []
     lane_cmd_buf, reward_buf = [], []
     term_buf, trunc_buf, episode_buf, step_buf = [], [], [], []
     # 스텝별 감지 차량 (x,y)는 한 줄로 이어 붙이고, 스텝 경계는 offsets로 기록한다.
@@ -223,7 +238,14 @@ def collect(args, sumocfg, episodes, worker_id, jsonl_path, npz_path, tag=""):
                     # 관측 벡터와 별도로 저장하는 부가 데이터 (분석/시각화용).
                     detected = env.get_detected_vehicles()
                     action = act(obs)
-                    next_obs, reward, terminated, truncated, info = env.step(action)
+                    executed = np.asarray(action, dtype=np.float32).copy()
+                    if driver is not None and noise_rng.random() >= args.beta:
+                        executed = np.clip(np.asarray(driver.predict(obs, deterministic=True),
+                                                      dtype=np.float32), -1.0, 1.0)
+                    elif args.dart_sigma > 0:
+                        executed[0] = np.clip(executed[0] + noise_rng.normal(0.0, args.dart_sigma),
+                                              -1.0, 1.0)
+                    next_obs, reward, terminated, truncated, info = env.step(executed)
                     state_tp1 = env.get_privileged_state()
                     done = terminated or truncated
 
@@ -263,6 +285,7 @@ def collect(args, sumocfg, episodes, worker_id, jsonl_path, npz_path, tag=""):
                     obs_buf.append(np.asarray(obs, dtype=np.float32))
                     next_obs_buf.append(np.asarray(next_obs, dtype=np.float32))
                     action_raw_buf.append(np.asarray(action, dtype=np.float32))
+                    executed_buf.append(executed)
                     lane_cmd_buf.append(int(info["lane_change"]))
                     reward_buf.append(float(reward))
                     term_buf.append(bool(terminated))
@@ -287,6 +310,7 @@ def collect(args, sumocfg, episodes, worker_id, jsonl_path, npz_path, tag=""):
         npz_path,
         observation=np.asarray(obs_buf, dtype=np.float32).reshape(total, -1),
         action_raw=np.asarray(action_raw_buf, dtype=np.float32).reshape(total, -1),
+        action_executed=np.asarray(executed_buf, dtype=np.float32).reshape(total, -1),
         lane_change=np.asarray(lane_cmd_buf, dtype=np.int8),
         reward=np.asarray(reward_buf, dtype=np.float32),
         next_observation=np.asarray(next_obs_buf, dtype=np.float32).reshape(total, -1),
@@ -344,6 +368,14 @@ def main():
     parser.add_argument("--device", default="cpu",
                         help="정책 추론 장치 (cpu/cuda). 관측 1개씩 추론이라 cpu로 충분")
     parser.add_argument("--seed", type=int, default=0)
+    parser.add_argument("--dagger-model", default=None,
+                        help="DAgger: 이 model.pt(BC/PPO)가 운전하고, 저장 라벨(action_raw)은 --policy(선생님) 행동. "
+                             "실제 실행한 행동은 action_executed")
+    parser.add_argument("--beta", type=float, default=0.0,
+                        help="DAgger: 스텝마다 이 확률로 선생님 행동을 대신 실행 (0 = 정책만 운전)")
+    parser.add_argument("--dart-sigma", type=float, default=0.0,
+                        help="DART: 실행하는 가감속에만 N(0, σ) 노이즈 (저장 라벨은 원래 행동). "
+                             "선생님 데이터는 0.1~0.2 권장")
     parser.add_argument("--gui", action="store_true",
                         help="SUMO GUI로 수집. 기본은 headless")
     parser.add_argument("--workers", type=int, default=1,
@@ -356,6 +388,8 @@ def main():
                         help="JSONL의 observation/state/detected float 소수 자릿수 "
                              "(NPZ에는 영향 없음)")
     args = parser.parse_args()
+    if args.dagger_model and args.policy != "sumo-expert":
+        parser.error("--dagger-model 은 --policy sumo-expert (라벨 = 선생님) 와 함께 쓰세요.")
     if args.policy in ("ppo", "bc") and args.model is None:
         parser.error(f"--policy {args.policy}에는 --model이 필요합니다.")
     if args.model is not None and not os.path.exists(args.model):

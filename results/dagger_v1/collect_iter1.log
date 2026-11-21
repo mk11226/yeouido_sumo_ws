@@ -1,0 +1,113 @@
+평가 알고리즘: PPO
+[w7] episode   89/100 | steps= 508 return=  18.748
+평가 알고리즘: PPO
+[w6] episode   77/100 | steps= 554 return=  18.822
+평가 알고리즘: PPO
+[w5] episode   65/100 | steps= 800 return=  18.443
+평가 알고리즘: PPO
+[w4] episode   53/100 | steps= 892 return=  18.511
+평가 알고리즘: PPO
+[w2] episode   27/100 | steps=1021 return=  18.862
+[w7] episode   90/100 | steps=1158 return=  17.540
+[w7] episode   91/100 | steps= 465 return=  18.378
+[w2] episode   28/100 | steps= 974 return=  16.902
+[w5] episode   66/100 | steps=1596 return=  14.142
+[w6] episode   78/100 | steps=1091 return=  17.137
+평가 알고리즘: PPO
+[w3] episode   40/100 | steps=1149 return=  15.549
+[w2] episode   29/100 | steps= 896 return=  17.650
+[w3] episode   41/100 | steps=1073 return=  18.391
+평가 알고리즘: PPO
+[w1] episode   14/100 | steps=1352 return=  15.962
+[w7] episode   92/100 | steps=1036 return=  17.935
+[w7] episode   93/100 | steps= 355 return=  19.548
+[w3] episode   42/100 | steps=1008 return=  18.069
+[w3] episode   43/100 | steps=1216 return=  17.553
+[w3] episode   44/100 | steps= 409 return=  19.569
+[w3] episode   45/100 | steps= 642 return=  18.515
+[w2] episode   30/100 | steps=1217 return=  17.342
+[w2] episode   31/100 | steps= 784 return=  18.987
+[w3] episode   46/100 | steps= 876 return=  16.644
+[w1] episode   15/100 | steps=3600 return=   1.615
+평가 알고리즘: PPO
+[w0] episode    1/100 | steps=3600 return=  -1.219
+[w0] episode    2/100 | steps= 304 return=  19.681
+[w3] episode   47/100 | steps=1603 return=  15.242
+[w2] episode   32/100 | steps=1955 return=  15.130
+[w2] episode   33/100 | steps= 533 return=  19.190
+[w7] episode   94/100 | steps=3600 return=  -7.148
+[w6] episode   79/100 | steps=3229 return=   8.409
+[w3] episode   48/100 | steps= 757 return=  16.468
+[w4] episode   54/100 | steps=3600 return=  -6.390
+[w7] episode   95/100 | steps=1018 return=  17.541
+[w4] episode   55/100 | steps= 832 return=  18.659
+[w3] episode   49/100 | steps= 761 return=  18.602
+[w3] episode   50/100 | steps= 941 return=  17.557
+[w0] episode    3/100 | steps=2116 return=  -1.928
+[w0] episode    4/100 | steps= 451 return=  19.445
+[w4] episode   56/100 | steps= 369 return=  18.746
+[w4] episode   57/100 | steps= 823 return=  19.217
+[w5] episode   67/100 | steps=3600 return=  -1.229
+[w0] episode    5/100 | steps=1488 return=  15.496
+[w4] episode   58/100 | steps=1809 return=  14.119
+[w2] episode   34/100 | steps=2718 return=  13.211
+[w4] episode   59/100 | steps= 444 return=  17.676
+[w7] episode   96/100 | steps=1600 return= -23.517
+[w2] episode   35/100 | steps= 741 return=  19.281
+[w4] episode   60/100 | steps= 291 return=  19.778
+[w1] episode   16/100 | steps=3600 return=  -4.048
+[w3] episode   51/100 | steps=1252 return=  16.638
+[w4] episode   61/100 | steps=1177 return=  17.449
+[w1] episode   17/100 | steps= 391 return=  18.773
+[w1] episode   18/100 | steps=1222 return=  18.815
+[w3] episode   52/100 | steps= 409 return=  18.504
+[w5] episode   68/100 | steps=1077 return=  16.321
+[w5] episode   69/100 | steps= 516 return=  19.434
+[w2] episode   36/100 | steps=1072 return=  15.313
+[w2] episode   37/100 | steps= 820 return=  19.258
+[w2] episode   38/100 | steps= 475 return=  19.384
+[w1] episode   19/100 | steps=1232 return=  15.971
+[w2] episode   39/100 | steps=1276 return=  18.703
+[w5] episode   70/100 | steps=1264 return=  15.735
+[w7] episode   97/100 | steps=3600 return=  -3.618
+[w6] episode   80/100 | steps=3600 return=  -0.639
+[w5] episode   71/100 | steps=1672 return=  -5.917
+[w6] episode   81/100 | steps=1546 return=  17.914
+[w5] episode   72/100 | steps= 474 return=  19.675
+[w5] episode   73/100 | steps= 313 return=  19.546
+[w4] episode   62/100 | steps=3600 return=  -2.819
+[w0] episode    6/100 | steps=3600 return=  -5.080
+[w5] episode   74/100 | steps=1595 return=  14.533
+[w0] episode    7/100 | steps= 930 return=  17.021
+[w4] episode   63/100 | steps=1025 return=  18.026
+[w4] episode   64/100 | steps= 793 return=  18.948
+[w5] episode   75/100 | steps=1257 return=  14.348
+[w5] episode   76/100 | steps= 598 return=  18.779
+[w7] episode   98/100 | steps=3183 return=  11.011
+[w1] episode   20/100 | steps=3600 return=  -8.831
+[w7] episode   99/100 | steps= 807 return=  17.667
+[w7] episode  100/100 | steps= 736 return=  19.225
+[w6] episode   82/100 | steps=3600 return=  -0.775
+[w0] episode    8/100 | steps=3600 return=   1.673
+[w0] episode    9/100 | steps= 277 return=  19.738
+[w6] episode   83/100 | steps=1391 return=  15.033
+[w0] episode   10/100 | steps=1059 return=  -2.023
+[w0] episode   11/100 | steps= 451 return=  17.393
+[w0] episode   12/100 | steps= 774 return=  19.274
+[w1] episode   21/100 | steps=3600 return=  -7.024
+[w6] episode   84/100 | steps=1735 return=  -7.096
+[w1] episode   22/100 | steps=1266 return=  14.676
+[w6] episode   85/100 | steps=2100 return=  12.312
+[w6] episode   86/100 | steps=1781 return=  13.430
+[w0] episode   13/100 | steps=3600 return=  -3.333
+[w1] episode   23/100 | steps=3600 return=  -3.754
+[w1] episode   24/100 | steps= 794 return=  19.356
+[w6] episode   87/100 | steps=1972 return=  14.031
+[w1] episode   25/100 | steps=2413 return=  13.981
+[w6] episode   88/100 | steps=2429 return=  14.337
+[w1] episode   26/100 | steps=2374 return=  12.096
+
+수집 완료
+  transitions: 151383  (1912.1s, 79 step/s, workers=8)
+  JSONL(full POMDP + privileged state): /Users/junochun/Documents/auto_driving/bmil_ws/data/dagger_v1_iter1.jsonl.gz (89.3 MB)
+  NPZ(training-friendly):               /Users/junochun/Documents/auto_driving/bmil_ws/data/dagger_v1_iter1.npz (12.1 MB)

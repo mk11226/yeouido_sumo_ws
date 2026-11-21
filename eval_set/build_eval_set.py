@@ -114,6 +114,31 @@ def build():
     return problems
 
 
+def build_random(n, seed):
+    """무작위 시험지: 가능한 출발·도착 쌍 전체(1.2 km 이상)에서 n문제를 고르게 뽑는다.
+
+    쌍·시간대·워밍업 시점을 모두 무작위로 정하되 seed 로 고정해, 다른 모델도 같은 문제로 비교할 수 있다.
+    기준선 측정처럼 "어떤 출발·도착이 나와도" 성능을 보고 싶을 때 쓴다.
+    """
+    sumo_home()
+    import sumolib
+    net = sumolib.net.readNet(str(NET))
+    lms = json.loads(LANDMARK_FILE.read_text())
+    rng = random.Random(seed)
+    rows = candidates(net, lms)
+    problems = []
+    for pid in range(n):
+        pair = rng.choice(rows)
+        problems.append(dict(id=pid, level=rng.choice(LEVELS), origin=pair["origin"],
+                             destination=pair["destination"],
+                             snapshot_time=rng.choice(SNAPSHOTS),
+                             sumo_seed=SUMO_SEED_BASE + seed * 10_000 + pid,
+                             category=pair["category"], bridges=pair["bridges"],
+                             route_m=pair["route_m"]))
+    print(f"[eval_set] 후보 쌍 {len(rows)}개에서 {n}문제를 무작위로 뽑음 (seed {seed})")
+    return problems
+
+
 def check(problems):
     """150문제 모두 env.reset 이 되는지 (경로 있음, 1 km 이상, 출발 지점이 막히지 않음)."""
     import os
@@ -159,7 +184,17 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--check", action="store_true", help="150문제 모두 env.reset 이 되는지 확인")
+    ap.add_argument("--random", type=int, metavar="N",
+                    help="고정 150문제 대신 무작위 N문제 (→ eval_set/random_<N>_s<seed>.json)")
+    ap.add_argument("--seed", type=int, default=1, help="--random 의 난수 시드")
     args = ap.parse_args(argv)
+    if args.random:
+        problems = build_random(args.random, args.seed)
+        path = OUT / f"random_{args.random}_s{args.seed}.json"
+        path.write_text("[\n" + ",\n".join(json.dumps(p, ensure_ascii=False) for p in problems) + "\n]\n")
+        summary(problems)
+        print(f"→ {path}")
+        return
     problems = build()
     if args.check:
         failed = check(problems)

@@ -54,7 +54,7 @@ class RolloutBuffer:
         self.log_probs.append(log_prob)
         self.rewards.append(reward)
         self.values.append(value)
-        self.dones.append(float(done))
+        self.dones.append(np.asarray(done, dtype=np.float32))   # 단일 환경: 스칼라, 병렬: (N,)
 
     def __len__(self):
         return len(self.rewards)
@@ -80,7 +80,7 @@ class RolloutBuffer:
         dones = np.asarray(self.dones, dtype=np.float32)
         T = len(rewards)
 
-        advantages = np.zeros(T, dtype=np.float32)
+        advantages = np.zeros_like(rewards)      # (T,) 단일 환경 / (T, N) 병렬 환경
         gae = 0.0
         for t in reversed(range(T)):
             next_value = last_value if t == T - 1 else values[t + 1]

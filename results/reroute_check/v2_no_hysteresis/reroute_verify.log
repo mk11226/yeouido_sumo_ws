@@ -1,0 +1,71 @@
+  #1   night arrival   경로 바뀜 0회
+  #6   night arrival   경로 바뀜 0회
+  #9   night arrival   경로 바뀜 0회
+  #8   night arrival   경로 바뀜 0회
+  #5   day   arrival   경로 바뀜 0회
+  #11  day   arrival   경로 바뀜 0회
+  #4   day   arrival   경로 바뀜 0회
+  #3   day   arrival   경로 바뀜 0회
+  #13  night arrival   경로 바뀜 0회
+  #15  night arrival   경로 바뀜 0회
+  #17  day   arrival   경로 바뀜 0회
+  #12  rush  arrival   경로 바뀜 0회
+  #0   rush  arrival   경로 바뀜 1회
+  #14  rush  arrival   경로 바뀜 1회
+  #10  rush  teleport  경로 바뀜 1회
+  #7   rush  arrival   경로 바뀜 2회
+  #21  rush  arrival   경로 바뀜 1회
+  #24  night arrival   경로 바뀜 0회
+  #19  rush  teleport  경로 바뀜 2회
+  #23  rush  arrival   경로 바뀜 0회
+  #18  rush  arrival   경로 바뀜 3회
+  #2   day   timeout   경로 바뀜 16회
+  #29  night arrival   경로 바뀜 0회
+  #16  day   timeout   경로 바뀜 18회
+  #20  rush  teleport  경로 바뀜 1회
+  #31  night arrival   경로 바뀜 0회
+  #28  day   arrival   경로 바뀜 1회
+  #33  night arrival   경로 바뀜 0회
+  #34  night arrival   경로 바뀜 0회
+  #30  day   arrival   경로 바뀜 0회
+  #35  night arrival   경로 바뀜 0회
+  #38  day   arrival   경로 바뀜 0회
+  #37  rush  arrival   경로 바뀜 0회
+  #41  night arrival   경로 바뀜 0회
+  #27  rush  arrival   경로 바뀜 1회
+  #39  rush  arrival   경로 바뀜 1회
+  #26  rush  teleport  경로 바뀜 2회
+  #45  night arrival   경로 바뀜 0회
+  #36  rush  arrival   경로 바뀜 1회
+  #42  day   arrival   경로 바뀜 0회
+  #47  night arrival   경로 바뀜 0회
+  #49  night arrival   경로 바뀜 0회
+  #44  day   arrival   경로 바뀜 0회
+  #51  night arrival   경로 바뀜 0회
+  #22  day   timeout   경로 바뀜 2회
+  #53  night arrival   경로 바뀜 0회
+  #46  rush  arrival   경로 바뀜 1회
+  #55  night arrival   경로 바뀜 0회
+  #50  rush  arrival   경로 바뀜 1회
+  #56  night arrival   경로 바뀜 0회
+  #43  day   arrival   경로 바뀜 1회
+  #54  day   arrival   경로 바뀜 0회
+  #59  day   arrival   경로 바뀜 0회
+  #52  day   arrival   경로 바뀜 1회
+  #25  rush  timeout   경로 바뀜 12회
+  #40  rush  timeout   경로 바뀜 1회
+  #48  rush  timeout   경로 바뀜 29회
+  #58  rush  teleport  경로 바뀜 6회
+  #57  rush  timeout   경로 바뀜 6회
+
+재검증 (선생님 + 재탐색, 60문제, 16분)
+  도착 47 (기준선 45)  시간대 {'night': '20/20', 'day': '14/17', 'rush': '13/23'} (기준선 {'night': '20/20', 'day': '14/17', 'rush': '11/23'})
+  충돌 0  순간이동 5 (기준선 1)  시간초과 7  풀림 [14, 18, 21, 39, 50]  망가짐 [10, 20, 57]
+  경로 바뀜 112회, 남은 거리 2배 넘게 는 우회 5회, 교차로 겹침 54 (기준선 44)
+  [통과] 충돌 0
+  [통과] 빨간불 0
+  [실패] 순간이동 기준선 이하
+  [통과] 도착 기준선 이상
+  [통과] 관측 NaN 없음
+  [통과] 재탐색 직후 보상 정상
+판정: 실패 → /Users/junochun/Documents/auto_driving/bmil_ws/results/reroute_check/verify_expert.json

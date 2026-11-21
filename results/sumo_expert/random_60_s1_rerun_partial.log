@@ -1,0 +1,27 @@
+시험지: eval_set/random_60_s1.json (60문제, workers=8)
+  #1   (전체 60문제) 도착   night 당산역 → 여의도공원
+  #6   (전체 60문제) 도착   night 게이트 D → 노량진수산시장
+  #9   (전체 60문제) 도착   night 국회의사당 → 게이트 B
+  #17  (전체 60문제) 도착   day   국회의사당 → 여의도공원
+  #5   (전체 60문제) 도착   day   게이트 ㄷ → 게이트 A
+  #13  (전체 60문제) 도착   night 게이트 C → 국회의사당
+  #4   (전체 60문제) 도착   day   IFC 서울 → 게이트 D
+  #3   (전체 60문제) 도착   day   게이트 E → IFC 서울
+Error: tcpip::Socket::recvAndCheck @ recv: peer shutdown
+Quitting (on error).
+Error: tcpip::Socket::recvAndCheck @ recv: peer shutdown
+Quitting (on error).
+Error: tcpip::Socket::recvAndCheck @ recv: Connection reset by peer
+Quitting (on error).
+Error: tcpip::Socket::recvAndCheck @ recv: peer shutdown
+Quitting (on error).
+Error: tcpip::Socket::recvAndCheck @ recv: Connection reset by peer
+Quitting (on error).
+/opt/anaconda3/envs/sumo_rl/lib/python3.10/multiprocessing/resource_tracker.py:224: UserWarning: resource_tracker: There appear to be 6 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '
+Error: tcpip::Socket::recvAndCheck @ recv: peer shutdown
+Quitting (on error).
+Error: tcpip::Socket::recvAndCheck @ recv: peer shutdown
+Quitting (on error).
+Error: tcpip::Socket::recvAndCheck @ recv: peer shutdown
+Quitting (on error).

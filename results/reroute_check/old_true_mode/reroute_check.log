@@ -1,0 +1,46 @@
+재탐색 효과 확인: 20문제 (기준선 실패 14 + 대조군), 규칙 속도<2.0m/s 60초 → 재탐색, 쉬는 시간 60초
+  #19  rush  teleport  재탐색 8회 (경로 바뀜 0) 63빌딩 → 국회의사당
+  #16  day   timeout   재탐색 18회 (경로 바뀜 0) 게이트 F → 게이트 ㄷ
+  #22  day   timeout   재탐색 21회 (경로 바뀜 0) 노량진수산시장 → 63빌딩
+  #2   day   timeout   재탐색 29회 (경로 바뀜 0) 게이트 F → 게이트 ㄷ
+  #14  rush  timeout   재탐색 26회 (경로 바뀜 0) 게이트 B → 여의도공원
+  #21  rush  timeout   재탐색 20회 (경로 바뀜 0) 게이트 B → 게이트 D
+  #18  rush  timeout   재탐색 24회 (경로 바뀜 0) 영등포역 → 63빌딩
+  #25  rush  timeout   재탐색 18회 (경로 바뀜 0) 당산역 → 63빌딩
+  #26  rush  timeout   재탐색 19회 (경로 바뀜 0) 게이트 A → IFC 서울
+  #0   rush  arrival   재탐색 4회 (경로 바뀜 0) 63빌딩 → 노량진수산시장
+  #3   day   arrival   재탐색 0회 (경로 바뀜 0) 게이트 E → IFC 서울
+  #1   night arrival   재탐색 0회 (경로 바뀜 0) 당산역 → 여의도공원
+  #6   night arrival   재탐색 0회 (경로 바뀜 0) 게이트 D → 노량진수산시장
+  #4   day   arrival   재탐색 0회 (경로 바뀜 0) IFC 서울 → 게이트 D
+  #39  rush  timeout   재탐색 23회 (경로 바뀜 0) 여의도공원 → 게이트 C
+  #50  rush  timeout   재탐색 15회 (경로 바뀜 0) 국회의사당 → 게이트 C
+  #48  rush  timeout   재탐색 29회 (경로 바뀜 0) 게이트 C → 노량진수산시장
+  #40  rush  timeout   재탐색 15회 (경로 바뀜 0) 게이트 B → 게이트 ㄱ
+  #7   rush  arrival   재탐색 6회 (경로 바뀜 0) 당산역 → 게이트 C
+  #58  rush  timeout   재탐색 10회 (경로 바뀜 0) 게이트 A → 게이트 F
+
+ id 시간대   기준선        재탐색            재탐색 횟수(바뀜)  출발 → 도착
+  0 rush  arrival    arrival           4(0)  63빌딩 → 노량진수산시장
+  1 night arrival    arrival           0(0)  당산역 → 여의도공원
+  2 day   timeout    timeout          29(0)  게이트 F → 게이트 ㄷ
+  3 day   arrival    arrival           0(0)  게이트 E → IFC 서울
+  4 day   arrival    arrival           0(0)  IFC 서울 → 게이트 D
+  6 night arrival    arrival           0(0)  게이트 D → 노량진수산시장
+  7 rush  arrival    arrival           6(0)  당산역 → 게이트 C
+ 14 rush  timeout    timeout          26(0)  게이트 B → 여의도공원
+ 16 day   timeout    timeout          18(0)  게이트 F → 게이트 ㄷ
+ 18 rush  timeout    timeout          24(0)  영등포역 → 63빌딩
+ 19 rush  teleport   teleport          8(0)  63빌딩 → 국회의사당
+ 21 rush  timeout    timeout          20(0)  게이트 B → 게이트 D
+ 22 day   timeout    timeout          21(0)  노량진수산시장 → 63빌딩
+ 25 rush  timeout    timeout          18(0)  당산역 → 63빌딩
+ 26 rush  timeout    timeout          19(0)  게이트 A → IFC 서울
+ 39 rush  timeout    timeout          23(0)  여의도공원 → 게이트 C
+ 40 rush  timeout    timeout          15(0)  게이트 B → 게이트 ㄱ
+ 48 rush  timeout    timeout          29(0)  게이트 C → 노량진수산시장
+ 50 rush  timeout    timeout          15(0)  국회의사당 → 게이트 C
+ 58 rush  timeout    timeout          10(0)  게이트 A → 게이트 F
+
+기준선 실패 14문제 중 풀림 0, 대조군(기준선 도착) 망가짐 0, 충돌 0, 빨간불 0 (12분)
+→ /Users/junochun/Documents/auto_driving/bmil_ws/results/reroute_check/expert_reroute.json

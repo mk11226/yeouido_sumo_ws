@@ -1,0 +1,18 @@
+<configuration>
+    <input>
+        <net-file value="yeouido.net.xml"/>
+        <route-files value="yeouido.vtypes.xml,rush_uniform.rou.xml"/>
+        <additional-files value="signals_rush.add.xml"/>
+    </input>
+    <time>
+        <begin value="0"/>
+        <end value="4200"/>
+    </time>
+    <processing>
+        <time-to-teleport value="300"/>
+        <ignore-route-errors value="true"/>
+    </processing>
+    <random_number>
+        <seed value="7"/>
+    </random_number>
+</configuration>

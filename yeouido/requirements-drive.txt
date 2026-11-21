@@ -2,4 +2,7 @@
 -r requirements.txt
 gymnasium
 tensorboard
+libsumo==1.27.1        # 화면 없는 평가·학습 가속 (LIBSUMO_AS_TRACI=quiet), eclipse-sumo 와 같은 버전
+Pillow                 # 주행 영상 상태 띠 (drive_model --record)
+imageio-ffmpeg         # 주행 영상 mp4 인코딩 (시스템 ffmpeg 가 없을 때)
 # Install torch separately, selecting the CPU/CUDA build for your machine.

@@ -1,0 +1,21 @@
+0단계 점검: 9회 주행 (workers 9)
+ Retrying in 1 seconds
+  expert   쉴드O #1   night arrival     3.9분 보상   19.01 저크합 154.901 쉴드 17 (9초)
+ Retrying in 1 seconds
+  expert   쉴드O #6   night arrival     8.0분 보상   19.18 저크합 83.752 쉴드 1 (17초)
+ Retrying in 1 seconds
+  expert   쉴드O #3   day   arrival     8.8분 보상   15.63 저크합 201.284 쉴드 356 (103초)
+ Retrying in 1 seconds
+  expert   쉴드O #10  rush  arrival    13.2분 보상   15.44 저크합 295.924 쉴드 463 (174초)
+ Retrying in 1 seconds
+  expert   쉴드O #0   rush  arrival    17.9분 보상   15.94 저크합 458.785 쉴드 491 (230초)
+ Retrying in 1 seconds
+  expert   쉴드X #7   rush  arrival    20.0분 보상   15.89 저크합 449.592 쉴드 0 (313초)
+ Retrying in 1 seconds
+  throttle 쉴드O #7   rush  arrival    25.1분 보상   15.33 저크합 553.356 쉴드 2171 (371초)
+ Retrying in 1 seconds
+  expert   쉴드O #7   rush  arrival    27.7분 보상   14.32 저크합 449.896 쉴드 998 (432초)
+ Retrying in 1 seconds
+  expert   쉴드O #2   day   timeout    30.0분 보상   -1.93 저크합 38.871 쉴드 570 (446초)
+
+447초, 결과: /Users/junochun/Documents/auto_driving/bmil_ws/results/step0_check.json

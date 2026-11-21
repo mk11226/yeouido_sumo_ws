@@ -83,9 +83,26 @@ class YeouidoEnv(SumoHighwayEnv):
         self.signal_range = float(mdp_obs.get("signal_range", 100.0))
         self.route_range = float(mdp_obs.get("route_range", 200.0))
         self.junction_range = float(mdp_obs.get("junction_range", 50.0))
+        self.far_range = float(mdp_obs.get("far_range", 150.0))
+        self.safety_shield = bool(road.get("safety_shield", True))
+        # 일반 차량 수요 버전: "measured" = 실측 지점 맞춤·경계 출발 (env/yeouido/<level>.rou.xml),
+        # "uniform" = 같은 대수를 도로망 전체에 고르게 (<level>_uniform.rou.xml, yeouido/build_demand_uniform.py)
+        self.demand = str(road.get("demand", "measured"))
+        self._suffix = "" if self.demand == "measured" else f"_{self.demand}"
+        rr = road.get("reroute") or {}
+        self.reroute = bool(rr.get("enabled", False))
+        self.reroute_slow = float(rr.get("slow", 2.0))
+        self.reroute_stuck = float(rr.get("stuck", 60.0))
+        self.reroute_cooldown = float(rr.get("cooldown", 60.0))
+        self.reroute_gain = float(rr.get("gain", 0.3))
+        self.reroute_min_gain_s = float(rr.get("min_gain_s", 60.0))
+        self.reroute_max_detour = float(rr.get("max_detour", 1.5))
+        self.reroute_max_changes = int(rr.get("max_changes", 3))
+        self.reroutes = 0
+        self._edge_ids = None
 
         # 관측: 수업 환경 31차원 + 여의도 전용 9차원
-        self.obs_dim += 9
+        self.obs_dim += 11      # 신호·경로·교차로 9개 + 먼 앞차 2개
         self.observation_space = gym.spaces.Box(-1.0, 1.0, shape=(self.obs_dim,),
                                                 dtype=np.float32)
         # 배경 차량이 새로 생기는 도로 = 들어오는 도로가 없는 범위 경계 도로.
@@ -101,28 +118,34 @@ class YeouidoEnv(SumoHighwayEnv):
         self.route_length = 0.0
         self.destination_changes = 0
         self.red_lights = 0
+        self.shield_steps = 0
+        self.junction_overlaps = 0   # 교차로 안에서 움직이는 ego 차체가 다른 차와 겹친 스텝 수 (진단용)
+        self.jerk_sum = 0.0     # 에피소드 동안 |가속도 변화| 합 (m/s^2, 승차감 지표)
+        self._prev_speed = self._prev_acc = None
         self._remaining = self._prev_remaining = None
         self._signal = 1.0      # 마지막 관측의 앞 신호 색 (보상에서 재사용)
         self._limit = self.vmax
+        self._shield_hit = False
+        self._v_ref = None      # 이번 스텝에 낼 수 있었던 속도 (불필요한 정지 벌점)
+        self._reference = None  # 그 속도를 계산하는 SumoExpert (처음 쓸 때 만든다)
         self._ensure_snapshots()
 
     # ==================================================================
     # 워밍업 상태 (시간대 × snapshot_times)
     # ==================================================================
-    @staticmethod
-    def _cfg(level):
-        return os.path.join(DATA, f"yeouido_{level}.sumocfg")
+    def _cfg(self, level):
+        return os.path.join(DATA, f"yeouido_{level}{self._suffix}.sumocfg")
 
-    @staticmethod
-    def _snapshot(level, t):
-        return os.path.join(STATES, f"{level}_{int(t)}.xml.gz")
+    def _snapshot(self, level, t):
+        return os.path.join(STATES, f"{level}{self._suffix}_{int(t)}.xml.gz")
 
     def _ensure_snapshots(self):
         """없거나 도로망·교통량보다 오래된 워밍업 상태를 새로 만든다."""
         os.makedirs(STATES, exist_ok=True)
-        net_time = os.path.getmtime(os.path.join(DATA, "yeouido.net.xml"))
+        net_time = max(os.path.getmtime(os.path.join(DATA, f))     # 차량 종류(vtypes)가 바뀌어도 다시 만든다
+                       for f in ("yeouido.net.xml", "yeouido.vtypes.xml"))
         for level in self.levels:
-            source_time = max(net_time, os.path.getmtime(os.path.join(DATA, f"{level}.rou.xml")))
+            source_time = max(net_time, os.path.getmtime(os.path.join(DATA, f"{level}{self._suffix}.rou.xml")))
             signals = os.path.join(DATA, f"signals_{level}.add.xml")
             if os.path.exists(signals):
                 source_time = max(source_time, os.path.getmtime(signals))
@@ -167,6 +190,14 @@ class YeouidoEnv(SumoHighwayEnv):
             files = self.road.get("gui_files", ("yeouido.poly.xml", "markers.add.xml"))
             extra = [os.path.join(DATA, f) for f in files]
             settings = os.path.join(DATA, self.road.get("gui_settings", "gui.view.xml"))
+            if "gui_settings" not in self.road:
+                # 기본 화면은 yeouido.view / live 와 같게 지하차도를 밝은 회색으로. 이 색 설정은 색상용
+                # 파라미터를 붙인 표시용 도로망 복사본이 있어야 해서, 그 복사본으로 화면만 바꿔 띄운다
+                # (차로·연결·신호는 원본과 같아 워밍업 상태도 그대로 불러올 수 있다).
+                from pathlib import Path
+                from yeouido.visualization import VISUAL_NET, prepare_underpass_view
+                prepare_underpass_view(Path(settings))
+                cmd += ["--net-file", str(VISUAL_NET)]
             if os.path.exists(settings):
                 cmd += ["--gui-settings-file", settings]
             # TraCI close should also close the GUI without an end-of-simulation
@@ -195,6 +226,9 @@ class YeouidoEnv(SumoHighwayEnv):
         destination = options.get("destination") or str(
             rng.choice([n for n in names if n != origin]))
         snapshot_time = options.get("snapshot_time") or float(rng.choice(self.snapshot_times))
+        if float(snapshot_time) not in self.snapshot_times:
+            # 이 교통 버전에 없는 워밍업 시점(예: 시험지의 1800초, uniform 은 600초만) → 가장 가까운 것
+            snapshot_time = min(self.snapshot_times, key=lambda t: abs(t - float(snapshot_time)))
         return origin, destination, snapshot_time
 
     def _place_edge(self, name, depart):
@@ -235,6 +269,13 @@ class YeouidoEnv(SumoHighwayEnv):
         self.origin, self.destination = origin, destination
         self.destination_changes = 0
         self.red_lights = 0
+        self.shield_steps = 0
+        self.jerk_sum = 0.0
+        self.junction_overlaps = 0
+        self.reroutes = 0
+        self._rr_changes = 0
+        self._rr_slow = self._rr_cool = 0.0
+        self._prev_speed = self._prev_acc = None
         self.step_count = 0
         self._remaining = self._prev_remaining = None
 
@@ -247,6 +288,8 @@ class YeouidoEnv(SumoHighwayEnv):
         self._setup_gui()
         obs = self._get_obs()
         self._prev_remaining = self._remaining
+        self._prev_speed = traci.vehicle.getSpeed(self.ego_id)
+        self._prev_acc = 0.0
         return obs, self._info_extra()
 
     def _insert_ego(self, origin, destination) -> bool:
@@ -267,17 +310,23 @@ class YeouidoEnv(SumoHighwayEnv):
 
         route_id = f"ego_route_{self.episode}"
         traci.route.add(route_id, route.edges)
-        traci.vehicle.add(self.ego_id, route_id, typeID="ego_type",
-                          departLane="best", departPos=f"{o_pos:.1f}", departSpeed="0")
-        traci.vehicle.setSpeedMode(self.ego_id, 0)
-        traci.vehicle.setLaneChangeMode(self.ego_id, self.lane_change_mode)
-        for _ in range(60):
-            traci.simulationStep()
-            if self.ego_id in traci.vehicle.getIDList():
-                self.dest_edge, self.dest_pos = d_edge, d_pos
-                self.route_length = length
-                return True
-        traci.vehicle.remove(self.ego_id)       # 60스텝(30초) 동안 출발 지점이 막힘
+        # 출발 지점이 정체로 막혀 있으면 같은 도로의 다른 자리로 다시 넣어 본다
+        # (교통량 100% 출근 시간에는 랜드마크 앞 차로가 30초 넘게 꽉 차 있는 일이 있다).
+        #   1) 랜드마크 바로 앞 · 경로에 맞는 차로   2) 그 도로에서 빈 자리   3) 무작위 빈 자리
+        for lane, pos in (("best", f"{o_pos:.1f}"), ("free", "free"), ("random", "random_free")):
+            traci.vehicle.add(self.ego_id, route_id, typeID="ego_type",
+                              departLane=lane, departPos=pos, departSpeed="0")
+            traci.vehicle.setSpeedMode(self.ego_id, 0)
+            traci.vehicle.setLaneChangeMode(self.ego_id, self.lane_change_mode)
+            for _ in range(60):
+                traci.simulationStep()
+                if self.ego_id in traci.vehicle.getIDList():
+                    self.dest_edge, self.dest_pos = d_edge, d_pos
+                    # 다른 자리에서 출발했을 수 있으므로 실제 남은 거리로 경로 길이를 잡는다
+                    actual = traci.vehicle.getDrivingDistance(self.ego_id, d_edge, d_pos)
+                    self.route_length = float(actual) if actual > 0 else length
+                    return True
+            traci.vehicle.remove(self.ego_id)   # 60스텝(30초) 동안 이 자리가 막힘 → 다음 자리
         return False
 
     def _setup_gui(self):
@@ -300,6 +349,14 @@ class YeouidoEnv(SumoHighwayEnv):
             target = min(target, traci.vehicle.getAllowedSpeed(self.ego_id))
         if self.signal_assist:
             target = min(target, self._signal_cap(v))
+        if self.safety_shield and self._v_ref is not None and target > self._v_ref:
+            # 실제로 깎은 경우만 센다 (같은 계산의 반올림 차이 1 cm/s 미만은 개입이 아님)
+            # 안전 쉴드: 정책이 더 빨리 가려 해도 앞차를 따라가며 추돌하지 않는 속도·신호 정지·교차로
+            # 양보 속도를 넘지 못한다. 더 느리게 가는 것은 정책 마음대로.
+            if target - self._v_ref > 0.01:
+                self.shield_steps += 1
+                self._shield_hit = True
+            target = self._v_ref
         return target
 
     def _signal_cap(self, v):
@@ -328,9 +385,45 @@ class YeouidoEnv(SumoHighwayEnv):
         if traci.vehicle.getRoadID(self.ego_id) not in self.spawn_edges:
             self.lc_spawn_protect = 0.0
         try:
-            return super()._lane_change_is_safe(direction)
+            if not super()._lane_change_is_safe(direction):
+                return False
         finally:
             self.lc_spawn_protect = protect
+        return self._secure_gaps_ok(direction)
+
+    def _secure_gaps_ok(self, direction, margin=1.0):
+        """SUMO 차량추종 모델의 안전거리(getSecureGap)로 한 번 더 본다.
+
+        위의 고정 규칙(5 m + 0.5 s × 속도)만으로는 정체 속 느린 ego가 빠른 차로로 끼어들 때
+        뒤차(예: 11 m/s)가 멈출 거리가 모자라 들이받혔다 (무작위 정책 충돌 6건 모두 이 경우).
+          뒤차: ego 가 최대 감속으로 서도 뒤차가 자기 감속으로 멈출 수 있는 간격
+          앞차: 앞차가 최대 감속으로 서도 ego 가 멈출 수 있는 간격
+        SUMO 자체 차로 변경 모델이 쓰는 것과 같은 계산이다.
+        """
+        e = self.ego_id
+        v = traci.vehicle.getSpeed(e)
+        my_decel = traci.vehicle.getDecel(e)
+        try:
+            if direction > 0:
+                followers, leaders = traci.vehicle.getLeftFollowers(e), traci.vehicle.getLeftLeaders(e)
+            else:
+                followers, leaders = traci.vehicle.getRightFollowers(e), traci.vehicle.getRightLeaders(e)
+            for fid, gap in followers:
+                if not fid:
+                    continue
+                need = traci.vehicle.getSecureGap(fid, traci.vehicle.getSpeed(fid), v, my_decel, e)
+                if gap < need + margin:
+                    return False
+            for lid, gap in leaders:
+                if not lid:
+                    continue
+                need = traci.vehicle.getSecureGap(e, v, traci.vehicle.getSpeed(lid),
+                                                  traci.vehicle.getDecel(lid), lid)
+                if gap < need + margin:
+                    return False
+        except traci.TraCIException:
+            return False
+        return True
 
     def _apply_lane_change(self, lane_change):
         # 유지(0)일 때 현재 차로로 changeLane을 걸면 SUMO의 경로상 차로 변경까지 막히므로
@@ -358,6 +451,8 @@ class YeouidoEnv(SumoHighwayEnv):
         self.destination = name
         self.destination_changes += 1
         self._remaining = self._prev_remaining = self.remaining_distance()
+        if self._remaining:
+            self.route_length = self._remaining
         return True
 
     def remaining_distance(self):
@@ -373,14 +468,59 @@ class YeouidoEnv(SumoHighwayEnv):
         return (traci.vehicle.getRoadID(self.ego_id) == self.dest_edge
                 and traci.vehicle.getLanePosition(self.ego_id) >= self.dest_pos - ARRIVE_TOL)
 
+    def _junction_overlap(self, moving=1.0, width=1.6):
+        """교차로 안에서 ego가 움직이는 중(moving m/s 초과)에 차체가 다른 차와 겹쳤는지 (진단용).
+
+        교차로 안 충돌 검사를 끈 대신(env/road_config.py check_junction_collisions) 실제로 교차로 안에서
+        다른 차와 부딪힐 만큼 겹쳤는지 따로 센다. 차체는 앞-뒤 선분으로 보고 두 선분 간격이 차 폭보다
+        작으면 겹침. 대형 교차로 모양 오차로 생기는 겹침도 섞여 있으므로 보상에는 쓰지 않는다.
+        """
+        e = self.ego_id
+        if e not in traci.vehicle.getIDList() or not traci.vehicle.getLaneID(e).startswith(":"):
+            return False
+        if traci.vehicle.getSpeed(e) <= moving:
+            return False
+
+        def body(vid, x, y):
+            ang = np.radians(traci.vehicle.getAngle(vid))
+            back = np.array([-np.sin(ang), -np.cos(ang)])
+            return np.array([x, y]) + np.outer(np.linspace(0.0, traci.vehicle.getLength(vid), 6), back)
+
+        ex, ey = traci.vehicle.getPosition(e)
+        mine = body(e, ex, ey)
+        for vid, r in (traci.vehicle.getContextSubscriptionResults(e) or {}).items():
+            if vid == e:
+                continue
+            x, y = r[tc.VAR_POSITION]
+            if np.hypot(x - ex, y - ey) > 12.0:
+                continue
+            other = body(vid, x, y)
+            if np.min(np.hypot(mine[:, None, 0] - other[None, :, 0], mine[:, None, 1] - other[None, :, 1])) < width:
+                return True
+        return False
+
     def _info_extra(self):
         return {"level": self.level, "origin": self.origin, "destination": self.destination,
                 "route_length": self.route_length, "remaining": self._remaining,
-                "destination_changes": self.destination_changes, "red_lights": self.red_lights}
+                "destination_changes": self.destination_changes, "red_lights": self.red_lights,
+                "shield_steps": self.shield_steps,
+                "jerk_sum": round(self.jerk_sum, 3),
+                "junction_overlaps": self.junction_overlaps,
+                "reroutes": self.reroutes}
 
     def step(self, action):
         alive = self.ego_id in traci.vehicle.getIDList()
         tls_before = traci.vehicle.getNextTLS(self.ego_id) if alive else ()
+        road_before = traci.vehicle.getRoadID(self.ego_id) if alive else None
+        # 지금 낼 수 있는 안전한 속도 (제한속도·앞차·신호·양보, 선생님 정책과 같은 계산).
+        # 안전 쉴드의 상한이자 불필요한 정지 벌점의 기준. 둘 다 안 쓰면 계산하지 않는다.
+        self._v_ref = None
+        self._shield_hit = False
+        if alive and (self.safety_shield or float(self.rw.get("idle_penalty", 0.0)) > 0):
+            if self._reference is None:
+                from algorithms.sumo_expert import SumoExpert
+                self._reference = SumoExpert(self)
+            self._v_ref = self._reference.target_speed(accel_limited=False)
         reach = (traci.vehicle.getSpeed(self.ego_id) * self.step_length + 1.0) if alive else 0.0
         obs, reward, terminated, truncated, info = super().step(action)
 
@@ -388,16 +528,53 @@ class YeouidoEnv(SumoHighwayEnv):
         # 사라졌으면 넘은 것. (거리 조건이 없으면 교차로 앞 차로 변경으로 신호 번호만 바뀐 것을
         #  통과로 잘못 센다)
         info["red_light"] = False
-        if tls_before and self.ego_id in traci.vehicle.getIDList():
+        # 순간이동한 스텝은 뺀다 (정체로 서 있다가 SUMO 가 교차로 건너로 옮기면 빨간불 통과로 잘못 셌다, BC #19)
+        jumped = (self.ego_id in traci.simulation.getStartingTeleportIDList()
+                  or self.ego_id in traci.simulation.getEndingTeleportIDList())
+        if tls_before and not jumped and self.ego_id in traci.vehicle.getIDList():
             now = traci.vehicle.getNextTLS(self.ego_id)
+            # 실제로 정지선을 넘어 다른 도로(교차로 안)로 들어갔을 때만. 정지선 앞에 선 채로 SUMO가 경로상
+            # 차로 변경을 하면 다음 신호 번호만 바뀌어 통과로 잘못 셌다 (2026-11-20 BC #19, 속도 0인데 빨간불 1회).
             passed = (tls_before[0][2] <= reach
+                      and traci.vehicle.getRoadID(self.ego_id) != road_before
                       and (not now or now[0][:2] != tls_before[0][:2]))
             if passed and tls_before[0][3] in RED:
                 self.red_lights += 1
                 info["red_light"] = True
                 reward -= float(self.rw.get("red_light_penalty", 0.0))
+        # 저크(가속도 변화) 벌점: 실제로 낸 가속도가 스텝마다 얼마나 바뀌었는지 (쉴드가 깎은 것도 포함
+        # → 쉴드에 걸려 급제동하지 않도록 미리 부드럽게 감속하는 쪽이 이득).
+        # 가감속 범위(accel + decel)로 나눠 0~1 로 맞춘다. 끝난 스텝(ego 없음)은 건너뛴다.
+        info["junction_overlap"] = False
+        if not terminated and self._junction_overlap():
+            self.junction_overlaps += 1
+            info["junction_overlap"] = True
+        # 쉴드 개입 벌점: 쉴드가 속도를 깎은 스텝마다. 없으면 "계속 밟고 쉴드에 맡기기"가
+        # 선생님만큼 보상을 받는다 (보상 점검: 쉴드 켠 throttle 10/12 도착, 평균 14.3 vs 선생님 15.5).
+        info["shield"] = self._shield_hit
+        if self._shield_hit:
+            reward -= float(self.rw.get("shield_penalty", 0.0))
+        info["jerk"] = 0.0
+        if info.get("speed") is not None and self._prev_speed is not None:
+            acc = (info["speed"] - self._prev_speed) / self.step_length
+            jerk = abs(acc - self._prev_acc)
+            info["jerk"] = jerk
+            self.jerk_sum += jerk
+            reward -= float(self.rw.get("jerk_penalty", 0.0)) * jerk / (self.max_accel + self.max_decel)
+            self._prev_speed, self._prev_acc = info["speed"], acc
         # collision.action=remove 로 지워진 차도 SUMO 도착 목록에 들어가므로 충돌이면 도착이 아니다.
         info["arrived"] = info["arrived"] and not info["collided"]
+        # ego 순간이동: SUMO 는 너무 오래(time-to-teleport) 못 움직인 차를 앞으로 옮긴다. ego 에게 일어나면
+        # 운전하지 않은 거리를 공짜로 가게 되므로 그 자리에서 실패로 끝낸다 (도착률이 부풀지 않게).
+        info["teleported"] = False
+        if not terminated and (self.ego_id in traci.simulation.getStartingTeleportIDList()
+                               or self.ego_id in traci.simulation.getEndingTeleportIDList()):
+            info["teleported"] = True
+            terminated = True
+            reward -= float(self.rw.get("teleport_penalty", 0.0))
+            if self.ego_id in traci.vehicle.getIDList():
+                traci.vehicle.remove(self.ego_id)
+            obs = np.zeros(self.obs_dim, dtype=np.float32)
         # 목적지 지점에 닿으면 SUMO의 edge 끝 도착을 기다리지 않고 바로 완주 처리
         if not terminated and self._reached_destination():
             traci.vehicle.remove(self.ego_id)
@@ -405,8 +582,85 @@ class YeouidoEnv(SumoHighwayEnv):
             terminated = True
             info["arrived"] = True
             obs = np.zeros(self.obs_dim, dtype=np.float32)
+        info["rerouted"] = False
+        if self.reroute and not terminated and info.get("speed") is not None:
+            info["rerouted"] = self._maybe_reroute(info["speed"])
+            if info["rerouted"]:
+                obs = self._get_obs()            # 경로 관측(다음 회전·남은 거리 등)을 새 경로 기준으로
+        # 주변 일반 차량(HV) 수: 도로망 전체, ego 반경 CONTEXT_RADIUS(100 m) 안 (과제 기준 "HV 충분" 근거)
+        info["hv_total"] = info["hv_near"] = None
+        if self.ego_id in traci.vehicle.getIDList():
+            info["hv_total"] = traci.vehicle.getIDCount() - 1
+            ctx = traci.vehicle.getContextSubscriptionResults(self.ego_id) or {}
+            ex, ey = traci.vehicle.getPosition(self.ego_id)
+            info["hv_near"] = sum(1 for v, d in ctx.items() if v != self.ego_id and tc.VAR_POSITION in d
+                                  and (d[tc.VAR_POSITION][0] - ex) ** 2 + (d[tc.VAR_POSITION][1] - ey) ** 2
+                                  <= CONTEXT_RADIUS ** 2)
         info.update(self._info_extra())
         return obs, float(reward), terminated, truncated, info
+
+    def reroute_by_current_times(self, veh):
+        """지금 도로 상황(도로마다 현재 통행 시간)으로 더 빠른 길이 충분히 나으면 veh 의 경로를 바꾼다. 바꿨으면 True.
+        - rerouteTraveltime(veh, True) 는 기대와 달리 현재 통행 시간을 쓰지 않았다 (2026-11-21: 지금 경로 예상
+          168,812 s 인데 1,291 s 짜리 길로 안 바꿈, 370회 시도 중 변경 0). 그래서 모든 도로에 현재 통행 시간을 직접 넣고
+          (adaptTraveltime) findRoute 로 찾은 뒤 넣은 값은 지운다 (다른 차 경로 계산에 영향 없게).
+        - 오가기·큰 우회 방지: 새 길이 gain 비율·min_gain_s 초 이상 빠르고, 길이가 max_detour × 남은 거리 + 500 m 이하이고,
+          이번 판에 바꾼 횟수가 max_changes 미만일 때만 바꾼다."""
+        if self._rr_changes >= self.reroute_max_changes:
+            return False
+        road = traci.vehicle.getRoadID(veh)
+        if road.startswith(":"):
+            return False                                  # 교차로 안: 다음 도로에서 다시
+        rest = traci.vehicle.getRoute(veh)[traci.vehicle.getRouteIndex(veh):]
+        if not rest or rest[0] != road:
+            return False
+        if self._edge_ids is None:
+            self._edge_ids = [x for x in traci.edge.getIDList() if not x.startswith(":")]
+        tt = {}
+        try:
+            for x in self._edge_ids:
+                tt[x] = traci.edge.getTraveltime(x)
+                traci.edge.adaptTraveltime(x, tt[x])
+            alt = traci.simulation.findRoute(road, rest[-1], vType=traci.vehicle.getTypeID(veh))
+        except traci.TraCIException:
+            return False
+        finally:
+            for x in tt:
+                traci.edge.adaptTraveltime(x, -1)          # 음수 = 넣은 값 삭제
+        if not alt.edges or tuple(alt.edges) == tuple(rest):
+            return False
+        cur_tt = sum(tt.get(x, 0.0) for x in rest)
+        if alt.travelTime > cur_tt * (1.0 - self.reroute_gain) or cur_tt - alt.travelTime < self.reroute_min_gain_s:
+            return False
+        rem = self.remaining_distance()
+        if rem is not None and alt.length > self.reroute_max_detour * rem + 500.0:
+            return False
+        try:
+            traci.vehicle.setRoute(veh, list(alt.edges))
+        except traci.TraCIException:
+            return False
+        self._rr_changes += 1
+        return True
+
+    def _maybe_reroute(self, speed):
+        """막혀 있으면 같은 목적지로 경로를 다시 찾는다. 경로가 실제로 바뀌면 True."""
+        dt = self.step_length
+        self._rr_slow = self._rr_slow + dt if speed < self.reroute_slow else 0.0
+        self._rr_cool = max(0.0, self._rr_cool - dt)
+        if self._rr_slow < self.reroute_stuck or self._rr_cool > 0.0:
+            return False
+        self._rr_slow, self._rr_cool = 0.0, self.reroute_cooldown
+        e = self.ego_id
+        before = traci.vehicle.getRoute(e)[traci.vehicle.getRouteIndex(e):]
+        if not self.reroute_by_current_times(e):
+            return False
+        after = traci.vehicle.getRoute(e)[traci.vehicle.getRouteIndex(e):]
+        if tuple(after) == tuple(before):
+            return False
+        self.reroutes += 1
+        # change_destination 과 같이 남은 거리 기준을 다시 잡는다 (경로 길이가 바뀌어 진행 보상이 튀지 않게)
+        self._remaining = self._prev_remaining = self.remaining_distance()
+        return True
 
     # ==================================================================
     # 관측 (31 + 9) / 보상
@@ -451,34 +705,58 @@ class YeouidoEnv(SumoHighwayEnv):
             foe_dist = max(foe[2], 0.0) / self.junction_range
             yield_to = 1.0 if foe[7] else -1.0 if foe[8] else 0.0
 
+        # [40][41] 먼 앞차: 경로를 따라 far_range 안의 앞차 (가까운 차는 [9][10]이 정밀하게 본다).
+        # 정체 줄 끝을 일찍 보고 미리 감속하도록. 선생님 정책은 100 m 앞을 보고 감속한다.
+        far_gap, far_rel = 1.0, 1.0
+        lead = traci.vehicle.getLeader(e, self.far_range)
+        if lead is not None and lead[0]:
+            far_gap = max(lead[1], 0.0) / self.far_range
+            far_rel = (traci.vehicle.getSpeed(lead[0]) - traci.vehicle.getSpeed(e)) / self.vmax
+
         return np.clip([signal, signal_dist,
                         to_junction / self.route_range,
                         offset / 2.0,
                         continues / self.route_range,
                         left,
                         self._limit / self.vmax,
-                        foe_dist, yield_to], -1.0, 1.0)
+                        foe_dist, yield_to,
+                        far_gap, far_rel], -1.0, 1.0)
 
     def _driving_reward(self, ego_speed, leader):
-        """진행 거리 + 시간 벌점 + (정체·신호 대기가 아닐 때만) 차간거리·막힘 벌점."""
+        """전진 + 시간 벌점 + 불필요한 정지 벌점 + 위험 근접 벌점 (env/mdp_config.py REWARD "여의도 전용").
+
+        목표 순서: 충돌 ≪ 갈 수 있는데 안 가기 < 정체 속에서 조금씩 전진 < 도착.
+          - 전진: 경로 전체를 가면 progress_total 이 되도록 경로 길이로 나눈다 (짧은 경로·긴 경로 공평).
+            progress_total 이 0 이면 예전 방식(1 m당 progress_weight).
+          - 불필요한 정지: 지금 낼 수 있는 속도(제한속도·앞차·신호·양보, 선생님 정책과 같은 계산)보다
+            느리게 가면 그 차이만큼. 정체·빨간불로 어쩔 수 없이 서 있으면 낼 수 있는 속도가 0 이라 벌점도 0.
+          - 위험 근접: 움직이는 중 앞차와 충돌까지 남은 시간(TTC)이 ttc_threshold 초 미만이면.
+            정체 줄에서 천천히 붙어 서는 짧은 간격은 벌점이 없다.
+        """
         rw = self.rw
         reward = float(rw["speed_weight"]) * ego_speed / self.vmax
         reward -= float(rw.get("time_penalty", 0.0))
         if self._remaining is not None and self._prev_remaining is not None:
             progress = np.clip(self._prev_remaining - self._remaining, -MAX_PROGRESS, MAX_PROGRESS)
-            reward += float(rw.get("progress_weight", 0.0)) * progress
+            total = float(rw.get("progress_total", 0.0))
+            if total > 0:
+                reward += total * progress / max(self.route_length, 1.0)
+            else:
+                reward += float(rw.get("progress_weight", 0.0)) * progress
         self._prev_remaining = self._remaining
+
+        if self._v_ref is not None:
+            short = self._v_ref - ego_speed - float(rw.get("idle_tolerance", 1.0))
+            if short > 0:
+                reward -= float(rw.get("idle_penalty", 0.0)) * short / max(self._limit, 1.0)
 
         if leader is None:
             return reward
         gap, lead_speed = leader
-        queued = lead_speed < float(rw.get("queue_speed", 1.0)) or self._signal < 0
-        if (gap < float(rw["close_gap_threshold"])
-                and ego_speed > float(rw.get("moving_speed", 3.0))):
+        closing = ego_speed - lead_speed
+        if (ego_speed > float(rw.get("moving_speed", 3.0)) and closing > 0
+                and gap / closing < float(rw.get("ttc_threshold", 2.0))):
             reward -= float(rw["close_gap_penalty"])
-        if (not queued and gap < float(rw.get("blocked_gap", 20.0))
-                and ego_speed < float(rw.get("blocked_speed_frac", 0.7)) * self._limit):
-            reward -= float(rw.get("blocked_penalty", 0.0))
         return reward
 
     # ==================================================================

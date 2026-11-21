@@ -1,0 +1,15 @@
+  #4   night arrival   경로 바뀜 0회
+  #0   night arrival   경로 바뀜 0회
+  #8   night arrival   경로 바뀜 0회
+  #3   rush  arrival   경로 바뀜 0회
+  #9   day   arrival   경로 바뀜 0회
+  #11  rush  arrival   경로 바뀜 0회
+  #12  night arrival   경로 바뀜 0회
+  #13  night arrival   경로 바뀜 0회
+  #14  night arrival   경로 바뀜 0회
+  #10  day   arrival   경로 바뀜 0회
+  #17  day   arrival   경로 바뀜 0회
+  #1   day   arrival   경로 바뀜 0회
+  #6   rush  arrival   경로 바뀜 0회
+/opt/anaconda3/envs/sumo_rl/lib/python3.10/multiprocessing/resource_tracker.py:224: UserWarning: resource_tracker: There appear to be 6 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '

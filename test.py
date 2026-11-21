@@ -117,21 +117,28 @@ def make_agent(model_path, env, algorithm, verbose=True):
                           env.action_space.shape[0], algorithm)
 
 
-def _eval_worker(job):
-    """--workers > 1일 때 프로세스마다 SUMO 하나로 시험지 일부를 푼다."""
-    model_path, algorithm, problems, total = job
+_W = {}   # 워커 프로세스마다 환경·정책 하나 (Pool initializer 가 만든다)
+
+
+def _eval_init(model_path, algorithm, total):
+    """--workers > 1: 워커마다 SUMO 하나를 켜 두고, 문제를 하나씩 받아 푼다.
+    (미리 나눠 주면 막히는 출근 문제를 받은 워커만 늦게까지 돌고 나머지는 논다 → 끝난 워커가 남은 문제를 가져감)"""
+    from multiprocessing import util
     torch.set_num_threads(1)
     env = build_env(gui=False)
-    try:
-        agent = make_agent(model_path, env, algorithm, verbose=False)
-        return evaluate_problems(agent, env, problems, deterministic=True,
-                                 on_result=lambda r: _progress(r, total))
-    finally:
-        env.close()
+    util.Finalize(env, env.close, exitpriority=10)   # pool.close/join 으로 정상 종료할 때 SUMO 정리
+    _W.update(env=env, agent=make_agent(model_path, env, algorithm, verbose=False), total=total)
+
+
+def _eval_one(problem):
+    # 문제마다 sumo_seed 로 SUMO 를 새로 켜므로 어느 워커가 어떤 순서로 풀어도 결과는 같다
+    return evaluate_problems(_W["agent"], _W["env"], [problem], deterministic=True,
+                             on_result=lambda r: _progress(r, _W["total"]))[0]
 
 
 def _progress(r, total):
-    mark = {"arrival": "도착", "collision": "충돌", "timeout": "시간초과"}[r["ended_by"]]
+    mark = {"arrival": "도착", "collision": "충돌", "timeout": "시간초과",
+            "start_failed": "출발실패", "teleport": "순간이동"}[r["ended_by"]]
     print(f"  #{r['id']:<3d} (전체 {total}문제) {mark:4s} {r.get('level', ''):5s} "
           f"{r.get('origin', '')} → {r.get('destination', '')}", flush=True)
 
@@ -165,11 +172,20 @@ def run_eval_set(args, model_path):
         finally:
             env.close()
     else:
-        chunks = [problems[w::workers] for w in range(workers)]   # 섞어 나눠 워커별 소요 시간을 고르게
-        with multiprocessing.get_context("spawn").Pool(workers) as pool:
-            parts = pool.map(_eval_worker, [(model_path, args.algorithm, c, len(problems))
-                                            for c in chunks])
-        records = sorted((r for part in parts for r in part), key=lambda r: r["id"])
+        # 시험지 순서 그대로 (출근 문제를 먼저 몰아 주면 8개가 동시에 무거운 출근 SUMO 를 돌려 오히려
+        # 2배 넘게 느려졌다 — 2026-11-20 PPO 검증 2회차). 시험지는 쌍마다 심야/주간/출근이 섞여 있다.
+        order = list(problems)
+        pool = multiprocessing.get_context("spawn").Pool(
+            workers, initializer=_eval_init, initargs=(model_path, args.algorithm, len(problems)))
+        try:
+            records = list(pool.imap_unordered(_eval_one, order, chunksize=1))
+            pool.close()
+        except BaseException:
+            pool.terminate()
+            raise
+        finally:
+            pool.join()
+        records = sorted(records, key=lambda r: r["id"])
 
     os.makedirs(os.path.dirname(out), exist_ok=True)
     with open(out, "w", encoding="utf-8") as f:

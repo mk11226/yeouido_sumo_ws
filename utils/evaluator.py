@@ -53,6 +53,7 @@ def run_episode(policy, env, deterministic: bool = True, options=None) -> dict:
     done, ep_ret, ep_len, ep_lc = False, 0.0, 0, 0
     ended_by = None
     speed_sum = speed_n = gap_sum = gap_n = 0
+    hv_tot_sum = hv_near_sum = hv_n = 0                 # 주변 일반 차량 수 (info 에 있을 때만)
     min_gap = None
     info = {}
 
@@ -69,6 +70,8 @@ def run_episode(policy, env, deterministic: bool = True, options=None) -> dict:
 
         if info.get("collided"):
             ended_by = "collision"
+        elif info.get("teleported"):
+            ended_by = "teleport"             # 오래 못 움직여 SUMO 가 ego 를 순간이동시킴 (실패)
         elif info.get("arrived"):
             ended_by = "arrival"
 
@@ -78,6 +81,10 @@ def run_episode(policy, env, deterministic: bool = True, options=None) -> dict:
         if info.get("speed") is not None:
             speed_sum += float(info["speed"])
             speed_n += 1
+        if info.get("hv_total") is not None:
+            hv_tot_sum += info["hv_total"]
+            hv_near_sum += info["hv_near"] or 0
+            hv_n += 1
         if info.get("gap") is not None:
             g = float(info["gap"])
             gap_sum += g
@@ -94,6 +101,13 @@ def run_episode(policy, env, deterministic: bool = True, options=None) -> dict:
         # 여의도 환경만 주는 값 (직선 도로에서는 None)
         "red_lights": info.get("red_lights"),
         "route_length": info.get("route_length"),
+        "remaining": info.get("remaining"),       # 끝날 때 목적지까지 남은 거리 (시간 초과면 얼마나 갔는지)
+        "shield_steps": info.get("shield_steps"),   # 안전 쉴드가 속도를 깎은 스텝 수
+        "jerk_sum": info.get("jerk_sum"),           # |가속도 변화| 합 (m/s^2, 승차감)
+        "junction_overlaps": info.get("junction_overlaps"),  # 교차로 안 차체 겹침 스텝 수 (진단용)
+        "reroutes": info.get("reroutes"),           # 경로 재탐색으로 경로가 바뀐 횟수 (ROAD["reroute"])
+        "hv_total_mean": round(hv_tot_sum / hv_n, 1) if hv_n else None,   # 도로망 전체 일반 차량 수 (주행 중 평균)
+        "hv_near_mean": round(hv_near_sum / hv_n, 2) if hv_n else None,   # ego 반경 100 m 안 일반 차량 수 (평균)
     }
 
 
@@ -148,8 +162,17 @@ def evaluate_problems(policy, env, problems, deterministic: bool = True, on_resu
     """
     records = []
     for p in problems:
-        rec = {**p, **run_episode(policy, env, deterministic,
-                                  options={k: p[k] for k in PROBLEM_KEYS if k in p})}
+        try:
+            result = run_episode(policy, env, deterministic,
+                                 options={k: p[k] for k in PROBLEM_KEYS if k in p})
+        except RuntimeError as e:
+            # 출발 지점이 계속 막혀 ego를 넣지 못한 문제: 전체 평가를 멈추지 않고 "출발 실패"로 남긴다
+            result = {"ended_by": "start_failed", "error": str(e), "return": 0.0, "length": 0,
+                      "lane_changes": 0, "speed_sum": 0, "speed_n": 0, "gap_sum": 0, "gap_n": 0,
+                      "min_gap": None, "red_lights": None, "route_length": None, "remaining": None,
+                      "shield_steps": None, "jerk_sum": None, "junction_overlaps": None,
+                      "reroutes": None, "hv_total_mean": None, "hv_near_mean": None}
+        rec = {**p, **result}
         records.append(rec)
         if on_result:
             on_result(rec)

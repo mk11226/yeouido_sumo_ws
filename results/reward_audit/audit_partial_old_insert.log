@@ -1,0 +1,52 @@
+보상 점검: 12문제 × 정책 4개 = 48회 주행 (workers 8)
+  throttle #1   night collision 보상  -19.36
+  random   #1   night collision 보상  -18.51
+  throttle #6   night collision 보상  -15.14
+Process SpawnPoolWorker-4:
+Traceback (most recent call last):
+  File "/opt/anaconda3/envs/sumo_rl/lib/python3.10/multiprocessing/pool.py", line 131, in worker
+    put((job, i, result))
+  File "/opt/anaconda3/envs/sumo_rl/lib/python3.10/multiprocessing/queues.py", line 377, in put
+    self._writer.send_bytes(obj)
+  File "/opt/anaconda3/envs/sumo_rl/lib/python3.10/multiprocessing/connection.py", line 200, in send_bytes
+    self._send_bytes(m[offset:offset + size])
+  File "/opt/anaconda3/envs/sumo_rl/lib/python3.10/multiprocessing/connection.py", line 411, in _send_bytes
+    self._send(header + buf)
+  File "/opt/anaconda3/envs/sumo_rl/lib/python3.10/multiprocessing/connection.py", line 368, in _send
+    n = write(self._handle, buf)
+BrokenPipeError: [Errno 32] Broken pipe
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/anaconda3/envs/sumo_rl/lib/python3.10/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/opt/anaconda3/envs/sumo_rl/lib/python3.10/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/opt/anaconda3/envs/sumo_rl/lib/python3.10/multiprocessing/pool.py", line 136, in worker
+    put((job, i, (False, wrapped)))
+  File "/opt/anaconda3/envs/sumo_rl/lib/python3.10/multiprocessing/queues.py", line 377, in put
+    self._writer.send_bytes(obj)
+  File "/opt/anaconda3/envs/sumo_rl/lib/python3.10/multiprocessing/connection.py", line 200, in send_bytes
+    self._send_bytes(m[offset:offset + size])
+  File "/opt/anaconda3/envs/sumo_rl/lib/python3.10/multiprocessing/connection.py", line 411, in _send_bytes
+    self._send(header + buf)
+  File "/opt/anaconda3/envs/sumo_rl/lib/python3.10/multiprocessing/connection.py", line 368, in _send
+    n = write(self._handle, buf)
+BrokenPipeError: [Errno 32] Broken pipe
+Error: tcpip::Socket::recvAndCheck @ recv: Connection reset by peer
+Quitting (on error).Error: tcpip::Socket::recvAndCheck @ recv: Connection reset by peer
+Error: tcpip::Socket::recvAndCheck @ recv: Connection reset by peer
+Error: tcpip::Socket::recvAndCheck @ recv: Connection reset by peer
+
+Quitting (on error).
+Quitting (on error).
+Quitting (on error).
+Error: tcpip::Socket::recvAndCheck @ recv: Connection reset by peer
+Quitting (on error).
+Error: tcpip::Socket::recvAndCheck @ recv: Connection reset by peer
+Quitting (on error).
+Error: tcpip::Socket::recvAndCheck @ recv: peer shutdown
+Quitting (on error).
+/opt/anaconda3/envs/sumo_rl/lib/python3.10/multiprocessing/resource_tracker.py:224: UserWarning: resource_tracker: There appear to be 6 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '

@@ -1,0 +1,112 @@
+{
+ "started": "2026-11-20 06:52",
+ "args": {
+  "init": "results/bc_hybrid_v2/model.pt",
+  "init_result": "results/bc_hybrid_v2/random_60_s1_results.json",
+  "base_data": [
+   "data/expert_dart200_v2.npz"
+  ],
+  "iters": 3,
+  "episodes": 100,
+  "betas": "0.5,0.25,0",
+  "workers": 8,
+  "eval_set": "eval_set/random_60_s1.json",
+  "epochs": 30,
+  "lr": 0.0005,
+  "patience": 2,
+  "out": "dagger_v1",
+  "seed": 3000
+ },
+ "iters": [
+  {
+   "iter": 1,
+   "beta": 0.5,
+   "data": {
+    "samples": 151383,
+    "episodes": 100,
+    "expert_executed_share": 0.502
+   },
+   "model": "/Users/junochun/Documents/auto_driving/bmil_ws/results/dagger_v1/iter1/model.pt",
+   "score": {
+    "problems": 60,
+    "arrival": 0.7333333333333333,
+    "collision": 0.0,
+    "timeout": 0.25,
+    "arrival_night": 1.0,
+    "arrival_day": 0.8235294117647058,
+    "arrival_rush": 0.43478260869565216,
+    "collision_ids": []
+   },
+   "improved": true,
+   "minutes": 55.8
+  },
+  {
+   "iter": 2,
+   "beta": 0.25,
+   "data": {
+    "samples": 128808,
+    "episodes": 100,
+    "expert_executed_share": 0.252
+   },
+   "model": "/Users/junochun/Documents/auto_driving/bmil_ws/results/dagger_v1/iter2/model.pt",
+   "score": {
+    "problems": 60,
+    "arrival": 0.7333333333333333,
+    "collision": 0.0,
+    "timeout": 0.18333333333333332,
+    "arrival_night": 1.0,
+    "arrival_day": 0.8823529411764706,
+    "arrival_rush": 0.391304347826087,
+    "collision_ids": []
+   },
+   "improved": false,
+   "minutes": 48.8
+  },
+  {
+   "iter": 3,
+   "beta": 0.0,
+   "data": {
+    "samples": 152075,
+    "episodes": 100,
+    "expert_executed_share": 0.0
+   },
+   "model": "/Users/junochun/Documents/auto_driving/bmil_ws/results/dagger_v1/iter3/model.pt",
+   "score": {
+    "problems": 60,
+    "arrival": 0.7166666666666667,
+    "collision": 0.0,
+    "timeout": 0.18333333333333332,
+    "arrival_night": 1.0,
+    "arrival_day": 0.7647058823529411,
+    "arrival_rush": 0.43478260869565216,
+    "collision_ids": []
+   },
+   "improved": false,
+   "minutes": 119.8
+  }
+ ],
+ "init": {
+  "model": "/Users/junochun/Documents/auto_driving/bmil_ws/results/bc_hybrid_v2/model.pt",
+  "score": {
+   "problems": 60,
+   "arrival": 0.7,
+   "collision": 0.0,
+   "timeout": 0.25,
+   "arrival_night": 1.0,
+   "arrival_day": 0.8235294117647058,
+   "arrival_rush": 0.34782608695652173,
+   "collision_ids": []
+  }
+ },
+ "best_model": "/Users/junochun/Documents/auto_driving/bmil_ws/results/dagger_v1/iter1/model.pt",
+ "best_score": {
+  "problems": 60,
+  "arrival": 0.7333333333333333,
+  "collision": 0.0,
+  "timeout": 0.25,
+  "arrival_night": 1.0,
+  "arrival_day": 0.8235294117647058,
+  "arrival_rush": 0.43478260869565216,
+  "collision_ids": []
+ }
+}

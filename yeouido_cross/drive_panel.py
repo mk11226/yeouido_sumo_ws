@@ -187,6 +187,7 @@ class Panel:
 
     # ── 경로 주행 ──────────────────────────────────────────
     def _clear_route(self):
+        dr.clear_overlay()
         for lane in self.selected:
             try:
                 if traci.gui.isSelected(lane, "lane"):
@@ -218,6 +219,7 @@ class Panel:
             env._remaining = env._prev_remaining = env.remaining_distance()
         self.selected = dr.route_lanes(list(traci.vehicle.getRoute(env.ego_id)))
         dr.highlight(self.selected)
+        self.watch = dr.RouteWatch(env.ego_id)    # 주행 중 경로가 바뀌면 주황색으로 겹쳐 그림
         dr.fit_pins()
         via = f" via {r['bridge']}" if r["bridge"] else ""
         self.route_text = f"{o} → {d}{via}  {r['length_m'] / 1000:.1f} km"
@@ -229,6 +231,8 @@ class Panel:
         env = self.env
         self.obs, _, term, trunc, info = env.step(self.expert.predict(self.obs))
         self.steps += 1
+        if not (term or trunc) and self.watch.update():
+            print(f"[panel] 경로 바뀜 ({self.watch.changes}번째) → 주황색으로 표시", flush=True)
         left = env._remaining
         self.drive_text = f"주행 중: {self.route_text}" + (f"\n남은 거리    {left:.0f} m" if left is not None else "")
         if term or trunc:
