@@ -232,7 +232,12 @@ class YeouidoEnv(SumoHighwayEnv):
         return origin, destination, snapshot_time
 
     def _place_edge(self, name, depart):
-        """(edge, pos). 게이트는 출발이면 들어오는 도로, 도착이면 나가는 도로."""
+        """(edge, pos). 게이트는 출발이면 들어오는 도로, 도착이면 나가는 도로.
+        reset 옵션 origin_at / destination_at = [edge, pos] 를 주면 그 지점을 쓴다
+        (yeouido_cross 경로처럼 랜드마크의 반대 방향 도로에서 출발·도착할 때. 없으면 기존과 같음)."""
+        at = getattr(self, "_at", {}).get("origin" if depart else "destination")
+        if at:
+            return at[0], (None if at[1] is None else float(at[1]))
         a, b = self.places[name]
         if isinstance(b, str):                      # 게이트: (in, out)
             return (a, 0.0) if depart else (b, None)
@@ -242,6 +247,7 @@ class YeouidoEnv(SumoHighwayEnv):
         gym.Env.reset(self, seed=seed)
         options = dict(options or {})
         fixed = {k: place_name(self.places, options.get(k)) for k in ("origin", "destination")}
+        self._at = {"origin": options.get("origin_at"), "destination": options.get("destination_at")}
         # 평가 시험지: sumo_seed가 있으면 그 시드로 SUMO를 새로 켠다 (배경 차량의 무작위 움직임까지 재현).
         # SUMO 시드는 켤 때만 적용되므로, 켜 둔 SUMO를 재사용하는 학습과 달리 매번 다시 켠다.
         sumo_seed = options.get("sumo_seed")
@@ -440,6 +446,7 @@ class YeouidoEnv(SumoHighwayEnv):
         if self.ego_id not in traci.vehicle.getIDList():
             return False
         name = place_name(self.places, name)
+        self._at = {}                            # 새 목적지는 places 기준
         d_edge, d_pos = self._place_edge(name, depart=False)
         try:
             traci.vehicle.changeTarget(self.ego_id, d_edge)

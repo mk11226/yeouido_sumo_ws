@@ -675,6 +675,9 @@ def main(argv=None):
     _run([sumo_bin("netconvert"), "-s", str(net_out), "-n", str(patch), "-o", str(net_out),
           *TLS_OPTIONS], log)
 
+    from yeouido.road_corrections import correct_daebang_exit
+    if correct_daebang_exit(net_out):
+        print('[net] 대방지하차도 남측 출구: 신호·좌회전·유턴 제거, 2+2 → 4차로 직진')
     changed = set_clearance_times(net_out)
     from yeouido.signal_corrections import protect_yeoui2_left
     if protect_yeoui2_left(net_out):

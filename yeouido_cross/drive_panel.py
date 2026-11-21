@@ -210,7 +210,7 @@ class Panel:
         self._clear_route()
         env.loaded_level = self.level             # 시간대가 달라도 SUMO를 다시 켜지 않는다
         self.obs, _ = env.reset(options={"level": self.level, "origin": o, "destination": d,
-                                         "snapshot_time": SNAPSHOT})
+                                         "snapshot_time": SNAPSHOT, **dr.route_points(r)})
         self.last_phase = traci.simulation.getTime() % END
         here = traci.vehicle.getRoadID(env.ego_id)
         if here in r["edges"]:

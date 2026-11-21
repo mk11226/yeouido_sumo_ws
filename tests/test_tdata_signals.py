@@ -1,7 +1,7 @@
 """Measured cycles must never bridge telemetry gaps or invent missing arrows."""
 import unittest
 
-from yeouido.tdata_signals import FIELDS, FIELD_INDEX, complete_cycle, translated
+from yeouido.tdata_signals import FIELDS, FIELD_INDEX, complete_cycle, translated, validate_cycle, check_conflicts
 
 
 def observation(char):
@@ -18,6 +18,32 @@ def observed_cycle(start):
 
 class MeasuredSignalsTests(unittest.TestCase):
     mapping = {0: ('NT', 'STSG', 's', None)}
+
+    def test_directional_clearance_without_junction_wide_red(self):
+        validate_cycle([(30, 'Gr'), (3, 'yr'), (30, 'rG'), (3, 'ry')], {0: (), 1: ()})
+
+    def test_missing_observation_outside_repeated_cycles_is_ignored(self):
+        runs = [[-10, -9, '?' * len(FIELDS)]]
+        for start in (0, 35, 70, 105):
+            runs.extend(observed_cycle(start))
+        cycle, _, _ = complete_cycle(runs, self.mapping)
+        self.assertEqual(cycle, 35)
+
+    def test_protected_green_conflicting_with_yellow_is_rejected(self):
+        class Junction:
+            def areFoes(self, a, b):
+                return a != b
+        junction = Junction()
+        class Connection:
+            def __init__(self, index):
+                self.index = index
+            def getJunction(self):
+                return junction
+            def getJunctionIndex(self):
+                return self.index
+        mapping = {i: (None, None, None, Connection(i)) for i in range(2)}
+        with self.assertRaisesRegex(ValueError, '황색'):
+            check_conflicts([(3, 'Gy')], mapping)
 
     def test_repeated_complete_cycles_can_be_separated_by_data_gap(self):
         runs = observed_cycle(0) + observed_cycle(35) + observed_cycle(350) + observed_cycle(385)

@@ -151,6 +151,13 @@ def write_gui_files():
             '</viewsettings>\n')
 
 
+def route_points(r):
+    """routes.json 경로의 실제 출발·도착 지점 → env.reset 옵션.
+    랜드마크는 건물 쪽 도로 대신 반대 방향 도로에서 출발·도착하는 경로도 있다 (landmark_sides.py)."""
+    return {"origin_at": [r["edges"][0], r["origin_pos"]],
+            "destination_at": [r["edges"][-1], r["dest_pos"]]}
+
+
 def route_lanes(edges):
     """경로를 따라 실제로 갈 수 있는 차로만.
 
@@ -312,7 +319,7 @@ def main():
     expert = SumoExpert(env)
     try:
         obs, _ = env.reset(seed=args.seed, options={"level": args.level, "origin": origin,
-                                                   "destination": destination})
+                                                   "destination": destination, **route_points(r)})
         # routes.json 의 최단거리 경로로 바꾼다 (env는 기본으로 최단시간 경로를 탄다)
         here = traci.vehicle.getRoadID(env.ego_id)
         edges = r["edges"][r["edges"].index(here):] if here in r["edges"] else None
@@ -363,9 +370,9 @@ def main():
             # 끝 화면 유지: 시뮬레이션은 멈춘 채 창은 그대로 (확대·이동 가능). 창을 닫으면 끝난다.
             print("[drive] 끝 화면을 유지합니다. sumo-gui 창을 닫으면 종료됩니다.", flush=True)
             try:
-                while True:
-                    traci.simulation.getTime()
-                    time.sleep(0.5)
+                while traci.gui.getIDList():          # 창을 닫으면 view가 없어진다
+                    fit_pins()                    # 끝 화면에서 확대·축소해도 핀 크기를 맞춘다
+                    time.sleep(0.3)
             except (traci.TraCIException, traci.FatalTraCIError, OSError):
                 env._started = False          # 창이 닫혀 연결이 끊김
     finally:

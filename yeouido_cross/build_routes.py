@@ -33,6 +33,7 @@ from yeouido.build_context import POLY
 from yeouido.config import NET, OUT as YEOUIDO_OUT, sumo_home
 from yeouido.landmarks import RESULT as LANDMARK_FILE
 from yeouido.map_counts import MAPPING
+from yeouido_cross.landmark_sides import landmark_sides
 
 HERE = Path(__file__).resolve().parent
 OUT = HERE / "output"
@@ -84,19 +85,27 @@ def crossed(edges):
 
 
 def places(net, lms, island):
-    """핀포인트 {이름: (쪽, 출발 edge, 출발 pos, 도착 edge, 도착 pos)} — 랜드마크 7 + 게이트 6 = 13곳."""
+    """핀포인트 {이름: (쪽, 출발 후보, 도착 후보, 기준점)} — 랜드마크 7 + 게이트 6 = 13곳.
+
+    후보 = [(edge, pos, 라벨)]. 랜드마크는 건물 쪽 도로와 반대 방향 도로 둘 다 후보다 (landmark_sides.py).
+    경로를 만들 때 출발 후보 × 도착 후보 중 가장 짧은 조합을 고른다. 게이트는 후보가 하나씩
+    (출발 = 들어오는 도로 시작, 도착 = 나가는 도로 끝). 기준점은 직선거리를 잴 때 쓰는 그 장소의 위치.
+    """
     cut = {e for ids in BRIDGES.values() for e in ids}
     out = {}
-    for n, lm in lms.items():
-        e = net.getEdge(lm["edge"])
-        out[n] = (ISLAND if e in island else MAINLAND,
-                  e, min(max(lm["pos"], 0.0), max(e.getLength() - ORIGIN_MARGIN, 0.0)), e, lm["pos"])
+    for n, sides in landmark_sides(net, lms).items():
+        main = sides[0]["edge"]
+        dep = [(s["edge"], min(max(s["pos"], 0.0), max(s["edge"].getLength() - ORIGIN_MARGIN, 0.0)), s["side"])
+               for s in sides if s["can_depart"]]
+        arr = [(s["edge"], s["pos"], s["side"]) for s in sides if s["can_arrive"]]
+        out[n] = (ISLAND if main in island else MAINLAND, dep, arr, (lms[n]["x"], lms[n]["y"]))
     for g, v in json.loads(MAPPING.read_text())["gates"].items():
         if v["in"] in cut or v["out"] in cut:
             continue                       # 샛강 다리 위 게이트 ㄱ·ㄴ·ㄷ
         e_in, e_out = net.getEdge(v["in"]), net.getEdge(v["out"])
         out[f"게이트 {g}"] = (ISLAND if e_in in island else MAINLAND,
-                             e_in, 0.0, e_out, e_out.getLength())
+                             [(e_in, 0.0, "게이트")], [(e_out, e_out.getLength(), "게이트")],
+                             _point(e_in, 0.0))
     return out
 
 
@@ -104,6 +113,22 @@ def _point(edge, pos):
     import sumolib
     return sumolib.geomhelper.positionAtShapeOffset(edge.getLanes()[0].getShape(),
                                                     min(max(pos, 0.0), edge.getLength()))
+
+
+def _best_route(net, dep, arr):
+    """출발 후보 × 도착 후보 중 가장 짧은 경로 (edges, 길이, 출발 후보, 도착 후보)."""
+    best = None
+    for oe, op, ol in dep:
+        for de, dp, dl in arr:
+            if oe is de and dp <= op:
+                continue                   # 같은 도로에서 뒤쪽으로는 못 감
+            edges = shortest(net, oe, de)
+            if not edges:
+                continue
+            length = sum(e.getLength() for e in edges) - op - (de.getLength() - dp)
+            if best is None or length < best[1]:
+                best = (edges, length, (oe, op, ol), (de, dp, dl))
+    return best
 
 
 def build():
@@ -117,25 +142,27 @@ def build():
         print(f"[cross] {which}:", ", ".join(n for n, p in pts.items() if p[0] == which))
 
     routes, count = [], {"x": 0, "i": 0, "m": 0}
-    for o, (o_side, oe, op, _, _) in pts.items():
-        for d, (d_side, _, _, de, dp) in pts.items():
+    for o, (o_side, dep, _, o_ref) in pts.items():
+        for d, (d_side, _, arr, d_ref) in pts.items():
             if o == d:
                 continue
-            edges = shortest(net, oe, de)
-            if not edges:
+            found = _best_route(net, dep, arr)
+            if not found:
                 raise RuntimeError(f"{o} → {d}: 경로 없음")
+            edges, length, (oe, op, ol), (de, dp, dl) = found
             if o_side != d_side:
                 prefix, direction = "x", f"{o_side}→{d_side}"
             else:
                 prefix, direction = ("i" if o_side == ISLAND else "m"), f"{o_side} 안"
-            length = sum(e.getLength() for e in edges) - op - (de.getLength() - dp)
             t = free_time(edges) - op / oe.getSpeed() - (de.getLength() - dp) / de.getSpeed()
-            straight = math.dist(_point(oe, op), _point(de, dp))
+            straight = math.dist(o_ref, d_ref)
             routes.append(dict(id=f"{prefix}{count[prefix]:03d}", origin=o, destination=d,
                                direction=direction, bridge="+".join(crossed(edges)) or None,
                                length_m=round(length, 1), free_time_s=round(t, 1),
                                straight_m=round(straight, 1),
                                detour=round(length / straight, 2) if straight > 0 else None,
+                               origin_side=ol, origin_pos=round(op, 1),
+                               dest_side=dl, dest_pos=round(dp, 1),
                                edges=[e.getID() for e in edges]))
             count[prefix] += 1
     routes.sort(key=lambda r: ("xim".index(r["id"][0]), r["id"]))
@@ -145,7 +172,8 @@ def build():
 def write(net, routes):
     OUT.mkdir(exist_ok=True)
     keys = ["id", "origin", "destination", "direction", "bridge",
-            "length_m", "free_time_s", "straight_m", "detour", "edges"]
+            "length_m", "free_time_s", "straight_m", "detour",
+            "origin_side", "origin_pos", "dest_side", "dest_pos", "edges"]
     (OUT / "routes.json").write_text(json.dumps([{k: r[k] for k in keys} for r in routes],
                                                 ensure_ascii=False, indent=1))
 

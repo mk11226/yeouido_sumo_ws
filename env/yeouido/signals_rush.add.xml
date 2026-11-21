@@ -1,72 +1,362 @@
 <?xml version='1.0' encoding='utf-8'?>
 <additional>
-  <tlLogic id="cluster_1140029801_1140029804" type="static" programID="tdata_rush" offset="58.527">
-    <phase duration="64.960" state="GGG" />
-    <phase duration="2.990" state="yyy" />
-    <phase duration="46.000" state="rrr" />
+  <tlLogic id="cluster_1140029801_1140029804" type="static" programID="tdata_rush" offset="21.387">
+    <phase duration="44.992" state="rrr" />
+    <phase duration="80.999" state="GGG" />
+    <phase duration="4.011" state="yyy" />
   </tlLogic>
-  <tlLogic id="cluster_1140036302_1140333800" type="static" programID="tdata_rush" offset="115.277">
-    <phase duration="37.020" state="rrr" />
-    <phase duration="89.978" state="GGG" />
-    <phase duration="2.997" state="yyy" />
+  <tlLogic id="cluster_1140036302_1140333800" type="static" programID="tdata_rush" offset="43.769">
+    <phase duration="81.966" state="GGG" />
+    <phase duration="3.110" state="yyy" />
+    <phase duration="33.923" state="rrr" />
   </tlLogic>
-  <tlLogic id="cluster_1180023701_1180023702_1180023703_1180023704" type="static" programID="tdata_rush" offset="49.073">
-    <phase duration="2.001" state="GGGGGG" />
-    <phase duration="2.994" state="yyyyyy" />
-    <phase duration="45.005" state="rrrrrr" />
+  <tlLogic id="cluster_1160044101_1160044102_1160044103_1160044104" type="static" programID="tdata_rush" offset="164.573">
+    <phase duration="49.005" state="rrrrrrrr" />
+    <phase duration="117.985" state="GGGGGGGG" />
+    <phase duration="3.010" state="yyyyyyyy" />
   </tlLogic>
-  <tlLogic id="1140035802" type="static" programID="tdata_rush" offset="3.809">
-    <phase duration="10.968" state="GGG" />
-    <phase duration="3.003" state="yyy" />
-    <phase duration="36.996" state="rrr" />
+  <tlLogic id="cluster_1180046902_1180046903_1180046904_1180046905" type="static" programID="tdata_rush" offset="158.057">
+    <phase duration="119.990" state="GGGG" />
+    <phase duration="4.009" state="yyyy" />
+    <phase duration="36.000" state="rrrr" />
   </tlLogic>
-  <tlLogic id="cluster_1180049801_1180049802_1180049803_1180049804" type="static" programID="tdata_rush" offset="31.741">
-    <phase duration="86.000" state="rrrrrr" />
-    <phase duration="51.000" state="GGGGGG" />
+  <tlLogic id="cluster_1180026501_1180026502_1180026503_1180026504_#1more" type="static" programID="tdata_rush" offset="38.121">
+    <phase duration="90.000" state="rrrrrr" />
+    <phase duration="56.000" state="GGGGGG" />
     <phase duration="4.000" state="yyyyyy" />
   </tlLogic>
-  <tlLogic id="cluster_1180037401_1180037402_1180037403_1180037404" type="static" programID="tdata_rush" offset="11.251">
-    <phase duration="4.001" state="yyyyyy" />
-    <phase duration="45.000" state="rrrrrr" />
-    <phase duration="110.998" state="GGGGGG" />
+  <tlLogic id="cluster_1180017501_1180017502_1180017503_1180017504" type="static" programID="tdata_rush" offset="56.509">
+    <phase duration="106.990" state="GGGGGGG" />
+    <phase duration="4.000" state="yyyyyyy" />
+    <phase duration="39.000" state="rrrrrrr" />
   </tlLogic>
-  <tlLogic id="1180228500" type="static" programID="tdata_rush" offset="12.547">
-    <phase duration="57.046" state="GGG" />
-    <phase duration="2.666" state="yyy" />
-    <phase duration="42.333" state="rrr" />
+  <tlLogic id="cluster_1190020501_1190020502_1190020503_1190020504" type="static" programID="tdata_rush" offset="17.395">
+    <phase duration="60.000" state="rrrrrr" />
+    <phase duration="86.000" state="GGGGGG" />
+    <phase duration="4.000" state="yyyyyy" />
   </tlLogic>
-  <tlLogic id="cluster_1180008101_1180008102_1180008103_1180008104" type="static" programID="tdata_rush" offset="1.584">
-    <phase duration="4.006" state="rrryyyyyyrrrrrrr" />
-    <phase duration="1.001" state="rrrrrrrrrrrrrrrr" />
-    <phase duration="27.000" state="rrrrrrrrrrrrgGGG" />
-    <phase duration="2.995" state="rrrrrrrrrrrryyyy" />
-    <phase duration="2.004" state="rrrrrrrrrrrrrrrr" />
-    <phase duration="44.001" state="gGrrrrrrrgGrrrrr" />
+  <tlLogic id="cluster_1190017001_1190017002_1190017003_1190017004" type="static" programID="tdata_rush" offset="7.509">
+    <phase duration="35.990" state="rrrrgggrrrrrr" />
+    <phase duration="3.010" state="rrrryyyrrrrrr" />
+    <phase duration="33.990" state="rrrrrrrrrrrrr" />
+    <phase duration="73.010" state="GGGGrrrggGGGG" />
+    <phase duration="3.000" state="GGGGrrryyyyyy" />
+    <phase duration="16.004" state="GGGGrrrrrrrrr" />
+    <phase duration="3.997" state="yyyyrrrrrrrrr" />
+    <phase duration="0.999" state="rrrrrrrrrrrrr" />
+  </tlLogic>
+  <tlLogic id="1140035802" type="static" programID="tdata_rush" offset="79.234">
+    <phase duration="90.008" state="GGG" />
+    <phase duration="2.993" state="yyy" />
+    <phase duration="36.999" state="rrr" />
+  </tlLogic>
+  <tlLogic id="cluster_1190014101_1190014102_1190014103_1190014104_#4more" type="static" programID="tdata_rush" offset="43.538">
+    <phase duration="56.019" state="rrrrrrr" />
+    <phase duration="111.010" state="GGGGGGG" />
+    <phase duration="2.981" state="yyyyyyy" />
+  </tlLogic>
+  <tlLogic id="cluster_1180028901_1180028902_1180028903_1180028904" type="static" programID="tdata_rush" offset="18.562">
+    <phase duration="26.001" state="rrrGGG" />
+    <phase duration="4.012" state="rrryyy" />
+    <phase duration="42.992" state="rrrrrr" />
+    <phase duration="52.996" state="GGGGGG" />
+    <phase duration="3.999" state="yyyGGG" />
+  </tlLogic>
+  <tlLogic id="cluster_1190002301_1190002302_1190002303_1190002304_#2more" type="static" programID="tdata_rush" offset="127.780">
+    <phase duration="3.001" state="rryrrrrrrr" />
+    <phase duration="11.999" state="rrrrrrrrrr" />
+    <phase duration="33.000" state="rrrgGGrrrr" />
+    <phase duration="3.000" state="rrryyyrrrr" />
+    <phase duration="1.008" state="rrrrrrrrrr" />
+    <phase duration="70.992" state="GGrrrrgGGG" />
+    <phase duration="3.001" state="yyrrrryyyy" />
+    <phase duration="0.999" state="rrrrrrrrrr" />
+    <phase duration="23.000" state="rrGrrrrrrr" />
+  </tlLogic>
+  <tlLogic id="cluster_1190020201_1190020202_1190020203_1190020204" type="static" programID="tdata_rush" offset="121.137">
+    <phase duration="44.080" state="rrrrrrr" />
+    <phase duration="102.900" state="GGGGGGG" />
+    <phase duration="3.010" state="yyyyyyy" />
+  </tlLogic>
+  <tlLogic id="cluster_1180052001_1180052002_1180052003_1180052004" type="static" programID="tdata_rush" offset="191.782">
+    <phase duration="4.003" state="rrrrryyyyyyrrrrrgGGGGrr" />
+    <phase duration="0.998" state="rrrrrrrrrrrrrrrrgGGGGrr" />
+    <phase duration="32.001" state="rrrrrrrrrrrrrrrrgGGGGGG" />
+    <phase duration="4.999" state="rrrrrrrrrrrrrrrryyyyyGG" />
+    <phase duration="15.999" state="rrrrrrrrrrrrrrrrrrrrrGG" />
+    <phase duration="5.001" state="rrrrrrrrrrrrrrrrrrrrryy" />
+    <phase duration="0.999" state="rrrrrrrrrrrrrrrrrrrrrrr" />
+    <phase duration="46.000" state="ggGGrrrrrrrgGGGGrrrrrrr" />
+    <phase duration="5.000" state="yyyyrrrrrrryyyyyrrrrrrr" />
+    <phase duration="1.010" state="rrrrrrrrrrrrrrrrrrrrrrr" />
+    <phase duration="26.990" state="rrrrGrrrrrrrrrrrrrrrrrr" />
+    <phase duration="4.002" state="rrrryrrrrrrrrrrrrrrrrrr" />
+    <phase duration="1.000" state="rrrrrrrrrrrrrrrrrrrrrrr" />
+    <phase duration="51.998" state="rrrrrgGGGGGrrrrrgGGGGrr" />
+  </tlLogic>
+  <tlLogic id="cluster_1180048806_1180048807_1180048808_1180048809" type="static" programID="tdata_rush" offset="82.108">
+    <phase duration="13.995" state="rrrrrrrrrrrrrrrrrrrrr" />
+    <phase duration="91.005" state="rrrrrgGGGGGrrrrrgGGGG" />
+    <phase duration="5.000" state="rrrrryyyyyyrrrrryyyyy" />
+    <phase duration="2.000" state="rrrrrrrrrrrrrrrrrrrrr" />
+    <phase duration="45.000" state="ggGGGrrrrrrggGGGrrrrr" />
+    <phase duration="4.000" state="yyyyyrrrrrryyyyyrrrrr" />
+  </tlLogic>
+  <tlLogic id="cluster_1180049801_1180049802_1180049803_1180049804" type="static" programID="tdata_rush" offset="30.255">
+    <phase duration="3.117" state="yyyyyy" />
+    <phase duration="79.016" state="rrrrrr" />
+    <phase duration="45.834" state="GGGGGG" />
+  </tlLogic>
+  <tlLogic id="cluster_1180045207_1180045208_1180045209_1180045210_#1more" type="static" programID="tdata_rush" offset="6.588">
+    <phase duration="77.034" state="gGGGGrrrrGGGGGrrrrr" />
+    <phase duration="3.990" state="yyyyyrrrrGGGGGrrrrr" />
+    <phase duration="11.027" state="rrrrrrrrrGGGGGrrrrr" />
+    <phase duration="4.049" state="rrrrrrrrryyyyyrrrrr" />
+    <phase duration="43.900" state="rrrrrggGGrrrrrrggGG" />
+    <phase duration="5.035" state="rrrrryyyyrrrrrryyyy" />
+    <phase duration="1.007" state="rrrrrrrrrrrrrrrrrrr" />
+    <phase duration="10.058" state="rrrrrrrrrrrrrrGrrrr" />
+    <phase duration="3.900" state="rrrrrrrrrrrrrryrrrr" />
+  </tlLogic>
+  <tlLogic id="cluster_1180032601_1180032602_1180032603_1180032604" type="static" programID="tdata_rush" offset="158.291">
+    <phase duration="38.014" state="rrrrrr" />
+    <phase duration="118.982" state="GGGGGG" />
+    <phase duration="3.010" state="yyyyyy" />
+  </tlLogic>
+  <tlLogic id="cluster_1180034702_1180034703_1180034704_1180034705" type="static" programID="tdata_rush" offset="145.626">
+    <phase duration="4.000" state="rrrrrrrrrryyyyyrrrrr" />
+    <phase duration="1.000" state="rrrrrrrrrrrrrrrrrrrr" />
+    <phase duration="45.990" state="rrrrrgGGGGrrrrrrrrrr" />
+    <phase duration="5.018" state="rrrrryyyyyrrrrrrrrrr" />
+    <phase duration="37.993" state="rrrrrrrrrrrrrrrgGGGG" />
+    <phase duration="4.007" state="rrrrrrrrrrrrrrryyyyy" />
+    <phase duration="33.992" state="gGGGGrrrrrrrrrrrrrrr" />
+    <phase duration="4.000" state="yyyyyrrrrrrrrrrrrrrr" />
+    <phase duration="1.000" state="rrrrrrrrrrrrrrrrrrrr" />
+    <phase duration="33.000" state="rrrrrrrrrrgGGGGrrrrr" />
+  </tlLogic>
+  <tlLogic id="cluster_1180045801_1180045802_1180045803_1180045804" type="static" programID="tdata_rush" offset="117.650">
+    <phase duration="1.000" state="rrrrrrrrrrrrrrrrrrr" />
+    <phase duration="47.000" state="ggGGrrrrrrgGGGrrrrr" />
+    <phase duration="5.000" state="ggGGrrrrrryyyyrrrrr" />
+    <phase duration="2.000" state="ggGGrrrrrrrrrrrrrrr" />
+    <phase duration="24.000" state="ggGGGrrrrrrrrrrrrrr" />
+    <phase duration="5.000" state="yyyyyrrrrrrrrrrrrrr" />
+    <phase duration="1.006" state="rrrrrrrrrrrrrrrrrrr" />
+    <phase duration="70.994" state="rrrrrgGGGGrrrrgGGGG" />
+    <phase duration="4.000" state="rrrrryyyyyrrrryyyyy" />
+  </tlLogic>
+  <tlLogic id="cluster_1180006901_1180006902_1180006903_1180006904" type="static" programID="tdata_rush" offset="107.366">
+    <phase duration="3.000" state="yyyyrrrrrrrrrrrrr" />
+    <phase duration="1.002" state="rrrrrrrrrrrrrrrrr" />
+    <phase duration="57.998" state="rrrrgGGrrrrrgGGGr" />
+    <phase duration="2.999" state="rrrryyyrrrrryyyyr" />
+    <phase duration="20.015" state="rrrrrrrGrrrrrrrrG" />
+    <phase duration="3.047" state="rrrrrrryrrrrrrrry" />
+    <phase duration="34.939" state="rrrrrrrrgGGGrrrrr" />
+    <phase duration="3.001" state="rrrrrrrryyyyrrrrr" />
+    <phase duration="0.999" state="rrrrrrrrrrrrrrrrr" />
+    <phase duration="33.000" state="gGGGrrrrrrrrrrrrr" />
+  </tlLogic>
+  <tlLogic id="cluster_1180037401_1180037402_1180037403_1180037404" type="static" programID="tdata_rush" offset="134.767">
+    <phase duration="4.031" state="yyyyyy" />
+    <phase duration="41.067" state="rrrrrr" />
+    <phase duration="101.933" state="GGGGGG" />
+  </tlLogic>
+  <tlLogic id="cluster_1180028601_1180028602_1180028603_1180028604" type="static" programID="tdata_rush" offset="11.229">
+    <phase duration="3.005" state="yyyyyy" />
+    <phase duration="49.994" state="rrrrrr" />
+    <phase duration="116.994" state="GGGGGG" />
+  </tlLogic>
+  <tlLogic id="cluster_1180038202_1180038203_1180038204_1180038205" type="static" programID="tdata_rush" offset="104.370">
+    <phase duration="45.024" state="rrrrrgGGGrrrrrrgGGGr" />
+    <phase duration="3.976" state="rrrrryyyyrrrrrryyyyr" />
+    <phase duration="1.999" state="rrrrrrrrrrrrrrrrrrrr" />
+    <phase duration="19.000" state="rrrrrrrrrGrrrrrrrrrG" />
+    <phase duration="4.001" state="rrrrrrrrryrrrrrrrrry" />
+    <phase duration="0.999" state="rrrrrrrrrrrrrrrrrrrr" />
+    <phase duration="42.002" state="gGGGrrrrrrgGGGrrrrrr" />
+    <phase duration="4.005" state="yyyyrrrrrryyyyrrrrrr" />
+    <phase duration="1.004" state="rrrrrrrrrrrrrrrrrrrr" />
+    <phase duration="32.997" state="rrrrGrrrrrrrrrGrrrrr" />
+    <phase duration="4.003" state="rrrryrrrrrrrrryrrrrr" />
+    <phase duration="0.990" state="rrrrrrrrrrrrrrrrrrrr" />
+  </tlLogic>
+  <tlLogic id="cluster_1180040801_1180040802_1180040803_1180040804" type="static" programID="tdata_rush" offset="113.214">
+    <phase duration="39.000" state="rrrrgGGGrrrrrgGGGr" />
+    <phase duration="4.000" state="rrrryyyyrrrrrgGGGr" />
+    <phase duration="1.000" state="rrrrrrrrrrrrrgGGGr" />
+    <phase duration="13.008" state="rrrrrrrrrrrrrgGGGG" />
+    <phase duration="3.992" state="rrrrrrrrrrrrryyyyG" />
+    <phase duration="1.000" state="rrrrrrrrrrrrrrrrrG" />
+    <phase duration="22.000" state="rrrrrrrrGrrrrrrrrG" />
+    <phase duration="3.994" state="rrrrrrrryrrrrrrrry" />
+    <phase duration="32.014" state="gGGGrrrrrrrrrrrrrr" />
+    <phase duration="4.000" state="yyyyrrrrrrrrrrrrrr" />
+    <phase duration="30.992" state="rrrrrrrrrgGGGrrrrr" />
+    <phase duration="4.000" state="rrrrrrrrryyyyrrrrr" />
+    <phase duration="1.000" state="rrrrrrrrrrrrrrrrrr" />
+  </tlLogic>
+  <tlLogic id="1180228500" type="static" programID="tdata_rush" offset="137.407">
+    <phase duration="115.000" state="GGG" />
+    <phase duration="3.070" state="yyy" />
+    <phase duration="41.930" state="rrr" />
+  </tlLogic>
+  <tlLogic id="cluster_1180005201_1180005202_1180005203_1180005204" type="static" programID="tdata_rush" offset="18.034">
+    <phase duration="37.005" state="rrrrrrrrrr" />
+    <phase duration="46.003" state="gGGrrrrrrr" />
+    <phase duration="3.993" state="yyyrrrrrrr" />
+    <phase duration="0.999" state="rrrrrrrrrr" />
+    <phase duration="34.000" state="rrrgGGrrrr" />
+    <phase duration="4.000" state="rrryyyrrrr" />
+    <phase duration="30.000" state="rrrrrrGGGG" />
+    <phase duration="3.998" state="rrrrrryyyy" />
+  </tlLogic>
+  <tlLogic id="cluster_1180000301_1180000302_1180000303_1180000304" type="static" programID="tdata_rush" offset="111.591">
+    <phase duration="4.193" state="rrrrrrrrryrrrrrrrry" />
+    <phase duration="0.811" state="rrrrrrrrrrrrrrrrrrr" />
+    <phase duration="68.005" state="gGGGGrrrrrgGGrrrrrr" />
+    <phase duration="5.187" state="yyyyyrrrrryyyrrrrrr" />
+    <phase duration="0.816" state="rrrrrrrrrrrrrrrrrrr" />
+    <phase duration="25.185" state="rrrrrGrrrrrrrGGrrrr" />
+    <phase duration="3.816" state="rrrrryrrrrrrryyrrrr" />
+    <phase duration="37.183" state="rrrrrrgGGrrrrrrgGGr" />
+    <phase duration="3.819" state="rrrrrryyyrrrrrryyyr" />
+    <phase duration="1.992" state="rrrrrrrrrrrrrrrrrrr" />
+    <phase duration="18.994" state="rrrrrrrrrGrrrrrrrrG" />
+  </tlLogic>
+  <tlLogic id="cluster_1180022201_1180022202_1180022203_1180022204" type="static" programID="tdata_rush" offset="12.279">
+    <phase duration="117.011" state="GGGGGGG" />
+    <phase duration="3.994" state="yyyyyyy" />
+    <phase duration="49.006" state="rrrrrrr" />
+  </tlLogic>
+  <tlLogic id="cluster_1180042201_1180042202_1180042203_1180042204" type="static" programID="tdata_rush" offset="96.903">
+    <phase duration="70.048" state="rrrgGGGrrrrgGGG" />
+    <phase duration="2.921" state="rrryyyyrrrryyyy" />
+    <phase duration="37.034" state="rrrrrrrgGGGrrrr" />
+    <phase duration="3.850" state="rrrrrrryyyyrrrr" />
+    <phase duration="1.100" state="rrrrrrrrrrrrrrr" />
+    <phase duration="28.049" state="gGGrrrrrrrrrrrr" />
+    <phase duration="2.925" state="yyyrrrrrrrrrrrr" />
+    <phase duration="1.109" state="rrrrrrrrrrrrrrr" />
+  </tlLogic>
+  <tlLogic id="cluster_1180010301_1180010302_1180010303_1180010304" type="static" programID="tdata_rush" offset="93.573">
+    <phase duration="37.001" state="gGGGrrrrrgGGGrrrr" />
+    <phase duration="4.002" state="gGGGrrrrryyyyrrrr" />
+    <phase duration="34.008" state="gGGGGGrrrrrrrrrrr" />
+    <phase duration="3.990" state="yyyyGGrrrrrrrrrrr" />
+    <phase duration="11.995" state="rrrrGGrrrrrrrGrrr" />
+    <phase duration="4.015" state="rrrryyrrrrrrryrrr" />
+    <phase duration="0.994" state="rrrrrrrrrrrrrrrrr" />
+    <phase duration="32.991" state="rrrrrrrrrrrrrrgGG" />
+    <phase duration="3.994" state="rrrrrrrrrrrrrryyy" />
+    <phase duration="1.012" state="rrrrrrrrrrrrrrrrr" />
+    <phase duration="30.999" state="rrrrrrgGGrrrrrrrr" />
+    <phase duration="4.000" state="rrrrrryyyrrrrrrrr" />
+    <phase duration="1.000" state="rrrrrrrrrrrrrrrrr" />
+  </tlLogic>
+  <tlLogic id="cluster_1180054101_1180054102_1180054103_1180054104" type="static" programID="tdata_rush" offset="13.572">
+    <phase duration="33.999" state="GGGgrrrr" />
+    <phase duration="3.018" state="yyygrrrr" />
+    <phase duration="12.993" state="rrrgGrrr" />
+    <phase duration="3.989" state="rrryyrrr" />
+    <phase duration="28.013" state="GGrrrgGG" />
+    <phase duration="2.988" state="GGrrryyy" />
+  </tlLogic>
+  <tlLogic id="cluster_1180038901_1180038902_1180038903_1180038904" type="static" programID="tdata_rush" offset="16.566">
+    <phase duration="29.000" state="rrrrrrrrrrrrrrgGGGGG" />
+    <phase duration="4.006" state="rrrrrrrrrrrrrryyyyyy" />
+    <phase duration="53.990" state="ggGrrrrrrrgGrrrrrrrr" />
+    <phase duration="3.994" state="yyyrrrrrrryyrrrrrrrr" />
+    <phase duration="1.020" state="rrrrrrrrrrrrrrrrrrrr" />
+    <phase duration="42.997" state="rrrGrrrrrrrrGGrrrrrr" />
+    <phase duration="4.013" state="rrryrrrrrrrryyrrrrrr" />
+    <phase duration="0.970" state="rrrrrrrrrrrrrrrrrrrr" />
+    <phase duration="36.005" state="rrrrgGGGGGrrrrrrrrrr" />
+    <phase duration="4.005" state="rrrryyyyyyrrrrrrrrrr" />
+  </tlLogic>
+  <tlLogic id="cluster_1180008101_1180008102_1180008103_1180008104" type="static" programID="tdata_rush" offset="103.552">
+    <phase duration="43.987" state="gGrrrrrrrgGrrrrr" />
     <phase duration="4.006" state="yyrrrrrrryyrrrrr" />
-    <phase duration="1.006" state="rrrrrrrrrrrrrrrr" />
-    <phase duration="16.977" state="rrGrrrrrrrrGrrrr" />
-    <phase duration="3.999" state="rryrrrrrrrryrrrr" />
-    <phase duration="1.024" state="rrrrrrrrrrrrrrrr" />
-    <phase duration="31.982" state="rrrgGGGGGrrrrrrr" />
+    <phase duration="0.985" state="rrrrrrrrrrrrrrrr" />
+    <phase duration="17.022" state="rrGrrrrrrrrGrrrr" />
+    <phase duration="3.985" state="rryrrrrrrrryrrrr" />
+    <phase duration="1.019" state="rrrrrrrrrrrrrrrr" />
+    <phase duration="31.999" state="rrrgGGGGGrrrrrrr" />
+    <phase duration="3.990" state="rrryyyyyyrrrrrrr" />
+    <phase duration="1.007" state="rrrrrrrrrrrrrrrr" />
+    <phase duration="27.001" state="rrrrrrrrrrrrgGGG" />
+    <phase duration="3.000" state="rrrrrrrrrrrryyyy" />
+    <phase duration="1.999" state="rrrrrrrrrrrrrrrr" />
   </tlLogic>
-  <tlLogic id="cluster_1180048601_1180048602_1180048603_1180048604" type="static" programID="tdata_rush" offset="67.378">
-    <phase duration="2.995" state="y" />
-    <phase duration="26.005" state="r" />
-    <phase duration="46.005" state="G" />
+  <tlLogic id="cluster_1180048601_1180048602_1180048603_1180048604" type="static" programID="tdata_rush" offset="68.261">
+    <phase duration="3.004" state="y" />
+    <phase duration="26.066" state="r" />
+    <phase duration="45.930" state="G" />
   </tlLogic>
-  <tlLogic id="cluster_1180024001_1180024002_1180024003_1180024004_#1more" type="static" programID="tdata_rush" offset="18.111">
-    <phase duration="1.010" state="GGGGGG" />
-    <phase duration="2.990" state="yyyyyy" />
-    <phase duration="44.816" state="rrrrrr" />
+  <tlLogic id="cluster_1180008201_1180008202_1180008203_1180008204" type="static" programID="tdata_rush" offset="59.576">
+    <phase duration="17.011" state="GGrr" />
+    <phase duration="4.019" state="yyrr" />
+    <phase duration="26.972" state="rrrr" />
+    <phase duration="87.998" state="GGGG" />
+    <phase duration="4.000" state="GGyy" />
   </tlLogic>
-  <tlLogic id="cluster_1180017801_1180017802_1180017803_1180017804" type="static" programID="tdata_rush" offset="67.068">
-    <phase duration="29.194" state="GGGGGG" />
-    <phase duration="4.001" state="yyyyyy" />
-    <phase duration="69.999" state="rrrrrr" />
+  <tlLogic id="cluster_1180031506_1180031507_1180031508_1180031509_#1more" type="static" programID="tdata_rush" offset="124.514">
+    <phase duration="37.000" state="rrrrrrr" />
+    <phase duration="128.986" state="GGGGGGG" />
+    <phase duration="4.012" state="yyyyyyy" />
   </tlLogic>
-  <tlLogic id="cluster_1180019201_1180019202_1180019203_1180019204" type="static" programID="tdata_rush" offset="54.480">
-    <phase duration="57.000" state="GGGG" />
-    <phase duration="4.000" state="yyyy" />
-    <phase duration="89.000" state="rrrr" />
+  <tlLogic id="cluster_1180036701_1180036702_1180036703_1180036704" type="static" programID="tdata_rush" offset="82.746">
+    <phase duration="44.020" state="GG" />
+    <phase duration="4.002" state="yy" />
+    <phase duration="90.985" state="rr" />
+  </tlLogic>
+  <tlLogic id="cluster_1180032901_1180032902_1180032903_1180032904" type="static" programID="tdata_rush" offset="73.519">
+    <phase duration="4.047" state="rrrrryyyyrrrrrr" />
+    <phase duration="0.905" state="rrrrrrrrrrrrrrr" />
+    <phase duration="46.032" state="gGGGGrrrrGGGGGr" />
+    <phase duration="2.976" state="yyyyyrrrrGGGGGr" />
+    <phase duration="21.026" state="rrrrrrrrrGGGGGG" />
+    <phase duration="4.039" state="rrrrrrrrryyyyyy" />
+    <phase duration="59.965" state="rrrrrggGGrrrrrr" />
+  </tlLogic>
+  <tlLogic id="cluster_1180017801_1180017802_1180017803_1180017804" type="static" programID="tdata_rush" offset="87.682">
+    <phase duration="68.930" state="GGGGGG" />
+    <phase duration="4.033" state="yyyyyy" />
+    <phase duration="63.616" state="rrrrrr" />
+  </tlLogic>
+  <tlLogic id="cluster_1180067901_1180067902_1180067903_1180067904_#1more" type="static" programID="tdata_rush" offset="50.338">
+    <phase duration="60.008" state="GGGGGG" />
+    <phase duration="3.992" state="yyyyyy" />
+    <phase duration="86.000" state="rrrrrr" />
+  </tlLogic>
+  <tlLogic id="cluster_1180019201_1180019202_1180019203_1180019204" type="static" programID="tdata_rush" offset="132.462">
+    <phase duration="52.040" state="GGGG" />
+    <phase duration="3.852" state="yyyy" />
+    <phase duration="82.147" state="rrrr" />
+  </tlLogic>
+  <tlLogic id="cluster_1180018201_1180018202_1180018203_1180018204" type="static" programID="tdata_rush" offset="46.315">
+    <phase duration="38.000" state="gGGrrrrrrgGGrrrrrr" />
+    <phase duration="5.003" state="yyyrrrrrryyyrrrrrr" />
+    <phase duration="0.997" state="rrrrrrrrrrrrrrrrrr" />
+    <phase duration="32.000" state="rrrGrrrrrrrrGrrrrr" />
+    <phase duration="4.000" state="rrryrrrrrrrryrrrrr" />
+    <phase duration="1.000" state="rrrrrrrrrrrrrrrrrr" />
+    <phase duration="34.000" state="rrrrgGGGrrrrrgGGGr" />
+    <phase duration="4.000" state="rrrryyyyrrrrryyyyr" />
+    <phase duration="2.000" state="rrrrrrrrrrrrrrrrrr" />
+    <phase duration="25.000" state="rrrrrrrrGrrrrrrrrG" />
+    <phase duration="4.000" state="rrrrrrrryrrrrrrrry" />
+  </tlLogic>
+  <tlLogic id="cluster_1190013401_1190013404_1190013806_1190013807_#2more" type="static" programID="tdata_rush" offset="47.227">
+    <phase duration="2.932" state="yyyrrrrrrr" />
+    <phase duration="51.142" state="rrrrrrrrrr" />
+    <phase duration="30.992" state="rrrrrrrGGG" />
+    <phase duration="2.940" state="rrrrrrryyy" />
+    <phase duration="0.909" state="rrrrrrrrrr" />
+    <phase duration="32.111" state="rrrgGGGrrr" />
+    <phase duration="4.006" state="rrryyyyrrr" />
+    <phase duration="0.915" state="rrrrrrrrrr" />
+    <phase duration="30.070" state="gGGrrrrrrr" />
   </tlLogic>
 </additional>
