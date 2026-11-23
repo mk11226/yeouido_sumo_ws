@@ -190,6 +190,8 @@ def snapshot_configs(run_dir: str):
     """
     for src in [os.path.join(BASE, "env", "road_config.py"),
                 os.path.join(BASE, "env", "mdp_config.py"),
+                os.path.join(BASE, "env", "driving_profile.py"),
+                os.path.join(BASE, "env", "yeouido_env.py"),
                 os.path.join(BASE, "training", "train.py")]:
         shutil.copy(src, run_dir)
 
@@ -224,6 +226,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--init", default=INIT_MODEL, help="이어 학습할 모델 (BC/DAgger/PPO model.pt)")
     ap.add_argument("--scratch", action="store_true", help="무작위 신경망부터 (--init 무시)")
+    ap.add_argument("--no-assist", action="store_true", help="보조 없는 64차원 지도 관측으로 학습 (--scratch 필요)")
     ap.add_argument("--resume", default=None, help="이어서 할 run 폴더 (ckpt.pt 가 있는 곳)")
     ap.add_argument("--total", type=int, default=TOTAL_TIMESTEPS)
     ap.add_argument("--workers", type=int, default=N_WORKERS)
@@ -236,6 +239,22 @@ def main():
     ap.add_argument("--name", default=None)
     ap.add_argument("--smoke", action="store_true", help="동작 확인: 환경 2개, 짧은 rollout, 검증 3문제")
     args = ap.parse_args()
+    if args.resume:
+        profile_path = os.path.join(args.resume, "environment.json")
+        if os.path.exists(profile_path):
+            with open(profile_path) as f:
+                saved_profile = json.load(f)
+            if saved_profile.get("unassisted"):
+                if saved_profile.get("observation_dim") != 64:
+                    ap.error("이어 학습할 모델의 관측 차원이 64가 아닙니다. --scratch 로 새 run을 시작하세요.")
+                args.no_assist = True
+            elif args.no_assist or os.environ.get("YEOUIDO_UNASSISTED") == "1":
+                ap.error("보조 사용 run을 --no-assist 로 resume 할 수 없습니다. 새 run을 만드세요.")
+    if args.no_assist:
+        os.environ["YEOUIDO_UNASSISTED"] = "1"
+    from env.driving_profile import unassisted_enabled
+    if unassisted_enabled() and not (args.scratch or args.resume):
+        ap.error("보조 없는 새 관측은 64차원입니다. 기존 42차원 모델 대신 --scratch 로 시작하세요.")
     if args.smoke:
         args.workers, args.n_steps = 2, args.n_steps or 64
         args.critic_warmup = min(args.critic_warmup, 1)
@@ -272,7 +291,20 @@ def main():
 
     probe = make_env(**env_kwargs)                       # 차원만 읽고 닫는다 (SUMO 는 reset 때 켜짐)
     obs_dim, act_dim = probe.observation_space.shape[0], probe.action_space.shape[0]
+    effective_profile = dict(
+        signal_assist=getattr(probe, "signal_assist", None),
+        obey_speed_limit=getattr(probe, "obey_speed_limit", None),
+        safety_shield=getattr(probe, "safety_shield", None),
+        lane_change_mode=getattr(probe, "lane_change_mode", None),
+        lane_change_safety=probe.lc_safety_enabled,
+        route_lane_guidance=getattr(probe, "route_lane_guidance", None),
+        reroute=getattr(probe, "reroute", None),
+        idle_penalty=probe.rw.get("idle_penalty", 0.0))
     probe.close()
+    with open(os.path.join(run_dir, "environment.json"), "w") as f:
+        json.dump(dict(unassisted=unassisted_enabled(), observation_dim=obs_dim,
+                       schema="map_navigation_v2" if unassisted_enabled() else "legacy42",
+                       effective=effective_profile), f, indent=2)
 
     buffer = RolloutBuffer()
     agent = PPO(obs_dim=obs_dim, act_dim=act_dim, buffer=buffer, **hp)

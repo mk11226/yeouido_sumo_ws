@@ -46,6 +46,7 @@ training/data/*.log
 # PPO 코드 점검용 짧은 시험 · 차로 변경 수정 전 평가 · 문제 재현용 디버그 출력
 results/ppo_smoke/
 results/ppo_smoke.log
+results/ppo_unassisted_smoke*/
 results/uniform/pre_lcfix/
 results/repro_*.txt
 results/stall_*.txt

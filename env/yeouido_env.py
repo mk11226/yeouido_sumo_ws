@@ -79,6 +79,8 @@ class YeouidoEnv(SumoHighwayEnv):
         self.signal_assist = bool(road.get("signal_assist", True))
         self.obey_speed_limit = bool(road.get("obey_speed_limit", True))
         self.lane_change_mode = int(road.get("lane_change_mode", 1))
+        self.route_lane_guidance = bool(road.get("route_lane_guidance", True))
+        self.navigation_observation = bool(road.get("navigation_observation", False))
         self.check_junctions = bool(road.get("check_junction_collisions", True))
         self.signal_range = float(mdp_obs.get("signal_range", 100.0))
         self.route_range = float(mdp_obs.get("route_range", 200.0))
@@ -103,11 +105,14 @@ class YeouidoEnv(SumoHighwayEnv):
 
         # 관측: 수업 환경 31차원 + 여의도 전용 9차원
         self.obs_dim += 11      # 신호·경로·교차로 9개 + 먼 앞차 2개
+        if self.navigation_observation:
+            self.obs_dim += 22  # 차로 안내 2개 제거 + 다음 회전 4개 + 지도 차로 연결 20개
         self.observation_space = gym.spaces.Box(-1.0, 1.0, shape=(self.obs_dim,),
                                                 dtype=np.float32)
         # 배경 차량이 새로 생기는 도로 = 들어오는 도로가 없는 범위 경계 도로.
         # 차로 변경 입구 보호(spawn_protect)는 이 도로에서만 적용한다.
         net = sumolib.net.readNet(os.path.join(DATA, "yeouido.net.xml"))
+        self._navigation_net = net
         self.spawn_edges = {e.getID() for e in net.getEdges() if not e.getIncoming()}
 
         self.places = load_places(road.get("places", "landmarks"))
@@ -321,7 +326,8 @@ class YeouidoEnv(SumoHighwayEnv):
         # 출발 지점이 정체로 막혀 있으면 같은 도로의 다른 자리로 다시 넣어 본다
         # (교통량 100% 출근 시간에는 랜드마크 앞 차로가 30초 넘게 꽉 차 있는 일이 있다).
         #   1) 랜드마크 바로 앞 · 경로에 맞는 차로   2) 그 도로에서 빈 자리   3) 무작위 빈 자리
-        for lane, pos in (("best", f"{o_pos:.1f}"), ("free", "free"), ("random", "random_free")):
+        initial_lane = "best" if self.route_lane_guidance else "free"
+        for lane, pos in ((initial_lane, f"{o_pos:.1f}"), ("free", "free"), ("random", "random_free")):
             traci.vehicle.add(self.ego_id, route_id, typeID="ego_type",
                               departLane=lane, departPos=pos, departSpeed="0")
             traci.vehicle.setSpeedMode(self.ego_id, 0)
@@ -713,7 +719,19 @@ class YeouidoEnv(SumoHighwayEnv):
         base = super()._get_obs()
         if self.ego_id not in traci.vehicle.getIDList():
             return np.zeros(self.obs_dim, dtype=np.float32)
-        return np.concatenate([base, self._route_features()]).astype(np.float32)
+        route_features = self._route_features()
+        if self.navigation_observation:
+            # 기존 [34], [35]를 제거한다. 보조 없는 새 모델은 총 64차원이다.
+            route_features = np.concatenate([route_features[:3], route_features[5:]])
+        parts = [base, route_features]
+        if self.navigation_observation:
+            from env.driving_profile import navigation_features
+            parts.append(navigation_features(
+                self._navigation_net, traci.vehicle.getRoadID(self.ego_id),
+                traci.vehicle.getLaneIndex(self.ego_id),
+                traci.vehicle.getRoute(self.ego_id),
+                traci.vehicle.getRouteIndex(self.ego_id), self.obs_offsets))
+        return np.concatenate(parts).astype(np.float32)
 
     def _route_features(self):
         e = self.ego_id
@@ -731,10 +749,14 @@ class YeouidoEnv(SumoHighwayEnv):
         pos = traci.vehicle.getLanePosition(e)
         to_junction = 0.0 if lane_id.startswith(":") else traci.lane.getLength(lane_id) - pos
         offset, continues = 0, self.route_range
-        for best in traci.vehicle.getBestLanes(e):
-            if best[0] == lane_id:
-                offset, continues = best[3], best[1] - pos
-                break
+        if self.route_lane_guidance:
+            for best in traci.vehicle.getBestLanes(e):
+                if best[0] == lane_id:
+                    offset, continues = best[3], best[1] - pos
+                    break
+        else:
+            # 기존 체크포인트의 입력 크기는 유지하며 경로별 차로 안내를 숨긴다.
+            offset, continues = 0, 0.0
 
         # [36] 남은 경로, [37] 제한속도
         self._remaining = self.remaining_distance()
@@ -834,5 +856,10 @@ class YeouidoEnv(SumoHighwayEnv):
 def make_env(**kwargs):
     """ROAD["type"]에 맞는 환경을 만든다. 인자는 SumoHighwayEnv와 같다
     (train.py / test.py / collect_pomdp_data.py 공용)."""
+    from env.driving_profile import unassisted_enabled, unassisted_config
+    if kwargs["road"].get("type") == "yeouido" and unassisted_enabled():
+        kwargs["road"], kwargs["action"] = unassisted_config(kwargs["road"], kwargs["action"])
+        # 전문가 속도를 계산하는 보상도 제외해 주행 중 전문가 정책을 호출하지 않는다.
+        kwargs["reward"] = {**kwargs["reward"], "idle_penalty": 0.0, "shield_penalty": 0.0}
     cls = YeouidoEnv if kwargs["road"].get("type") == "yeouido" else SumoHighwayEnv
     return cls(**kwargs)

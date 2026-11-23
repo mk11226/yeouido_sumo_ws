@@ -102,3 +102,43 @@ LIBSUMO_AS_TRACI=quiet python -m training.train --smoke                      # �
 | `--iters`, `--episodes`, `--betas` | 반복 횟수, 반복마다 수집 에피소드 수, 반복별 β |
 | `--eval-set` | 반복마다 평가할 시험지 (기본 `inference/eval_set/random_60_s1.json`) |
 | `--out` | 결과 폴더 `results/<out>/` (요약 `summary.json`) |
+
+## 보조 없는 PPO 새 학습
+
+```bash
+# 화면 없이 환경 8개, 처음부터 100만 스텝 (libsumo가 설치된 환경)
+LIBSUMO_AS_TRACI=quiet python -m training.train --no-assist --scratch \
+    --workers 8 --total 1000000 --name ppo_unassisted_v1
+
+# 이어 학습: environment.json에서 보조 해제 설정을 복구한다
+python -m training.train --resume results/ppo_unassisted_v1 --workers 8
+
+# 같은 환경에서 평가 / GUI 주행
+python -m inference.test results/ppo_unassisted_v1/model.pt --no-assist \
+    --eval-set inference/eval_set/random_60_s1.json --workers 8 --nogui
+python -m inference.drive_model --model results/ppo_unassisted_v1/model.pt --unassisted --problem 12 --hold
+```
+
+`--no-assist`는 환경변수 `YEOUIDO_UNASSISTED=1`을 하위 평가·병렬 프로세스에도 전달한다.
+신호·제한속도·쉴드·자동 차로 변경·안전 검사·재탐색을 끄고 출발 차로도 경로 기준으로 고르지 않는다.
+전문가 속도를 사용하는 idle 보상과 쉴드 벌점도 제외한다. 물리적인 차량 가감속 한계는 유지한다.
+기존 42차원 중 추천 차로 입력 [34], [35] 두 개를 제거하고, 다음 24개를 붙여 **64차원**으로 학습한다.
+
+- [0:34]: 기존 자차·주변 차량·차로 연결성·밀도·신호·다음 교차로 거리.
+- [34:40]: 기존 [36:42]였던 남은 경로 비율·제한속도·교차로 상대 차량 거리·양보 관계·먼 앞차 거리·상대속도.
+- [40:44]: 도로 단위 경로의 다음 회전 (직진·좌회전·우회전·유턴, 숫자 0/1).
+- [44:64]: 좌2·좌1·현재·우1·우2 차로 각각의 모든 지도 연결 방향 (같은 순서로 4개씩).
+  목적지별 추천 차로·권장 변경 명령은 계산하지 않는다. 없는 차로/교차로 내부는 0이다.
+
+기존 42차원 모델은 새 관측과 호환되지 않는다. 기존 모델을 보조 없이 시험하는 GUI의
+`--no-assist`(42차원 유지)와 새 모델을 주행하는 `--unassisted`(64차원)를 구분한다.
+중간 점검에서 생성한 66차원 체크포인트도 호환되지 않으므로 새 run으로 시작한다.
+설정은 run의 `environment.json`에 기록된다. 짧은 점검은 다음과 같다.
+
+```bash
+YEOUIDO_EVAL_MAX_STEPS=16 python -m training.train --no-assist --scratch --smoke \
+    --total 64 --n-steps 16 --critic-warmup 0 --eval-limit 1 --name ppo_unassisted_smoke
+```
+
+이 명령의 평가는 16스텝에서 끊는 동작 점검이며 성능 평가가 아니다. 정식 학습/평가에서는
+`YEOUIDO_EVAL_MAX_STEPS`를 설정하지 않는다. `libsumo`가 없다면 `LIBSUMO_AS_TRACI` 없이 실행한다.

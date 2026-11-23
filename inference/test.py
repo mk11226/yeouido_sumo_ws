@@ -93,7 +93,8 @@ def build_env(gui):
                                  os.path.join(BASE, "env", "sumo"))
     return make_env(
         cfg_path=sumocfg,
-        road=ROAD, ego=EGO,
+        road={**ROAD, **({"max_steps": int(os.environ["YEOUIDO_EVAL_MAX_STEPS"])}
+                        if os.environ.get("YEOUIDO_EVAL_MAX_STEPS") else {})}, ego=EGO,
         mdp_sim=SIMULATION, mdp_obs=OBSERVATION,
         action=ACTION, reward=REWARD,
         traffic=TRAFFIC,
@@ -192,6 +193,8 @@ def run_eval_set(args, model_path):
     os.makedirs(os.path.dirname(out), exist_ok=True)
     with open(out, "w", encoding="utf-8") as f:
         json.dump({"name": name, "model": model_path, "eval_set": args.eval_set,
+                   "unassisted": os.environ.get("YEOUIDO_UNASSISTED") == "1",
+                   "max_steps_override": os.environ.get("YEOUIDO_EVAL_MAX_STEPS"),
                    "seconds": round(time.time() - t0), "records": records},
                   f, ensure_ascii=False, indent=1)
     return records, out
@@ -218,7 +221,15 @@ if __name__ == "__main__":
                         help="--eval-set에서 문제 일부만 (고르게 건너뛰며) 빠른 점검용")
     parser.add_argument("--out", default=None,
                         help="--eval-set 결과 JSON 경로 (기본: 모델 폴더/eval_set_results.json)")
+    parser.add_argument("--no-assist", action="store_true", help="보조 없는 64차원 모델 평가")
+    parser.add_argument("--max-steps", type=int, default=None, help="점검용 에피소드 길이 제한 (정식 평가에서는 생략)")
     args = parser.parse_args()
+    if args.no_assist:
+        os.environ["YEOUIDO_UNASSISTED"] = "1"
+    if args.max_steps is not None:
+        if args.max_steps < 1:
+            parser.error("--max-steps는 1 이상이어야 합니다.")
+        os.environ["YEOUIDO_EVAL_MAX_STEPS"] = str(args.max_steps)
     if args.episodes < 1:
         parser.error("--episodes는 1 이상이어야 합니다.")
     if args.expert and args.model:

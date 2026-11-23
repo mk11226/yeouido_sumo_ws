@@ -22,6 +22,16 @@
 
 ## 주행: `drive_model.py`
 
+새로 학습한 64차원 보조 없는 모델은 `python -m inference.drive_model --model results/ppo_unassisted_v1/model.pt --unassisted --problem 12 --hold`로 실행한다.
+평가에는 `python -m inference.test results/ppo_unassisted_v1/model.pt --no-assist --nogui --eval-set inference/eval_set/random_60_s1.json`를 사용한다.
+학습 방법과 입력 정의는 [training/README.md](../training/README.md#보조-없는-ppo-새-학습)를 따른다.
+
+기존 PPO를 보조 없이 시험하려면 `python -m inference.drive_model --problem 12 --no-assist --hold`를 실행한다.
+`--no-assist`는 신호 정지·제한속도 강제·안전 쉴드·자동 차로 변경·차로 변경 안전 검사·경로 재탐색을 끈다.
+출발 차로도 경로 기준으로 고르지 않으며, 경로별 차로 안내 관측 `[34]`, `[35]`는 0으로 가린다.
+기존 모델을 불러오도록 입력은 42차원으로 유지한다. 기존 모델은 보조가 있는 환경에서 학습됐으므로
+이 실행은 조건을 바꾼 시험이며 기존 평가 결과와 직접 같다고 볼 수 없다. 옵션을 생략하면 기존 동작을 유지한다.
+
 ```bash
 # 대표 영상과 같은 주행 (최종 모델 PPO, 출근, 서강대교 → 영등포역, 경로 재탐색 켬)
 python -m inference.drive_model --problem 12 --reroute

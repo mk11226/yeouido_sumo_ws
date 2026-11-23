@@ -140,6 +140,9 @@ def main():
                     help="시간대 (기본 rush). --problem 과 함께 쓰면 같은 출발·도착·시드로 시간대만 바꿈")
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--reroute", action="store_true", help="경로 재탐색 켜기 (바뀐 경로는 주황색)")
+    ap.add_argument("--no-assist", action="store_true",
+                    help="주행 보조·자동 차로 변경·재탐색 끄기, 경로 차로 안내 입력은 0으로 가림 (42차원 유지)")
+    ap.add_argument("--unassisted", action="store_true", help="새로 학습한 보조 없는 64차원 모델 주행")
     ap.add_argument("--change-dest", default=None, metavar="장소", help="주행 중 목적지를 이곳으로 바꿈")
     ap.add_argument("--at", type=float, default=120.0, help="--change-dest 를 할 시각 (출발 후 초)")
     ap.add_argument("--record", default=None, metavar="MP4", help="영상 저장 경로 (.mp4). 같은 이름 .csv 에 주행 기록")
@@ -154,6 +157,13 @@ def main():
     ap.add_argument("--check", default=None, metavar="RESULTS_JSON",
                     help="--problem 과 함께: 평가 결과 JSON 의 같은 문제와 결과·스텝 수가 같은지 확인 (추론 = 평가 검증)")
     args = ap.parse_args()
+    if args.unassisted:
+        os.environ["YEOUIDO_UNASSISTED"] = "1"
+    from env.driving_profile import unassisted_enabled
+    if unassisted_enabled() and (args.no_assist or args.reroute or args.check):
+        ap.error("64차원 보조 없는 모드는 --no-assist(기존42차원), --reroute, --check 와 함께 쓰지 마세요.")
+    if args.no_assist and (args.reroute or args.check):
+        ap.error("--no-assist 는 --reroute 또는 보조 사용 평가와 비교하는 --check 와 함께 쓸 수 없습니다.")
     if os.environ.get("LIBSUMO_AS_TRACI"):
         ap.error("sumo-gui 는 libsumo 로 띄울 수 없습니다. LIBSUMO_AS_TRACI 없이 실행하세요.")
     if args.check and args.problem is None:
@@ -176,11 +186,21 @@ def main():
 
     dr.write_gui_files()
     road = {**ROAD, "gui_files": ["yeouido.poly.xml", dr.PINS], "gui_settings": dr.VIEW}
+    action = ACTION
+    if args.no_assist:
+        road.update(signal_assist=False, obey_speed_limit=False,
+                    safety_shield=False, lane_change_mode=0,
+                    route_lane_guidance=False,
+                    reroute={**ROAD.get("reroute", {}), "enabled": False})
+        action = {**ACTION, "lane_change_safety": {
+            **ACTION.get("lane_change_safety", {}), "enabled": False}}
+        print("[no-assist] 신호·제한속도·안전 쉴드·차로 변경 보조·재탐색 OFF; "
+              "관측 [34:36]은 0 (기존 42차원 모델 유지).", flush=True)
     if args.reroute:
         road["reroute"] = {**ROAD.get("reroute", {}), "enabled": True}
     cfg = road_builder.build(road, EGO, TRAFFIC, os.path.join(BASE, "env", "sumo"))
     env = make_env(cfg_path=cfg, road=road, ego=EGO, mdp_sim=SIMULATION, mdp_obs=OBSERVATION,
-                   action=ACTION, reward=REWARD, traffic=TRAFFIC, gui=True, gui_autostart=True)
+                   action=action, reward=REWARD, traffic=TRAFFIC, gui=True, gui_autostart=True)
     env.gui_delay = args.delay
     if args.zoom:
         env.gui_zoom = args.zoom
