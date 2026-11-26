@@ -29,6 +29,9 @@ env/yeouido/source/signals/live/
 # macOS
 .DS_Store
 
+# Generated distributed-traffic snapshots, audit records, and GUI assets
+env/yeouido/fixed_population/
+
 # ── 100 MB 넘는 원본 주행 기록 3개: GitHub 파일 한도 때문에 90 MB 조각(<이름>.part_aa, _ab)으로 나눠 올린다 ──
 # 받은 뒤 합치기:  cat training/data/<이름>.part_* > data/<이름>   (README "큰 파일 합치기" 참고)
 training/data/dagger_v1_iter3.jsonl.gz

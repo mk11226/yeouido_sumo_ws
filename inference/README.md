@@ -107,3 +107,23 @@ python -m inference.eval_set.final_report --final "PPO=results/uniform_newnet/pp
 | DAgger | 43 | 0 | 2 | 655 |
 
 전체 표: `results/final/final_eval.md`. 평가 결과: `results/uniform_newnet/`.
+
+## 교통량 고정 (분산 배치 · 보충): `fixed_population_panel.py`
+
+시간대별로 **도로망 위 일반 차량 수를 정해 두고 그 대수를 유지**하는 실험용 교통 모드다 (교통 과포화 · 꼬리물기 대안).
+코드는 `env/fixed_population.py`, 실행 창은 `inference/fixed_population_panel.py`. 운전자는 선생님 정책이다 (학습 모델 평가와는 별개).
+
+```bash
+python -m inference.fixed_population_panel                       # 시간대 전환 · 주행 창 (Windows: 루트의 여의도_분산교통_실행.cmd)
+python -m inference.fixed_population_panel --validate --seconds 180   # 세 시간대 검증: 목표 대수 초과 · 도착 후 보충 · 충돌
+python -m inference.fixed_population_panel --smoke --delay 0      # GUI 동작 확인
+python -m unittest discover -s tests -p test_fixed_population.py
+```
+
+- **목표 대수:** 기존 uniform 교통 600초 시점에 도로 위에 있던 일반 차량 수 = 심야 462 · 주간 3,338 · 출근 4,417대.
+- **초기 배치:** 도로 길이 · 차로 수에 비례해 도로망 전체에 고르게 (승용차 통행 가능, 길이 50 m 이상, 안전 간격 15 m 확보한 차로만, 도로마다 최소 1대).
+- **운행 · 보충:** 일반 차량은 연결된 도로 두 구간을 달리고 도착한다. 부족해진 대수는 배정량보다 비어 있는 차로에 다시 넣는다 (SUMO 삽입 안전 검사를 따름, 기존 차량을 옮기거나 지우지 않음). ego 경로는 그대로.
+- **목표 대수에 포함:** 도로 위 · 삽입 대기 · 순간이동 복귀 중인 차량. 그래서 매 순간 도로 위 대수가 목표와 똑같지는 않다.
+- **시간대 전환:** 주행 중 바꾸면 새 목표에 맞춰 보충하고, 목표가 낮아지면 도착에 따라 자연 감소한다.
+- **주의:** 차량 대수와 공간 분포만 제어하며 실제 통근 OD나 시간당 유입량을 재현하지 않는다. 배경 차량이 자주 교체되므로 누적 생성 · 도착 대수를 실측 통행량과 직접 비교하면 안 된다.
+- 초기 상태 · 설정 · 검증 결과는 `env/yeouido/fixed_population/`에 자동 생성된다 (Git 제외).

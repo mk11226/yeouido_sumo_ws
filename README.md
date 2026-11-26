@@ -95,7 +95,7 @@ OSM → 배경
 | `main.py` | **최종 모델 주행 화면 바로 실행** (선택 창 또는 옵션으로 시간대 · 출발 · 목적지 · 배속, [9절](#9-한-번에-주행-화면-보기-mainpy)) |
 | `yeouido/` | 도로망 · 교통량 · 신호 · 배경 생성 파이프라인 ([4절](#4-yeouido-코드-의미와-실행)) |
 | `training/` | **학습**: 데이터 수집 · BC · DAgger · PPO 실행 파일, `algorithms/`(PPO · BC · 선생님 정책/안전 쉴드), `data/`(학습 데이터). 설명은 [training/README.md](training/README.md) |
-| `inference/` | **추론**: 시험지 평가 `test.py`, sumo-gui 주행 · 영상 `drive_model.py`, `eval_set/`(시험지 · 점검 · 평가표). 설명은 [inference/README.md](inference/README.md) |
+| `inference/` | **추론**: 시험지 평가 `test.py`, sumo-gui 주행 · 영상 `drive_model.py`, 교통량 고정 실험 창 `fixed_population_panel.py`, `eval_set/`(시험지 · 점검 · 평가표). 설명은 [inference/README.md](inference/README.md) |
 | `env/` | 학습 환경: `yeouido_env.py`(여의도 환경), `sumo_env.py`(기본 환경), `road_config.py`(도로 · 교통 설정), `mdp_config.py`(관측 · 행동 · 보상), `view_road.py`(수업 기본 직선 도로를 sumo-gui로 확인: `python -m env.view_road`) |
 | `env/yeouido/` | 생성된 도로망 · 교통 · 신호 · 배경 · 랜드마크 · 워밍업 상태 |
 | `utils/` | 학습 · 추론 공용: `evaluator.py`(시험지 평가), `vec_env.py`(병렬 환경), `networks.py`, `buffer.py`, `logger.py`, `eval_report.py` |
@@ -358,6 +358,17 @@ python -m yeouido_cross.drive_panel --level rush            # 조절 창에서 �
 python -m yeouido_cross.drive_route 1 B --level day         # 국회의사당 → 마포대교 하나만
 python -m yeouido.live                                      # 배경 교통만 보기 (시간대 전환 버튼)
 ```
+
+### 8-4. 교통량 고정 모드 (실험): `inference/fixed_population_panel.py`
+
+시간대별 일반 차량 수(심야 462 · 주간 3,338 · 출근 4,417대)를 도로망 전체에 고르게 배치하고, 도착한 만큼 다시 채워 그 대수를 유지한다. 배율 1 교통이 점점 막히는 과포화 · 꼬리물기의 대안으로 시험 중이며, 지금은 선생님 정책 GUI 창에서만 쓴다 (학습 · 평가 환경에는 아직 연결 안 됨).
+
+```bash
+python -m inference.fixed_population_panel                       # Windows: 여의도_분산교통_실행.cmd
+python -m inference.fixed_population_panel --validate --seconds 180
+```
+
+자세한 규칙과 주의점은 [inference/README.md](inference/README.md#교통량-고정-분산-배치--보충-fixed_population_panelpy).
 
 ## 9. 한 번에 주행 화면 보기: `main.py`
 
