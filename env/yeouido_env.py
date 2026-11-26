@@ -524,6 +524,11 @@ class YeouidoEnv(SumoHighwayEnv):
                 "reroutes": self.reroutes}
 
     def step(self, action):
+        population = getattr(self, 'population_manager', None)
+        if population is None:
+            population = getattr(self, 'manager', None)
+        if population is not None:
+            population.protect_near_ego(traci, self.ego_id)
         alive = self.ego_id in traci.vehicle.getIDList()
         tls_before = traci.vehicle.getNextTLS(self.ego_id) if alive else ()
         road_before = traci.vehicle.getRoadID(self.ego_id) if alive else None

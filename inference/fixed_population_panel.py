@@ -96,6 +96,7 @@ class PopulationPanel(panel.Panel):
         super()._load_level(level)
         self.manager = make_population(self.targets[level])
         self.manager.attach(traci)
+        self.env.population_manager = self.manager
 
     def set_level(self, level):
         super().set_level(level)

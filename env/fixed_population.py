@@ -10,6 +10,7 @@ import random
 import xml.etree.ElementTree as ET
 
 import sumolib
+from sumolib.geomhelper import positionAtShapeOffset
 import traci.constants as tc
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -20,7 +21,8 @@ PREFIX = "fp_"
 VERSION = 4
 MARGIN = 15.0
 GAP = 15.0
-BALANCED_POLICY = {"route_edges": 2}
+BALANCED_POLICY = {"route_edges": 10}
+EGO_ROUTE_PROTECTION_M = 100.0
 
 
 def reference_targets():
@@ -143,6 +145,8 @@ class FixedPopulation:
         return (source, nxt)
 
     def add(self, api, lane_id, position, depart_speed=None):
+        if not self.spawn_allowed(api, lane_id, position):
+            return False
         route = self.route_for(lane_id)
         if route not in self.route_cache:
             self.route_serial += 1
@@ -158,6 +162,7 @@ class FixedPopulation:
                         arrivalPos="random")
         self.pending[vid] = (lane_id, position, api.simulation.getTime())
         self.created += 1
+        return True
 
     def seed(self, api):
         """Evenly space the first cohort, before allowing vehicles to move."""
@@ -180,8 +185,84 @@ class FixedPopulation:
 
     def subscribe(self, api, ids):
         for vid in set(ids) - self.subscribed:
-            api.vehicle.subscribe(vid, (tc.VAR_LANE_ID, tc.VAR_LANEPOSITION, tc.VAR_SPEED))
+            api.vehicle.subscribe(vid, (tc.VAR_LANE_ID, tc.VAR_LANEPOSITION, tc.VAR_SPEED,
+                                       tc.VAR_POSITION))
             self.subscribed.add(vid)
+
+    def protect_near_ego(self, api, ego_id='ego', radius=EGO_ROUTE_PROTECTION_M):
+        """Extend expiring HV routes before stepping; never move/delete a car.
+
+        A 30m buffer covers vehicles entering the radius in the next 0.5s.
+        Actual network exits with no legal continuation remain valid arrivals.
+        """
+        all_ids = set(api.vehicle.getIDList())
+        if ego_id not in all_ids:
+            return 0
+        ex, ey = api.vehicle.getPosition(ego_id)
+        self.subscribe(api, {vid for vid in all_ids if vid.startswith(PREFIX)})
+        # A queued insertion can become nearby after ego moves. Cancel only
+        # off-road requests, before SUMO gets another chance to insert them.
+        for vid, (lane_id, pos, _) in list(self.pending.items()):
+            if vid not in all_ids and not self.spawn_allowed(api, lane_id, pos, (ex, ey)):
+                api.vehicle.remove(vid, reason=tc.REMOVE_VAPORIZED)
+                del self.pending[vid]
+                self.cancelled_pending += 1
+        count = 0
+        for vid, values in (api.vehicle.getAllSubscriptionResults() or {}).items():
+            if not vid.startswith(PREFIX) or tc.VAR_POSITION not in values:
+                continue
+            x, y = values[tc.VAR_POSITION]
+            if (x-ex)**2 + (y-ey)**2 > (radius+30.0)**2:
+                continue
+            current = api.vehicle.getRoadID(vid)
+            if not current:
+                continue
+            route = api.vehicle.getRoute(vid)
+            index = api.vehicle.getRouteIndex(vid)
+            if index < 0:
+                continue
+            remaining = list(route[index:])
+            # Many short edges can be crossed in one step. Check distance as
+            # well as edge count, including vehicles currently in a junction.
+            if index < len(route)-2 and sum(self.net.getEdge(e).getLength()
+                                           for e in remaining) > 400:
+                continue
+            tail = self.net.getEdge(remaining[-1])
+            extension = []
+            distance = 0.0
+            for _ in range(32):
+                outgoing = [edge for edge, connections in tail.getOutgoing().items()
+                            if edge.allows('passenger') and any(
+                                c.getFromLane().allows('passenger') and
+                                c.getToLane().allows('passenger') for c in connections)]
+                if not outgoing:
+                    break
+                # Prefer onward roads over immediate returns or dead ends.
+                fresh = [edge for edge in outgoing
+                         if edge.getID() not in remaining+extension]
+                candidates = fresh or outgoing
+                onward = [edge for edge in candidates if any(
+                    nxt.allows('passenger') for nxt in edge.getOutgoing())]
+                tail = self.rng.choice(sorted(onward or candidates, key=lambda e: e.getID()))
+                extension.append(tail.getID())
+                distance += tail.getLength()
+                if len(extension) >= 4 and distance >= 500:
+                    break
+            if extension:
+                api.vehicle.setRoute(vid, remaining+extension)
+                count += 1
+        self.near_ego_extensions = getattr(self, 'near_ego_extensions', 0)+count
+        return count
+
+    def spawn_allowed(self, api, lane_id, position, ego_position=None):
+        """Keep new traffic outside ego's 100m area plus a movement buffer."""
+        if ego_position is None:
+            if 'ego' not in api.vehicle.getIDList():
+                return True
+            ego_position = api.vehicle.getPosition('ego')
+        x, y = positionAtShapeOffset(self.lanes[lane_id].getShape(), position)
+        ex, ey = ego_position
+        return (x-ex)**2+(y-ey)**2 > (EGO_ROUTE_PROTECTION_M+30.0)**2
 
     def expected_population(self, api, all_ids=None):
         """Reserve slots for all loaded HVs, including teleporting vehicles.
@@ -244,7 +325,10 @@ class FixedPopulation:
             pos = free_position(self.lanes[lane_id].getLength(), occupied[lane_id])
             if pos is None:
                 continue
-            self.add(api, lane_id, pos, depart_speed="max")
+            if not self.spawn_allowed(api, lane_id, pos):
+                continue
+            if self.add(api, lane_id, pos, depart_speed="max") is False:
+                continue
             occupied[lane_id].append(pos)
             added += 1
             quota = self.quota[lane_id]

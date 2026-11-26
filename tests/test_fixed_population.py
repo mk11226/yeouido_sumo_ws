@@ -36,7 +36,8 @@ class FixedPopulationTests(unittest.TestCase):
             simulation=SimpleNamespace(getTime=lambda: 5, getArrivedIDList=lambda: (),
                 getStartingTeleportIDList=lambda: (), getEndingTeleportIDList=lambda: (),
                 getMinExpectedNumber=lambda: len(ids)),
-            vehicle=SimpleNamespace(getIDList=lambda: ids, getAllSubscriptionResults=lambda: {}))
+            vehicle=SimpleNamespace(getIDList=lambda: ids, getAllSubscriptionResults=lambda: {},
+                                    getPosition=lambda vid: (100000, 100000)))
 
     def test_pending_insertion_consumes_budget_and_ego_does_not(self):
         manager = self.manager(3, {"fp_3": ("lane", 50, 0)})
@@ -61,7 +62,8 @@ class FixedPopulationTests(unittest.TestCase):
 
     def replenishing_manager(self):
         manager = self.manager(3, {})
-        manager.lanes = {"lane": SimpleNamespace(getLength=lambda: 200)}
+        manager.lanes = {"lane": SimpleNamespace(getLength=lambda: 200,
+                                                getShape=lambda: [(0, 0), (200, 0)])}
         manager.quota = {"lane": 3}
         calls = []
         def add(api, lane, pos, depart_speed):
@@ -110,7 +112,9 @@ class FixedPopulationTests(unittest.TestCase):
         counts = {}
         for key, lane in manager.lanes.items():
             route = manager.route_for(key)
-            self.assertEqual(len(route), 2)
+            self.assertGreaterEqual(len(route), 2)
+            if manager.route_edges:
+                self.assertLessEqual(len(route), manager.route_edges)
             self.assertEqual(route[0], lane.getEdge().getID())
             self.assertIn(route[1], manager.next_edges[key])
             counts[route[0]] = counts.get(route[0], 0) + manager.quota[key]
